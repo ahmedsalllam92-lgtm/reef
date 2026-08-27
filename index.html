@@ -1494,6 +1494,7 @@ body[data-theme="dark"] .opsd-opbtn,body[data-theme="dark"] .opsd-canvas{backgro
 .mt-prog{margin:10px 0;min-height:4px}
 .mt-or{font-size:11.5px;color:#8a958d;margin:10px 0 6px}
 .mt-transbox{background:#EEF5FF;border:1px solid #CFE0F5;border-radius:10px;padding:13px 15px;margin-bottom:12px}
+.mt-tb-d{font-size:12px;color:#4a5a50;margin-bottom:10px;line-height:1.7}
 .mt-tb-h{font-size:13px;font-weight:800;color:#12447A;margin-bottom:8px}
 .mt-steps{margin:0 0 10px;padding-inline-start:20px;font-size:12.5px;color:#33433b;line-height:1.9}
 .mt-q{color:#12447A;font-style:italic}
@@ -5729,12 +5730,10 @@ function meetStop(){ MREC.on=false; _mstat(""); if(MREC.timer){clearInterval(MRE
   var b=document.getElementById("mtStart"); if(b){ b.innerHTML='<span class="mt-dot"></span> ابدأ تسجيلاً جديدًا'; b.classList.remove("recording"); } }
 function meetShowOut(){ var host=document.getElementById("mtOut"); if(!host)return;
   host.innerHTML='<div class="mt-outbox"><audio controls src="'+MREC.url+'" style="width:100%;margin-bottom:12px"></audio>'
-    +'<div class="mt-transbox"><div class="mt-tb-h">🎯 تفريغ دقيق عبر ChatGPT (موصى به للعربي)</div>'
-    +'<ol class="mt-steps"><li>اضغط <b>«⭳ تنزيل الصوت»</b> لحفظ ملف الاجتماع.</li><li>افتح <b>chatgpt.com</b> وارفع ملف الصوت، واكتب: «<span class="mt-q">فرّغ هذا الاجتماع نصيًا بالعربية مع تلخيص القرارات والمهام</span>».</li><li>انسخ النص الناتج، ثم اضغط <b>«📋 لصق التفريغ»</b> بالأسفل والصقه.</li></ol>'
+    +'<div class="mt-transbox"><div class="mt-tb-h">🎯 تفريغ تلقائي دقيق مع تمييز المتحدّثين</div>'
+    +'<div class="mt-tb-d">اضغط الزر ليُرفع الصوت ويُفرّغ تلقائيًا (عربي + توزيع على المتحدّثين). قد يستغرق دقائق حسب طول الاجتماع.</div>'
     +'<div class="mt-actions"><button class="mt-btn" id="mtAuto" onclick="meetAutoTranscribe()">🎯 تفريغ دقيق + تمييز المتحدّثين</button></div>'
-    +'<div class="mt-prog" id="mtProg"></div>'
-    +'<div class="mt-or">أو يدويًا عبر ChatGPT:</div>'
-    +'<div class="mt-actions"><button class="mt-btn ghost" onclick="meetPasteTrans()">📋 لصق التفريغ</button> <button class="mt-btn ghost" onclick="meetCopyPrompt()">نسخ صيغة الطلب</button></div></div>'
+    +'<div class="mt-prog" id="mtProg"></div></div>'
     +'<div class="mt-actions" style="margin-top:12px"><button class="mt-btn" onclick="meetSave()">💾 حفظ على الجهاز</button>'
     +'<button class="mt-btn ghost" onclick="meetDownloadAudio()">⭳ تنزيل الصوت</button>'
     +'<button class="mt-btn ghost" onclick="meetDownloadText()">⭳ تنزيل النص</button>'
