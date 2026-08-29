@@ -3,6 +3,8 @@
 // المفتاح يُقرأ من متغيّر البيئة ASSEMBLYAI_API_KEY (سري على الخادم)
 
 const AAI = "https://api.assemblyai.com/v2";
+const WORD_BOOST = ["ريف","برنامج ريف","التنمية الريفية","وزارة البيئة والمياه والزراعة","مستخلص","المستخلص","تعميد","التعميد","أمر مباشرة","محضر تسليم الموقع","المقاول","الاستشاري","إدارة المشاريع","إدارة القطاعات","إدارة الخدمات المشتركة","المزارع النموذجية","الجبيل","نجران","جازان","عسير","الباحة","الجدول الزمني","نطاق العمل","الميزانية","الدفعة","نسبة الإنجاز","الترسية","المنافسة","الكراسات","خطاب الضمان","التحليل الفني","لجنة فحص العروض","المخطط","الفكرة التصميمية","المتطلبات","الطرح","التنفيذ","الإغلاق"];
+
 
 exports.handler = async function (event) {
   const KEY = process.env.ASSEMBLYAI_API_KEY;
@@ -67,7 +69,11 @@ exports.handler = async function (event) {
         body: JSON.stringify({
           audio_url: uj.upload_url,
           language_code: "ar",
-          speaker_labels: true
+          speaker_labels: true,
+          punctuate: true,
+          format_text: true,
+          word_boost: WORD_BOOST,
+          boost_param: "high"
         })
       });
       const tj = await tr.json();
