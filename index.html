@@ -7498,7 +7498,7 @@ function _lcReadPdf(file,onProg){
         var pn=i++;
         return pdf.getPage(pn).then(function(pg){ return pg.getTextContent().then(function(tc){
             var items=(tc.items||[]).map(function(it){ return {s:String(it.str||""), x:(it.transform?it.transform[4]:0), y:(it.transform?it.transform[5]:0)}; });
-            pages.push({page:pn, items:items, text:items.map(function(o){return o.s;}).join(" ").replace(/\s+/g," ").trim(), pg:pg});
+            pages.push({page:pn, items:items, w:(function(){ try{ return pg.getViewport({scale:1}).width; }catch(e){ return 800; } })(), text:items.map(function(o){return o.s;}).join(" ").replace(/\s+/g," ").trim(), pg:pg});
             if(onProg) onProg(pn/pdf.numPages);
             return nx(); }); }); }
       return nx(); }); }
@@ -7629,6 +7629,102 @@ function _lcItemsHeuristic(grid,srcName,sheetName){ var out=[];
       origin:origin, needCert:yn[0]||"", hasCertSaid:yn[1]||"", listType:listType||"", code:code||"",
       notes:"", src:srcName, sheet:sheetName, row:(ri+1) }); });
   return out; }
+
+/* ---------- قراءة جدول تقرير الالتزام من PDF بالأعمدة الحقيقية ---------- */
+function _lcPageGrid(items,pageW){
+  var its=(items||[]).filter(function(it){ return String(it.s).trim()!==""; });
+  if(!its.length) return [];
+  var T=Math.max(8,(pageW||800)*0.02);
+  var rows={};
+  its.forEach(function(it){ var k=Math.round(it.y/3); (rows[k]=rows[k]||[]).push(it); });
+  var ks=Object.keys(rows).map(Number).sort(function(a,b){ return b-a; });
+  var rowCells=ks.map(function(k){
+    var arr=rows[k].slice().sort(function(a,b){ return b.x-a.x; });
+    var cells=[], cur=[arr[0]];
+    for(var i=1;i<arr.length;i++){
+      if(arr[i-1].x-arr[i].x>T){ cells.push(cur); cur=[arr[i]]; } else cur.push(arr[i]); }
+    cells.push(cur);
+    return cells.map(function(c){ return {x:c[0].x, t:c.map(function(w){ return String(w.s).trim(); }).join(" ").replace(/\s+/g," ").trim()}; });
+  });
+  var xs=[]; rowCells.forEach(function(r){ r.forEach(function(c){ xs.push(c.x); }); });
+  xs.sort(function(a,b){ return b-a; });
+  var bands=[], cur=[xs[0]];
+  for(var i=1;i<xs.length;i++){ if(cur[cur.length-1]-xs[i]<=T) cur.push(xs[i]);
+    else { bands.push(cur.reduce(function(a,b){return a+b;},0)/cur.length); cur=[xs[i]]; } }
+  bands.push(cur.reduce(function(a,b){return a+b;},0)/cur.length);
+  var bandOf=function(x){ var bi=0,bd=1e9; for(var i=0;i<bands.length;i++){ var d=Math.abs(bands[i]-x); if(d<bd){bd=d;bi=i;} } return bi; };
+  return rowCells.map(function(r){ var row=new Array(bands.length).fill("");
+    r.forEach(function(c){ var i=bandOf(c.x); row[i]=row[i]?(row[i]+" "+c.t):c.t; });
+    return row; });
+}
+var _LCMONEY=/^\d{1,3}(,\d{3})*\.\d{1,2}$/;
+function _lcColRoles(grid){
+  var data=grid.filter(function(r){ return r.some(function(c){ return _LCMONEY.test(String(c).trim()); }); });
+  if(data.length<2) return null;
+  var W=grid[0].length, N=data.length, st=[];
+  for(var j=0;j<W;j++){
+    var col=data.map(function(r){ return String(r[j]||"").trim(); });
+    var f=function(fn){ return col.filter(fn).length/N; };
+    st.push({ j:j,
+      ints:f(function(c){ return /^\d{1,4}$/.test(c); }),
+      money:f(function(c){ return _LCMONEY.test(c); }),
+      orig:f(function(c){ return c==="وطني"||c==="غير وطني"; }),
+      yn:f(function(c){ return c==="نعم"||c==="لا"||c==="لا ينطبق"; }),
+      ent:f(function(c){ return /شرك|مؤسس|مصنع|عوازل|بيتومات|مؤسسه/.test(c); }),
+      len:col.reduce(function(a,c){ return a+c.length; },0)/N });
+  }
+  var pick=function(key,min,filter){ var best=null;
+    st.forEach(function(s){ if(filter&&!filter(s)) return; if(s[key]>=(min||0) && (!best||s[key]>best[key])) best=s; });
+    return best?best.j:-1; };
+  var cMoney=pick("money",0.5);
+  var cOrig =pick("orig",0.5);
+  var cComp =pick("ent",0.5,function(s){ return s.len>=10 && s.len<=70; });
+  var cN    =pick("ints",0.5,function(s){ return cMoney<0||s.j<cMoney; });
+  var cProd=-1,bl=-1;
+  st.forEach(function(s){ if(cMoney>=0&&s.j>=cMoney) return; if(s.j===cComp||s.j===cN) return;
+    if(s.ent>0.4) return; if(s.len>bl){ bl=s.len; cProd=s.j; } });
+  var cDoc=-1;
+  st.forEach(function(s){ if(cOrig>=0&&s.j<=cOrig) return; if(cComp>=0&&s.j>=cComp) return;
+    if(s.yn>0.5||s.len<4) return; if(cDoc<0) cDoc=s.j; });
+  if(cProd<0||cMoney<0) return null;
+  return {n:cN, product:cProd, company:cComp, value:cMoney, origin:cOrig, docType:cDoc,
+          code:(cProd>=0?cProd+1:-1), width:W};
+}
+function _lcDespace(t){ var w=String(t||"").split(/\s+/), out=[], buf=[];
+  var flush=function(){ if(buf.length>=2) out.push(buf.join("")); else if(buf.length) out.push(buf[0]); buf=[]; };
+  w.forEach(function(x){ if(x.length===1 && /[\u0621-\u064A]/.test(x)) buf.push(x); else { flush(); out.push(x); } });
+  flush(); return out.join(" ").replace(/\s+/g," ").trim(); }
+function _lcItemsFromPageGrid(grid,srcName,sheetName){
+  var R=_lcColRoles(grid); if(!R) return [];
+  var g=function(row,i){ return (i>=0&&row&&row[i]!=null)?_lcDespace(String(row[i])):""; };
+  var isMoney=function(row){ return row.some(function(c){ return _LCMONEY.test(String(c).trim()); }); };
+  var parse=function(row){ var nCell=g(row,R.n), pCell=g(row,R.product);
+    var m=nCell.match(/^(\d{1,4})\s*(.*)$/);
+    return { n:(m?m[1]:""), p:[pCell,(m?m[2]:nCell)].filter(Boolean).join(" ").replace(/\s+/g," ").trim() }; };
+  var out=[], claimed={};
+  grid.forEach(function(row,ri){
+    if(!isMoney(row)) return;
+    var cur=parse(row), N=cur.n, P=cur.p, k=ri;
+    /* اصعد لأعلى والتقط الأسطر غير المحجوزة التي تحمل بقية الوصف أو الرقم */
+    while(k>0 && (!N||!P)){ k--;
+      if(claimed[k] || isMoney(grid[k])) break;
+      var up=parse(grid[k]);
+      if(!up.n && !up.p) { claimed[k]=1; continue; }
+      if(up.p) P=P?(up.p+" "+P):up.p;
+      if(up.n && !N) N=up.n;
+      claimed[k]=1; }
+    if(_lcNorm(P).length<3) return;
+    var codeCell=g(row,R.code)||g(grid[ri-1]||[],R.code), code="";
+    var mc=String(codeCell).match(/^(\d{3,5})\b/); if(mc) code=mc[1];
+    var comp=g(row,R.company)||g(grid[ri-1]||[],R.company);
+    if(/^(نعم|لا|وطني|غير وطني)$/.test(comp)||/^\d+$/.test(comp)) comp="";
+    out.push({ n:N||String(out.length+1), product:P, company:comp, brand:"",
+      docType:g(row,R.docType)||g(grid[ri-1]||[],R.docType),
+      value:(row.filter(function(c){return _LCMONEY.test(String(c).trim());})[0]||""),
+      origin:g(row,R.origin)||g(grid[ri-1]||[],R.origin), needCert:"نعم", hasCertSaid:"",
+      listType:"", code:code, notes:"", src:srcName, sheet:sheetName, row:(ri+1) }); });
+  return out;
+}
 
 /* ---------- محرّك المراجعة: شهادة للشركة + إثبات لكل بند ---------- */
 function _lcNeeds(it){ if(!LC.opts.onlyRequired) return true;
@@ -7772,7 +7868,10 @@ function lcParseReport(){ var f=LC.report.file, nm=(f.name||"").toLowerCase();
       if(!LC.items.length) throw new Error("لم أجد جدول بنود في ملف Excel — تأكد من وجود عمود «اسم المنتج».");
       _lcProg(0.12,"قُرئ "+LC.items.length+" بند"); }); }
   return _lcReadPdf(f,function(p){ _lcProg(0.03+p*0.09,"قراءة تقرير الالتزام"); }).then(function(o){
-    LC.items=[]; o.pages.forEach(function(pg){ var grid=_lcRowsFromItems(pg.items);
+    LC.items=[]; o.pages.forEach(function(pg){
+      var byCol=[]; try{ byCol=_lcItemsFromPageGrid(_lcPageGrid(pg.items,pg.w),f.name,"صفحة "+pg.page); }catch(e){ byCol=[]; }
+      if(byCol.length){ LC.items=LC.items.concat(byCol); return; }
+      var grid=_lcRowsFromItems(pg.items);
       LC.items=LC.items.concat(_lcItemsFromGrid(grid,f.name,"صفحة "+pg.page)); });
     if(!LC.items.length) throw new Error("لم أتمكن من قراءة جدول البنود من PDF — يُفضّل رفع نسخة Excel.");
     _lcProg(0.12,"قُرئ "+LC.items.length+" بند"); }); }
