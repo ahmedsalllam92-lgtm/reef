@@ -7661,7 +7661,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
     ["بطاقات المشاريع","cardsBuilder()","بطاقة لكل مشروع بالصور"],["المحتوى المحلي","lcAuditOpen()","مراجعة تقرير الالتزام"],["النماذج","openFormsMenu()","محاضر ونماذج جاهزة"],["تحديث المحفظة","pfOpen()","رفع محفظة Excel أحدث"]];
   var quick='<section class="hm-card"><header><h3>الوصول السريع</h3></header><div class="hm-quick">'+Q.map(function(q){ return '<button onclick="'+q[1]+'"><b>'+esc(q[0])+'</b><span>'+esc(q[2])+'</span></button>'; }).join("")+'</div></section>';
   var html='<div class="hb-page hm">'
-    +'<div class="hm-hero"><i class="hm-fx"></i><div class="hm-ht"><div class="hm-greet">'+greet+' · '+esc(fmtDateTxt(new Date().toISOString().slice(0,10)))+'</div><h1>منصة مشاريع برنامج ريف</h1><div class="hm-sub">برنامج التنمية الريفية الزراعية المستدامة · '+esc(MONTHLBL)+'</div></div>'
+    +'<div class="hm-hero"><i class="hm-fx"></i><div class="hm-ht"><div class="hm-greet">'+greet+' · '+esc(fmtDateTxt(new Date().toISOString().slice(0,10)))+'</div><h1>ملخص مشاريع برنامج ريف</h1><div class="hm-sub">برنامج التنمية الريفية الزراعية المستدامة · '+esc(MONTHLBL)+'</div></div>'
       +'<div class="hm-hr">'+_dxSrc()+_hbBtns()+'<button class="hm-ask" onclick="raOpen(true)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg> اسأل مساعد ريف</button></div></div>'
     +kpis+'<div class="hm-row r1">'+rec+hl+'</div><div class="hm-row r2">'+sec+quick+'</div></div>';
   show(html); }
