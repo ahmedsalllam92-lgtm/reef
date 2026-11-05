@@ -3464,6 +3464,34 @@ body[data-theme="dark"] #answer img[src^="data:image/png;base64,iVBORw0KGgoAAAAN
 .pcg-msg{font-size:12px;font-weight:700;color:#1E5B3A;min-height:0}.pcg-msg:empty{display:none}.pcg-msg.bad{color:#A94438}
 body[data-theme="dark"] .pcg-stage{background:rgba(255,255,255,.05)}body[data-theme="dark"] .pcg-cf button{background:rgba(255,255,255,.05);border-color:#33414A;color:#A9E2C0}
 @media print{.pcg-th,.pcg-cf,.pcg-msg{display:none!important}}
+
+/* ===== لوحة المشروع: خريطة الموقع بدل المقارنة بالقطاع ===== */
+.dx-land.pdl .fit .pdl-g{grid-template-areas:"tl fin cl ph" "cmp rk pt ph" "cmp nt nt ph"!important}
+.g-map .dx-ch{margin-bottom:4px}
+.kp{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;gap:6px;height:100%}
+.kp-svg{flex:1 1 0;min-height:140px;width:100%;display:block;overflow:visible}
+.kp-r{fill:#E8EEEA;stroke:#fff;stroke-width:1.6}
+.kp-r.on-b{fill:#CFE0D5}
+.kp-on{fill:#1E5B3A;stroke:#D9BC84;stroke-width:2.4;animation:kpPulse 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes kpPulse{0%,100%{fill:#1E5B3A;opacity:1}50%{fill:#3E8A62;opacity:.78}}
+.kp-pin .kp-dot{fill:#D9BC84;stroke:#fff;stroke-width:3}
+.kp-ring{fill:none;stroke:#D9BC84;stroke-width:3;opacity:0;transform-box:fill-box;transform-origin:center;animation:kpRing 2.4s ease-out infinite}
+.kp-ring.d2{animation-delay:1.2s}
+@keyframes kpRing{0%{transform:scale(.6);opacity:.9}100%{transform:scale(3.6);opacity:0}}
+.kp-lbl{font-size:22px;font-weight:900;fill:#0B3D27;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+.kp-f{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px}
+.kp-f b{font-weight:900;color:#14241B}.kp-dotl{width:10px;height:10px;border-radius:50%;background:#1E5B3A;box-shadow:0 0 0 4px rgba(30,91,58,.18);animation:kpDotL 2.6s ease-in-out infinite}
+@keyframes kpDotL{50%{box-shadow:0 0 0 7px rgba(30,91,58,.06)}}
+.kp-a{margin-inline-start:auto;font-size:11.5px;font-weight:800;color:#1E5B3A;text-decoration:none}
+body[data-theme="dark"] .kp-r{fill:#26323A;stroke:#141C20}body[data-theme="dark"] .kp-r.on-b{fill:#2F4A44}
+body[data-theme="dark"] .kp-on{fill:#6FBF94;stroke:#E2C68E;animation-name:kpPulseD}@keyframes kpPulseD{0%,100%{fill:#6FBF94;opacity:1}50%{fill:#A7E0C0;opacity:.8}}
+body[data-theme="dark"] .kp-lbl{fill:#E6EEF0;stroke:#141C20}body[data-theme="dark"] .kp-f b{color:#E6EEF0}body[data-theme="dark"] .kp-a{color:#A9E2C0}
+@media (prefers-reduced-motion:reduce){.kp-on,.kp-ring,.kp-dotl{animation:none!important}.kp-ring{opacity:0}}
+@media print{.kp-on,.kp-ring,.kp-dotl{animation:none!important}.kp-ring{display:none}}
+.dx-land.pdl .fit .g-nt .pd-notes{grid-template-columns:none!important;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);grid-auto-rows:auto!important;overflow-x:auto!important;overflow-y:hidden;scrollbar-width:thin;align-items:stretch}
+.dx-land.pdl .fit .g-nt .pd-note p{-webkit-line-clamp:4!important;font-size:11.5px;line-height:1.6}
+.kp-on{stroke-width:3.2}
+.dx-land.pdl .fit .pdl-g{grid-template-rows:1fr .8fr .72fr!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7825,6 +7853,23 @@ function _pcgInit(p){ PCG.code=p.code; PCG.i=0; PCG.list=_pcgSheet(p); _pcgRende
   _pcgLoad(p).then(function(L){ if(PCG.code!==p.code) return; if(L.length){ PCG.list=L; PCG.i=0; _pcgRender(); } }).catch(function(){}); }
 try{ document.addEventListener("keydown",function(e){ if(!document.getElementById("pc3Gal")||/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||"")||document.body.classList.contains("pm-on")) return; if(e.key==="ArrowLeft") pcgGo(1); else if(e.key==="ArrowRight") pcgGo(-1); }); }catch(e){}
 try{ window.pcgGo=pcgGo; window.pcgDelete=pcgDelete; window.pcgSaveCap=pcgSaveCap; window.pcgUpload=pcgUpload; }catch(e){}
+
+/* خريطة موقع المشروع (لوحة المشروع): منطقة المشروع متوهّجة */
+function ksaProjMap(p){ var reg=String((p&&p.region)||""), nat=_isNational(reg);
+  var hits=KSA_REG.r.filter(function(r){ return nat||_regionHas(reg,r.ar); });
+  var base="", top="", pins="";
+  KSA_REG.r.forEach(function(r){ var on=hits.indexOf(r)>-1;
+    base+='<path class="kp-r'+(on?' on-b':'')+'" d="'+r.d+'"><title>'+esc(r.ar)+'</title></path>'; });
+  hits.forEach(function(r,i){ top+='<path class="kp-on" style="animation-delay:'+(i*0.12).toFixed(2)+'s" d="'+r.d+'"><title>'+esc(r.ar)+'</title></path>';
+    if(!nat||hits.length<=3) pins+='<g class="kp-pin" transform="translate('+r.x+','+r.y+')"><circle class="kp-ring" r="10"/><circle class="kp-ring d2" r="10"/><circle class="kp-dot" r="7"/></g>'
+      +'<text class="kp-lbl" x="'+r.x+'" y="'+(r.y+30)+'">'+esc(r.ar)+'</text>'; });
+  var sub=nat?"مشروع على مستوى المملكة":(hits.length?hits.map(function(r){ return r.ar; }).join("، "):(reg||"غير محدد"));
+  return '<div class="kp"><svg class="kp-svg" viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr" xmlns="http://www.w3.org/2000/svg">'
+    +'<defs><filter id="kpGlowF" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
+    +base+'<g filter="url(#kpGlowF)">'+top+'</g>'+pins+'</svg>'
+    +'<div class="kp-f"><span class="kp-dotl"></span><b>'+esc(sub)+'</b>'+(p.location&&typeof locValid==="function"&&locValid(p.location)?'<a class="kp-a noprint" target="_blank" rel="noopener" href="'+mapsUrl(_dxTxt(p.coords)||p.location)+'">الموقع على الخريطة ←</a>':'')+'</div>'
+    +'<div class="km-cr">الخريطة: svg-maps · CC BY 4.0</div></div>'; }
+try{ window.ksaProjMap=ksaProjMap; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -8273,7 +8318,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   _dxShow('<div class="dash dash3 dx dx-land pd pdl">'+tools+'<div class="dx-canvas">'+head+kpis
     +'<div class="dx-gr pdl-g">'+_dxCard("الجدول الزمني",esc(dur||""),tlBody,"g-tl")+_dxCard("الوضع المالي","ريال سعودي",finBody,"g-fin")+_dxCard("المطالبات والجودة","",qBody,"g-cl")
       +_dxCard("آخر المستجدات","",ntBody,"g-nt")+_dxCard("صور الموقع",imgs.length?ar(imgs.length)+" صور":"",galBody,"pd-gcard g-ph")
-      +_dxCard("المقارنة بالقطاع",esc(p.sector||""),cmpBody,"g-cmp")+_dxCard("تحليل المخاطر","",rkBody,"g-rk")+_dxCard("الأطراف والمراجع","",ptBody,"g-pt")+'</div>'
+      +_dxCard("موقع المشروع",esc(p.region||""),ksaProjMap(p),"g-cmp g-map")+_dxCard("تحليل المخاطر","",rkBody,"g-rk")+_dxCard("الأطراف والمراجع","",ptBody,"g-pt")+'</div>'
     +'<div class="dx-foot">برنامج ريف · لوحة المشروع · '+esc(MONTHLBL)+'</div>'
     +'</div></div>');
 }
