@@ -3442,6 +3442,28 @@ body[data-theme="dark"] .hb-t td.go button{background:rgba(255,255,255,.05);bord
 
 /* الوضع الداكن: الشعار الملوّن داخل الصفحات يظهر أبيض */
 body[data-theme="dark"] #answer img[src^="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdYAAADcCAYAAADN9oCIAACo"],body[data-theme="dark"] .pm img[src^="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdYAAADcCAYAAADN9oCIAACo"]{filter:brightness(0) invert(1)!important;opacity:.92}
+
+/* ===== معرض صور بطاقة المشروع ===== */
+.pc3-phh h3 small{font-size:12px;font-weight:800;color:#7D8A82;margin-inline-start:8px}
+.pc3-gal{display:flex!important;flex-direction:column;gap:10px}
+.pcg-stage{position:relative;border-radius:16px;overflow:hidden;background:#EEF1EF;aspect-ratio:16/10}
+.pcg-stage>img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.pcg-stage>img.err{opacity:0}
+.pcg-del{position:absolute;top:12px;left:12px;height:32px;padding:0 14px;border:0;border-radius:10px;background:#8E2F3A;color:#fff;font:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 6px 14px -6px rgba(0,0,0,.5)}
+.pcg-del:hover{background:#A3343F}
+.pcg-src{position:absolute;top:12px;left:12px;height:26px;padding:0 10px;border-radius:99px;background:rgba(255,255,255,.88);color:#55625A;font-size:11px;font-weight:800;display:inline-flex;align-items:center}
+.pcg-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(18,62,47,.78);color:#fff;font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s,transform .2s}
+.pcg-nav:hover{background:#0B3D27;transform:translateY(-50%) scale(1.06)}.pcg-nav.prev{right:14px}.pcg-nav.next{left:14px}
+.pcg-cap{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 10px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.62));display:flex;justify-content:space-between;align-items:flex-end;gap:10px;min-height:20px}
+.pcg-cap b{color:#fff;font-size:17px;font-weight:900;text-shadow:0 1px 3px rgba(0,0,0,.4)}.pcg-cap em{font-style:normal;color:#E6EEF0;font-size:11px;font-weight:700;margin-inline-start:auto}
+.pcg-th{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.pcg-th img{flex:none;width:96px;height:66px;object-fit:cover;border-radius:10px;cursor:pointer;border:2px solid transparent;opacity:.85;transition:opacity .2s,border-color .2s}
+.pcg-th img.on{border-color:#1E5B3A;opacity:1}.pcg-th img:hover{opacity:1}
+.pcg-cf{display:flex;gap:8px}.pcg-cf input{flex:1;min-width:0;height:40px;border:1px solid #DCE6E0;border-radius:11px;padding:0 12px;font:inherit;font-size:13px}
+.pcg-cf button{height:40px;padding:0 16px;border:1px solid #DCE6E0;border-radius:11px;background:#fff;color:#1E5B3A;font:inherit;font-size:13px;font-weight:800;cursor:pointer}.pcg-cf button:hover{background:#F1F6F2}
+.pcg-msg{font-size:12px;font-weight:700;color:#1E5B3A;min-height:0}.pcg-msg:empty{display:none}.pcg-msg.bad{color:#A94438}
+body[data-theme="dark"] .pcg-stage{background:rgba(255,255,255,.05)}body[data-theme="dark"] .pcg-cf button{background:rgba(255,255,255,.05);border-color:#33414A;color:#A9E2C0}
+@media print{.pcg-th,.pcg-cf,.pcg-msg{display:none!important}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7727,7 +7749,7 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
     +kt("الحيود عن الخطة",dev==null?"—":_dxPct(dev),DX_CAT[cat].l,null,(cat==="late"||cat==="stumb")?"bad":(cat==="watch"?"warn":""))
     +kt("المستخلصات",ar(cl),ap?ar(ap)+" معتمد":"لا توجد مستخلصات",null)
     +kt("درجة المخاطر",esc(r.level),r.reasons.length?ar(r.reasons.length)+" مؤشر · عرض ←":"لا توجد مؤشرات",null,r.score>=4?"bad":(r.score>=2?"warn":""),"pcTab('rk')")+'</div>';
-  var gal='<div class="pc3-ph"><div class="pc3-phh"><h3>صور المشروع</h3><button class="pc3-b sm noprint" onclick="pcAddPhotos(\''+q+'\')">'+_pcIco("plus")+' إضافة صور</button></div>'
+  var gal='<div class="pc3-ph"><div class="pc3-phh"><h3>صور المشروع<small id="pc3GalN"></small></h3><label class="pc3-b sm noprint" title="رفع صور جديدة لهذا المشروع على السحابة">'+_pcIco("plus")+' إضافة صور<input type="file" accept="image/*" multiple hidden onchange="pcgUpload(this)"></label></div>'
     +'<div class="pc3-gal" id="pc3Gal">'+(imgs.length?imgs.map(function(u,i){ return '<img class="'+(i===0?"main":"")+'" loading="lazy" referrerpolicy="no-referrer" src="'+u+'" onclick="lightbox(this.src)" onerror="_pmImgErr(this)">'; }).join(""):'<div class="pc3-noimg">'+_pcIco("img")+'<span>لا توجد صور</span></div>')+'</div></div>';
   var TABS=[["ov","نظرة عامة"],["data","البيانات والتعاقد"],["fin","المالية والمستخلصات"],["tl","الجدول الزمني"],["nt","المستجدات"],["rk","المخاطر"]];
   var tabs='<div class="pc3-tabs noprint">'+TABS.map(function(x){ return '<button class="'+(PCARD.tab===x[0]?"on":"")+'" onclick="pcTab(\''+x[0]+'\')">'+x[1]+'</button>'; }).join("")+'</div>';
@@ -7754,8 +7776,8 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
     +'<button class="pc3-back noprint" onclick="projRegOpen(true)">'+_pcIco("back")+' العودة إلى سجل المشاريع</button>'
     +'<div class="pc3-card">'+head+'<div class="pc3-grid"><div class="pc3-mainc">'+info+money+kpis+'</div>'+gal+'</div></div>'
     +tabs+'<div class="pc3-panes">'+panes+'</div></div>';
-  show(html);
-  try{ if(typeof cldProjectImages==="function"&&p.name) cldProjectImages(p.name).then(function(u){ if(!u||!u.length||PCARD.code!==p.code) return; var g=document.getElementById("pc3Gal"); if(!g) return;
+  show(html); try{ _pcgInit(p); }catch(e){}
+  if(false) try{ if(typeof cldProjectImages==="function"&&p.name) cldProjectImages(p.name).then(function(u){ if(!u||!u.length||PCARD.code!==p.code) return; var g=document.getElementById("pc3Gal"); if(!g) return;
     g.innerHTML=u.slice(0,5).map(function(x,i){ return '<img class="'+(i===0?"main":"")+'" loading="lazy" src="'+(typeof _cldThumb==="function"?_cldThumb(x,1200):x)+'" onclick="lightbox(this.src)" onerror="_pmImgErr(this)">'; }).join(""); }).catch(function(){}); }catch(e){}
   try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){} }
 function pcTab(id){ PCARD.tab=id; document.querySelectorAll(".pc3-tabs button").forEach(function(b){ b.classList.toggle("on",(b.getAttribute("onclick")||"").indexOf("'"+id+"'")>-1); });
@@ -7764,6 +7786,45 @@ function pcTab(id){ PCARD.tab=id; document.querySelectorAll(".pc3-tabs button").
 function pcAddPhotos(code){ var p=(DATA||[]).find(function(x){ return String(x.code)===String(code); }); var i=(DATA||[]).indexOf(p); try{ cloudPhotosOpen(); }catch(e){ return; }
   setTimeout(function(){ try{ var s=document.getElementById("cphProj"); if(s&&i>-1){ s.value=String(i); _cphPick(); } }catch(e){} },60); }
 try{ window.projCard=projCard; window.pcTab=pcTab; window.pcAddPhotos=pcAddPhotos; }catch(e){}
+
+/* ================= معرض صور بطاقة المشروع ================= */
+var PCG={list:[],i:0,code:null,busy:false};
+function _pcgSheet(p){ return [p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean).map(function(u){ return {url:u,cloud:false,cap:"",at:""}; }); }
+function _pcgLoad(p){ var tags=[_cldTag(p.name)]; try{ var ct=_cldCodeTag(p.name); if(ct&&tags.indexOf(ct)<0) tags.push(ct); }catch(e){}
+  return Promise.all(tags.map(function(t){ return _cldList(t,0).catch(function(){ return []; }); })).then(function(rs){ var seen={},out=[];
+    rs.forEach(function(a){ (a||[]).forEach(function(x){ if(!x||!x.pid||seen[x.pid]||(x.tags||[]).some(function(g){ return /_hidden$/.test(g); })) return; seen[x.pid]=1; out.push({url:x.url,pid:x.pid,at:x.at||"",cap:x.cap||"",cloud:true}); }); });
+    out.sort(function(a,b){ return String(b.at).localeCompare(String(a.at)); }); return out; }); }
+function _pcgUrl(it,w){ return it.cloud&&typeof _cldThumb==="function"?_cldThumb(it.url,w):it.url; }
+function _pcgDate(it){ if(!it.at) return ""; try{ var d=new Date(it.at); return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear(); }catch(e){ return ""; } }
+function _pcgRender(){ var box=document.getElementById("pc3Gal"); if(!box) return; var L=PCG.list, n=L.length, cnt=document.getElementById("pc3GalN"); if(PCG.i>=n) PCG.i=Math.max(0,n-1);
+  if(cnt) cnt.textContent=n?(ar(PCG.i+1)+" من "+ar(n)):"";
+  if(!n){ box.innerHTML='<div class="pc3-noimg">'+_pcIco("img")+'<span>لا توجد صور</span></div>'; return; }
+  if(PCG.i>=n) PCG.i=n-1; var it=L[PCG.i];
+  box.innerHTML='<div class="pcg-stage"><img src="'+_pcgUrl(it,1400)+'" referrerpolicy="no-referrer" onclick="lightbox(\''+esc(it.cloud?it.url:_pcgUrl(it,1400)).replace(/'/g,"\\'")+'\')" onerror="this.classList.add(\'err\')">'
+    +(it.cloud?'<button class="pcg-del noprint" onclick="pcgDelete()">حذف</button>':'<span class="pcg-src">من الشيت</span>')
+    +(n>1?'<button class="pcg-nav prev noprint" onclick="pcgGo(-1)" aria-label="السابقة">›</button><button class="pcg-nav next noprint" onclick="pcgGo(1)" aria-label="التالية">‹</button>':'')
+    +'<div class="pcg-cap">'+(it.cap?'<b>'+esc(it.cap)+'</b>':'')+(_pcgDate(it)?'<em>'+_pcgDate(it)+'</em>':'')+'</div></div>'
+    +(n>1?'<div class="pcg-th">'+L.map(function(x,k){ return '<img class="'+(k===PCG.i?"on":"")+'" src="'+_pcgUrl(x,240)+'" referrerpolicy="no-referrer" loading="lazy" onclick="pcgGo(0,'+k+')" onerror="this.style.visibility=\'hidden\'">'; }).join("")+'</div>':'')
+    +(it.cloud?'<div class="pcg-cf noprint"><input id="pcgCap" maxlength="300" placeholder="اكتب وصفاً للصورة…" value="'+esc(it.cap||"")+'" onkeydown="if(event.key===\'Enter\')pcgSaveCap()"><button onclick="pcgSaveCap()">حفظ الوصف</button></div>':'')
+    +'<div class="pcg-msg" id="pcgMsg"></div>'; }
+function pcgGo(d,k){ var n=PCG.list.length; if(!n) return; PCG.i=(k!=null)?k:((PCG.i+d+n)%n); _pcgRender(); }
+function _pcgMsg(m,bad){ var e=document.getElementById("pcgMsg"); if(e){ e.textContent=m||""; e.className="pcg-msg"+(bad?" bad":""); } }
+function _pcgApi(body){ if(location.protocol==="file:") return Promise.reject(new Error("الحذف وحفظ الوصف متاحان على الموقع المنشور فقط")); return fetch("/.netlify/functions/photo-edit",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)}).then(function(r){ return r.json().catch(function(){ throw new Error("رد غير صالح من الخادم ("+r.status+")"); }); }).then(function(j){ if(!j||!j.ok) throw new Error((j&&j.error)||"تعذّر تنفيذ العملية"); return j; }); }
+function pcgDelete(){ var it=PCG.list[PCG.i]; if(!it||!it.cloud||PCG.busy) return; if(!confirm("حذف هذه الصورة نهائياً من السحابة؟ لن تظهر لأي مستخدم.")) return;
+  PCG.busy=true; _pcgMsg("● جارٍ الحذف…"); _pcgApi({action:"delete",publicId:it.pid}).then(function(){ PCG.busy=false; PCG.list.splice(PCG.i,1); try{ var p=PCARD._p; if(p) cldInvalidate(p.name); }catch(e){} _pcgRender(); _pcgMsg("✓ تم حذف الصورة"); })
+  .catch(function(e){ PCG.busy=false; _pcgMsg("⚠ "+e.message,true); }); }
+function pcgSaveCap(){ var it=PCG.list[PCG.i], inp=document.getElementById("pcgCap"); if(!it||!it.cloud||!inp||PCG.busy) return; var v=inp.value.trim();
+  PCG.busy=true; _pcgMsg("● جارٍ حفظ الوصف…"); _pcgApi({action:"caption",publicId:it.pid,caption:v}).then(function(j){ PCG.busy=false; it.cap=j.caption!=null?j.caption:v; _pcgRender(); _pcgMsg("✓ تم حفظ الوصف"); })
+  .catch(function(e){ PCG.busy=false; _pcgMsg("⚠ "+e.message,true); }); }
+function pcgUpload(inp){ var p=PCARD._p, fs=inp&&inp.files; if(!p||!fs||!fs.length) return; var arr=[].slice.call(fs), tag=_cldTag(p.name), done=0, fail=0; _pcgMsg("● جارٍ رفع "+ar(arr.length)+" صورة…");
+  var next=function(k){ if(k>=arr.length){ try{ inp.value=""; }catch(e){} try{ cldInvalidate(p.name); }catch(e){} _pcgMsg(done?("✓ تم رفع "+ar(done)+" صورة"+(fail?(" · فشل "+ar(fail)):"")):"⚠ لم يتم رفع أي صورة",!done); _pcgRender(); return; }
+    _iaCompressFile(arr[k]).then(function(b){ return _cldUpload(b,tag); }).then(function(j){ if(j&&j.secure_url){ done++; PCG.list.unshift({url:j.secure_url,pid:j.public_id,at:j.created_at||new Date().toISOString(),cap:"",cloud:true}); PCG.i=0; } else fail++; })
+    .catch(function(){ fail++; }).then(function(){ next(k+1); }); };
+  next(0); }
+function _pcgInit(p){ PCG.code=p.code; PCG.i=0; PCG.list=_pcgSheet(p); _pcgRender();
+  _pcgLoad(p).then(function(L){ if(PCG.code!==p.code) return; if(L.length){ PCG.list=L; PCG.i=0; _pcgRender(); } }).catch(function(){}); }
+try{ document.addEventListener("keydown",function(e){ if(!document.getElementById("pc3Gal")||/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||"")||document.body.classList.contains("pm-on")) return; if(e.key==="ArrowLeft") pcgGo(1); else if(e.key==="ArrowRight") pcgGo(-1); }); }catch(e){}
+try{ window.pcgGo=pcgGo; window.pcgDelete=pcgDelete; window.pcgSaveCap=pcgSaveCap; window.pcgUpload=pcgUpload; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -11254,7 +11315,7 @@ function _cldUpload(file,tag){ var fd=new FormData(); fd.append("file",file); fd
 function _cldList(tag,retry){ // قائمة عامة بالوسم (تتطلب تفعيل Resource list في إعدادات Cloudinary)
   var u="https://res.cloudinary.com/"+CLOUD.name+"/image/list/"+tag+".json?_="+Date.now();
   return fetch(u,{cache:"no-store"}).then(function(r){ if(r.status===404) return {resources:[]}; if(!r.ok)throw new Error("http "+r.status); return r.json(); })
-    .then(function(j){ return (j.resources||[]).map(function(x){ return { url:"https://res.cloudinary.com/"+CLOUD.name+"/image/upload/"+x.public_id+"."+(x.format||"jpg"), pid:x.public_id, at:x.created_at, tags:(x.tags||[]) }; }); })
+    .then(function(j){ return (j.resources||[]).map(function(x){ return { url:"https://res.cloudinary.com/"+CLOUD.name+"/image/upload/"+x.public_id+"."+(x.format||"jpg"), pid:x.public_id, at:x.created_at, tags:(x.tags||[]), cap:(x.context&&x.context.custom&&(x.context.custom.caption||x.context.custom.alt))||"" }; }); })
     .catch(function(e){ if(retry>0) return new Promise(function(rs){ setTimeout(rs,1500); }).then(function(){ return _cldList(tag,retry-1); }); throw e; }); }
 /* دمج الصور المرفوعة محليًا مع فهرس Cloudinary (الفهرس يتأخر ثوانٍ بعد الرفع) */
 function _cphMerge(items){ var seen={},out=[];
