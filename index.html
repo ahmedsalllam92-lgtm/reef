@@ -3494,6 +3494,34 @@ body[data-theme="dark"] .kp-lbl{fill:#E6EEF0;stroke:#141C20}body[data-theme="dar
 .dx-land.pdl .fit .pdl-g{grid-template-rows:1fr .8fr .72fr!important}
 /* رفع عناوين الكروت: إلغاء الحشوة العامة الموروثة من رأس الصفحة القديم */
 #answer section>header,#answer .dx-card>header,#answer .dxf-p>header,#answer .hm-card>header{padding-top:0!important}
+
+/* ===== تدرّج وحركة شريط لوحة المشروع: القائمة الجانبية وشريط مؤشرات اللوحة العامة ===== */
+.hx-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;border-radius:inherit}
+.hx-fx:before{content:"";position:absolute;inset:-40%;background:repeating-linear-gradient(135deg,rgba(217,177,102,.06) 0 2px,transparent 2px 26px);animation:pdLines 28s linear infinite}
+.hx-fx:after{content:"";position:absolute;top:0;bottom:0;width:38%;left:-45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.09) 45%,rgba(217,177,102,.15) 55%,transparent);transform:skewX(-18deg);animation:pdSweep 7s ease-in-out infinite}
+.hx-fx i{position:absolute;width:7px;height:7px;border-radius:50%;background:rgba(217,177,102,.55);box-shadow:0 0 12px rgba(217,177,102,.7);animation:pdDot 9s ease-in-out infinite}
+.hx-fx i:nth-child(1){top:22%;inset-inline-end:34%}.hx-fx i:nth-child(2){top:68%;inset-inline-end:58%;animation-delay:-3s;width:5px;height:5px}.hx-fx i:nth-child(3){top:40%;inset-inline-end:12%;animation-delay:-6s;width:4px;height:4px}
+/* شريط مؤشرات اللوحة العامة */
+.dxf .dxf-kpis.kfx{position:relative;overflow:hidden;isolation:isolate;border:0!important;border-radius:14px!important;background:linear-gradient(120deg,#03170C 0%,#082A16 38%,#0D3A20 66%,#14502E 100%)!important;background-size:220% 220%!important;animation:pdGrad 16s ease-in-out infinite;box-shadow:inset 0 -2px 0 rgba(201,169,110,.55),0 14px 30px -18px rgba(3,23,12,.7)}
+.dxf .dxf-kpis.kfx:after{content:"";position:absolute;inset-inline-end:-60px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(217,177,102,.22),transparent 70%);pointer-events:none;animation:pdGlow 9s ease-in-out infinite alternate;z-index:0}
+.dxf .kfx .dxf-k{position:relative;z-index:1;background:transparent!important}
+.dxf .kfx .dxf-k+.dxf-k{border-inline-start:1px solid rgba(255,255,255,.10)!important}
+.dxf .kfx .dxf-kl{color:#D8BC85!important}.dxf .kfx .dxf-kv{color:#fff!important}.dxf .kfx .dxf-kv small,.dxf .kfx .dxf-ks{color:#A9C2B3!important}
+.dxf .kfx .dxf-k.bad .dxf-kv{color:#F6AFA6!important}.dxf .kfx .dxf-k.warn .dxf-kv{color:#EBCF92!important}
+.dxf .kfx .dxf-k:hover{background:rgba(255,255,255,.06)!important;box-shadow:none!important;border-color:rgba(255,255,255,.1)!important;border-radius:0!important}
+body[data-theme="dark"] .dxf .dxf-kpis.kfx{background:linear-gradient(120deg,#121B1F 0%,#18252A 38%,#1E2F35 66%,#26393F 100%)!important;background-size:220% 220%!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:inset 0 -2px 0 rgba(201,169,110,.45)!important}
+/* القائمة الجانبية */
+.sidebar{background:linear-gradient(165deg,#03170C 0%,#082A16 36%,#0D3A20 66%,#14502E 100%)!important;background-size:100% 260%!important;animation:sbGrad 18s ease-in-out infinite;isolation:isolate}
+.sidebar>*:not(.hx-fx){position:relative;z-index:1}
+.sidebar>.hx-fx{position:absolute}
+.sbfx:before{inset:-25%!important}
+.sbfx:after{top:-45%!important;bottom:auto!important;left:0!important;right:0!important;width:auto!important;height:32%!important;background:linear-gradient(185deg,transparent,rgba(255,255,255,.07) 45%,rgba(217,177,102,.12) 55%,transparent)!important;transform:skewY(-14deg)!important;animation:sbSweep 9s ease-in-out infinite!important}
+.sbfx i:nth-child(1){top:14%;inset-inline-end:22%}.sbfx i:nth-child(2){top:52%;inset-inline-end:70%}.sbfx i:nth-child(3){top:80%;inset-inline-end:30%}
+@keyframes sbGrad{0%,100%{background-position:50% 0%}50%{background-position:50% 100%}}
+@keyframes sbSweep{0%,55%{top:-45%}100%{top:125%}}
+body[data-theme="dark"]:not([data-dark="black"]) .sidebar{background:linear-gradient(165deg,#121B1F 0%,#18252A 36%,#1E2F35 66%,#26393F 100%)!important;background-size:100% 260%!important}
+@media (prefers-reduced-motion:reduce){.hx-fx:before,.hx-fx:after,.hx-fx i,.dxf .dxf-kpis.kfx,.dxf .dxf-kpis.kfx:after,.sidebar{animation:none!important}}
+@media print{.hx-fx{display:none!important}.dxf .dxf-kpis.kfx{animation:none!important}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7872,6 +7900,8 @@ function ksaProjMap(p){ var reg=String((p&&p.region)||""), nat=_isNational(reg);
     +'<div class="kp-f"><span class="kp-dotl"></span><b>'+esc(sub)+'</b>'+(p.location&&typeof locValid==="function"&&locValid(p.location)?'<a class="kp-a noprint" target="_blank" rel="noopener" href="'+mapsUrl(_dxTxt(p.coords)||p.location)+'">الموقع على الخريطة ←</a>':'')+'</div>'
     +'<div class="km-cr">الخريطة: svg-maps · CC BY 4.0</div></div>'; }
 try{ window.ksaProjMap=ksaProjMap; }catch(e){}
+
+function _sbFx(){ try{ var sb=document.getElementById("sidebar"); if(!sb||sb.querySelector(".sbfx")) return; var fx=document.createElement("i"); fx.className="hx-fx sbfx"; fx.setAttribute("aria-hidden","true"); fx.innerHTML="<i></i><i></i><i></i>"; sb.insertBefore(fx,sb.firstChild); }catch(e){} }
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -7946,7 +7976,7 @@ function _dataStamp(){ try{ var el=document.getElementById("dataStamp"); if(!el)
   else s="بيانات المحفظة · "+fmtDateTxt(SNAPSHOT_DATE);
   el.textContent=s; var st=document.querySelector(".side-stat b"); if(st) st.textContent=ar(DATA.length); }catch(e){} try{ _tbAlCount(); }catch(e){} }
 function _hubBoot(){ try{ _applyEdits(DATA); }catch(e){} try{ _dataStamp(); _syncDicts(); }catch(e){}
-  try{ _tbMount(); }catch(e){} try{ _sbMount(); }catch(e){}
+  try{ _tbMount(); }catch(e){} try{ _sbMount(); }catch(e){} try{ _sbFx(); }catch(e){}
   try{ _autoView(); window.addEventListener("resize",function(){ clearTimeout(window._avT); window._avT=setTimeout(_autoView,200); }); }catch(e){}
   try{ setInterval(_cldAutoRefresh,180000); }catch(e){} try{ _raMount(); }catch(e){} try{ _setHero(false); }catch(e){}
   try{ var h=(location.hash||"").replace(/^#/,""); if(h==="projects") projRegOpen(); else if(h==="cancelled") cancelledOpen(); else if(!h){ SILENT_RENDER=true; homeOpen(); SILENT_RENDER=false; } }catch(e){ SILENT_RENDER=false; } }
@@ -8151,7 +8181,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var fK=function(l,v,u,s,tone){ return '<div class="dxf-k'+(tone?" "+tone:"")+'"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+v+(u?'<small>'+esc(u)+'</small>':'')+'</span><span class="dxf-ks">'+s+'</span></div>'; };
   var fBox=function(cls,title,note,body){ return '<section class="dxf-p '+cls+'"><header><h3>'+esc(title)+'</h3>'+(note?'<span>'+note+'</span>':'')+'</header><div class="dxf-pb">'+body+'</div></section>'; };
   var awM=_dxMs(awarded);
-  var kpiF='<div class="dxf-kpis">'
+  var kpiF='<div class="dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +fK("إجمالي المشاريع",ar(total),"مشروع",ar(cnt.done)+" مكتمل · "+ar(total-cnt.done)+" قيد التنفيذ")
     +fK("القيمة التعاقدية بعد التعديل",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة الأصلية"):"دون تغيير عن القيمة الأصلية")
     +fK("متوسط الإنجاز الفعلي",_dxPct(avgA),"","المخطط "+_dxPct(avgP)+" · الفارق "+(gap>=0?"+":"−")+ar(Math.abs(Math.round(gap*100)))+" نقطة",gap<-0.05?"warn":"")
