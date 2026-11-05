@@ -3619,6 +3619,15 @@ body[data-theme="dark"] .rtb-upd{color:#8A989E}body[data-theme="dark"] .rtb-upd 
 @media screen and (max-width:920px){.rtb-upd{display:none}}
 .wrap{padding-bottom:12px!important}
 .wrap:has(#answer .dx-land){padding-bottom:0!important}
+.rk-pts li{display:flex;gap:6px;align-items:baseline}.rk-pts li b{flex:none;font-size:10.5px;font-weight:900;color:#A94438;background:#FBEDEA;border-radius:6px;padding:0 5px}
+body[data-theme="dark"] .rk-pts li b{background:rgba(216,135,124,.15);color:#EBA79E}
+/* المشاريع الموقوفة في السجل */
+.hb-t tbody tr.stp td{background:#EEF0EF!important;color:#7A847E!important}.hb-t tbody tr.stp td.nm b{color:#5E6862!important}
+.hb-card.stp{background:#F0F1F0!important;border-color:#DADFDB!important}.hb-card.stp .hb-cimg img{filter:grayscale(1) brightness(.95)}.hb-card.stp h4,.hb-card.stp .hb-cf b{color:#5E6862!important}
+body[data-theme="dark"] .hb-t tbody tr.stp td{background:rgba(140,150,145,.14)!important;color:#9AA6A0!important}body[data-theme="dark"] .hb-card.stp{background:rgba(140,150,145,.12)!important}
+.hb-stp{display:inline-flex;align-items:center;gap:5px;margin-inline-start:6px;font-size:11px;font-weight:800;color:#5E6862;background:#E2E6E3;border:1px solid #CDD3CF;border-radius:99px;padding:2px 9px;white-space:nowrap}.hb-cimg .hb-stp{position:absolute;bottom:10px;left:10px;margin:0}
+body[data-theme="dark"] .hb-stp{background:rgba(255,255,255,.1);border-color:#3A474E;color:#C8D4D8}
+.hb-go{top:10px!important;right:10px!important;bottom:auto!important;left:auto!important}.hb-cimg.cld:after{top:12px!important;right:48px!important;left:auto!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -6833,16 +6842,16 @@ function analyzeProject(p){
   var sv=(a!=null&&pl!=null)?(a-pl):null; try{ var _dv=_dxDev(p); if(_dv!=null) sv=-_dv; }catch(e){}
   var val=_pnum(p.value), dis=_pnum(p.disbursed);
   var sr=val>0?dis/val:null;
-  var reasons=[], score=0;
-  if(_isStopped(p)){ reasons.push("المشروع متوقف"); score+=3; }
-  if(!_isDone(p) && sv!=null && sv<=-0.15){ reasons.push("متأخر عن الخطة بنسبة "+ar(Math.round(Math.abs(sv)*100))+"%"); score+=2; }
-  if(_overdue(p)){ reasons.push("تجاوز تاريخ النهاية بـ"+ar(_daysOverdue(p))+" يوم دون اكتمال"); score+=3; }
-  if(sr!=null && a!=null && sr>a+0.10){ reasons.push("الصرف ("+ar(Math.round(sr*100))+"%) أعلى من الإنجاز ("+ar(Math.round(a*100))+"%)"); score+=2; }
+  var reasons=[], pts=[], score=0;
+  if(_isStopped(p)){ reasons.push("المشروع متوقف"); pts.push(3); score+=3; }
+  if(!_isDone(p) && sv!=null && sv<=-0.15){ reasons.push("متأخر عن الخطة بنسبة "+ar(Math.round(Math.abs(sv)*100))+"%"); pts.push(2); score+=2; }
+  if(_overdue(p)){ reasons.push("تجاوز تاريخ النهاية بـ"+ar(_daysOverdue(p))+" يوم دون اكتمال"); pts.push(3); score+=3; }
+  if(sr!=null && a!=null && sr>a+0.10){ reasons.push("الصرف ("+ar(Math.round(sr*100))+"%) أعلى من الإنجاز ("+ar(Math.round(a*100))+"%)"); pts.push(2); score+=2; }
   var wc=_pnum(p.warn_count||p.warnings), ncr=_pnum(p.ncr);
-  if(wc>0){ reasons.push("عليه "+ar(wc)+" إنذار"); score+=1; }
-  if(ncr>0){ reasons.push(ar(ncr)+" تقرير عدم مطابقة (NCR)"); score+=1; }
+  if(wc>0){ reasons.push("عليه "+ar(wc)+" إنذار"); pts.push(1); score+=1; }
+  if(ncr>0){ reasons.push(ar(ncr)+" تقرير عدم مطابقة (NCR)"); pts.push(1); score+=1; }
   var level = score>=4?"عالي":(score>=2?"متوسط":(score>=1?"منخفض":"سليم"));
-  return {p:p, a:a, pl:pl, sv:sv, sr:sr, val:val, dis:dis, score:score, level:level, reasons:reasons, done:_isDone(p), stopped:_isStopped(p), overdue:_overdue(p)};
+  return {p:p, a:a, pl:pl, sv:sv, sr:sr, val:val, dis:dis, score:score, level:level, reasons:reasons, pts:pts, done:_isDone(p), stopped:_isStopped(p), overdue:_overdue(p)};
 }
 function analyzePortfolio(list){
   list=list||DATA;
@@ -7578,14 +7587,14 @@ function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDa
   var body;
   if(!L.length) body='<div class="hb-empty">لا توجد مشاريع مطابقة.</div>';
   else if(PR.view==="cards") body='<div class="hb-cards">'+L.map(function(p){ var im=_hbCloudThumb(p)||_hbThumb(p), v=_dxBase(p), sp=v?_dxN(p.disbursed)/v:0;
-      return '<article class="hb-card" onclick="projCard(\''+esc(p.code)+'\')">'
-        +'<div class="hb-cimg" data-code="'+esc(p.code)+'">'+(im?'<img loading="lazy" referrerpolicy="no-referrer" src="'+im+'" onerror="this.remove()">':'')+'<span class="hb-code">'+esc(p.code)+'</span>'+_hbBadge(_hbStatus(p))+(p._edited?'<span class="hb-ed">✎ معدّل</span>':'')+'<button class="hb-go" title="لوحة المشروع" onclick="event.stopPropagation();projDash(\''+esc(p.code)+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button></div>'
+      return '<article class="hb-card'+(_isStopped(p)?' stp':'')+'" onclick="projCard(\''+esc(p.code)+'\')">'
+        +'<div class="hb-cimg" data-code="'+esc(p.code)+'">'+(im?'<img loading="lazy" referrerpolicy="no-referrer" src="'+im+'" onerror="this.remove()">':'')+'<span class="hb-code">'+esc(p.code)+'</span>'+_hbBadge(_hbStatus(p))+(_isStopped(p)?'<span class="hb-stp">⏸ موقوف</span>':'')+(p._edited?'<span class="hb-ed">✎ معدّل</span>':'')+'<button class="hb-go" title="لوحة المشروع" onclick="event.stopPropagation();projDash(\''+esc(p.code)+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button></div>'
         +'<div class="hb-cb"><h4>'+esc(p.name)+'</h4><div class="hb-cm">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div>'
         +_hbProg(p)+'<div class="hb-cf"><div><span>القيمة</span><b>'+_dxM(v)+'</b></div><div><span>الصرف</span><b>'+_dxPct(sp)+'</b></div><div><span>النهاية</span><b>'+fmtDateTxt(endDateOf(p))+'</b></div></div>'
         +'<div class="hb-cc">'+esc(_dxTxt(p.contractor)||"—")+'</div></div></article>'; }).join("")+'</div>';
   else body='<div class="hb-tw"><table class="hb-t"><thead><tr>'+th("code","الكود")+th("name","المشروع")+th("region","المنطقة")+'<th>الحالة</th>'+th("contractor","المقاول")+th("value","القيمة بعد التعديل")+th("actual","الإنجاز")+th("spend","الصرف")+th("end","النهاية")+th("upd","آخر تحديث")+'<th class="go"></th></tr></thead><tbody>'
     +L.map(function(p){ var v=_dxBase(p);
-      return '<tr onclick="projCard(\''+esc(p.code)+'\')"><td class="cd">'+esc(p.code)+'</td><td class="nm"><b>'+esc(p.name)+'</b><small>'+esc(p.sector||"")+(p.ptype?(" · "+esc(p.ptype)):"")+'</small></td><td>'+esc(p.region||"—")+'</td><td>'+_hbBadge(_hbStatus(p))+'</td>'
+      return '<tr'+(_isStopped(p)?' class="stp" title="مشروع موقوف"':'')+' onclick="projCard(\''+esc(p.code)+'\')"><td class="cd">'+esc(p.code)+'</td><td class="nm"><b>'+esc(p.name)+'</b><small>'+esc(p.sector||"")+(p.ptype?(" · "+esc(p.ptype)):"")+'</small></td><td>'+esc(p.region||"—")+'</td><td>'+_hbBadge(_hbStatus(p))+(_isStopped(p)?'<span class="hb-stp">⏸ موقوف</span>':'')+'</td>'
         +'<td class="ct">'+esc(_dxTxt(p.contractor)||"—")+'</td><td class="n">'+_dxM(v)+'</td><td>'+_hbProg(p)+'</td><td class="n">'+_dxPct(v?_dxN(p.disbursed)/v:0)+'</td><td class="n">'+fmtDateTxt(endDateOf(p))+'</td><td class="n mut">'+(p.last_update?fmtDateTxt(p.last_update):"—")+'</td><td class="go"><button title="لوحة المشروع" onclick="event.stopPropagation();projDash(\''+esc(p.code)+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button></td></tr>'; }).join("")
     +'</tbody></table></div>';
   var html='<div class="hb-page"><div class="hb-head"><div><div class="hb-kick">السجلات</div><h1>سجل المشاريع</h1><div class="hb-sub">كل مشاريع المحفظة ببياناتها — اضغط على أي مشروع لفتح لوحته</div></div><div class="hb-hr">'+_dxSrc()+_hbBtns()+'</div></div>'
@@ -7920,7 +7929,7 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var notes=[["الموقف الحالي",p.build_status||p.last_note],["الملخص التنفيذي",p.exec_summary],["المغايرات",p.variations],["البنود المستحدثة",p.new_items],["الالتزام البيئي",p.env]].filter(function(x){ return _dxTxt(x[1]); });
   var ntBox=notes.length?'<div class="pc3-notes">'+notes.map(function(x){ return '<div><span>'+x[0]+'</span><p>'+_pcV(x[1])+'</p></div>'; }).join("")+'</div>':'<div class="hb-empty">لا توجد مستجدات مسجّلة.</div>';
   var claims='<div class="pc3-mini">'+[["إجمالي المستخلصات",p.total_claims||p.claims_count],["المعتمدة",p.approved_claims],["تحت الدراسة",p.under_study],["المُعادة",p.returned_claims],["نسبة الإنجاز حسب المستخلصات",p.claims_pct!=null&&String(p.claims_pct).trim()!==""?_dxPct(pct(p.claims_pct)):""],["الإنذارات",p.warn_count]].map(function(x){ return '<div><span>'+x[0]+'</span><b>'+(x[1]===""||x[1]==null?"—":(typeof x[1]==="string"&&/%/.test(x[1])?esc(x[1]):ar(_dxN(x[1]))))+'</b></div>'; }).join("")+'</div>';
-  var rkBox='<div class="pc3-rk"><div class="pc3-rkh">'+_dxLevel(r.level)+'<em>درجة المخاطر '+ar(r.score)+'</em></div>'+(r.reasons.length?'<ul>'+r.reasons.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join("")+'</ul>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>')+'</div>';
+  var rkBox='<div class="pc3-rk"><div class="pc3-rkh">'+_dxLevel(r.level)+'<em>درجة المخاطر '+ar(r.score)+' نقطة · عالي ≥ 4 · متوسط 2–3 · منخفض 1</em></div>'+(r.reasons.length?'<ul class="rk-pts">'+r.reasons.map(function(x,i){ return '<li><b>+'+ar((r.pts||[])[i]||0)+'</b>'+esc(x)+'</li>'; }).join("")+'</ul><div class="note">النقاط: متوقف +3 · تجاوز تاريخ النهاية +3 · حيود 15% فأكثر +2 · الصرف أعلى من الإنجاز بأكثر من 10 نقاط +2 · كل نوع من الإنذارات / تقارير عدم المطابقة +1</div>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>')+'</div>';
   var pane=function(id,title,body){ return '<section class="pc3-pane'+(PCARD.tab===id?" on":"")+'" data-tab="'+id+'"><h3>'+title+'</h3>'+body+'</section>'; };
   var panes=pane("ov","نظرة عامة",tlBox+(notes.length?'<div class="pc3-sub">آخر المستجدات</div>'+'<div class="pc3-notes one"><div><span>'+notes[0][0]+'</span><p>'+_pcV(notes[0][1])+'</p></div></div>':''))
     +pane("data","البيانات والتعاقد",'<div class="pc3-two">'+_pcRows(_pcSecF("البيانات الأساسية"))+_pcRows(_pcSecF("الأطراف والمراجع"))+'</div>')
@@ -8437,6 +8446,10 @@ function pdStep(d){ var list=DATA.filter(function(p){return !PD.sector||p.sector
   if(!list.length) return; i=(i+d+list.length)%list.length; projDashSel(list[i].code); }
 function pdSearch(inp){ var q=norm(inp.value||""); if(!q) return; var hit=DATA.find(function(p){ return norm(p.name).indexOf(q)>-1||norm(p.alias||"").indexOf(q)>-1||String(p.code).toLowerCase()===String(inp.value).trim().toLowerCase(); });
   if(hit){ PD.sector=""; projDash(hit.code); } }
+function _dxExtTxt(p){ try{ var a=_dxDt(p.end_contractual), b=_dxDt(p.end_after_ext);
+  if(a&&b&&b>a){ var m=(b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth()), d=b.getDate()-a.getDate(); if(d<0){ m--; var pm=new Date(b.getFullYear(),b.getMonth(),0).getDate(); d+=pm; }
+    var days=Math.round((b-a)/864e5); return (m>0?ar(m)+" شهر":"")+(m>0&&d>0?" و ":"")+(d>0?ar(d)+" يوم":"")+" ("+ar(days)+" يوم)"; } }catch(e){}
+  return _dxTxt(p.extension)||"لا يوجد"; }
 function _pdRow(k,v,html){ return '<div class="pd-r"><span>'+esc(k)+'</span><b>'+(html?v:(v==null||v===""?"—":esc(v)))+'</b></div>'; }
 function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGroup(); }catch(e){}
   var p=DATA.find(function(x){return String(x.code)===String(code);}); if(!p) return projDashOpen();
@@ -8493,7 +8506,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):_dxTxt(p.duration);
   var stp=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+(calParts(p.resume_date)?fmtDate(p.resume_date):"لم يُستأنف")):"لا يوجد";
   var tlBody=tl+'<div class="pd-rows two">'
-    +_pdRow("مدة العقد",dur)+_pdRow("مدة التمديد",_dxTxt(p.extension)||"لا يوجد")
+    +_pdRow("مدة العقد",dur)+_pdRow("مدة التمديد",_dxExtTxt(p))
     +_pdRow("النهاية التعاقدية",fmtDate(p.end_contractual),true)+_pdRow("النهاية بعد التمديد",fmtDate(p.end_after_ext||p.end_date),true)
     +_pdRow("تاريخ الترسية",fmtDate(p.award_date),true)+_pdRow("تسليم الموقع",fmtDate(p.site_handover),true)
     +_pdRow("الإيقاف ← الاستئناف",stp,true)+_pdRow("مدة الإيقاف",_dxTxt(p.stop_duration)?(_dxTxt(p.stop_duration)+" يوم"):"لا يوجد")+'</div>';
@@ -8525,8 +8538,8 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   /* --- المخاطر --- */
   var score=_dxClamp(r.score/8,0,1);
   var rkBody='<div class="pd-risk"><div class="pd-rg"><div class="pd-rgb"><i style="width:'+(score*100).toFixed(0)+'%"></i></div><div class="pd-rgl"><span>سليم</span><span>منخفض</span><span>متوسط</span><span>عالي</span></div></div>'
-    +'<div class="pd-rs">'+_dxLevel(r.level)+'<em>درجة المخاطر '+ar(r.score)+'</em></div></div>'
-    +(r.reasons.length?'<ul class="pd-why">'+r.reasons.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>');
+    +'<div class="pd-rs" title="عالي: 4 نقاط فأكثر · متوسط: 2–3 · منخفض: 1 · سليم: 0">'+_dxLevel(r.level)+'<em>درجة المخاطر '+ar(r.score)+' نقطة</em></div></div>'
+    +(r.reasons.length?'<ul class="pd-why rk-pts">'+r.reasons.map(function(x,i){return '<li><b>+'+ar((r.pts||[])[i]||0)+'</b>'+esc(x)+'</li>';}).join("")+'</ul>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>');
   /* --- الأطراف والمراجع --- */
   var pm=_dxTxt(p.pm);
   var ptBody='<div class="pd-rows">'+_pdRow("المقاول",_dxTxt(p.contractor)||"—")+_pdRow("الاستشاري",_dxTxt(p.consultant)||"—")
