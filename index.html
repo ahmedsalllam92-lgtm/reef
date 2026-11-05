@@ -3263,6 +3263,41 @@ body.sb-mini .sidebar .side-group.open{display:block!important;position:fixed;to
 body.sb-mini .sidebar .ra-btn{justify-content:center;padding:9px 0!important}
 }
 @media screen and (max-width:920px){.sb-tg,.logo-mini{display:none!important}}
+
+/* ===== شريط واحد: الفلاتر + التصدير، فلاتر متعددة الاختيار ===== */
+.dx .dxbar{position:relative;z-index:40;gap:6px 8px!important;padding:7px 10px!important;margin:0 0 10px!important;border-radius:12px!important;align-items:center}
+.dx .dxbar .dx-fl{gap:6px!important;width:auto!important}
+.dx .dxbar .df-sel{height:30px!important;font-size:11.5px!important;min-width:110px!important;border-radius:9px!important;width:auto!important;flex:none!important}
+.dx .dxbar .pd-sel{min-width:260px!important;max-width:420px}.dx .dxbar .pd-q{min-width:200px!important}
+.dx .dxbar .df-count{font-size:11px!important;padding:4px 10px!important;margin-inline-start:auto}
+.dx .dxbar .df-reset{height:28px!important;font-size:11px!important}
+.dxbar-x{display:inline-flex;align-items:center;gap:6px}
+.dxbar-x .rtool{height:30px!important;padding:0 10px!important;font-size:11px!important;border-radius:9px!important;gap:5px!important;box-shadow:none!important}
+.dxbar-x .rtool svg{width:13px;height:13px}
+.msel{position:relative}
+.msel-b{height:30px;display:inline-flex;align-items:center;gap:8px;min-width:120px;justify-content:space-between;border:1px solid var(--dx-line,#DCE6E0);border-radius:9px;background:var(--dx-soft,#F6F8F6);color:var(--dx-ink,#1B2A21);font:inherit;font-size:11.5px;font-weight:800;padding:0 10px;cursor:pointer;white-space:nowrap}
+.msel-b i{font-style:normal;font-size:10px;color:#86918A}
+.msel.on .msel-b{border-color:#9CC4AC;background:#EAF4EE;color:#0E4A2F}
+.msel-p{display:none;position:absolute;top:calc(100% + 6px);inset-inline-start:0;z-index:90;width:250px;background:#fff;border:1px solid #DCE6E0;border-radius:12px;box-shadow:0 20px 40px -18px rgba(8,45,26,.35);padding:8px}
+.msel.open .msel-p{display:block}
+.msel-p label{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;font-size:12px;font-weight:700;color:#1B2A21;cursor:pointer}
+.msel-p label:hover{background:#F1F6F2}
+.msel-p label i{width:9px;height:9px;border-radius:3px;flex:none}
+.msel-p label span{flex:1}.msel-p label em{font-style:normal;font-size:11px;color:#86918A}
+.msel-p input{accent-color:#1E5B3A;width:14px;height:14px;margin:0}
+.msel-all{border-bottom:1px solid #EEF0EC;margin-bottom:4px;border-radius:8px 8px 0 0!important}
+.msel-l{max-height:260px;overflow:auto}
+.msel-a{display:flex;gap:6px;justify-content:flex-end;border-top:1px solid #EEF0EC;margin-top:6px;padding-top:8px}
+.msel-a button{height:28px;padding:0 12px;border-radius:8px;border:1px solid #DCE6E0;background:#fff;font:inherit;font-size:11.5px;font-weight:800;color:#55625A;cursor:pointer}
+.msel-a button.ok{background:#1E5B3A;border-color:#1E5B3A;color:#fff}
+body[data-theme="dark"] .msel-b{background:rgba(255,255,255,.05)!important;border-color:#33414A!important;color:#E6EEF0!important}
+body[data-theme="dark"] .msel.on .msel-b{background:rgba(143,211,168,.12)!important;border-color:rgba(143,211,168,.4)!important;color:#A9E2C0!important}
+body[data-theme="dark"] .msel-p{background:#1D262A;border-color:#33414A}
+body[data-theme="dark"] .msel-p label{color:#E6EEF0}body[data-theme="dark"] .msel-p label:hover{background:rgba(255,255,255,.06)}
+body[data-theme="dark"] .msel-all,body[data-theme="dark"] .msel-a{border-color:#2B363B}
+body[data-theme="dark"] .msel-a button{background:rgba(255,255,255,.05);border-color:#33414A;color:#C8D4D8}body[data-theme="dark"] .msel-a button.ok{background:#7FBF9C;border-color:#7FBF9C;color:#12201A}
+@media screen and (max-width:920px){.dx .dxbar .dx-fl{width:100%!important}.msel{flex:1 1 45%}.msel-b{width:100%}.dxbar-x{display:none}}
+.acard:has(.dxbar-x .rtool) > .rtools,.acard:has(.hb-hb .hb-rt) > .rtools{display:none!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -4093,7 +4128,7 @@ function show(html){
   const cover=(IS_REPORT||/class="dash dash3/.test(html))?"":printCoverHTML(topic||"محفظة المشاريع");
   const tools=PRINT_NAME?exportToolbar():"";
   A.innerHTML='<div class="acard">'+tools+cover+html+'</div>';
-  try{ var _hh=A.querySelector('.hb-head .hb-hb, .hm-hero .hb-hb'), _rt=A.querySelector('.acard > .rtools'); if(_hh&&_rt){ Array.prototype.slice.call(_rt.querySelectorAll('.rtool')).forEach(function(b){ b.classList.add('hb-rt','noprint'); _hh.insertBefore(b,_hh.firstChild); }); _rt.style.display='none'; } _hbFitTable(); }catch(e){} try{ setTimeout(_tbTitle,0); }catch(e){}
+  try{ var _hh=A.querySelector('.hb-head .hb-hb, .hm-hero .hb-hb, .dxbar .dxbar-x'), _rt=A.querySelector('.acard > .rtools'); if(_hh&&_rt){ Array.prototype.slice.call(_rt.querySelectorAll('.rtool')).forEach(function(b){ b.classList.add('hb-rt','noprint'); _hh.insertBefore(b,_hh.firstChild); }); _rt.style.display='none'; } _hbFitTable(); }catch(e){} try{ setTimeout(_tbTitle,0); }catch(e){}
   A.classList.add("show"); try{ if(document.querySelector("[data-proj]")){ setTimeout(_cldFillGalleries,60); setTimeout(function(){ document.querySelectorAll("[data-proj]").forEach(function(x){x._cldDone=false;}); _cldFillGalleries(); },1500); setTimeout(function(){ document.querySelectorAll("[data-proj]").forEach(function(x){x._cldDone=false;}); _cldFillGalleries(); },4000); } }catch(e){} if(!SILENT_RENDER) A.scrollIntoView({behavior:"smooth",block:"nearest"}); try{requestAnimationFrame(function(){ paginateReportPages(); try{rpFit();}catch(e){} });}catch(e){} }
 let PRINT_NAME="";
 let WEEKLY_MODE=false;
@@ -6950,7 +6985,9 @@ function _dxBtns(extra){ return '<div class="dash-bar dx-actions noprint">'+(ext
 function _dxShow(html){ try{
   var old=SILENT_RENDER&&A&&A.querySelector(".acard > .dx");
   if(old){ var tmp=document.createElement("div"); tmp.innerHTML=html; var nw=tmp.firstElementChild;
-    if(nw&&nw.className===old.className){ old.parentNode.replaceChild(nw,old);
+    if(nw&&nw.className===old.className){ var _rt0=A.querySelector(".acard > .rtools"), _ob=old.querySelectorAll(".dxbar-x .rtool"); if(_rt0) [].slice.call(_ob).forEach(function(b){ _rt0.appendChild(b); });
+      old.parentNode.replaceChild(nw,old);
+      try{ var _nx=nw.querySelector(".dxbar-x"); if(_nx&&_rt0) [].slice.call(_rt0.querySelectorAll(".rtool")).reverse().forEach(function(b){ _nx.insertBefore(b,_nx.firstChild); }); }catch(e){}
       try{ if(nw.querySelector("[data-proj]")) setTimeout(_cldFillGalleries,60); }catch(e){}
       dxLandFit(); return; } }
   }catch(e){}
@@ -7403,16 +7440,17 @@ function ksaChoro(list,sel){ list=list||[];
   var mx=Math.max(1,Math.max.apply(null,KSA_REG.r.map(function(r){ return cnt[r.ar]; })));
   var cls=function(v){ if(!v) return 0; var f=v/mx; return f>0.66?4:(f>0.4?3:(f>0.18?2:1)); };
   var paths="", labels="";
-  KSA_REG.r.forEach(function(r){ var v=cnt[r.ar], c=cls(v), on=sel&&_regionIs(r.ar,sel)&&KSA_KW[sel], dim=sel&&!on;
-    var q=esc(r.ar).replace(/'/g,"\\'"), click="dashSetFilter('region','"+q+"')";
+  var SA=Array.isArray(sel)?sel:(sel?[sel]:[]);
+  KSA_REG.r.forEach(function(r){ var v=cnt[r.ar], c=cls(v), on=SA.some(function(x){ return KSA_KW[x]&&x===r.ar; }), dim=SA.length&&!on;
+    var q=esc(r.ar).replace(/'/g,"\\'"), click="mapToggleRegion('"+q+"')";
     paths+='<path class="km-r km-c'+c+(on?' on':'')+(dim?' dim':'')+'" d="'+r.d+'" onclick="'+click+'"><title>'+esc(r.ar)+': '+ar(v)+' مشروع</title></path>';
     var sm=/الباحة|جازان/.test(r.ar);
     labels+='<g class="km-l km-t'+c+(dim?' dim':'')+'" onclick="'+click+'"><text x="'+r.x+'" y="'+(r.y-2)+'" class="km-n'+(sm?' sm':'')+'">'+ar(v)+'</text><text x="'+r.x+'" y="'+(r.y+(sm?14:20))+'" class="km-a'+(sm?' sm':'')+'">'+esc(r.ar)+'</text></g>'; });
-  var natOn=sel&&!KSA_KW[sel]&&_isNational(sel);
+  var natOn=SA.some(function(x){ return !KSA_KW[x]&&_isNational(x); });
   return '<div class="km">'
     +'<svg class="km-svg" viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr" xmlns="http://www.w3.org/2000/svg">'+paths+labels+'</svg>'
     +'<div class="km-side"><div class="km-f"><div class="km-lg"><i class="km-c4"></i><em>الأكثر</em><i class="km-c3"></i><em></em><i class="km-c2"></i><em></em><i class="km-c1"></i><em>الأقل</em></div>'
-    +(nat?'<button class="km-nat'+(natOn?' on':'')+'" onclick="dashSetFilter(\'region\',\'مناطق المملكة\')">على مستوى المملكة <b>'+ar(nat)+'</b></button>':'')
+    +(nat?'<button class="km-nat'+(natOn?' on':'')+'" onclick="mapToggleRegion(\'مناطق المملكة\')">على مستوى المملكة <b>'+ar(nat)+'</b></button>':'')
     +'</div><div class="km-cr">الخريطة: svg-maps · CC BY 4.0</div></div></div>'; }
 function _dashFiltExcept(k){ var keep=DASH_FILTER[k]; DASH_FILTER[k]=""; try{ return _dashFilt(); }finally{ DASH_FILTER[k]=keep; } }
 /* القائمة الجانبية المصغّرة (أيقونات فقط) */
@@ -7513,36 +7551,62 @@ try{ window.addEventListener("load",function(){ setTimeout(_hubBoot,30); }); }ca
 
 /* ======================= اللوحة العامة ======================= */
 function _dashFilt(){ try{ return DATA.filter(function(p){
-  if(DASH_FILTER.region&&!_regionIs(p.region,DASH_FILTER.region)) return false;
-  if(DASH_FILTER.sector&&p.sector!==DASH_FILTER.sector) return false;
-  if(DASH_FILTER.ptype&&(p.ptype||"")!==DASH_FILTER.ptype) return false;
-  if(DASH_FILTER.cat&&_dxCatOf(analyzeProject(p))!==DASH_FILTER.cat) return false;
+  var _r=_dfArr("region"), _s=_dfArr("sector"), _t=_dfArr("ptype"), _c=_dfArr("cat");
+  if(_r.length&&!_r.some(function(v){ return _regionIs(p.region,v); })) return false;
+  if(_s.length&&_s.indexOf(String(p.sector||"").trim())<0&&_s.indexOf(p.sector)<0) return false;
+  if(_t.length&&_t.indexOf(String(p.ptype||"").trim())<0) return false;
+  if(_c.length&&_c.indexOf(_dxCatOf(analyzeProject(p)))<0) return false;
   return true; }); }catch(e){ return DATA; } }
 function _uniq(k){ var seen={},out=[]; (DATA||[]).forEach(function(p){ var v=(p[k]||"").toString().trim(); if(v&&!seen[v]){seen[v]=1;out.push(v);} }); return out.sort(function(a,b){return a.localeCompare(b,"ar");}); }
 function _dxSel(k,all,vals){ return '<select class="df-sel" onchange="dashSetFilter(\''+k+'\',this.value)"><option value="">'+all+'</option>'
   +vals.map(function(v){ return '<option value="'+esc(v)+'"'+(DASH_FILTER[k]===v?" selected":"")+'>'+esc(v)+'</option>'; }).join("")+'</select>'; }
+function _dfArr(k){ var v=DASH_FILTER[k]; if(!v) return []; return Array.isArray(v)?v.slice():[v]; }
+function _dfNorm(v){ if(Array.isArray(v)){ v=v.filter(Boolean); return v.length?(v.length===1?v[0]:v):""; } return v||""; }
+function _dfLabel(k){ var a=_dfArr(k); if(!a.length) return ""; var f=function(v){ return k==="cat"?(DX_CAT[v]?DX_CAT[v].l:v):v; }; return a.length<=2?a.map(f).join("، "):ar(a.length)+" "+({region:"مناطق",sector:"قطاعات",ptype:"أنواع",cat:"حالات"}[k]||""); }
+function _dfOpts(k){ var D=DATA||[];
+  if(k==="cat") return Object.keys(DX_CAT).map(function(c){ return {v:c,l:DX_CAT[c].l,n:D.filter(function(p){ return _dxCatOf(analyzeProject(p))===c; }).length,c:DX_CAT[c].c}; }).filter(function(o){ return o.n>0; });
+  if(k==="region"){ var o=[]; Object.keys(KSA_KW).forEach(function(r){ var n=D.filter(function(p){ return _regionHas(p.region,r); }).length; if(n) o.push({v:r,l:r,n:n}); });
+    var rest={}; D.forEach(function(p){ var s=String(p.region||"").trim(); if(s&&!Object.keys(KSA_KW).some(function(r){ return _regionHas(s,r); })) rest[s]=(rest[s]||0)+1; });
+    Object.keys(rest).forEach(function(s){ o.push({v:s,l:s,n:rest[s]}); }); return o.sort(function(a,b){ return b.n-a.n; }); }
+  var m={}; D.forEach(function(p){ var s=String(p[k]||"").trim(); if(s) m[s]=(m[s]||0)+1; }); return Object.keys(m).sort(function(a,b){ return a.localeCompare(b,"ar"); }).map(function(s){ return {v:s,l:s,n:m[s]}; }); }
+function _dxMsel(k,allLbl){ var opts=_dfOpts(k), sel=_dfArr(k), on=sel.length&&sel.length<opts.length;
+  var lbl=on?_dfLabel(k):allLbl;
+  return '<div class="msel'+(on?' on':'')+'" data-k="'+k+'"><button type="button" class="msel-b" onclick="mselOpen(event,\''+k+'\')"><span>'+esc(lbl)+'</span><i>▾</i></button>'
+    +'<div class="msel-p" onclick="event.stopPropagation()"><label class="msel-all"><input type="checkbox" onchange="mselAll(this)"'+((!sel.length||sel.length===opts.length)?' checked':'')+'><b>تحديد الكل</b></label>'
+    +'<div class="msel-l">'+opts.map(function(o){ var ck=!sel.length||sel.indexOf(o.v)>-1; return '<label><input type="checkbox" value="'+esc(o.v)+'"'+(ck?' checked':'')+' onchange="mselSync(this)">'+(o.c?'<i style="background:'+o.c+'"></i>':'')+'<span>'+esc(o.l)+'</span><em>'+ar(o.n)+'</em></label>'; }).join("")+'</div>'
+    +'<div class="msel-a"><button type="button" onclick="mselNone(this)">مسح</button><button type="button" class="ok" onclick="mselApply(this)">تطبيق</button></div></div></div>'; }
+function mselOpen(e,k){ if(e) e.stopPropagation(); var w=e&&e.target.closest(".msel"); var was=w&&w.classList.contains("open"); document.querySelectorAll(".msel.open").forEach(function(x){ x.classList.remove("open"); }); if(w&&!was) w.classList.add("open"); }
+function mselSync(inp){ var p=inp.closest(".msel-p"), all=p.querySelectorAll(".msel-l input"), ck=p.querySelectorAll(".msel-l input:checked"); p.querySelector(".msel-all input").checked=(ck.length===all.length); }
+function mselAll(inp){ inp.closest(".msel-p").querySelectorAll(".msel-l input").forEach(function(x){ x.checked=inp.checked; }); }
+function mselNone(b){ var p=b.closest(".msel-p"); p.querySelectorAll("input").forEach(function(x){ x.checked=false; }); }
+function mselApply(b){ var w=b.closest(".msel"), k=w.getAttribute("data-k"), p=w.querySelector(".msel-p");
+  var all=p.querySelectorAll(".msel-l input"), ck=[].slice.call(p.querySelectorAll(".msel-l input:checked")).map(function(x){ return x.value; });
+  w.classList.remove("open"); dashSetFilter(k,(ck.length===all.length||!ck.length)?"":ck); }
+try{ document.addEventListener("click",function(e){ if(!e.target.closest(".msel")) document.querySelectorAll(".msel.open").forEach(function(x){ x.classList.remove("open"); }); }); }catch(e){}
+try{ window.mselOpen=mselOpen; window.mselSync=mselSync; window.mselAll=mselAll; window.mselNone=mselNone; window.mselApply=mselApply; }catch(e){}
+function mapToggleRegion(r){ var a=_dfArr("region"); var i=a.indexOf(r); if(i>-1) a.splice(i,1); else a.push(r); dashSetFilter("region",a.length?a:""); }
+try{ window.mapToggleRegion=mapToggleRegion; }catch(e){}
 function _dashFilterBar(n){
-  var active=DASH_FILTER.region||DASH_FILTER.sector||DASH_FILTER.ptype||DASH_FILTER.cat;
-  var chips=[["","الكل"]].concat(Object.keys(DX_CAT).map(function(k){return [k,DX_CAT[k].l];}));
-  return '<div class="dash-filter dx-filter noprint">'
-    +'<div class="dx-fl">'+_dxSel("region","كل المناطق",_uniq("region"))+_dxSel("sector","كل القطاعات",_uniq("sector"))+_dxSel("ptype","كل الأنواع",_uniq("ptype"))+'</div>'
-    +'<div class="dx-chips">'+chips.map(function(c){ return '<button class="dx-chip'+(DASH_FILTER.cat===c[0]?" on":"")+'" onclick="dashSetFilter(\'cat\',\''+c[0]+'\')">'+(c[0]?'<i style="background:'+DX_CAT[c[0]].c+'"></i>':'')+esc(c[1])+'</button>'; }).join("")+'</div>'
+  var active=_dfArr("region").length||_dfArr("sector").length||_dfArr("ptype").length||_dfArr("cat").length;
+  return '<div class="dash-filter dx-filter dxbar noprint">'
+    +'<div class="dx-fl">'+_dxMsel("region","كل المناطق")+_dxMsel("sector","كل القطاعات")+_dxMsel("ptype","كل الأنواع")+_dxMsel("cat","كل الحالات")+'</div>'
     +(active?'<button class="df-reset" onclick="dashResetFilter()">✕ إلغاء التصفية</button>':'')
-    +'<span class="df-count">'+ar(n)+' مشروع</span></div>'; }
+    +'<span class="df-count">'+ar(n)+' مشروع</span><span class="dxbar-x"></span></div>'; }
+
 function _dxIsFS(){ var h=document.querySelector("#answer .acard"); return !!(document.fullscreenElement||document.webkitFullscreenElement)||!!(h&&h.classList.contains("wkfs-fallback")); }
 function _dxReInPlace(fn){ var fs=_dxIsFS(), y=window.scrollY; if(fs) SILENT_RENDER=true; try{ fn(); }finally{ SILENT_RENDER=false; }
   if(fs){ try{ dashFitFS(); }catch(e){} setTimeout(function(){ try{ dashFitFS(); }catch(e){} },140); } else { try{ window.scrollTo(0,y); }catch(e){} } }
 var DASH_HIST=[];
-function _dxFCopy(){ return {region:DASH_FILTER.region||"",sector:DASH_FILTER.sector||"",ptype:DASH_FILTER.ptype||"",cat:DASH_FILTER.cat||""}; }
+function _dxFCopy(){ var c=function(v){ return Array.isArray(v)?v.slice():(v||""); }; return {region:c(DASH_FILTER.region),sector:c(DASH_FILTER.sector),ptype:c(DASH_FILTER.ptype),cat:c(DASH_FILTER.cat)}; }
 function _dxPush(){ var prev=_dxFCopy(); DASH_HIST.push(prev); if(DASH_HIST.length>30) DASH_HIST.shift();
   try{ if(!history.state||!history.state.dxf) history.replaceState({dxf:prev},"",location.href); }catch(e){} }
 function _dxPushAfter(){ try{ history.pushState({dxf:_dxFCopy()},"",location.href); }catch(e){} }
-function dashSetFilter(k,v){ v=v||""; if(v&&DASH_FILTER[k]===v) v=""; if((DASH_FILTER[k]||"")===v) return; _dxPush(); DASH_FILTER[k]=v; _dxPushAfter(); _dxReInPlace(execDashboard); }
+function dashSetFilter(k,v){ v=_dfNorm(v); var cur=_dfArr(k); if(typeof v==="string"&&v&&cur.length===1&&cur[0]===v) v=""; var nx=Array.isArray(v)?v:(v?[v]:[]); if(JSON.stringify(cur.slice().sort())===JSON.stringify(nx.slice().sort())) return; _dxPush(); DASH_FILTER[k]=v; _dxPushAfter(); _dxReInPlace(execDashboard); }
 function dashResetFilter(){ _dxPush(); DASH_FILTER={region:"",sector:"",ptype:"",cat:""}; _dxPushAfter(); _dxReInPlace(execDashboard); }
 function dashBack(){ if(!DASH_HIST.length){ dashResetFilter(); return; } var p=DASH_HIST.pop(); DASH_FILTER=p; try{ history.replaceState({dxf:_dxFCopy()},"",location.href); }catch(e){} _dxReInPlace(execDashboard); }
 try{ window.addEventListener("popstate",function(e){ try{ if(!document.querySelector("#answer .dxf")) return; var s=e.state&&e.state.dxf; DASH_FILTER=s?{region:s.region||"",sector:s.sector||"",ptype:s.ptype||"",cat:s.cat||""}:{region:"",sector:"",ptype:"",cat:""}; if(DASH_HIST.length) DASH_HIST.pop(); _dxReInPlace(execDashboard); }catch(x){} }); }catch(e){}
 function _dxActChips(){ var a=[]; var L={region:"المنطقة",sector:"القطاع",ptype:"النوع",cat:"الحالة"};
-  ["sector","region","ptype","cat"].forEach(function(k){ var v=DASH_FILTER[k]; if(!v) return; var t=k==="cat"?(DX_CAT[v]?DX_CAT[v].l:v):v; a.push('<button class="dxf-ac" onclick="dashSetFilter(\''+k+'\',\'\')" title="إزالة">'+L[k]+': <b>'+esc(t)+'</b> ✕</button>'); });
+  ["sector","region","ptype","cat"].forEach(function(k){ if(!_dfArr(k).length) return; var t=_dfLabel(k); a.push('<button class="dxf-ac" onclick="dashSetFilter(\''+k+'\',\'\')" title="إزالة">'+L[k]+': <b>'+esc(t)+'</b> ✕</button>'); });
   if(!a.length) return ""; return '<span class="dxf-acts noprint">'+a.join("")+'<button class="dxf-ac back" onclick="dashBack()">↶ رجوع</button>'+(a.length>1?'<button class="dxf-ac clr" onclick="dashResetFilter()">إلغاء الكل</button>':'')+'</span>'; }
 try{ window.dashBack=dashBack; }catch(e){}
 function projDashSel(c){ _dxReInPlace(function(){ projDash(c); }); }
@@ -7608,7 +7672,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var hSegs=["ok","watch","late","stumb","ns"].map(function(k){ return {l:DX_CAT[k].l,v:cnt[k],c:DX_CAT[k].c,k:k}; });
   var onT=cnt.ok, offT=cnt.watch+cnt.late+cnt.stumb;
   var healthBody='<div class="dx-health">'+_dxDonut(hSegs,ar(total),"مشروع",176,22)
-    +'<div class="dx-hleg">'+hSegs.map(function(s){ return '<button class="dx-hli'+(DASH_FILTER.cat===s.k?" on":"")+'" onclick="dashSetFilter(\'cat\',\''+(DASH_FILTER.cat===s.k?"":s.k)+'\')"><i style="background:'+s.c+'"></i><span>'+esc(s.l)+'</span><b>'+ar(s.v)+'</b><em>'+_dxPct(total?s.v/total:0)+'</em></button>'; }).join("")+'</div></div>'
+    +'<div class="dx-hleg">'+hSegs.map(function(s){ return '<button class="dx-hli'+(_dfArr('cat').indexOf(s.k)>-1?" on":"")+'" onclick="dashSetFilter(\'cat\',\''+(DASH_FILTER.cat===s.k?"":s.k)+'\')"><i style="background:'+s.c+'"></i><span>'+esc(s.l)+'</span><b>'+ar(s.v)+'</b><em>'+_dxPct(total?s.v/total:0)+'</em></button>'; }).join("")+'</div></div>'
     +'<div class="dx-split"><div class="ok"><b>'+ar(onT)+'</b><span>ضمن المسار</span></div><div class="bad"><b>'+ar(offT)+'</b><span>خارج المسار</span></div></div>';
   /* ---- المالية ---- */
   var fSegs=[{l:"المنصرف",v:dis,c:DX.g},{l:"تحت الإجراء",v:under,c:DX.blue},{l:"المتبقي",v:remain,c:"#D8D0BE"}];
@@ -7620,7 +7684,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +'<div class="dx-note">'+(spend<=wA+0.02?'✓ الصرف متوازن مع الإنجاز':'⚠ الصرف يتقدّم على الإنجاز بـ '+ar(Math.round((spend-wA)*100))+' نقطة')+'</div></div>';
   /* ---- الجغرافي ---- */
   var byR=_dxGroup(rows,function(r){return r.p.region;});
-  var regs=Object.keys(byR).map(function(k){return {l:k,v:byR[k].length,on:DASH_FILTER.region===k,click:"dashSetFilter('region','"+(DASH_FILTER.region===k?"":esc(k).replace(/'/g,"\\'"))+"')"};}).sort(function(a,b){return b.v-a.v;});
+  var regs=Object.keys(byR).map(function(k){return {l:k,v:byR[k].length,on:_dfArr('region').indexOf(k)>-1,click:"dashSetFilter('region','"+(DASH_FILTER.region===k?"":esc(k).replace(/'/g,"\\'"))+"')"};}).sort(function(a,b){return b.v-a.v;});
   var geoBody='<div class="dx-geo">'+(typeof saudiMapSVG==="function"?'<div class="dx-map">'+saudiMapSVG(D)+'</div>':'')
     +'<div class="dx-geol">'+_dxHList(regs.slice(0,10))+'</div></div>';
   /* ---- الحالة ---- */
@@ -7678,7 +7742,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
       risk:risk.slice(0,7).map(function(r){return {n:r.p.alias||r.p.name,s:r.p.sector||"",a:_dxPct(r.a),pl:_dxPct(r.pl),lv:r.level,why:r.reasons[0]||""};}),
       summary:ins.map(function(t){return String(t).replace(/<[^>]+>/g,"");}) }; }catch(e){ DASH_CTX=null; }
   PRINT_NAME="لوحة الأداء العامة — "+MONTHLBL;
-  var subT=[DASH_FILTER.region,DASH_FILTER.sector,DASH_FILTER.ptype,DASH_FILTER.cat?DX_CAT[DASH_FILTER.cat].l:""].filter(Boolean).join(" · ");
+  var subT=["region","sector","ptype","cat"].map(_dfLabel).filter(Boolean).join(" · ");
   /* ================= تخطيط رسمي مبسّط ================= */
   var fK=function(l,v,u,s,tone){ return '<div class="dxf-k'+(tone?" "+tone:"")+'"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+v+(u?'<small>'+esc(u)+'</small>':'')+'</span><span class="dxf-ks">'+s+'</span></div>'; };
   var fBox=function(cls,title,note,body){ return '<section class="dxf-p '+cls+'"><header><h3>'+esc(title)+'</h3>'+(note?'<span>'+note+'</span>':'')+'</header><div class="dxf-pb">'+body+'</div></section>'; };
@@ -7720,7 +7784,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   /* التوزيع حسب المنطقة */
   var rmx=Math.max.apply(null,regs.map(function(r){return r.v;}).concat([1]));
   var regF='<div class="dxf-reg">'+regs.slice(0,9).map(function(r){ return '<div class="dxf-rr dxf-row'+(r.on?" on":"")+'" role="button" onclick="'+r.click+'"><span>'+esc(r.l)+'</span><i><b style="width:'+(r.v/rmx*100).toFixed(1)+'%"></b></i><em>'+ar(r.v)+'</em></div>'; }).join("")+'</div>';
-  var subT2=[DASH_FILTER.region,DASH_FILTER.sector,DASH_FILTER.ptype,DASH_FILTER.cat?DX_CAT[DASH_FILTER.cat].l:""].filter(Boolean).join(" · ");
+  var subT2=["region","sector","ptype","cat"].map(_dfLabel).filter(Boolean).join(" · ");
   _dxShow('<div class="dash dash3 dx dx-land dxf">'
     +_dashFilterBar(total)
     +'<div class="dx-canvas">'
@@ -7766,12 +7830,12 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var rank=pr.slice().sort(function(x,y){return (y.a||0)-(x.a||0);}).findIndex(function(x){return x.p===p;})+1;
   /* --- شريط الاختيار --- */
   var secs=_uniq("sector"), list=DATA.filter(function(x){return !PD.sector||x.sector===PD.sector;});
-  var tools='<div class="dash-filter dx-filter pd-tools noprint">'
+  var tools='<div class="dash-filter dx-filter pd-tools dxbar noprint">'
     +'<div class="dx-fl"><select class="df-sel" onchange="pdSetSector(this.value)"><option value="">كل القطاعات</option>'+secs.map(function(s){return '<option value="'+esc(s)+'"'+(PD.sector===s?" selected":"")+'>'+esc(s)+'</option>';}).join("")+'</select>'
     +'<select class="df-sel pd-sel" onchange="projDashSel(this.value)">'+list.map(function(x){return '<option value="'+esc(x.code)+'"'+(x===p?" selected":"")+'>'+esc(x.name)+'</option>';}).join("")+'</select></div>'
     +'<input class="df-sel pd-q" list="pdList" placeholder="🔍 ابحث باسم المشروع أو الرمز…" onchange="pdSearch(this)"><datalist id="pdList">'+DATA.map(function(x){return '<option value="'+esc(x.name)+'">';}).join("")+'</datalist>'
     +'<span class="pd-nav"><button class="dx-btn" onclick="pdStep(-1)" title="السابق">→</button><button class="dx-btn" onclick="pdStep(1)" title="التالي">←</button></span>'
-    +'<span class="df-count">'+ar(list.findIndex(function(x){return x===p;})+1)+' / '+ar(list.length)+'</span></div>';
+    +'<span class="df-count">'+ar(list.findIndex(function(x){return x===p;})+1)+' / '+ar(list.length)+'</span><span class="dxbar-x"></span></div>';
   /* --- الرأس --- */
   var chips='<span class="pd-chip st">'+esc(p.status||"—")+'</span><span class="pd-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+'</span><span class="pd-chip">مستوى المخاطر: '+esc(r.level)+'</span>';
   var head='<div class="pd-head"><span class="pd-fx" aria-hidden="true"><i></i><i></i><i></i></span><div class="pd-ht"><div class="dx-kick">لوحة المشروع'+(p.code?' · <span class="ltr">'+esc(p.code)+'</span>':'')+'</div><h1>'+esc(p.name)+'</h1>'
