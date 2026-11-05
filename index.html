@@ -3617,6 +3617,8 @@ body[data-theme="dark"] .qx-acts button{background:rgba(255,255,255,.05);border-
 .rtb-upd{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#6E7B73;white-space:nowrap}.rtb-upd b{color:#1E5B3A;font-weight:800}.rtb-upd i{width:7px;height:7px;border-radius:50%;background:#2E8B57;box-shadow:0 0 0 3px rgba(46,139,87,.15)}
 body[data-theme="dark"] .rtb-upd{color:#8A989E}body[data-theme="dark"] .rtb-upd b{color:#A9E2C0}
 @media screen and (max-width:920px){.rtb-upd{display:none}}
+.wrap{padding-bottom:12px!important}
+.wrap:has(#answer .dx-land){padding-bottom:0!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7332,6 +7334,7 @@ function dxLandFit(mode){ try{
   if(H>DXL.Hmax*1.3){ H=DXL.Hmax*1.3; }
   var k=aw/W; if(H*k>ah+1) k=ah/H;
   c.style.width=Math.floor(W)+"px"; c.style.height=Math.floor(H)+"px"; c.style.zoom=k.toFixed(4); c.style.marginTop="";
+  if(!fs&&mode!=="print"){ try{ var over=document.documentElement.scrollHeight-window.innerHeight; if(over>0&&over<400){ var H2=Math.max(DXL.Hmin*0.9,H-over/k-2); if(H2<H){ H=H2; c.style.height=Math.floor(H)+"px"; } } }catch(e){} }
   _dxTrim(c);
 }catch(e){} }
 /* يخفي الصفوف التي لا تتسع كاملة داخل بطاقتها بدل قصّها */
