@@ -3547,6 +3547,13 @@ body[data-theme="dark"] .pd-pm{background:#1D262A;border-color:#33414A}body[data
 @media print{body.pdps-on>*:not(#pdPrintSet){display:none!important}body.pdps-on #pdPrintSet{position:static!important;left:auto!important;width:auto!important}
  body.pdps-on .pdps-page{page:pdland;break-after:page;page-break-after:always;margin:0!important}body.pdps-on .pdps-page:last-child{break-after:auto;page-break-after:auto}
  body.pdps-on .pdps-page *{animation:none!important}}
+
+/* أزرار أيقونات فقط + رفع شريط الفلاتر */
+.dx-btn.ic{width:32px;padding:0!important;justify-content:center}.dx-land.pdl .fit .dx-btn.ic{width:28px}
+.hb-btn.ic{width:36px;padding:0!important;justify-content:center}
+#answer:has(.dx-land){margin-top:0!important}
+.acard:has(.dx-land){padding-top:10px!important}
+/* الطباعة دائماً بالوضع الفاتح */
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7228,7 +7235,7 @@ function _dxSrc(){ if(typeof PF!=="undefined"&&PF) return '<span class="dx-src l
   if(err) return '<span class="dx-src snap" title="'+esc(err)+'"><i></i>تعذّر التحديث'+(ok?' · آخر بيانات '+f(LAST_CHANGE||LAST_REFRESH):' · الأرقام من النسخة المدمجة')+'</span>';
   return '<span class="dx-src live" title="آخر سحب '+f(LAST_REFRESH)+'"><i></i>بيانات مباشرة · آخر تحديث '+f(LAST_REFRESH)+'</span>'; }
 function _dxBtns(extra){ return '<div class="dash-bar dx-actions noprint">'+(extra||'')
-  +'<button class="dx-btn" onclick="wkFullscreen()" title="عرض ملء الشاشة">'+DX_ICO.fs+' ملء الشاشة</button></div>'; }
+  +'<button class="dx-btn ic" onclick="wkFullscreen()" title="ملء الشاشة" aria-label="ملء الشاشة">'+DX_ICO.fs+'</button></div>'; }
 /* عرض اللوحة: في التحديث الصامت نستبدل اللوحة نفسها داخل البطاقة (يحافظ على ملء الشاشة والتمرير) */
 function _dxShow(html){ if(_PD_CAPTURE){ _PD_CAP.push(html); return; } try{
   var old=SILENT_RENDER&&A&&A.querySelector(".acard > .dx");
@@ -7472,7 +7479,7 @@ function _hbCloudFill(){ try{ var els=Array.prototype.slice.call(document.queryS
   Promise.resolve(cldWarmAll()).then(function(){ var miss=[];
     /* الفهرس الكامل (cldWarmAll) فحص كل مشروع بالفعل — لا طلبات إضافية */
     els.forEach(function(el){ var p=DATA.find(function(x){ return String(x.code)===el.getAttribute("data-code"); }); if(!p) return; var u=_hbCloudThumb(p); if(u) put(el,u); }); }).catch(function(){}); }catch(e){} }
-function _hbBtns(){ return '<div class="hb-hb noprint"><button class="hb-btn sm" onclick="wkFullscreen()" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg> ملء الشاشة</button><button class="hb-btn sm" onclick="printAnswer()" title="طباعة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg> طباعة</button></div>'; }
+function _hbBtns(){ return '<div class="hb-hb noprint"><button class="hb-btn sm ic" onclick="wkFullscreen()" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button><button class="hb-btn sm ic" onclick="printAnswer()" title="طباعة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button></div>'; }
 function prClear(){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; projRegOpen(true); }
 function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDashGroup(); }catch(e){}
   if(!keep){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; }
@@ -7969,6 +7976,11 @@ function pdPrintMany(list){ var m=document.getElementById("pdPm"); if(m) m.remov
     window.addEventListener("afterprint",done); try{ document.title="لوحات المشاريع — "+(list.length===DATA.length?"كل المشاريع":(list[0].sector||""))+" — "+MONTHLBL; }catch(e){}
     window.print(); setTimeout(function(){ if(document.body.classList.contains("pdps-on")&&!window.matchMedia("print").matches) done(); },1500); }, Math.min(6000,1200+list.length*40)); }
 try{ window.pdPrintMenu=pdPrintMenu; window.pdPrintOne=pdPrintOne; window.pdPrintSector=pdPrintSector; window.pdPrintMany=pdPrintMany; }catch(e){}
+
+/* الطباعة دائماً بالوضع الفاتح حتى لو كان الوضع الداكن مفعّلاً */
+var _PRINT_DARK=false;
+try{ window.addEventListener("beforeprint",function(){ try{ if(document.body.getAttribute("data-theme")==="dark"){ _PRINT_DARK=true; applyTheme("light"); try{ if(document.querySelector("#answer .dx-land")) dxLandFit("print"); }catch(e){} } }catch(e){} });
+  window.addEventListener("afterprint",function(){ try{ if(_PRINT_DARK){ _PRINT_DARK=false; applyTheme("dark"); setTimeout(function(){ try{ dxLandFit(); }catch(e){} },60); } }catch(e){} }); }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -8290,7 +8302,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +_dashFilterBar(total)
     +'<div class="dx-canvas">'
       +'<div class="dxf-head"><div class="dxf-ht"><h1>لوحة الأداء العامة</h1><div class="dxf-sub">محفظة مشاريع برنامج ريف · '+esc(MONTHLBL)+(subT2?'<span class="onlyprint"> · <b>'+esc(subT2)+'</b></span>':'')+_dxActChips()+'</div></div>'
-        +'<div class="dxf-hl">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projDashOpen()">لوحة المشروع</button><button class="dx-btn" onclick="printAnswer()">طباعة</button>')
+        +'<div class="dxf-hl">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projDashOpen()">لوحة المشروع</button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
         +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'
       +kpiF
       +'<div class="dx-gr dxf-r1">'+fBox("g-sec","الإنجاز حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","الوضع الجدولي","",schF)+fBox("g-fin","الوضع المالي","ريال سعودي",finF)+'</div>'
@@ -8341,7 +8353,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var chips='<span class="pd-chip st">'+esc(p.status||"—")+'</span><span class="pd-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+'</span><span class="pd-chip">مستوى المخاطر: '+esc(r.level)+'</span>';
   var head='<div class="pd-head"><span class="pd-fx" aria-hidden="true"><i></i><i></i><i></i></span><div class="pd-ht"><div class="dx-kick">لوحة المشروع'+(p.code?' · <span class="ltr">'+esc(p.code)+'</span>':'')+'</div><h1>'+esc(p.name)+'</h1>'
     +'<div class="pd-meta">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div><div class="pd-chips">'+chips+'</div></div>'
-    +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn" onclick="pdPrintMenu(event)">طباعة ▾</button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
+    +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn ic" onclick="pdPrintMenu(event)" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
     +(function(){ var ps=_pdPos(); return '<div class="pd-fsnav noprint"><button onclick="pdStep(-1)" title="المشروع السابق (→)">→</button><span>'+ar(ps.i+1)+' / '+ar(ps.n)+'</span><button onclick="pdStep(1)" title="المشروع التالي (←)">←</button></div>'; })();
   /* --- KPI --- */
   var kpis='<div class="dx-kpis">'
