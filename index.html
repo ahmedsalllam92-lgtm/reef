@@ -3524,6 +3524,29 @@ body[data-theme="dark"]:not([data-dark="black"]) .sidebar{background:linear-grad
 @media print{.hx-fx{display:none!important}.dxf .dxf-kpis.kfx{animation:none!important}}
 /* الوضع الداكن: خلفية الصور داكنة بدل الأبيض */
 body[data-theme="dark"] .dx .pd-gal .gph,body[data-theme="dark"] .dx-land.pdl .fit .pd-gal .gph,body[data-theme="dark"] .pdl .pd-gal .gph img,body[data-theme="dark"] .pc-gal .gph,body[data-theme="dark"] .pc-gal .gph img,body[data-theme="dark"] .pcg-stage,body[data-theme="dark"] .pc3-gal img,body[data-theme="dark"] .pm-gal img,body[data-theme="dark"] .hb-cimg{background:#10171B!important}
+
+/* ===== مشاريع تتطلب متابعة: اسم كامل بدون عمود الملاحظة ===== */
+.dxf .dxf-tbl td.nm{white-space:normal!important;max-width:none!important;overflow:visible!important;text-overflow:clip!important;line-height:1.5}
+/* ===== تنقّل لوحة المشروع في ملء الشاشة ===== */
+.pd-fsnav{display:none}
+.acard:fullscreen .pd-fsnav,.acard:-webkit-full-screen .pd-fsnav,.acard.wkfs-fallback .pd-fsnav{display:flex;position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:99998;align-items:center;gap:6px;background:rgba(5,30,18,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,188,132,.35);border-radius:99px;padding:4px;box-shadow:0 10px 24px -12px rgba(0,0,0,.6)}
+.pd-fsnav button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:#fff;font-size:18px;font-weight:900;cursor:pointer;display:grid;place-items:center}
+.pd-fsnav button:hover{background:#D9BC84;color:#05271A}.pd-fsnav span{color:#EAD7AE;font-size:12px;font-weight:800;padding:0 8px;white-space:nowrap}
+.pd-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:2000;background:#0B3D27;color:#fff;border-radius:12px;padding:10px 18px;font-size:13px;font-weight:800;box-shadow:0 14px 30px -12px rgba(0,0,0,.5);transition:opacity .2s,transform .2s}.pd-toast.show{opacity:1;transform:translateX(-50%)}
+.pd-pm{position:fixed;z-index:100000;width:290px;background:#fff;border:1px solid #DCE6E0;border-radius:14px;box-shadow:0 24px 50px -18px rgba(8,45,26,.45);padding:8px}
+.pd-pmh{font-size:12px;font-weight:900;color:#8A6420;padding:6px 8px 8px;border-bottom:1px solid #EEF0EC;margin-bottom:4px}
+.pd-pm>button{display:block;width:100%;text-align:right;border:0;background:transparent;border-radius:10px;padding:9px 10px;font:inherit;cursor:pointer}.pd-pm>button:hover{background:#F1F6F2}
+.pd-pm b{display:block;font-size:13px;color:#14241B}.pd-pm span{display:block;font-size:11px;color:#7D8A82;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pd-pmr{display:flex;gap:6px;padding:6px 8px}.pd-pmr select{flex:1;min-width:0;height:32px;border:1px solid #DCE6E0;border-radius:8px;font:inherit;font-size:12px}.pd-pmr .ok{height:32px;border:0;border-radius:8px;background:#1E5B3A;color:#fff;font:inherit;font-size:12px;font-weight:800;padding:0 10px;cursor:pointer}
+body[data-theme="dark"] .pd-pm{background:#1D262A;border-color:#33414A}body[data-theme="dark"] .pd-pm b{color:#E6EEF0}body[data-theme="dark"] .pd-pm>button:hover{background:rgba(255,255,255,.06)}body[data-theme="dark"] .pd-pmh{border-color:#2B363B}
+/* ===== طباعة لوحات متعددة ===== */
+#pdPrintSet{position:absolute;left:-200000px;top:0;width:1100px}
+#pdPrintSet .noprint,#pdPrintSet .dash-filter,#pdPrintSet .pd-fsnav{display:none!important}
+#pdPrintSet .pdps-page{width:1058px;height:728px;overflow:hidden;margin:0 0 20px}
+@page pdland{size:A4 landscape;margin:6mm}
+@media print{body.pdps-on>*:not(#pdPrintSet){display:none!important}body.pdps-on #pdPrintSet{position:static!important;left:auto!important;width:auto!important}
+ body.pdps-on .pdps-page{page:pdland;break-after:page;page-break-after:always;margin:0!important}body.pdps-on .pdps-page:last-child{break-after:auto;page-break-after:auto}
+ body.pdps-on .pdps-page *{animation:none!important}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7207,7 +7230,7 @@ function _dxSrc(){ if(typeof PF!=="undefined"&&PF) return '<span class="dx-src l
 function _dxBtns(extra){ return '<div class="dash-bar dx-actions noprint">'+(extra||'')
   +'<button class="dx-btn" onclick="wkFullscreen()" title="عرض ملء الشاشة">'+DX_ICO.fs+' ملء الشاشة</button></div>'; }
 /* عرض اللوحة: في التحديث الصامت نستبدل اللوحة نفسها داخل البطاقة (يحافظ على ملء الشاشة والتمرير) */
-function _dxShow(html){ try{
+function _dxShow(html){ if(_PD_CAPTURE){ _PD_CAP.push(html); return; } try{
   var old=SILENT_RENDER&&A&&A.querySelector(".acard > .dx");
   if(old){ var tmp=document.createElement("div"); tmp.innerHTML=html; var nw=tmp.firstElementChild;
     if(nw&&nw.className===old.className){ var _rt0=A.querySelector(".acard > .rtools"), _ob=old.querySelectorAll(".dxbar-x .rtool"); if(_rt0) [].slice.call(_ob).forEach(function(b){ _rt0.appendChild(b); });
@@ -7904,6 +7927,48 @@ function ksaProjMap(p){ var reg=String((p&&p.region)||""), nat=_isNational(reg);
 try{ window.ksaProjMap=ksaProjMap; }catch(e){}
 
 function _sbFx(){ try{ var sb=document.getElementById("sidebar"); if(!sb||sb.querySelector(".sbfx")) return; var fx=document.createElement("i"); fx.className="hx-fx sbfx"; fx.setAttribute("aria-hidden","true"); fx.innerHTML="<i></i><i></i><i></i>"; sb.insertBefore(fx,sb.firstChild); }catch(e){} }
+
+/* ================= لوحة المشروع: تنقّل وطباعة متعددة ================= */
+var _PD_CAPTURE=false, _PD_CAP=[];
+function _pdList(){ return DATA.filter(function(p){return !PD.sector||p.sector===PD.sector;}); }
+function _pdPos(){ var L=_pdList(), i=L.findIndex(function(p){ return String(p.code)===String(PD.code); }); return {i:i,n:L.length}; }
+try{ document.addEventListener("keydown",function(e){ if(!document.querySelector("#answer .pdl")||document.body.classList.contains("pm-on")) return; var ae=document.activeElement||{}; if(/INPUT|TEXTAREA|SELECT/.test(ae.tagName||"")||ae.isContentEditable) return;
+  if(e.key==="ArrowLeft"){ e.preventDefault(); pdStep(1); } else if(e.key==="ArrowRight"){ e.preventDefault(); pdStep(-1); } }); }catch(e){}
+function _pdToast(m){ var t=document.getElementById("pdToast"); if(!t){ t=document.createElement("div"); t.id="pdToast"; t.className="pd-toast noprint"; document.body.appendChild(t); } t.textContent=m; t.classList.toggle("show",!!m); }
+function pdPrintMenu(ev){ if(ev) ev.stopPropagation(); var old=document.getElementById("pdPm"); if(old){ old.remove(); return; }
+  var b=ev&&ev.currentTarget, r=b?b.getBoundingClientRect():{left:20,bottom:60};
+  var secs=_uniq("sector"); var m=document.createElement("div"); m.id="pdPm"; m.className="pd-pm noprint"; m.onclick=function(e){ e.stopPropagation(); };
+  var cur=(DATA||[]).find(function(x){ return String(x.code)===String(PD.code); });
+  m.innerHTML='<div class="pd-pmh">طباعة لوحات المشاريع</div>'
+    +'<button onclick="pdPrintOne()"><b>هذا المشروع</b><span>'+esc(cur?(cur.alias||cur.name):"")+'</span></button>'
+    +(cur&&cur.sector?'<button onclick="pdPrintSector(\''+esc(cur.sector).replace(/'/g,"\\'")+'\')"><b>مشاريع قطاع '+esc(cur.sector)+'</b><span>'+ar(DATA.filter(function(p){ return p.sector===cur.sector; }).length)+' لوحة — صفحة لكل مشروع</span></button>':'')
+    +'<div class="pd-pmr"><select id="pdPmSec">'+secs.map(function(s){ return '<option value="'+esc(s)+'">'+esc(s)+' ('+ar(DATA.filter(function(p){ return p.sector===s; }).length)+')</option>'; }).join("")+'</select><button class="ok" onclick="pdPrintSector(document.getElementById(\'pdPmSec\').value)">طباعة القطاع</button></div>'
+    +'<button onclick="pdPrintMany(DATA.slice())"><b>كل المشاريع</b><span>'+ar(DATA.length)+' لوحة — صفحة لكل مشروع</span></button>';
+  document.body.appendChild(m);
+  var fs=document.fullscreenElement||document.webkitFullscreenElement; if(fs) fs.appendChild(m);
+  var x=Math.max(8,Math.min(window.innerWidth-300,r.left)), y=Math.min(window.innerHeight-260,r.bottom+6); m.style.left=x+"px"; m.style.top=y+"px";
+  setTimeout(function(){ document.addEventListener("click",function h(){ var q=document.getElementById("pdPm"); if(q) q.remove(); document.removeEventListener("click",h); }); },0); }
+function pdPrintOne(){ var m=document.getElementById("pdPm"); if(m) m.remove(); printAnswer(); }
+function pdPrintSector(s){ pdPrintMany(DATA.filter(function(p){ return p.sector===s; })); }
+function pdPrintMany(list){ var m=document.getElementById("pdPm"); if(m) m.remove(); if(!list||!list.length) return;
+  if(document.fullscreenElement){ try{ document.exitFullscreen(); }catch(e){} }
+  _pdToast("● جارٍ تجهيز "+ar(list.length)+" لوحة للطباعة…");
+  var save={code:PD.code,rr:RERENDER,pn:PRINT_NAME,hash:location.hash};
+  _PD_CAP=[]; _PD_CAPTURE=true; try{ list.forEach(function(p){ try{ projDash(p.code); }catch(e){} }); }finally{ _PD_CAPTURE=false; }
+  PD.code=save.code; RERENDER=save.rr; PRINT_NAME=save.pn; try{ history.replaceState(history.state,"",location.pathname+location.search+save.hash); }catch(e){} try{ setNavActive("pdash"); }catch(e){}
+  var old=document.getElementById("pdPrintSet"); if(old) old.remove();
+  var box=document.createElement("div"); box.id="pdPrintSet"; box.innerHTML=_PD_CAP.map(function(h){ return '<div class="pdps-page">'+h+'</div>'; }).join(""); _PD_CAP=[];
+  document.body.appendChild(box);
+  var W=DXL.W, PW=1058, PH=728, H=Math.round(W*PH/PW), k=PW/W;
+  box.querySelectorAll(".dx-canvas").forEach(function(c){ c.classList.add("fit"); c.style.width=W+"px"; c.style.height=H+"px"; c.style.zoom=k.toFixed(4); });
+  box.querySelectorAll("img").forEach(function(i){ try{ i.loading="eager"; }catch(e){} });
+  try{ _cldFillGalleries(); }catch(e){}
+  setTimeout(function(){ box.querySelectorAll(".dx-canvas").forEach(function(c){ try{ _dxTrim(c); }catch(e){} });
+    _pdToast(""); document.body.classList.add("pdps-on");
+    var done=function(){ document.body.classList.remove("pdps-on"); var b2=document.getElementById("pdPrintSet"); if(b2) b2.remove(); window.removeEventListener("afterprint",done); };
+    window.addEventListener("afterprint",done); try{ document.title="لوحات المشاريع — "+(list.length===DATA.length?"كل المشاريع":(list[0].sector||""))+" — "+MONTHLBL; }catch(e){}
+    window.print(); setTimeout(function(){ if(document.body.classList.contains("pdps-on")&&!window.matchMedia("print").matches) done(); },1500); }, Math.min(6000,1200+list.length*40)); }
+try{ window.pdPrintMenu=pdPrintMenu; window.pdPrintOne=pdPrintOne; window.pdPrintSector=pdPrintSector; window.pdPrintMany=pdPrintMany; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -8210,12 +8275,12 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +'</div>';
   /* المشاريع التي تتطلب متابعة */
   var lvCls={"عالي":"bad","متوسط":"warn","منخفض":"low","سليم":"ok"};
-  var riskF=risk.length?('<table class="dxf-tbl"><thead><tr><th>المشروع</th><th>القطاع</th><th class="c">الإنجاز</th><th class="c">المخطط</th><th class="c">الحيود</th><th>الملاحظة</th></tr></thead><tbody>'
+  var riskF=risk.length?('<table class="dxf-tbl"><thead><tr><th>المشروع</th><th>القطاع</th><th class="c">الإنجاز</th><th class="c">المخطط</th><th class="c">الحيود</th></tr></thead><tbody>'
     +risk.map(function(r){ var p=r.p;
-      return '<tr class="dxf-row" role="button" onclick="projDash(\''+esc(p.code)+'\')"><td class="nm"><i class="'+(lvCls[r.level]||"ok")+'"></i>'+esc(p.alias||p.name)+'</td><td>'+esc(p.sector||"—")+'</td>'
+      return '<tr class="dxf-row" role="button" onclick="projDash(\''+esc(p.code)+'\')"><td class="nm"><i class="'+(lvCls[r.level]||"ok")+'"></i>'+esc(p.name||p.alias)+'</td><td>'+esc(p.sector||"—")+'</td>'
         +'<td class="c b">'+_dxPct(r.a)+'</td><td class="c">'+_dxPct(r.pl)+'</td>'
         +'<td class="c dn">'+(r.sv==null?"—":((r.sv<0?"−":"+")+ar(Math.abs(Math.round(r.sv*100)))))+'</td>'
-        +'<td class="why">'+esc(r.reasons[0]||(r.cat==="late"?"متأخر عن الخطة":"—"))+'</td></tr>'; }).join("")
+        +'</tr>'; }).join("")
     +'</tbody></table>'):'<div class="dxf-empty">لا توجد مشاريع تتطلب متابعة ضمن التصفية الحالية</div>';
   /* التوزيع حسب المنطقة */
   var rmx=Math.max.apply(null,regs.map(function(r){return r.v;}).concat([1]));
@@ -8241,9 +8306,9 @@ function projDashOpen(){ var p=null;
   if(!p&&CUR_PROJECT) p=CUR_PROJECT;
   if(!p){ var r=DATA.map(analyzeProject).filter(function(x){return !x.done;}).sort(function(a,b){return b.score-a.score;})[0]; p=r?r.p:DATA[0]; }
   if(p) projDash(p.code); }
-function pdSetSector(v){ PD.sector=v; var list=DATA.filter(function(p){return !v||p.sector===v;}); if(list.length) projDash(list[0].code); }
+function pdSetSector(v){ PD.sector=v; var list=DATA.filter(function(p){return !v||p.sector===v;}); if(list.length) projDashSel(list[0].code); }
 function pdStep(d){ var list=DATA.filter(function(p){return !PD.sector||p.sector===PD.sector;}); var i=list.findIndex(function(p){return String(p.code)===String(PD.code);});
-  if(!list.length) return; i=(i+d+list.length)%list.length; projDash(list[i].code); }
+  if(!list.length) return; i=(i+d+list.length)%list.length; projDashSel(list[i].code); }
 function pdSearch(inp){ var q=norm(inp.value||""); if(!q) return; var hit=DATA.find(function(p){ return norm(p.name).indexOf(q)>-1||norm(p.alias||"").indexOf(q)>-1||String(p.code).toLowerCase()===String(inp.value).trim().toLowerCase(); });
   if(hit){ PD.sector=""; projDash(hit.code); } }
 function _pdRow(k,v,html){ return '<div class="pd-r"><span>'+esc(k)+'</span><b>'+(html?v:(v==null||v===""?"—":esc(v)))+'</b></div>'; }
@@ -8276,7 +8341,8 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var chips='<span class="pd-chip st">'+esc(p.status||"—")+'</span><span class="pd-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+'</span><span class="pd-chip">مستوى المخاطر: '+esc(r.level)+'</span>';
   var head='<div class="pd-head"><span class="pd-fx" aria-hidden="true"><i></i><i></i><i></i></span><div class="pd-ht"><div class="dx-kick">لوحة المشروع'+(p.code?' · <span class="ltr">'+esc(p.code)+'</span>':'')+'</div><h1>'+esc(p.name)+'</h1>'
     +'<div class="pd-meta">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div><div class="pd-chips">'+chips+'</div></div>'
-    +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn" onclick="printAnswer()">طباعة</button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>';
+    +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn" onclick="pdPrintMenu(event)">طباعة ▾</button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
+    +(function(){ var ps=_pdPos(); return '<div class="pd-fsnav noprint"><button onclick="pdStep(-1)" title="المشروع السابق (→)">→</button><span>'+ar(ps.i+1)+' / '+ar(ps.n)+'</span><button onclick="pdStep(1)" title="المشروع التالي (←)">←</button></div>'; })();
   /* --- KPI --- */
   var kpis='<div class="dx-kpis">'
     +_dxKpi({ico:DX_ICO.prog,l:"الإنجاز الفعلي",v:_dxPct(a),viz:_dxBar(a,pl),s:'متوسط القطاع '+_dxPct(sA)+(rank?' · الترتيب '+ar(rank)+' من '+ar(peers.length):'')})
