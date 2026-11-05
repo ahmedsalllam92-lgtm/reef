@@ -3576,6 +3576,7 @@ body[data-theme="dark"] .rp-mode,body[data-theme="dark"] .rp-card,body[data-them
 body[data-theme="dark"] .rp-mode b,body[data-theme="dark"] .rp-card h3,body[data-theme="dark"] .rp-t b{color:#E6EEF0}body[data-theme="dark"] .rp-sum span{color:#C8D4D8}
 body[data-theme="dark"] .rp-mode.on{box-shadow:inset 0 0 0 1px #7FBF9C}body[data-theme="dark"] .rp-sum{border-color:#2B363B}body[data-theme="dark"] .rp-sum b{background:rgba(143,211,168,.12);color:#A9E2C0}
 @media screen and (max-width:700px){.rp-modes{grid-template-columns:1fr}}
+.rp-top{margin:0 0 14px}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8027,7 +8028,7 @@ function reportPrepOpen(keep){ try{ setNavActive("report"); }catch(e){} RERENDER
   var T=[["list","قائمة المشاريع","جدول بكل بيانات المشاريع المختارة، قابل للتعديل والتصدير Excel"],["dash","لوحة الأداء","لوحة الأداء العامة لهذه المشاريع فقط"],["pd","لوحات المشاريع","طباعة لوحة لكل مشروع — صفحة أفقية لكل مشروع"],["cards","بطاقات المشاريع","بطاقة لكل مشروع بالصور والمؤشرات"],["weekly","التقرير الأسبوعي","تقرير أسبوعي للمشاريع المختارة"],["program","تقرير البرنامج","تقرير شامل بالمحفظة المختارة"]];
   var html='<div class="hb-page rp">'
     +'<div class="hb-head"><div><div class="hb-kick">التقارير</div><h1>إعداد تقرير</h1><div class="hb-sub">اختر المشاريع بالفلاتر ثم نوع التقرير، أو ابنِ تقريراً من البداية</div></div></div>'
-    +'<div class="rp-modes"><div class="rp-mode on"><b>تقرير حسب الفلاتر</b><span>اختر قطاعاً أو منطقة أو مقاولاً أو أكثر من اختيار</span></div><button class="rp-mode" onclick="reportBuilder()"><b>بناء تقرير من البداية</b><span>اختيار المشاريع والأقسام يدوياً ←</span></button></div>'
+    +_rpModes("f")
     +'<section class="rp-card"><h3>1 · تقرير لأي مشاريع؟</h3><div class="rp-fs">'+filt+'</div>'
       +'<div class="rp-sum"><b id="rpN">'+ar(L.length)+' مشروع</b><span>'+esc(_rpTitle())+'</span>'+(any?'<button class="hb-clr" onclick="reportPrepOpen(false)">✕ مسح الفلاتر</button>':'')+'</div></section>'
     +'<section class="rp-card"><h3>2 · نوع التقرير</h3><div class="rp-types">'+T.map(function(x){ return '<button class="rp-t" '+(L.length?'':'disabled ')+'onclick="rpGo(\''+x[0]+'\')"><b>'+x[1]+'</b><span>'+x[2]+'</span></button>'; }).join("")+'</div></section></div>';
@@ -8044,6 +8045,12 @@ function rpGo(type){ var L=_rpList(); if(!L.length) return; var codes=L.map(func
   if(type==="weekly"){ weeklyBuilder(); setTimeout(function(){ _rpCheck(".wkchk",codes); try{ wkCount(); }catch(e){} },60); return; }
   if(type==="program"){ reportBuilder(); setTimeout(function(){ _rpCheck(".rbchk",codes); try{ rbCount(); }catch(e){} },60); return; } }
 try{ window.reportPrepOpen=reportPrepOpen; window.rpMSet=rpMSet; window.rpGo=rpGo; }catch(e){}
+function _rpModes(on){ return '<div class="rp-modes noprint">'+(on==="f"?'<div class="rp-mode on"><b>تقرير حسب الفلاتر</b><span>اختر قطاعاً أو منطقة أو مقاولاً أو أكثر من اختيار</span></div>':'<button class="rp-mode" onclick="reportPrepOpen(true)"><b>تقرير حسب الفلاتر</b><span>← الرجوع لاختيار المشاريع بالفلاتر</span></button>')
+  +(on==="b"?'<div class="rp-mode on"><b>بناء تقرير من البداية</b><span>اختيار المشاريع والأقسام يدوياً</span></div>':'<button class="rp-mode" onclick="reportBuilder()"><b>بناء تقرير من البداية</b><span>اختيار المشاريع والأقسام يدوياً ←</span></button>')+'</div>'; }
+try{ (function(){ var orig=window.reportBuilder; if(typeof orig!=="function"||orig._rp) return;
+  var w=function(){ var r=orig.apply(this,arguments); try{ setNavActive("report"); var c=document.querySelector("#answer .acard"); if(c&&!c.querySelector(".rp-modes")){ var d=document.createElement("div"); d.innerHTML=_rpModes("b"); var m=d.firstChild; m.classList.add("rp-top"); var rt=c.querySelector(":scope > .rtools"); if(rt&&rt.nextSibling) c.insertBefore(m,rt.nextSibling); else c.insertBefore(m,c.firstChild); } }catch(e){} return r; };
+  w._rp=true; window.reportBuilder=w; try{ reportBuilder=w; }catch(e){} })(); }catch(e){}
+
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
