@@ -6926,8 +6926,8 @@ function initProjMap(list){
 function _pnum(v){ var n=toNum(v); return n==null?0:n; }
 function _isDone(p){ return /إنتهاء|انتهاء|مكتمل/.test(p.status||"") || (pct(p.actual)!=null && pct(p.actual)>=1); }
 function _isStopped(p){ return /إيقاف|متوقف|معلّق|معلق/.test(p.status||""); }
-function _overdue(p){ if(_isDone(p))return false; var d=p.end_date; if(!d||!/^\d{4}-\d{2}-\d{2}/.test(d))return false; try{ return new Date(d) < new Date(); }catch(e){ return false; } }
-function _daysOverdue(p){ try{ return Math.round((new Date()-new Date(p.end_date))/86400000); }catch(e){ return 0; } }
+function _overdue(p){ if(_isDone(p))return false; var d=endDateOf(p); if(!d||!/^\d{4}-\d{2}-\d{2}/.test(d))return false; try{ return new Date(d) < new Date(); }catch(e){ return false; } }
+function _daysOverdue(p){ try{ return Math.round((new Date()-new Date(endDateOf(p)))/86400000); }catch(e){ return 0; } }
 function analyzeProject(p){
   var a=pct(p.actual), pl=pct(p.planned);
   var sv=(a!=null&&pl!=null)?(a-pl):null; try{ var _dv=_dxDev(p); if(_dv!=null) sv=-_dv; }catch(e){}
@@ -7619,7 +7619,7 @@ var HB_STC={"بدء المشروع":"#1E5B3A","إنتهاء المشروع":"#7F
 function _hbStCol(s){ s=String(s||"").trim(); if(HB_STC[s]) return HB_STC[s]; if(/إيقاف|متوقف/.test(s)) return "#A94438"; if(/إنتهاء|انتهاء/.test(s)) return "#7FA98E"; if(/طرح/.test(s)) return "#4F86A6"; if(/بدء/.test(s)) return "#1E5B3A"; return "#86918A"; }
 function _hbBadge(s){ var c=_hbStCol(s); return '<span class="hb-st" style="--c:'+c+'"><i></i>'+esc(s)+'</span>'; }
 function _hbProg(p){ var a=pct(p.actual)||0, pl=pct(p.planned); a=Math.max(0,Math.min(1,a));
-  return '<div class="hb-pg"><span><i style="width:'+(a*100).toFixed(1)+'%"></i>'+(pl!=null?'<b style="inset-inline-start:'+(Math.max(0,Math.min(1,pl))*100).toFixed(1)+'%"></b>':'')+'</span><em>'+ar(Math.round(a*100))+'%</em></div>'; }
+  return '<div class="hb-pg" title="الإنجاز الفعلي '+Math.round(a*100)+'%'+(pl!=null?' · الخط الذهبي = الإنجاز المخطط '+Math.round(pl*100)+'%':'')+'"><span><i style="width:'+(a*100).toFixed(1)+'%"></i>'+(pl!=null?'<b style="inset-inline-start:'+(Math.max(0,Math.min(1,pl))*100).toFixed(1)+'%"></b>':'')+'</span><em>'+ar(Math.round(a*100))+'%</em></div>'; }
 function _hbThumb(p){ var u=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean)[0]; return u||""; }
 
 /* ---------------- سجل المشاريع ---------------- */
@@ -7684,17 +7684,17 @@ function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDa
         +'<div class="hb-cb"><h4>'+esc(p.name)+'</h4><div class="hb-cm">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div>'
         +_hbProg(p)+'<div class="hb-cf"><div><span>القيمة</span><b>'+_dxM(v)+'</b></div><div><span>الصرف</span><b>'+_dxPct(sp)+'</b></div><div><span>النهاية</span><b>'+fmtDateTxt(endDateOf(p))+'</b></div></div>'
         +'<div class="hb-cc">'+esc(_dxTxt(p.contractor)||"—")+'</div></div></article>'; }).join("")+'</div>';
-  else body='<div class="hb-tw"><table class="hb-t"><thead><tr>'+th("code","الكود")+th("name","المشروع")+th("region","المنطقة")+'<th>الحالة</th>'+th("contractor","المقاول")+th("value","القيمة بعد التعديل")+th("actual","الإنجاز")+th("spend","الصرف")+th("end","النهاية")+th("upd","آخر تحديث")+'<th class="go"></th></tr></thead><tbody>'
+  else body='<div class="hb-tw"><table class="hb-t"><thead><tr>'+th("code","الكود")+th("name","المشروع")+th("region","المنطقة")+'<th>الحالة</th>'+th("contractor","المقاول")+th("value","القيمة بعد التعديل")+th("actual","الإنجاز")+th("spend","الصرف")+th("end","النهاية")+'<th class="go"></th></tr></thead><tbody>'
     +L.map(function(p){ var v=_dxBase(p);
       return '<tr'+(_isStopped(p)?' class="stp" title="مشروع موقوف"':'')+' onclick="projCard(\''+esc(p.code)+'\')"><td class="cd">'+esc(p.code)+'</td><td class="nm"><b>'+esc(p.name)+'</b><small>'+esc(p.sector||"")+(p.ptype?(" · "+esc(p.ptype)):"")+'</small></td><td>'+esc(p.region||"—")+'</td><td>'+_hbBadge(_hbStatus(p))+(_isStopped(p)?'<span class="hb-stp">⏸ موقوف</span>':'')+'</td>'
-        +'<td class="ct">'+esc(_dxTxt(p.contractor)||"—")+'</td><td class="n">'+_dxM(v)+'</td><td>'+_hbProg(p)+'</td><td class="n">'+_dxPct(v?_dxN(p.disbursed)/v:0)+'</td><td class="n">'+fmtDateTxt(endDateOf(p))+'</td><td class="n mut">'+(p.last_update?fmtDateTxt(p.last_update):"—")+'</td><td class="go"><button title="لوحة المشروع" onclick="event.stopPropagation();projDash(\''+esc(p.code)+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button></td></tr>'; }).join("")
+        +'<td class="ct">'+esc(_dxTxt(p.contractor)||"—")+'</td><td class="n">'+_dxM(v)+'</td><td>'+_hbProg(p)+'</td><td class="n">'+_dxPct(v?_dxN(p.disbursed)/v:0)+'</td><td class="n">'+fmtDateTxt(endDateOf(p))+'</td><td class="go"><button title="لوحة المشروع" onclick="event.stopPropagation();projDash(\''+esc(p.code)+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button></td></tr>'; }).join("")
     +'</tbody></table></div>';
   var html='<div class="hb-page"><div class="hb-head"><div><div class="hb-kick">السجلات</div><h1>سجل المشاريع</h1><div class="hb-sub">كل مشاريع المحفظة ببياناتها — اضغط على أي مشروع لفتح لوحته</div></div><div class="hb-hr">'+_dxSrc()+_hbBtns()+'</div></div>'
     +stats+tools+body+'</div>';
   show(html); if(PR.view==="cards") setTimeout(_hbCloudFill,30); }
 function prExport(){ var L=_prList(); loadXLSX().then(function(){
-  var rows=[["الكود","المشروع","القطاع","المنطقة","النوع","الحالة","المقاول","الاستشاري","القيمة بعد التعديل","الإنجاز الفعلي","الإنجاز المخطط","المنصرف","البداية","النهاية","آخر تحديث"]]
-    .concat(L.map(function(p){ return [p.code,p.name,p.sector,p.region,p.ptype,_hbStatus(p),_dxTxt(p.contractor),_dxTxt(p.consultant),_dxBase(p),pct(p.actual),pct(p.planned),_dxN(p.disbursed),fmtDateTxt(p.start_date),fmtDateTxt(endDateOf(p)),p.last_update?fmtDateTxt(p.last_update):""]; }));
+  var rows=[["الكود","المشروع","القطاع","المنطقة","النوع","الحالة","المقاول","الاستشاري","القيمة بعد التعديل","الإنجاز الفعلي","الإنجاز المخطط","المنصرف","البداية","النهاية"]]
+    .concat(L.map(function(p){ return [p.code,p.name,p.sector,p.region,p.ptype,_hbStatus(p),_dxTxt(p.contractor),_dxTxt(p.consultant),_dxBase(p),pct(p.actual),pct(p.planned),_dxN(p.disbursed),fmtDateTxt(p.start_date),fmtDateTxt(endDateOf(p))]; }));
   var wb=XLSX.utils.book_new(), ws=XLSX.utils.aoa_to_sheet(rows); ws["!cols"]=[8,50,14,16,12,16,34,22,16,10,10,16,14,14,14].map(function(w){ return {wch:w}; });
   XLSX.utils.book_append_sheet(wb,ws,"سجل المشاريع"); wb.Workbook={Views:[{RTL:true}]}; XLSX.writeFile(wb,"Reef_Projects_Register.xlsx"); }); }
 
