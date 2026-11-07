@@ -4102,6 +4102,24 @@ body[data-theme="dark"] .rx-jt,body[data-theme="dark"] .rx-ft,body[data-theme="d
 
 .rx-gh{min-height:520px!important}
 .rx-gh .rx-hmap{top:22px!important;height:340px}.rx-gh .rx-hmap .kp-svg,.rx-gh .rx-hmap .km-svg{height:340px!important}
+
+/* الرئيسية: كروت أقل ارتفاعاً */
+.hm-k{padding:11px 16px 10px!important;gap:1px!important}
+.hm-k b{font-size:26px!important;margin-top:0!important;line-height:1.15!important}
+.hm-ki{width:30px!important;height:30px!important;border-radius:9px!important}
+.hm-kb{margin-top:6px!important;height:5px!important}
+/* لوحة المشروع: كارد المدد */
+.pd-dur{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:8px}
+.pd-dur>div{display:flex;flex-direction:column;gap:1px;padding:5px 8px;border-radius:9px;background:var(--dx-soft,#F6F8F5);border:1px solid var(--dx-line,#E8ECE8)}
+.pd-dur span{font-size:10.5px;color:var(--dx-mut,#7D8A82)}.pd-dur b{font-size:13px;font-weight:800!important;color:var(--dx-ink,#14241B);line-height:1.35}
+body[data-theme="dark"] .pd-dur>div{background:rgba(255,255,255,.04);border-color:#2B363B}body[data-theme="dark"] .pd-dur b{color:#E6EEF0}
+/* الجدول الزمني: تواريخ بخط أصغر + المدة المتبقية تحت البار */
+.dx .pd-tlh span,.dx-land.pdl .fit .pd-tlh span{font-size:10px!important}
+.dx .pd-tlh b,.dx-land.pdl .fit .pd-tlh b{font-size:11.5px!important}
+.dx .pd-tll .pd-left{color:#1E5B3A;font-size:11px}.dx .pd-tll .pd-left b{font-weight:800!important}
+.dx .pd-tll .pd-left.over{color:#B23B2E}
+.dx .pd-tll{justify-content:space-between}
+.dx.pdl .g-tl .pd-rows .pd-stop>b{grid-column:span 3}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9316,8 +9334,10 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
       +'<div class="pd-p3"><div><span>الإنجاز الفعلي</span><b>'+_dxPct(a)+'</b></div><div><span>الإنجاز المخطط</span><b>'+(pl==null?"—":_dxPct(pl))+'</b></div><div class="'+_ptn+'"><span>الحيود عن الخطة</span><b>'+(sv==null?"—":((sv<0?"−":"+")+ar(Math.abs(Math.round(sv*100)))+"%"))+'</b></div></div>'
       +'<div class="pd-pbar"><u style="width:'+(_dxClamp(pl||0,0,1)*100).toFixed(1)+'%"></u><i style="width:'+(_dxClamp(a||0,0,1)*100).toFixed(1)+'%"></i></div>'
       +'<div class="dx-ks"><span class="pd-lg a"></span>الفعلي <span class="pd-lg p"></span>المخطط</div></div>'
-    +_dxKpi({ico:DX_ICO.clock,l:"الزمن المنقضي",v:(t.ok?_dxPct(t.raw>1?t.raw:t.frac):"—"),tone:(t.ok&&t.left<0&&!r.done?"bad":""),viz:_dxBar(t.ok?t.frac:0,a,t.ok&&t.left<0?DX.red:DX.blue),
-        s:(t.ok?(t.left<0?(r.done?'انتهت المدة':'متجاوز بـ '+ar(-t.left)+' يوم'):'متبقٍ '+ar(t.left)+' يوم'):'تواريخ غير مكتملة')})
+    +(function(){ var _dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):(_dxTxt(p.duration)||"—"), _sd=_dxTxt(p.stop_duration);
+        return '<div class="dx-kpi pd-durk"><div class="dx-kh"><span class="dx-ki">'+DX_ICO.clock+'</span><span class="dx-kl">المدد</span></div><div class="pd-dur">'
+          +'<div><span>مدة العقد</span><b>'+esc(_dur)+'</b></div><div><span>مدة التمديد</span><b>'+esc(_dxExtTxt(p))+'</b></div>'
+          +'<div><span>مدة الإيقاف</span><b>'+(_sd?esc(_sd)+' يوم':'لا يوجد')+'</b></div><div><span>المدة الكلية</span><b>'+(t.ok?ar(t.total)+' يوم':'—')+'</b></div></div></div>'; })()
     +'</div>';
   /* --- الجدول الزمني --- */
   var tl='';
@@ -9325,15 +9345,14 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     tl='<div class="pd-tl"><div class="pd-tlh"><span>البداية<b>'+fmtDateTxt(p.start_date)+'</b></span>'+(!r.done?'<span class="pd-today'+(t.raw>1?' over':'')+'"><i></i>اليوم<b>'+fmtDateTxt(new Date().toISOString().slice(0,10))+'</b></span>':'')+'<span class="e">النهاية<b>'+fmtDateTxt(endDateOf(p))+'</b></span></div>'
       +'<div class="pd-tlb"><i class="el" style="width:'+(nowF*100).toFixed(1)+'%"></i><i class="ac" style="width:'+(_dxClamp(a,0,1)*100).toFixed(1)+'%"></i>'
       +(!r.done?'<b class="now'+(t.raw>1?' over':'')+'" style="inset-inline-start:'+(nowF*100).toFixed(1)+'%"></b>':'')+'</div>'
-      +'<div class="pd-tll"><span><i class="el"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span><span><i class="ac"></i>الإنجاز الفعلي '+_dxPct(a)+'</span><span>المدة الكلية '+ar(t.total)+' يوم</span></div></div>'; }
+      +'<div class="pd-tll"><span class="pd-left'+(t.left<0&&!r.done?' over':'')+'">'+(r.done?'انتهت المدة':(t.left>=0?'المدة المتبقية <b>'+ar(t.left)+' يوم</b>':'متجاوز المدة بـ <b>'+ar(-t.left)+' يوم</b>'))+'</span><span><i class="el"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span><span><i class="ac"></i>الإنجاز '+_dxPct(a)+'</span></div></div>'; }
   else tl='<div class="dx-empty">تواريخ البداية/النهاية غير مكتملة في الشيت</div>';
   var dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):_dxTxt(p.duration);
   var stp=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+(calParts(p.resume_date)?fmtDate(p.resume_date):"لم يُستأنف")):"لا يوجد";
   var tlBody=tl+'<div class="pd-rows two">'
-    +_pdRow("مدة العقد",dur)+_pdRow("مدة التمديد",_dxExtTxt(p))
     +_pdRow("النهاية التعاقدية",fmtDate(p.end_contractual),true)+_pdRow("النهاية بعد التمديد",fmtDate(p.end_after_ext||p.end_date),true)
     +_pdRow("تاريخ الترسية",fmtDate(p.award_date),true)+_pdRow("تسليم الموقع",fmtDate(p.site_handover),true)
-    +'<div class="pd-r pd-stop"><span>الإيقاف ← الاستئناف</span><b>'+stp+(_dxTxt(p.stop_duration)?' <em class="pd-sd">('+esc(_dxTxt(p.stop_duration))+' يوم)</em>':'')+'</b></div></div>';
+    +'<div class="pd-r pd-stop"><span>الإيقاف ← الاستئناف</span><b>'+stp+'</b></div></div>';
   /* --- المالية --- */
   var fSegs=[{l:"المنصرف",v:dis,c:DX.g},{l:"تحت الإجراء",v:under,c:DX.blue},{l:"المتبقي",v:remain,c:"#D8D0BE"}];
   var finBody='<div class="dx-health sm">'+_dxDonut(fSegs,_dxPct(spend),"مصروف",150,18)+_dxLeg(fSegs,function(v){ return String(_dxM(v)).replace(/\s*(مليار|مليون|ألف)$/,' <small class="pd-u">$1 '+RYL+'</small>'); })+'</div>'
