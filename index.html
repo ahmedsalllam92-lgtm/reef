@@ -3628,6 +3628,14 @@ body[data-theme="dark"] .hb-t tbody tr.stp td{background:rgba(140,150,145,.14)!i
 .hb-stp{display:inline-flex;align-items:center;gap:5px;margin-inline-start:6px;font-size:11px;font-weight:800;color:#5E6862;background:#E2E6E3;border:1px solid #CDD3CF;border-radius:99px;padding:2px 9px;white-space:nowrap}.hb-cimg .hb-stp{position:absolute;bottom:10px;left:10px;margin:0}
 body[data-theme="dark"] .hb-stp{background:rgba(255,255,255,.1);border-color:#3A474E;color:#C8D4D8}
 .hb-go{top:10px!important;right:10px!important;bottom:auto!important;left:auto!important}.hb-cimg.cld:after{top:12px!important;right:48px!important;left:auto!important}
+.dx .g-nt .pd-notes.nt2,.dx-land.pdl .fit .g-nt .pd-notes.nt2{display:grid!important;grid-template-columns:var(--ntc)!important;grid-auto-flow:row!important;grid-auto-columns:auto!important;grid-template-rows:1fr!important;overflow:hidden!important;gap:8px}
+.pd-note.pd-short{display:flex!important;flex-direction:column;justify-content:center;gap:6px}
+.pd-note.pd-short>div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1px solid rgba(0,0,0,.06);padding-bottom:4px}.pd-note.pd-short>div:last-child{border:0;padding:0}
+.pd-note.pd-short span{margin:0!important;font-size:11px!important}.pd-note.pd-short b{font-size:11.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
+body[data-theme="dark"] .pd-note.pd-short>div{border-color:rgba(255,255,255,.07)}
+.dx .g-nt .pd-notes.nt2 .pd-note{overflow:hidden;min-height:0}
+.dx .g-nt .pd-notes.nt2 .pd-note:not(.pd-short) p{-webkit-line-clamp:3!important;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;line-height:1.55!important;font-size:11.5px!important}
+.pd-note.pd-short span{white-space:nowrap;flex:none}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8550,7 +8558,9 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   /* --- آخر المستجدات --- */
   var notes=[["الموقف الحالي",_dxTxt(p.build_status)||_dxTxt(p.last_note)],["الملخص التنفيذي",(_dxTxt(p.exec_summary)&&!_dxSame(p.exec_summary,_dxTxt(p.build_status)||_dxTxt(p.last_note)))?_dxTxt(p.exec_summary):""],
     ["المغايرات",_dxTxt(p.variations)],["البنود المستحدثة",_dxTxt(p.new_items)],["الالتزام البيئي",_dxTxt(p.env)]].filter(function(x){return x[1];});
-  var ntBody=notes.length?('<div class="pd-notes">'+notes.map(function(x){ return '<div class="pd-note'+(String(x[1]).length>260?" long":"")+'" onclick="this.classList.toggle(\'open\')"><span>'+esc(x[0])+'</span><p>'+hlAppr(esc(x[1]).replace(/\|/g," · ")).replace(/\n+/g,"<br>")+'</p></div>'; }).join("")+'</div>'):'<div class="dx-empty">لا توجد ملاحظات مسجّلة</div>';
+  var _nL=notes.filter(function(x){ return String(x[1]).length>45; }), _nS=notes.filter(function(x){ return String(x[1]).length<=45; });
+  var ntBody=notes.length?('<div class="pd-notes nt2" style="--ntc:'+(_nL.map(function(){ return "minmax(0,1.5fr)"; }).concat(_nS.length?["minmax(0,1fr)"]:[]).join(" "))+'">'+_nL.map(function(x){ return '<div class="pd-note'+(String(x[1]).length>260?" long":"")+'" onclick="this.classList.toggle(\'open\')"><span>'+esc(x[0])+'</span><p>'+hlAppr(esc(x[1]).replace(/\|/g," · ")).replace(/\n+/g,"<br>")+'</p></div>'; }).join("")
+    +(_nS.length?'<div class="pd-note pd-short">'+_nS.map(function(x){ return '<div><span>'+esc(x[0])+'</span><b>'+hlAppr(esc(x[1]).replace(/\|/g," · "))+'</b></div>'; }).join("")+'</div>':'')+'</div>'):'<div class="dx-empty">لا توجد ملاحظات مسجّلة</div>';
   /* --- الصور --- */
   var imgs=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean);
   var galBody='<div class="pd-gal" data-proj="'+esc(p.name||"")+'">'+(imgs.length?imgs.map(function(u){ return '<div class="gph"><img loading="lazy" referrerpolicy="no-referrer" src="'+u+'" onclick="lightbox(this.src)" onerror="this.parentNode.style.display=\'none\'"></div>'; }).join(""):'<div class="dx-empty">لا توجد صور مرفوعة لهذا المشروع</div>')+'</div>';
