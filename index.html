@@ -3852,6 +3852,29 @@ body[data-theme="dark"] .pd-notes .pd-note.pd-short>div>span,body[data-theme="da
 .pd-pill{display:inline-flex;align-items:center;height:20px;padding:0 10px;border-radius:99px;font-style:normal;font-size:10.5px;line-height:1}
 .pd-pill.ok{background:#E3F1E8;color:#00703C;border:1px solid #BFDFCB}
 body[data-theme="dark"] .pd-pill.ok{background:rgba(143,211,168,.12);color:#9FDDB6;border-color:rgba(143,211,168,.3)}
+
+/* لوحة المشروع: صفوف بمحاذاة يمين موحّدة */
+.dx.pdl .pd-rows,.dx.pdl .pd-rows.two{display:grid!important;grid-template-columns:max-content minmax(0,1fr)!important;column-gap:16px;row-gap:0}
+.dx.pdl .pd-rows .pd-r{display:contents!important}
+.dx.pdl .pd-rows .pd-r>span,.dx.pdl .pd-rows .pd-r>b{padding:5px 0;border-bottom:1px dotted var(--dx-line,#E3E8E3);text-align:right!important;display:flex;align-items:center;justify-content:flex-start}
+.dx.pdl .pd-rows .pd-r:last-child>span,.dx.pdl .pd-rows .pd-r:last-child>b{border-bottom:0}
+.dx-land.pdl .fit .pd-rows .pd-r>span,.dx-land.pdl .fit .pd-rows .pd-r>b{padding:3px 0;font-size:11px}
+.dx.pdl .pd-r b .ryl{height:.72em;opacity:.75;margin-inline-start:3px}
+.dx.pdl .pd-chg.up{color:#00703C}.dx.pdl .pd-chg.dn{color:#B23B2E}
+.dx .pd-u{font-size:.68em;color:var(--dx-mut,#7D8A82);margin-inline-start:2px;font-weight:500!important}.dx .pd-u .ryl{height:.95em;opacity:.8}
+.dx .dx-lg b .pd-u{font-size:.7em}
+.pd-pill{height:17px!important;padding:0 8px!important;font-size:9.5px!important}
+.dx .pd-tlb .now,.dx-land.pdl .fit .pd-tlb .now{top:-5px!important;bottom:-5px!important;width:3px!important;border-radius:2px;background:#B89968;z-index:2}
+.dx .pd-tlb .now:before{content:"";position:absolute;top:-4px;left:50%;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:#B89968;box-shadow:0 0 0 3px rgba(184,153,104,.25)}
+.dx .pd-tlb .now em,.dx-land.pdl .fit .pd-tlb .now em{display:block!important;top:auto!important;bottom:-19px;font-size:9.5px!important;color:#8A6420;background:#FBF6EC;border:1px solid #EADBBE;border-radius:99px;padding:1px 7px;transform:translateX(50%)}
+.dx .pd-tlb .now.over em{transform:translateX(0);inset-inline-end:-2px}
+.dx .pd-tlh{align-items:flex-end}
+.dx .pd-tlh .pd-today{display:flex;flex-direction:column;align-items:center;color:#8A6420!important;font-size:10.5px}.dx .pd-tlh .pd-today b{color:#8A6420!important}.dx .pd-tlh .pd-today i{display:none}
+.dx .pd-tlh .pd-today.over b:after{content:" (متجاوز)";color:#B23B2E}
+body[data-theme="dark"] .dx .pd-tlb .now em{background:#2A2618;border-color:#4A3F25;color:#E3C88E}
+
+.dx.pdl .g-tl>.pd-tl{flex:none!important}
+.dx.pdl .g-tl>.pd-rows,.dx.pdl .g-fin>.pd-rows,.dx.pdl .g-pt>.pd-rows{flex:1 1 auto;min-height:0;overflow:hidden;align-content:start}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8857,7 +8880,7 @@ function pdStep(d){ var list=DATA.filter(function(p){return !PD.sector||p.sector
   if(!list.length) return; i=(i+d+list.length)%list.length; projDashSel(list[i].code); }
 function pdSearch(inp){ var q=norm(inp.value||""); if(!q) return; var hit=DATA.find(function(p){ return norm(p.name).indexOf(q)>-1||norm(p.alias||"").indexOf(q)>-1||String(p.code).toLowerCase()===String(inp.value).trim().toLowerCase(); });
   if(hit){ PD.sector=""; projDash(hit.code); } }
-function _dxExtTxt(p){ try{ var a=_dxDt(p.end_contractual), b=_dxDt(p.end_after_ext);
+function _dxExtTxt(p){ var raw=_dxTxt(p.extension); if(raw) return raw; try{ var a=_dxDt(p.end_contractual), b=_dxDt(p.end_after_ext);
   if(a&&b&&b>a){ var m=(b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth()), d=b.getDate()-a.getDate(); if(d<0){ m--; var pm=new Date(b.getFullYear(),b.getMonth(),0).getDate(); d+=pm; }
     var days=Math.round((b-a)/864e5); return (m>0?ar(m)+" شهر":"")+(m>0&&d>0?" و ":"")+(d>0?ar(d)+" يوم":"")+" ("+ar(days)+" يوم)"; } }catch(e){}
   return _dxTxt(p.extension)||"لا يوجد"; }
@@ -8909,9 +8932,9 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   /* --- الجدول الزمني --- */
   var tl='';
   if(t.ok){ var nowF=_dxClamp(t.raw,0,1);
-    tl='<div class="pd-tl"><div class="pd-tlh"><span>البداية<b>'+fmtDateTxt(p.start_date)+'</b></span><span class="e">النهاية<b>'+fmtDateTxt(endDateOf(p))+'</b></span></div>'
+    tl='<div class="pd-tl"><div class="pd-tlh"><span>البداية<b>'+fmtDateTxt(p.start_date)+'</b></span>'+(!r.done?'<span class="pd-today'+(t.raw>1?' over':'')+'"><i></i>اليوم<b>'+fmtDateTxt(new Date().toISOString().slice(0,10))+'</b></span>':'')+'<span class="e">النهاية<b>'+fmtDateTxt(endDateOf(p))+'</b></span></div>'
       +'<div class="pd-tlb"><i class="el" style="width:'+(nowF*100).toFixed(1)+'%"></i><i class="ac" style="width:'+(_dxClamp(a,0,1)*100).toFixed(1)+'%"></i>'
-      +(!r.done&&t.raw<=1?'<b class="now" style="inset-inline-start:'+(nowF*100).toFixed(1)+'%"><em>اليوم</em></b>':'')+'</div>'
+      +(!r.done?'<b class="now'+(t.raw>1?' over':'')+'" style="inset-inline-start:'+(nowF*100).toFixed(1)+'%"></b>':'')+'</div>'
       +'<div class="pd-tll"><span><i class="el"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span><span><i class="ac"></i>الإنجاز الفعلي '+_dxPct(a)+'</span><span>المدة الكلية '+ar(t.total)+' يوم</span></div></div>'; }
   else tl='<div class="dx-empty">تواريخ البداية/النهاية غير مكتملة في الشيت</div>';
   var dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):_dxTxt(p.duration);
@@ -8923,9 +8946,9 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +_pdRow("الإيقاف ← الاستئناف",stp,true)+_pdRow("مدة الإيقاف",_dxTxt(p.stop_duration)?(_dxTxt(p.stop_duration)+" يوم"):"لا يوجد")+'</div>';
   /* --- المالية --- */
   var fSegs=[{l:"المنصرف",v:dis,c:DX.g},{l:"تحت الإجراء",v:under,c:DX.blue},{l:"المتبقي",v:remain,c:"#D8D0BE"}];
-  var finBody='<div class="dx-health sm">'+_dxDonut(fSegs,_dxPct(spend),"مصروف",150,18)+_dxLeg(fSegs,_dxM)+'</div>'
+  var finBody='<div class="dx-health sm">'+_dxDonut(fSegs,_dxPct(spend),"مصروف",150,18)+_dxLeg(fSegs,function(v){ return String(_dxM(v)).replace(/\s*(مليار|مليون|ألف)$/,' <small class="pd-u">$1 '+RYL+'</small>'); })+'</div>'
     +'<div class="pd-rows">'+_pdRow("القيمة التعاقدية",fmtFull(orig||null),true)
-    +_pdRow("الزيادة / التخفيض",chg?('<span class="'+(chg>0?"up":"dn")+'">'+(chg>0?"+ ":"− ")+fmtFull(Math.abs(chg))+'</span>'):"لا يوجد",true)
+    +_pdRow("الزيادة / التخفيض",chg?('<span class="pd-chg '+(chg>0?"up":"dn")+'">'+(chg>0?"▲ +":"▼ −")+fmtFull(Math.abs(chg))+'</span>'):"لا يوجد",true)
     +_pdRow("القيمة بعد التعديل",'<span class="hl">'+fmtFull(after||null)+'</span>',true)
     +_pdRow("عدد المستخلصات",ar(_dxN(p.claims_count)))+'</div>';
   /* --- المطالبات والجودة --- */
