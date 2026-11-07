@@ -3714,6 +3714,11 @@ body[data-theme="dark"] .rp-ready{background:rgba(143,211,168,.06);border-color:
 .rp-pdp .noprint,.rp-pdp .dash-filter,.rp-pdp .pd-fsnav{display:none!important}
 .acard:fullscreen .rp-pdv,.acard.wkfs-fallback .rp-pdv{overflow:auto;max-height:100vh}
 body[data-theme="dark"] .rp-pdp{border-color:#2B363B;background:transparent}
+.pf-exp{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #CFE0D5;background:linear-gradient(135deg,#EAF4EE,#fff);border-radius:12px;padding:12px 14px;margin:10px 0}
+.pf-exp b{display:block;font-size:13.5px;color:#0B3D27}.pf-exp span{font-size:12px;color:#55625A;font-weight:700}
+.pf-mapbox{margin:10px 0;border-color:#ECD9B2!important;background:#FFFBF2!important}.pf-mt td{padding:7px 8px;vertical-align:middle}.pf-mt em{font-style:normal;font-size:10.5px;color:#A94438;font-weight:800}.pf-mt small{color:#86918A}.pf-mt .mut{color:#9AA49D}
+.pf-map{height:32px;border:1px solid #DCE6E0;border-radius:8px;font:inherit;font-size:12px;max-width:260px;background:#fff}
+body[data-theme="dark"] .pf-exp{background:rgba(143,211,168,.06);border-color:#2B363B}body[data-theme="dark"] .pf-exp b{color:#E6EEF0}body[data-theme="dark"] .pf-exp span{color:#B8C6CC}body[data-theme="dark"] .pf-mapbox{background:rgba(201,169,110,.06)!important;border-color:#3A3424!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -7516,7 +7521,7 @@ function _pfParse(file){ return loadXLSX().then(function(){ return file.arrayBuf
   var d=rowsToData(best.grid);
   if(!d.length) throw new Error("قُرئت العناوين لكن لا توجد صفوف مشاريع (يلزم عمودا «الكود» و«مسمى المشروع»).");
   var cs=[]; try{ cs=_pfCancelledFrom(wb); }catch(e){}
-  return {name:file.name, sheet:best.sheet, headerRow:best.hr+1, fields:fields, data:d, cols:head.length, cancelSheet:cs}; }); }
+  return {name:file.name, sheet:best.sheet, headerRow:best.hr+1, fields:fields, data:d, cols:head.length, cancelSheet:cs, headRow:head}; }); }
 /* ورقة «المشاريع الملغاه» إن وُجدت في ملف المحفظة */
 function _pfCancelledFrom(wb){ var sn=(wb.SheetNames||[]).filter(function(s){ return /ملغ/.test(_lcNorm(s)); })[0]; if(!sn) return [];
   var ws=wb.Sheets[sn]; if(!ws||!ws["!ref"]) return [];
@@ -7551,13 +7556,14 @@ function pfOpen(){ try{setNavActive("pfdata");}catch(e){} try{ _initDashGroup();
     +'<div class="pf-wrap">'
     +'<div class="pf-intro">ارفع ملف المحفظة الأحدث (Excel) لتحديث <b>كل</b> بيانات المنصة: لوحات الأداء، القوائم، التقارير، البطاقات والنماذج. تُقرأ الأعمدة بنفس عناوين جدول المتابعة، وتُعرض المقارنة قبل الاعتماد. تُحفظ المحفظة في هذا المتصفح وتبقى مصدر البيانات حتى ترفع أحدث منها أو ترجع للمصدر الأصلي.</div>'
     +src
+    +(function(){ var E=_peLoad(), n=Object.keys(E).length; return '<div class="pf-exp"><div><b>تنزيل المحفظة Excel'+(n?' بالتعديلات':'')+'</b><span>نفس ملف المحفظة الأصلي بكل أوراقه وتنسيقه وألوانه وخطوطه، وتُكتب داخله فقط القيم التي عدّلتها في المنصة'+(n?' ('+ar(n)+' مشروع معدّل)':'')+'.</span></div><button class="pf-btn" onclick="pfExportXlsx()">⬇ تنزيل Excel</button></div>'; })()
     +'<label class="pf-drop"><input type="file" accept=".xlsx,.xls,.xlsm,.csv" onchange="pfPick(this)"><span class="pf-dt">اختر ملف المحفظة</span><span class="pf-ds" id="pfName">Excel ‏(xlsx / xls / csv)</span></label>'
     +'<div id="pfOut"></div></div>');
   if(PF_PENDING) _pfRender(); }
 function pfPick(inp){ var f=inp&&inp.files&&inp.files[0]; if(!f) return; try{ inp.value=""; }catch(e){}
   var o=document.getElementById("pfOut"), nm=document.getElementById("pfName"); if(nm) nm.textContent=f.name;
   if(o) o.innerHTML='<div class="pf-msg">● جارٍ قراءة الملف…</div>';
-  _pfParse(f).then(function(r){ PF_PENDING=r; _pfRender(); })
+  _pfParse(f).then(function(r){ r._file=f; PF_PENDING=_pfSuggest(r); _pfRender(); })
     .catch(function(e){ PF_PENDING=null; if(o) o.innerHTML='<div class="pf-msg bad">⚠ '+_lcEsc((e&&e.message)||"تعذّر قراءة الملف")+'</div>'; }); }
 function _pfRender(){ var o=document.getElementById("pfOut"), R=PF_PENDING; if(!o||!R) return;
   var D=_pfDiff(R.data), miss=PF_REQ.filter(function(k){ return !(k in R.fields); });
@@ -7569,11 +7575,11 @@ function _pfRender(){ var o=document.getElementById("pfOut"), R=PF_PENDING; if(!
     +'<div class="pf-meta">الورقة: <b>'+_lcEsc(R.sheet)+'</b> · صف العناوين: <b>'+R.headerRow+'</b> · <bdi dir="ltr">'+_lcEsc(R.name)+'</bdi></div>'
     +(miss.length?'<div class="pf-msg bad">⚠ أعمدة أساسية غير موجودة: '+miss.map(function(k){ return _lcEsc(PF_FIELDS[k]); }).join("، ")+' — ستظهر فارغة في المنصة.</div>':'')
     +(D.removed.length?'<div class="pf-msg warn">مشاريع موجودة حالياً وغير موجودة في الملف ('+ar(D.removed.length)+') — ستنتقل إلى «سجل المشاريع الملغاة»: '+D.removed.slice(0,12).map(function(p){ return _lcEsc(p.alias||p.name); }).join("، ")+(D.removed.length>12?"…":"")+'</div>':'')
-    +'<div class="pf-grid"><div class="pf-box"><h4>مطابقة الأعمدة الأساسية</h4><table class="pf-t">'+cols+'</table></div>'
+    +_pfMapPanel(R)+'<div class="pf-grid"><div class="pf-box"><h4>مطابقة الأعمدة الأساسية</h4><table class="pf-t">'+cols+'</table></div>'
     +'<div class="pf-box"><h4>أبرز التغييرات</h4>'+(chRows?'<div class="pf-scroll"><table class="pf-t ch">'+chRows+'</table></div>'+(D.changed.length>40?'<div class="pf-note">و'+ar(D.changed.length-40)+' مشروع آخر…</div>':''):'<div class="pf-note">لا توجد فروق في الحقول الرئيسية.</div>')
       +(D.added.length?'<h4 style="margin-top:12px">مشاريع جديدة</h4><div class="pf-note">'+D.added.slice(0,20).map(function(p){ return _lcEsc(p.alias||p.name); }).join("، ")+'</div>':'')+'</div></div>'
     +'<div class="pf-act"><button class="pf-btn" onclick="pfApply()">اعتماد المحفظة وتحديث كل البيانات</button><button class="pf-btn ghost" onclick="PF_PENDING=null;pfOpen()">إلغاء</button></div></div>'; }
-function pfApply(){ var R=PF_PENDING; if(!R) return;
+function pfApply(){ var R=PF_PENDING; if(!R) return; try{ if(R._file&&/\.xls[xm]$/i.test(R._file.name)) R._file.arrayBuffer().then(function(b){ _pfFileSave(R._file.name,b); }); }catch(e){}
   var D=_pfDiff(R.data), now={}; R.data.forEach(function(p){ now[p.code]=1; });
   var canc=((PF&&PF.cancelled)||[]).filter(function(c){ return !(c.code&&now[c.code]); });
   D.removed.forEach(function(p){ canc.push({src:"portfolio",code:p.code,sector:p.sector||"",name:p.name,value:String(_dxBase(p)||""),duration:String(p.duration||""),status:_hbStatus(p),
@@ -7622,7 +7628,7 @@ function prSet(k,v){ PR[k]=v; projRegOpen(true); }
 function prSort(k){ if(PR.sort===k) PR.dir=-PR.dir; else { PR.sort=k; PR.dir=1; } projRegOpen(true); }
 function _prList(){ var q=_lcNorm(PR.q);
   var L=DATA.filter(function(p){
-    var _s=_prArr("sector"), _r=_prArr("region"), _t=_prArr("ptype"), _u=_prArr("status");
+    var _s=_prArr("sector"), _r=_prArr("region"), _t=_prArr("ptype"), _u=_prArr("status"), _k=_prArr("cat"); if(_k.length&&_k.indexOf(_dxCatOf(analyzeProject(p)))<0) return false;
     if(_s.length&&_s.indexOf(String(p.sector||"").trim())<0&&_s.indexOf(p.sector)<0) return false; if(_r.length&&!_r.some(function(v){ return _regionIs(p.region,v); })) return false;
     if(_t.length&&_t.indexOf(String(p.ptype||"").trim())<0) return false; if(_u.length&&_u.indexOf(_hbStatus(p))<0) return false;
     if(q){ var h=_lcNorm([p.code,p.name,p.alias,p.contractor,p.consultant,p.sector,p.region].join(" ")); if(h.indexOf(q)<0) return false; }
@@ -7641,15 +7647,15 @@ function _hbCloudFill(){ try{ var els=Array.prototype.slice.call(document.queryS
     /* الفهرس الكامل (cldWarmAll) فحص كل مشروع بالفعل — لا طلبات إضافية */
     els.forEach(function(el){ var p=DATA.find(function(x){ return String(x.code)===el.getAttribute("data-code"); }); if(!p) return; var u=_hbCloudThumb(p); if(u) put(el,u); }); }).catch(function(){}); }catch(e){} }
 function _hbBtns(){ return '<div class="hb-hb noprint"><button class="hb-btn sm ic" onclick="wkFullscreen()" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button><button class="hb-btn sm ic" onclick="printAnswer()" title="طباعة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button></div>'; }
-function prClear(){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; projRegOpen(true); }
+function prClear(){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; PR.cat=""; projRegOpen(true); }
 function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDashGroup(); }catch(e){}
-  if(!keep){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; }
+  if(!keep){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; PR.cat=""; }
   RERENDER=function(){ projRegOpen(true); }; ANSWER_TITLE=""; IS_REPORT=false; PRINT_NAME="سجل المشاريع — "+MONTHLBL; _dxSetHash("projects");
   var all=DATA, L=_prList();
   /* أعداد الحالات تتبع بقية الفلاتر (القطاع/المنطقة/النوع/البحث) */
   var _st=PR.status; PR.status=""; var base=_prList(); PR.status=_st;
   var bySt={}; base.forEach(function(p){ var s=_hbStatus(p); bySt[s]=(bySt[s]||0)+1; });
-  var anyF=!!(PR.q||PR.sector||PR.region||PR.status||PR.ptype);
+  var anyF=!!(PR.q||PR.sector||PR.region||PR.status||PR.ptype||_prArr("cat").length);
   var sts=Object.keys(bySt).sort(function(a,b){ return bySt[b]-bySt[a]; });
   var tv=all.reduce(function(a,p){ return a+_dxBase(p); },0), td=all.reduce(function(a,p){ return a+_dxN(p.disbursed); },0);
   var avg=_dxAvg(all.map(function(p){ return pct(p.actual); }))||0, ctr={}; all.forEach(function(p){ var c=_dxTxt(p.contractor); if(c) ctr[c]=1; });
@@ -7664,7 +7670,7 @@ function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDa
     +'<div class="hb-stchips solo"><button class="hb-chip'+(!anyF?" on":"")+'" onclick="prClear()" title="كل المشاريع بدون أي فلتر"><b>'+ar(all.length)+'</b>الكل</button>'
       +sts.map(function(s){ return '<button class="hb-chip'+(_prArr('status').indexOf(s)>-1?" on":"")+'" style="--c:'+_hbStCol(s)+'" onclick="prTogStatus(\''+esc(s).replace(/'/g,"\\'")+'\')"><i></i><b>'+ar(bySt[s])+'</b>'+esc(s)+'</button>'; }).join("")+'</div>';
   var tools='<div class="hb-tools noprint"><input class="hb-q" placeholder="ابحث بالاسم أو الكود أو المقاول…" value="'+esc(PR.q)+'" oninput="PR.q=this.value;clearTimeout(window._prT);window._prT=setTimeout(function(){projRegOpen(true);var i=document.querySelector(\'.hb-q\');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)">'
-    +_mselHTML("pr","sector","كل القطاعات",_prOpts("sector"),_prArr("sector"))+_mselHTML("pr","region","كل المناطق",_prOpts("region"),_prArr("region"))+_mselHTML("pr","ptype","كل الأنواع",_prOpts("ptype"),_prArr("ptype"))+_mselHTML("pr","status","كل الحالات",_prOpts("status"),_prArr("status"))
+    +_mselHTML("pr","sector","كل القطاعات",_prOpts("sector"),_prArr("sector"))+_mselHTML("pr","region","كل المناطق",_prOpts("region"),_prArr("region"))+_mselHTML("pr","ptype","كل الأنواع",_prOpts("ptype"),_prArr("ptype"))+_mselHTML("pr","status","كل الحالات",_prOpts("status"),_prArr("status"))+_mselHTML("pr","cat","كل حالات الجدول",_dfOpts("cat"),_prArr("cat"),_prArr("cat").map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "))
     +'<span class="hb-count">'+ar(L.length)+(L.length!==all.length?(' من '+ar(all.length)):'')+' مشروع</span>'
     +(anyF?'<button class="hb-clr" onclick="prClear()">✕ مسح الفلاتر</button>':'')
     +'<div class="hb-vt"><button class="'+(PR.view==="table"?"on":"")+'" onclick="prSet(\'view\',\'table\')">جدول</button><button class="'+(PR.view==="cards"?"on":"")+'" onclick="prSet(\'view\',\'cards\')">بطاقات</button></div>'
@@ -7736,9 +7742,9 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
   var tvm=_dxMs(tv);
   var kpis='<div class="hm-kpis">'
     +k("المشاريع النشطة",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
-    +k("القيمة بعد التعديل",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" ("+_dxPct(tv?td/tv:0)+")","","execDashboard()","mo",tv?td/tv:0)
+    +k("قيمة المشاريع",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" ("+_dxPct(tv?td/tv:0)+")","","execDashboard()","mo",tv?td/tv:0)
     +k("متوسط الإنجاز",_dxPct(avgA),"","المخطط "+_dxPct(avgP),avgA<avgP-0.05?"warn":"","execDashboard()","pg",avgA,avgP)
-    +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","execDashboard()","al",D.length?off.length/D.length:0)
+    +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['watch','late','stumb'])","al",D.length?off.length/D.length:0)
     +k("الملغاة",ar(cancelledAll().length),"مشروع","سجل المشاريع الملغاة","mut","cancelledOpen()","cx")+'</div>';
   var rec='<section class="hm-card"><header><h3>آخر المشاريع تحديثاً</h3><button onclick="PR.sort=\'upd\';PR.dir=-1;projRegOpen(true)">عرض الكل ←</button></header>'
     +(recent.length?'<div class="hm-list">'+recent.map(function(p){ return '<div class="hm-li" role="button" onclick="projDash(\''+esc(p.code)+'\')"><div class="hm-lt"><b>'+esc(p.alias||p.name)+'</b><span>'+esc(p.code)+' · '+esc(p.sector||"")+' · '+fmtDateTxt(p.last_update)+'</span></div>'+_hbBadge(_hbStatus(p))+_hbProg(p)+'</div>'; }).join("")+'</div>'
@@ -8205,6 +8211,93 @@ try{ (function(){ var orig=window.reportBuilder; if(typeof orig!=="function"||or
   var w=function(){ var r=orig.apply(this,arguments); try{ setNavActive("report"); var c=document.querySelector("#answer .acard"); if(c&&!c.querySelector(".rp-modes")){ var d=document.createElement("div"); d.innerHTML=_rpModes("b"); var m=d.firstChild; m.classList.add("rp-top"); var rt=c.querySelector(":scope > .rtools"); if(rt&&rt.nextSibling) c.insertBefore(m,rt.nextSibling); else c.insertBefore(m,c.firstChild); } }catch(e){} return r; };
   w._rp=true; window.reportBuilder=w; try{ reportBuilder=w; }catch(e){} })(); }catch(e){}
 
+
+/* ================= المحفظة: مطابقة الأعمدة الذكية + تنزيل Excel بنفس التنسيق ================= */
+var PF_MAP_KEY="reef_colmap_v1";
+function _pfMapLoad(){ try{ return JSON.parse(localStorage.getItem(PF_MAP_KEY)||"{}")||{}; }catch(e){ return {}; } }
+function _pfMapApply(){ try{ var m=_pfMapLoad(); Object.keys(m).forEach(function(f){ if(m[f]) HMAP[hkey(m[f])]=f; }); }catch(e){} }
+try{ _pfMapApply(); }catch(e){}
+function _pfSyn(f){ var out=[PF_FIELDS[f]||""]; try{ Object.keys(HMAP).forEach(function(k){ if(HMAP[k]===f) out.push(k); }); }catch(e){} return out; }
+function _pfSuggest(R){ try{ var head=R.headRow||[], used={}; head.forEach(function(h){ if(HMAP[hkey(h)]) used[String(h).trim()]=1; });
+  var free=head.map(function(h){ return String(h||"").trim(); }).filter(function(h){ return h&&!used[h]; });
+  var miss=Object.keys(PF_FIELDS).filter(function(k){ return !(k in R.fields); });
+  R.unmatched=free; R.suggest=miss.map(function(f){ var best="",bs=0; free.forEach(function(h){ _pfSyn(f).forEach(function(s){ var sc=_pfScore(h,s); if(sc>bs){ bs=sc; best=h; } }); }); return {f:f,label:PF_FIELDS[f],header:bs>=0.45?best:"",score:bs}; }).filter(function(s){ return s.header||PF_REQ.indexOf(s.f)>-1; }); }catch(e){ R.suggest=[]; R.unmatched=[]; } return R; }
+function _pfRoot(w){ w=String(w).replace(/^(ال|بال|وال|لل|ب|ل)/,""); return w.length>3?w.replace(/[اويىهةمنت]/g,""):w; }
+function _pfScore(h,s){ var a=_lcNorm(h), b=_lcNorm(s); if(!a||!b) return 0; var sim=0; try{ sim=_lcSim(a,b); }catch(e){}
+  var STOP={"نسبه":1,"قيمه":1,"تاريخ":1,"اجمالي":1,"عدد":1,"حتي":1,"الي":1,"من":1,"في":1};
+  var ta=a.split(" ").filter(function(w){ return w.length>1&&!STOP[w]; }).map(_pfRoot), tb=b.split(" ").filter(function(w){ return w.length>1&&!STOP[w]; }).map(_pfRoot);
+  if(!ta.length||!tb.length) return sim; var hit=tb.filter(function(w){ return w.length>=2&&ta.indexOf(w)>-1; }).length; return Math.max(sim,0.85*hit/tb.length); }
+function _pfMapPanel(R){ if(!R.suggest||!R.suggest.length) return "";
+  var opts=function(sel){ return '<option value="">— لا يوجد —</option>'+R.unmatched.map(function(h){ return '<option value="'+_lcEsc(h)+'"'+(h===sel?" selected":"")+'>'+_lcEsc(h)+'</option>'; }).join(""); };
+  var rows=R.suggest.map(function(s){ return '<tr class="'+(s.header?"sg":"na")+(PF_REQ.indexOf(s.f)>-1?" req":"")+'"><td><b>'+_lcEsc(s.label)+'</b>'+(PF_REQ.indexOf(s.f)>-1?' <em>مطلوب</em>':'')+'</td><td>'+(s.header?'أقترح عمود «<b>'+_lcEsc(s.header)+'</b>» <small>(تشابه '+Math.round(s.score*100)+'%)</small>':'<span class="mut">لم أجد عموداً قريباً</span>')+'</td><td><select class="pf-map" data-f="'+s.f+'">'+opts(s.header)+'</select></td></tr>'; }).join("");
+  return '<div class="pf-box pf-mapbox"><h4>أعمدة لم أجدها بالاسم — راجع الاقتراحات</h4><div class="pf-note">أقرأ الأعمدة بعناوينها، فتغيير ترتيب الأعمدة لا يؤثر. هذه الحقول لم أجد عنوانها كما هو؛ اختر العمود المناسب أو اترك «لا يوجد»، وسأتذكّر اختيارك في المرات القادمة.</div>'
+    +'<table class="pf-t pf-mt">'+rows+'</table><div class="pf-act"><button class="pf-btn" onclick="pfMapSave()">✓ اعتماد هذه المطابقة وإعادة القراءة</button></div></div>'; }
+function pfMapSave(){ var m=_pfMapLoad(); document.querySelectorAll(".pf-map").forEach(function(s){ var f=s.getAttribute("data-f"); if(s.value){ m[f]=s.value; HMAP[hkey(s.value)]=f; } });
+  try{ localStorage.setItem(PF_MAP_KEY,JSON.stringify(m)); }catch(e){}
+  var R=PF_PENDING; if(!R||!R._file) return; var o=document.getElementById("pfOut"); if(o) o.innerHTML='<div class="pf-msg">● جارٍ إعادة قراءة الملف بالمطابقة الجديدة…</div>';
+  _pfParse(R._file).then(function(r){ r._file=R._file; PF_PENDING=_pfSuggest(r); _pfRender(); }).catch(function(e){ if(o) o.innerHTML='<div class="pf-msg bad">⚠ '+_lcEsc(e.message||"تعذّر")+'</div>'; }); }
+try{ window.pfMapSave=pfMapSave; }catch(e){}
+/* حفظ الملف الأصلي (للتنزيل بنفس التنسيق) */
+function _pfDB(){ return new Promise(function(res,rej){ try{ var r=indexedDB.open("reef_pf_file",1); r.onupgradeneeded=function(){ r.result.createObjectStore("f"); }; r.onsuccess=function(){ res(r.result); }; r.onerror=function(){ rej(r.error); }; }catch(e){ rej(e); } }); }
+function _pfFileSave(name,buf){ return _pfDB().then(function(db){ return new Promise(function(res){ var tx=db.transaction("f","readwrite"); tx.objectStore("f").put({name:name,buf:buf,at:new Date().toISOString()},"orig"); tx.oncomplete=function(){ res(true); }; tx.onerror=function(){ res(false); }; }); }).catch(function(){ return false; }); }
+function _pfFileLoad(){ return _pfDB().then(function(db){ return new Promise(function(res){ var tx=db.transaction("f","readonly"), g=tx.objectStore("f").get("orig"); g.onsuccess=function(){ res(g.result||null); }; g.onerror=function(){ res(null); }; }); }).catch(function(){ return null; }); }
+function _xColN(s){ var n=0; for(var i=0;i<s.length;i++) n=n*26+(s.charCodeAt(i)-64); return n; }
+function _xColS(n){ var s=""; while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
+function _xSerial(iso){ var d=_dxDt(iso); if(!d) return null; var u=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()); return Math.round(u/864e5)+25569; }
+function _pfZipLib(){ if(window.JSZip) return Promise.resolve(window.JSZip); return new Promise(function(res,rej){ var urls=["https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js","https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js","https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"];
+  (function nx(i){ if(window.JSZip) return res(window.JSZip); if(i>=urls.length) return rej(new Error("تعذّر تحميل مكتبة ملفات Excel — تحقق من الإنترنت")); var s=document.createElement("script"); s.src=urls[i]; s.onload=function(){ window.JSZip?res(window.JSZip):nx(i+1); }; s.onerror=function(){ nx(i+1); }; document.head.appendChild(s); })(0); }); }
+function pfExportXlsx(){ var E=_peLoad(), codes=Object.keys(E).filter(function(c){ return Object.keys(E[c]||{}).some(function(k){ return k.charAt(0)!=="_"; }); });
+  var msg=function(m,bad){ var o=document.getElementById("pfOut")||document.getElementById("pfxMsg"); if(o) o.innerHTML='<div class="pf-msg'+(bad?' bad':' ok')+'">'+m+'</div>'; else alert(m.replace(/<[^>]+>/g,"")); };
+  _pfFileLoad().then(function(rec){ if(rec&&rec.buf) return rec;
+    return new Promise(function(res){ var i=document.createElement("input"); i.type="file"; i.accept=".xlsx,.xlsm"; i.onchange=function(){ var f=i.files&&i.files[0]; if(!f){ res(null); return; } f.arrayBuffer().then(function(b){ _pfFileSave(f.name,b); res({name:f.name,buf:b}); }); };
+      if(!confirm("لا يوجد ملف محفظة أصلي محفوظ في هذا المتصفح.\nاختر ملف المحفظة الأصلي (xlsx) لأكتب التعديلات داخله بنفس التنسيق.")) { res(null); return; } i.click(); }); })
+  .then(function(rec){ if(!rec) return; msg("● جارٍ كتابة التعديلات داخل ملف المحفظة الأصلي…");
+    return _pfZipLib().then(function(JS){ return JS.loadAsync(rec.buf); }).then(function(zip){ return _pfWriteEdits(zip,E,codes).then(function(st){
+      return zip.generateAsync({type:"blob",compression:"DEFLATE",mimeType:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}).then(function(blob){
+        var nm=String(rec.name||"المحفظة.xlsx").replace(/\.(xlsx|xlsm|xls)$/i,"")+" — محدّثة "+new Date().toISOString().slice(0,10)+".xlsx";
+        var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=nm; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },3000);
+        msg("✓ تم تنزيل «"+_lcEsc(nm)+"» — نفس ملف المحفظة بتنسيقه وأوراقه، مع "+ar(st.cells)+" تعديل في "+ar(st.rows)+" مشروع"+(st.skipped.length?" · لم يُكتب: "+_lcEsc(st.skipped.slice(0,6).join("، ")):"")+"."); }); }); }); })
+  .catch(function(e){ msg("⚠ تعذّر إنشاء الملف: "+_lcEsc((e&&e.message)||e),true); }); }
+function _pfWriteEdits(zip,E,codes){ var P=new DOMParser(), S=new XMLSerializer(), NS="http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+  var sheetName=(typeof PF!=="undefined"&&PF&&PF.sheet)||"";
+  return Promise.all([zip.file("xl/workbook.xml").async("string"),zip.file("xl/_rels/workbook.xml.rels").async("string"),zip.file("xl/sharedStrings.xml")?zip.file("xl/sharedStrings.xml").async("string"):Promise.resolve("")]).then(function(a){
+    var wb=P.parseFromString(a[0],"application/xml"), rels=P.parseFromString(a[1],"application/xml"), ss=a[2]?P.parseFromString(a[2],"application/xml"):null;
+    var strs=ss?Array.prototype.map.call(ss.getElementsByTagNameNS(NS,"si"),function(si){ return Array.prototype.map.call(si.getElementsByTagNameNS(NS,"t"),function(t){ return t.textContent; }).join(""); }):[];
+    var sheets=Array.prototype.slice.call(wb.getElementsByTagNameNS(NS,"sheet")), rid=function(s){ return s.getAttribute("r:id")||s.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships","id"); };
+    var target=function(s){ var id=rid(s), r=Array.prototype.find.call(rels.getElementsByTagName("Relationship"),function(x){ return x.getAttribute("Id")===id; }); if(!r) return null; var t=r.getAttribute("Target"); return t.charAt(0)==="/"?t.slice(1):"xl/"+t.replace(/^\.\//,""); };
+    var cand=sheets.filter(function(s){ return s.getAttribute("name")===sheetName; }); if(!cand.length) cand=sheets;
+    var cellText=function(c){ var t=c.getAttribute("t"), v=c.getElementsByTagNameNS(NS,"v")[0]; if(t==="s") return v?(strs[+v.textContent]||""):""; if(t==="inlineStr"){ return Array.prototype.map.call(c.getElementsByTagNameNS(NS,"t"),function(x){ return x.textContent; }).join(""); } return v?v.textContent:""; };
+    var pick=function(i){ if(i>=cand.length) return Promise.reject(new Error("لم أجد ورقة المشاريع في الملف")); var path=target(cand[i]); if(!path||!zip.file(path)) return pick(i+1);
+      return zip.file(path).async("string").then(function(x){ var doc=P.parseFromString(x,"application/xml"), rows=Array.prototype.slice.call(doc.getElementsByTagNameNS(NS,"row"));
+        var hr=null,colOf={},best=0; rows.slice(0,20).forEach(function(r){ var m={},n=0; Array.prototype.forEach.call(r.getElementsByTagNameNS(NS,"c"),function(c){ var f=HMAP[hkey(cellText(c))]; if(f&&!(f in m)){ m[f]=String(c.getAttribute("r")).replace(/\d+/g,""); n++; } }); if(n>best){ best=n; hr=r; colOf=m; } });
+        if(!hr||best<3||!colOf.code) return pick(i+1); return {path:path,doc:doc,rows:rows,hr:hr,colOf:colOf}; }); };
+    return pick(0).then(function(W){ var rowOf={}, hrN=+W.hr.getAttribute("r");
+      W.rows.forEach(function(r){ var n=+r.getAttribute("r"); if(n<=hrN) return; var c=Array.prototype.find.call(r.getElementsByTagNameNS(NS,"c"),function(c){ return String(c.getAttribute("r")).replace(/\d+/g,"")===W.colOf.code; }); if(c){ var k=String(cellText(c)).trim(); if(k&&!rowOf[k]) rowOf[k]=r; } });
+      var TY={}; PE_FIELDS.forEach(function(s){ s[1].forEach(function(f){ TY[f[0]]=f[2]; }); });
+      var st={cells:0,rows:0,skipped:[]};
+      codes.forEach(function(code){ var row=rowOf[code]; if(!row){ st.skipped.push(code); return; } var e=E[code], any=false;
+        Object.keys(e).forEach(function(f){ if(f.charAt(0)==="_") return; var col=W.colOf[f]; if(!col){ st.skipped.push(code+":"+f); return; }
+          var ref=col+row.getAttribute("r"), c=Array.prototype.find.call(row.getElementsByTagNameNS(NS,"c"),function(x){ return x.getAttribute("r")===ref; });
+          if(!c){ c=W.doc.createElementNS(NS,"c"); c.setAttribute("r",ref); var after=Array.prototype.find.call(row.getElementsByTagNameNS(NS,"c"),function(x){ return _xColN(String(x.getAttribute("r")).replace(/\d+/g,""))>_xColN(col); }); row.insertBefore(c,after||null); }
+          while(c.firstChild) c.removeChild(c.firstChild); c.removeAttribute("t");
+          var val=e[f], ty=TY[f]||"t", num=null;
+          if(ty==="p"){ var pv=pct(val); if(pv!=null) num=pv; } else if(ty==="n"){ num=toNum(val); } else if(ty==="d"){ num=_xSerial(val); }
+          if(num!=null&&!isNaN(num)){ var v=W.doc.createElementNS(NS,"v"); v.textContent=String(num); c.appendChild(v); }
+          else if(String(val==null?"":val).trim()!==""){ c.setAttribute("t","inlineStr"); var is=W.doc.createElementNS(NS,"is"), tt=W.doc.createElementNS(NS,"t"); tt.setAttribute("xml:space","preserve"); tt.textContent=String(val); is.appendChild(tt); c.appendChild(is); }
+          st.cells++; any=true; });
+        if(any) st.rows++; });
+      zip.file(W.path,S.serializeToString(W.doc),{createFolders:false});
+      /* إعادة حساب الصيغ عند الفتح + حذف سلسلة الحساب القديمة */
+      var cp=wb.getElementsByTagNameNS(NS,"calcPr")[0]; if(!cp){ cp=wb.createElementNS(NS,"calcPr"); wb.documentElement.appendChild(cp); } cp.setAttribute("fullCalcOnLoad","1");
+      zip.file("xl/workbook.xml",S.serializeToString(wb),{createFolders:false});
+      if(zip.file("xl/calcChain.xml")){ zip.remove("xl/calcChain.xml");
+        return Promise.all([zip.file("[Content_Types].xml").async("string")]).then(function(b){ zip.file("[Content_Types].xml",b[0].replace(/<Override[^>]*calcChain[^>]*\/>/g,""),{createFolders:false});
+          Array.prototype.slice.call(rels.getElementsByTagName("Relationship")).forEach(function(r){ if(/calcChain/.test(r.getAttribute("Target")||"")) r.parentNode.removeChild(r); }); zip.file("xl/_rels/workbook.xml.rels",S.serializeToString(rels),{createFolders:false}); return st; }); }
+      return st; }); }); }
+try{ window.pfExportXlsx=pfExportXlsx; }catch(e){}
+/* فلتر حالة الجدول في سجل المشاريع */
+function prOpenCat(arr){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; PR.cat=arr; PR.view=PR.view||"table"; projRegOpen(true); }
+try{ window.prOpenCat=prOpenCat; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -8709,7 +8802,7 @@ function qxRoute(raw){ var q0=norm(raw), q=qxClean(raw); if(!q) return false;
   if(sp&&_qxHas(q,["صور","صوره"])&&!_qxW(q,QX_EV)){ projCard(sp.code); return true; }
   if(sp&&!_qxW(q,QX_EV)){ var ff=_qxField(q); if(ff){ qxField(sp,ff); return true; } }
   /* عرض تلقائي للوحات */
-  if(_qxHas(q,["استعرض","تصفح","قلب","قلّب","شغل","اعرض","عرض تلقائي","عرض تقديمي","سلايد","slideshow","لف"])&&_qxHas(q,["لوحات","اللوحات","لوحه المشاريع","لوحات المشاريع","داشبورد المشاريع","عرض تلقائي","سلايد","عرض تقديمي"])){
+  if((_qxHas(q,["استعرض","تصفح","قلب","قلّب","شغل","اعرض","عرض تلقائي","عرض تقديمي","سلايد","slideshow"])&&_qxHas(q,["لوحات","اللوحات","لوحات المشاريع","داشبورد المشاريع","عرض تلقائي","سلايد","عرض تقديمي"]))||(_qxHas(q,["اتنقل","تنقل","انتقل بين","بينهم","بينها","واحده واحده","ورا بعض","تباعا","مر على","عدي على","لف على"])&&_qxHas(q,["لوحه","لوحات","اللوحات","المشاريع"]))){
     var S=_qxSub(q), n=_qxNums(q).filter(function(x){ return x>=2&&x<=600; })[0]; var sec=n||8; if(/دقيقه|دقايق|دقائق/.test(q)&&n) sec=n*60;
     var catL=_qxCatIn(q); var L=S.list; if(catL) L=L.filter(function(p){ return _dxCatOf(analyzeProject(p))===catL; });
     if(!L.length){ _qxShow("عرض تلقائي",'<div class="atext">لا توجد مشاريع مطابقة للعرض.</div>'); return true; }
