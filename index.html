@@ -3838,6 +3838,20 @@ body[data-theme="dark"] .fu-it{background:rgba(255,255,255,.04);border-color:#2B
 .dx-land.pdl .fit .g-fin>.dx-health,.dx-land.pdl .fit .g-cl>.dx-health{flex:none!important;height:96px;align-items:center}
 .dx-land.pdl .fit .g-fin>.dx-health .dx-donut,.dx-land.pdl .fit .g-cl>.dx-health .dx-donut{width:84px!important;height:84px!important}
 .dx-land.pdl .fit .g-cl>.dx-tiles{margin-top:auto}
+
+/* ملاحظات لوحة المشروع: محاذاة يمين وحالات ملوّنة */
+.pd-notes .pd-note.pd-short{display:grid!important;grid-template-columns:max-content minmax(0,1fr);align-content:center;column-gap:10px;row-gap:0;direction:rtl}
+.pd-notes .pd-note.pd-short>div{display:contents!important}
+.pd-notes .pd-note.pd-short>div>span,.pd-notes .pd-note.pd-short>div>b{padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);align-self:stretch;display:flex!important;align-items:center;justify-content:flex-start!important}
+.pd-notes .pd-note.pd-short>div:last-child>span,.pd-notes .pd-note.pd-short>div:last-child>b{border:0}
+body[data-theme="dark"] .pd-notes .pd-note.pd-short>div>span,body[data-theme="dark"] .pd-notes .pd-note.pd-short>div>b{border-color:rgba(255,255,255,.07)}
+.pd-note.pd-short b:has(.pd-pill){overflow:visible!important}
+.pd-note.pd-short b{max-width:none!important;text-align:right!important;justify-self:start!important;margin:0!important}
+.pd-note.pd-short span{text-align:right!important;justify-self:start}
+.pd-note p{text-align:right}
+.pd-pill{display:inline-flex;align-items:center;height:20px;padding:0 10px;border-radius:99px;font-style:normal;font-size:10.5px;line-height:1}
+.pd-pill.ok{background:#E3F1E8;color:#00703C;border:1px solid #BFDFCB}
+body[data-theme="dark"] .pd-pill.ok{background:rgba(143,211,168,.12);color:#9FDDB6;border-color:rgba(143,211,168,.3)}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -4956,6 +4970,10 @@ function fmtVal(attr,v){ if(v==null)return "لا يوجد";
   if(attr.kind==="money")return fmtM(v); if(attr.kind==="pct")return ar(Math.round((v>1?v/100:v)*100))+"%";
   if(attr.kind==="area")return ar(v)+" م²"; if(attr.kind==="dur")return ar(Math.round(v))+" يوم"; return ar(v); }
 
+function _pdNoteV(k,v){ var s=String(v==null?"":v).trim();
+  if(/البيئي/.test(k)&&/تم\s*صدور|صدر|يوجد|متوفر|متوافر/.test(s)) return '<em class="pd-pill ok">يوجد</em>';
+  if(/المغايرات|البنود المستحدثة/.test(k)&&/تم\s*ال[إا]عتماد/.test(s)) return '<em class="pd-pill ok">تم الاعتماد</em>';
+  return hlAppr(esc(s).replace(/\|/g," · ")); }
 function hlAppr(s){ return String(s==null?"":s).replace(/تم\s*ال[إا]عتماد/g,'<span class="appr">$&</span>'); }
 function _synHit(f,q){ const a=ATTRS.find(x=>x.f===f); return !!(a&&a.s.some(syn=>q.indexOf(norm(syn))>-1)); }
 function _vnTable(field,label0,sub){ const arr=sub.filter(p=>String(p[field]||"").trim()!=="" && clean(p[field])!=="لا يوجد");
@@ -8945,7 +8963,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     ["المغايرات",_dxTxt(p.variations)],["البنود المستحدثة",_dxTxt(p.new_items)],["الالتزام البيئي",_dxTxt(p.env)]].filter(function(x){return x[1];});
   var _nL=notes.filter(function(x){ return String(x[1]).length>45; }), _nS=notes.filter(function(x){ return String(x[1]).length<=45; });
   var ntBody=notes.length?('<div class="pd-notes nt2" style="--ntc:'+(_nL.map(function(){ return "minmax(0,1.5fr)"; }).concat(_nS.length?["minmax(0,1fr)"]:[]).join(" "))+'">'+_nL.map(function(x){ return '<div class="pd-note'+(String(x[1]).length>260?" long":"")+'" onclick="this.classList.toggle(\'open\')"><span>'+esc(x[0])+'</span><p>'+hlAppr(esc(x[1]).replace(/\|/g," · ")).replace(/\n+/g,"<br>")+'</p></div>'; }).join("")
-    +(_nS.length?'<div class="pd-note pd-short">'+_nS.map(function(x){ return '<div><span>'+esc(x[0])+'</span><b>'+hlAppr(esc(x[1]).replace(/\|/g," · "))+'</b></div>'; }).join("")+'</div>':'')+'</div>'):'<div class="dx-empty">لا توجد ملاحظات مسجّلة</div>';
+    +(_nS.length?'<div class="pd-note pd-short">'+_nS.map(function(x){ return '<div><span>'+esc(x[0])+'</span><b>'+_pdNoteV(x[0],x[1])+'</b></div>'; }).join("")+'</div>':'')+'</div>'):'<div class="dx-empty">لا توجد ملاحظات مسجّلة</div>';
   /* --- الصور --- */
   var imgs=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean);
   var galBody='<div class="pd-gal" data-proj="'+esc(p.name||"")+'">'+(imgs.length?imgs.map(function(u){ return '<div class="gph"><img loading="lazy" referrerpolicy="no-referrer" src="'+u+'" onclick="lightbox(this.src)" onerror="this.parentNode.style.display=\'none\'"></div>'; }).join(""):'<div class="dx-empty">لا توجد صور مرفوعة لهذا المشروع</div>')+'</div>';
