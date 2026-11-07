@@ -3793,7 +3793,9 @@ body :is(b,strong,span,em,small,p,td,th,button,a,label,li,div,i,u,s,input,select
 body :is(h1,h2,h3,h4,h5,h6),body :is(h1,h2,h3,h4,h5,h6) *,body :is(.big,.cal-d,.calmid,.cmp .col .n,.cv-title,.d-kpi-n,.d-mini-n,.d-q-n,.dash-title,.dash-title2,.dsh-big b,.dsh-hn,.dsh-mini b,.dsh-stat b,.dx-kv,.dx-split b,.pd-rank b,.dxf-kv,.hb-kt b,.hb-total b,.hm-k>b,.hm-sum b,.k-num,.kb-title,.km-n,.lc-kc b,.pcd-n,.pc3-dis b,.pc3-k b,.pc3-val b,.pc3-mini b,.pc4-k b,.pc4-rv b,.pf-kpis b,.qx-big b,.qx-kp b,.rk-n,.stat .n,.uh-cv-title,.uh-kpi-n,.uh-title,.weval-v,.proj h2,.cv-kick,.rtb-t,#rsplash h1),body :is(.big,.cal-d,.calmid,.cmp .col .n,.cv-title,.d-kpi-n,.d-mini-n,.d-q-n,.dash-title,.dash-title2,.dsh-big b,.dsh-hn,.dsh-mini b,.dsh-stat b,.dx-kv,.dx-split b,.pd-rank b,.dxf-kv,.hb-kt b,.hb-total b,.hm-k>b,.hm-sum b,.k-num,.kb-title,.km-n,.lc-kc b,.pcd-n,.pc3-dis b,.pc3-k b,.pc3-val b,.pc3-mini b,.pc4-k b,.pc4-rv b,.pf-kpis b,.qx-big b,.qx-kp b,.rk-n,.stat .n,.uh-cv-title,.uh-kpi-n,.uh-title,.weval-v,.proj h2,.cv-kick,.rtb-t,#rsplash h1) *{font-weight:800!important}
 
 /* لوحة المشروع: كروت المؤشرات الثلاثة */
-.dx .dx-kpis.pd-kpis3,#answer .dx .dx-kpis.pd-kpis3,.dx-land .fit .dx-kpis.pd-kpis3,.acard:fullscreen .dx .dx-kpis.pd-kpis3{grid-template-columns:minmax(0,1fr) minmax(0,2.3fr) minmax(0,1fr)!important}
+.dx .dx-kpis.pd-kpis3,#answer .dx .dx-kpis.pd-kpis3,.dx-land .fit .dx-kpis.pd-kpis3,.acard:fullscreen .dx .dx-kpis.pd-kpis3{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.dx .dx-kpis.pd-kpis3>.pd-pk{grid-column:span 2}
+.dx-land.pdl .fit .dx-kpis.pd-kpis3,#answer .dx-land.pdl .fit .dx-kpis.pd-kpis3{grid-template-columns:1.12fr 1fr 1fr 1.1fr!important;gap:10px!important}
 .pd-pk .dx-kh{display:flex;align-items:center;gap:8px}.pd-pk .pd-pst{margin-inline-start:auto;font-style:normal;font-size:11px;padding:3px 10px;border-radius:99px;background:#EEF4EF;color:#1E5B3A}
 .pd-pk .pd-pst.bad{background:#FBECEA;color:#B23B2E}.pd-pk .pd-pst.warn{background:#FFF6DD;color:#8A6A00}
 .pd-p3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:6px 0 8px}
@@ -8877,7 +8879,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +'<div class="dx-kpi pd-pk"><div class="dx-kh"><span class="dx-ki">'+DX_ICO.prog+'</span><span class="dx-kl">الإنجاز والحيود</span><em class="pd-pst '+_ptn+'">'+_pst+'</em></div>'
       +'<div class="pd-p3"><div><span>الإنجاز الفعلي</span><b>'+_dxPct(a)+'</b></div><div><span>الإنجاز المخطط</span><b>'+(pl==null?"—":_dxPct(pl))+'</b></div><div class="'+_ptn+'"><span>الحيود عن الخطة</span><b>'+(sv==null?"—":((sv<0?"−":"+")+ar(Math.abs(Math.round(sv*100)))+"%"))+'</b></div></div>'
       +'<div class="pd-pbar"><u style="width:'+(_dxClamp(pl||0,0,1)*100).toFixed(1)+'%"></u><i style="width:'+(_dxClamp(a||0,0,1)*100).toFixed(1)+'%"></i></div>'
-      +'<div class="dx-ks"><span class="pd-lg a"></span>الفعلي <span class="pd-lg p"></span>المخطط · متوسط القطاع '+_dxPct(sA)+(rank?' · الترتيب '+ar(rank)+' من '+ar(peers.length):'')+'</div></div>'
+      +'<div class="dx-ks"><span class="pd-lg a"></span>الفعلي <span class="pd-lg p"></span>المخطط</div></div>'
     +_dxKpi({ico:DX_ICO.clock,l:"الزمن المنقضي",v:(t.ok?_dxPct(t.raw>1?t.raw:t.frac):"—"),tone:(t.ok&&t.left<0&&!r.done?"bad":""),viz:_dxBar(t.ok?t.frac:0,a,t.ok&&t.left<0?DX.red:DX.blue),
         s:(t.ok?(t.left<0?(r.done?'انتهت المدة':'متجاوز بـ '+ar(-t.left)+' يوم'):'متبقٍ '+ar(t.left)+' يوم'):'تواريخ غير مكتملة')})
     +'</div>';
