@@ -8767,8 +8767,9 @@ function hmgStop(){ if(HMG.t){ clearInterval(HMG.t); HMG.t=null; } }
 function hmgStart(){ hmgStop(); if(!HMG.slides.length) return; HMG.t=setInterval(function(){ if(!document.querySelector('#answer .hmg-stage')){ hmgStop(); return; } if(HMG.pause||document.hidden) return; hmgShow(HMG.i+1); },2000); var pb=document.getElementById('hmgPb'); if(pb){ pb.classList.remove('run'); void pb.offsetWidth; pb.classList.add('run'); } }
 
 /* ================= ملفات ريف: تقرير المشروع / المنطقة / القطاع بتصميم جديد ================= */
-var RX_MODE=(function(){ try{ return localStorage.getItem("reef_rx")||"new"; }catch(e){ return "new"; } })();
-function rxSetMode(m){ RX_MODE=m; try{ localStorage.setItem("reef_rx",m); }catch(e){} if(typeof RERENDER==="function") RERENDER(); }
+var RX_ENABLED=false; /* مخفي مؤقتاً لحين الاتفاق على الشكل */
+var RX_MODE=RX_ENABLED?(function(){ try{ return localStorage.getItem("reef_rx")||"new"; }catch(e){ return "new"; } })():"classic";
+function rxSetMode(m){ if(!RX_ENABLED) m="classic"; RX_MODE=m; try{ localStorage.setItem("reef_rx",m); }catch(e){} if(typeof RERENDER==="function") RERENDER(); }
 function _rxN(v){ var n=toNum(v); return n==null?0:n; }
 function _rxSn(p){ return String(p.alias||p.name||"").replace(/^(إنشاء وتجهيز|انشاء وتجهيز|توريد وتركيب|تقديم الخدمات لاستكمال|إنشاء|انشاء|توريد|تشغيل وصيانة)\s+/,""); }
 function _rxMu(x){ var s=String(_dxM(x)); return s.replace(/\s*(مليار|مليون|ألف)$/,' <small>$1</small>')+'<small class="rx-ry">'+RYL+'</small>'; }
@@ -8923,7 +8924,7 @@ try{ (function(){
     if(!sub.length) return; RERENDER=function(){ report(kind,name); }; PRINT_NAME="ملف "+(kind==="region"?"منطقة ":"قطاع ")+name+" - "+MONTHLBL; ANSWER_TITLE="ملف "+name; rxGroup(kind,name,sub); };
   window.projectCard=wPC; projectCard=wPC; window.report=wRep; report=wRep;
 })(); }catch(e){}
-function _rxClassicBar(){ try{ var c=document.querySelector("#answer .acard"); if(!c||c.querySelector(".rx-bar")) return; var d=document.createElement("div");
+function _rxClassicBar(){ if(!RX_ENABLED) return; try{ var c=document.querySelector("#answer .acard"); if(!c||c.querySelector(".rx-bar")) return; var d=document.createElement("div");
   d.innerHTML='<div class="rx-bar noprint rx-cb"><div class="rx-seg"><button onclick="rxSetMode(\'new\')">الملف التفاعلي</button><button class="on">التقرير الكلاسيكي</button></div></div>'; var rt=c.querySelector(":scope > .rtools"); c.insertBefore(d.firstChild,rt?rt.nextSibling:c.firstChild); }catch(e){} }
 try{ window.rxSetMode=rxSetMode; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
