@@ -4200,6 +4200,11 @@ body[data-theme="dark"] .tlp .filterbar .xlbtn{background:#1E5B3A!important}
 
 .tlp .tblcap{display:flex!important;justify-content:flex-start!important;text-align:right!important;width:100%}
 .tlp .tblcap .alabel{margin-inline-start:0!important;margin-inline-end:auto!important;justify-content:flex-start!important}
+
+.tlp .ptable td.pnd-c{white-space:nowrap}
+.tlp .pnd{display:inline-block;padding:3px 10px;border-radius:99px;font-size:10.5px;margin-inline-end:4px;white-space:nowrap;border:1px solid transparent}
+.tlp .pnd.v{background:#FBF4E4;color:#8A6420;border-color:#EEDDB8}.tlp .pnd.n{background:#EAF1F7;color:#3D6A8C;border-color:#CFE0EC}
+.tlp .pnd.od{background:#FBECEA;color:#B23B2E;border-color:#F2CFCA}.tlp .pnd.sn{background:#FFF6DD;color:#8A6A00;border-color:#F0DFA8}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -5127,7 +5132,7 @@ function tblColDefs(sub,col){ let keys=(TABLE_COLS&&TABLE_COLS.length)?TABLE_COL
   if(!(TABLE_COLS&&TABLE_COLS.length)&&col==='sector') keys=keys.map(k=>k==='region'?'sector':k);
   const stopped=sub.length>0&&sub.every(p=>/إيقاف|الإمتثال/.test(p.status||""));
   if(stopped&&!(TABLE_COLS&&TABLE_COLS.length)){ let done=false; keys=keys.map(k=>{ if((k==='region'||k==='sector')&&!done){done=true;return 'stop_date';} return k; }); if(!done&&keys.indexOf('stop_date')<0) keys.splice(1,0,'stop_date'); }
-  return keys.map(k=>ALL_COLS.find(c=>c.k===k)).filter(Boolean); }
+  const _d=keys.map(k=>ALL_COLS.find(c=>c.k===k)).filter(Boolean); if(typeof TBL_EXTRA!=="undefined"&&TBL_EXTRA&&TBL_EXTRA.length) _d.splice(1,0,...TBL_EXTRA); return _d; }
 function tCellHTML(d,p){ const v=d.g(p); if(d.pill){ const s=String(v||""), c=/إيقاف|موقوف|متوقف/.test(s)?"stp":(/إنتهاء|انتهاء|منته|مكتمل/.test(s)?"dn":(/بدء|تنفيذ/.test(s)?"run":"pre")); return '<td><span class="pill ps-'+c+'">'+v+'</span></td>'; } return '<td'+(d.cls?' class="'+d.cls+'"':'')+'>'+v+'</td>'; }
 function tRowHTML(p,i,defs){ const oc=p&&p.code?' class="prow" onclick="openProjRow(\''+String(p.code).replace(/'/g,"")+'\')"':''; return '<tr'+oc+'><td class="c mut">'+ar(i+1)+'</td>'+defs.map(d=>tCellHTML(d,p)).join("")+'</tr>'; }
 function openProjRow(code){ try{ const p=DATA.find(x=>String(x.code)===String(code)); if(!p)return; PROJ_MODE='general'; REPORT_CTX=null; projectCard(p,false); try{window.scrollTo({top:0,behavior:"smooth"});}catch(e){} }catch(e){} }
@@ -5206,6 +5211,7 @@ function tableBlock(sub,col){ sub=sub.slice().sort((a,b)=>(pct(b.actual)||0)-(pc
 function tblEditTitle(t){ ANSWER_TITLE=t; return '<div class="tblcap"><div class="alabel"><i></i><input class="tbl-title-in" id="listTitleIn" value="'+esc(t)+'" oninput="onListTitle(this.value)" title="اضغط لتغيير عنوان القائمة"><button class="tbl-title-ed" onclick="var i=document.getElementById(\'listTitleIn\');if(i){i.focus();i.select();}" title="تغيير العنوان"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></div>'; }
 function onListTitle(v){ v=(v==null?"":String(v)).trim(); const t=v||"قائمة المشاريع"; ANSWER_TITLE=t; PRINT_NAME=(/^تقرير/.test(t)?t:("تقرير "+t))+" - "+MONTHLBL; try{document.title=PRINT_NAME;}catch(e){} try{ const cov=document.querySelector("#answer .pcover .cv-title"); if(cov) cov.textContent=t; }catch(e){} }
 function projectTable(sub,title,dim,cov){ if(!sub.length) return show(label("نتيجة")+`<div class="atext">لا توجد مشاريع مطابقة لـ <strong>${title}</strong>.</div>`);
+  TBL_EXTRA=window._TBL_NEXT||null; window._TBL_NEXT=null;
   const cap=cov||("جدول — "+title); TBL_EDITING=false; show('<div class="tlp"><div class="tlp-kick"><span>قائمة مشاريع</span><b>'+esc(MONTHLBL)+'</b></div>'+tblEditTitle(cap)+'<div id="tblKpis">'+(TBL_SHOW_KPIS?kpis(sub):'')+'</div>'+tableBlock(sub,dim||'region')+'</div>'); }
 
 /* ---- breakdown ---- */
@@ -9028,6 +9034,7 @@ function _rxClassicBar(){ if(!RX_ENABLED) return; try{ var c=document.querySelec
 try{ window.rxSetMode=rxSetMode; }catch(e){}
 
 /* قوائم كروت «أبرز التنبيهات» في الرئيسية */
+var TBL_EXTRA=null;
 function hmList(k){ var rows=DATA.map(analyzeProject); rows.forEach(function(r){ r.t=_dxTime(r.p); });
   var L=[], ttl="";
   if(k==="overdue"){ L=rows.filter(function(r){ return r.overdue; }).sort(function(a,b){ return a.t.left-b.t.left; }); ttl="المشاريع المتجاوزة تاريخ النهاية"; }
@@ -9035,6 +9042,10 @@ function hmList(k){ var rows=DATA.map(analyzeProject); rows.forEach(function(r){
   else if(k==="soon"){ L=rows.filter(function(r){ return !r.done&&r.t.ok&&r.t.left>=0&&r.t.left<=60; }).sort(function(a,b){ return a.t.left-b.t.left; }); ttl="المشاريع التي تنتهي خلال ٦٠ يوماً"; }
   else { L=rows.filter(function(r){ return /إجراء|اجراء/.test(r.p.variations||"")||/إجراء|اجراء/.test(r.p.new_items||""); }); ttl="مشاريع بمغايرات أو بنود مستحدثة تحت الإجراء"; }
   var P=L.map(function(r){ return r.p; }); if(!P.length) return;
+  var pend=function(s){ return /إجراء|اجراء/.test(String(s||"")); };
+  if(k==="var") window._TBL_NEXT=[{k:"_pend",l:"تحت الإجراء",cls:"pnd-c",g:function(p){ return (pend(p.variations)?'<span class="pnd v">المغايرات</span>':'')+(pend(p.new_items)?'<span class="pnd n">البنود المستحدثة</span>':''); }}];
+  else if(k==="overdue") window._TBL_NEXT=[{k:"_od",l:"التجاوز",cls:"c nw",g:function(p){ var t=_dxTime(p); return t.ok&&t.left<0?'<span class="pnd od">'+ar(-t.left)+' يوم</span>':'—'; }},{k:"_end",l:"النهاية",cls:"nw",g:function(p){ return fmtDateTxt(endDateOf(p)); }}];
+  else if(k==="soon") window._TBL_NEXT=[{k:"_left",l:"المتبقي",cls:"c nw",g:function(p){ var t=_dxTime(p); return t.ok?'<span class="pnd sn">'+(t.left<=0?'اليوم':ar(t.left)+' يوم')+'</span>':'—'; }},{k:"_end",l:"النهاية",cls:"nw",g:function(p){ return fmtDateTxt(endDateOf(p)); }}];
   PRINT_NAME=ttl+" - "+MONTHLBL; ANSWER_TITLE=ttl; projectTable(P,ttl,"region",ttl);
   try{ setNavActive("home"); }catch(e){} }
 try{ window.hmList=hmList; }catch(e){}
