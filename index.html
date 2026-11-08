@@ -4260,6 +4260,23 @@ body[data-theme="dark"] .rb-grid div,body[data-theme="dark"] .rb-ct th,body[data
 body[data-theme="dark"] .df-codes{background:#2A2618;border-color:#4A3F25;color:#E3C88E}
 .dx .pd-chip{justify-content:center!important;text-align:center}
 .dx .pd-chip.c-watch i,.dx .pd-chip.c-late i,.dx .pd-chip.c-stumb i{display:none!important}
+
+/* التقرير العام: عناصر إضافية */
+.rpx-note{font-size:10.5px;color:#8A968F;margin-top:8px;line-height:1.7}
+.rpx-dual{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 12px}.rpx-dual span{display:block;font-size:11px;color:#6E7D74}.rpx-dual b{display:block;font-size:26px;font-weight:800!important;color:#0B3D27}
+.rpx-dual u{display:block;height:7px;border-radius:99px;background:#E9EEEA;overflow:hidden;margin-top:4px}.rpx-dual u i{display:block;height:100%;background:#1E5B3A;border-radius:99px}.rpx-dual u i.p{background:#C9A96E}
+.rpx-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.rpx-mini div{border:1px solid #E3E8E3;border-radius:10px;padding:8px;text-align:center}.rpx-mini b{display:block;font-size:20px;font-weight:800!important;color:#0B3D27}.rpx-mini span{font-size:10px;color:#6E7D74}
+.rpx-ap{display:flex;align-items:center;gap:8px}.rpx-ap u{position:relative;flex:1;height:7px;border-radius:99px;background:#E9EEEA;min-width:80px}.rpx-ap u i{display:block;height:100%;border-radius:99px;background:#1E5B3A}.rpx-ap u s{position:absolute;top:-3px;width:2px;height:13px;background:#B89968}.rpx-ap em{font-style:normal;font-size:10.5px;white-space:nowrap;color:#4F5D55}
+.rpx-st{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);white-space:nowrap}
+.rpx-row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #EEF1EE;font-size:11.5px}.rpx-row em{font-style:normal;color:#6E7D74;white-space:nowrap;font-size:10.5px}
+.rpx-t td,.rpx-t th{font-size:11px!important}
+
+.rp-port{display:flex;align-items:center;gap:14px;width:100%;text-align:right;padding:16px 18px;border-radius:16px;border:1px solid #0B3D27;background:linear-gradient(120deg,#03170C,#0B3D27 60%,#14502E);color:#fff;cursor:pointer;font:inherit;margin:0 0 14px;box-shadow:0 14px 30px -20px rgba(3,23,12,.8);transition:transform .2s}
+.rp-port:hover{transform:translateY(-2px)}
+.rp-pi{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(217,188,132,.18);color:#E2C996;display:grid;place-items:center}
+.rp-pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.rp-pt b{font-size:16px;font-weight:800!important}.rp-pt em{font-style:normal;font-size:11.5px;color:#CFE0D5;line-height:1.6}
+.rp-pg{flex:none;padding:8px 14px;border-radius:10px;background:#D9BC84;color:#05271A;font-size:12px;font-weight:800!important}
+@media (max-width:760px){.rp-port{flex-wrap:wrap}.rp-pg{width:100%;text-align:center}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -5963,7 +5980,7 @@ function programReport(){ RERENDER=()=>programReport(); WEEKLY_MODE=false; CUR_P
   const tv=sumF('value'), ds=sumF('disbursed'), rem=sumF('remaining'), up=sumF('under_proc');
   const aAvg=Math.round(avgF('actual')*100), pAvg=Math.round(avgF('planned')*100);
   const autoMonth=MO_AR[new Date().getMonth()]+" "+new Date().getFullYear();
-  initReportSettings("program",DEFAULT_REPORT_TITLE,autoMonth);
+  initReportSettings("program","تقرير مشاريع برنامج ريف",autoMonth);
   const monthLbl=REPORT_DATE;
   const corners='<div class="rg-corner tl"></div><div class="rg-corner tr"></div><div class="rg-corner bl"></div><div class="rg-corner br"></div>';
   const aggBy=f=>{ const a={}; all.forEach(p=>{ const k=p[f]||"غير محدد"; (a[k]=a[k]||{n:0,v:0}); a[k].n++; a[k].v+=toNum(p.value)||0; }); return Object.entries(a).sort((x,y)=>y[1].n-x[1].n); };
@@ -5983,7 +6000,7 @@ function programReport(){ RERENDER=()=>programReport(); WEEKLY_MODE=false; CUR_P
   const _opa=opP.map(p=>pct(p.actual)).filter(x=>x!=null); const opAvg=Math.round((_opa.length?_opa.reduce((a,b)=>a+b,0)/_opa.length:0)*100);
   const opRun=opP.filter(x=>/بدء/.test(x.status||"")&&!isFinishedP(x)).length, opFin=opP.filter(isFinishedP).length, opStp=opP.filter(x=>/إيقاف/.test(x.status||"")).length, opNs=Math.max(0,opN-opRun-opFin-opStp);
   let pages=[];
-  pages.push(`<section class="rpage cover">${corners}<div class="cv-mid"><div class="cv-kick">التقرير الشامل</div><div class="cv-title${REPORT_TITLE.length>28?" sm":""}">${esc(REPORT_TITLE)}</div><div class="cv-date">${monthLbl}</div></div>${coverBrandHTML()}</section>`);
+  pages.push(`<section class="rpage cover">${corners}<div class="cv-mid"><div class="cv-kick">التقرير العام</div><div class="cv-title${REPORT_TITLE.length>28?" sm":""}">${esc(REPORT_TITLE)}</div><div class="cv-date">${monthLbl}</div></div>${coverBrandHTML()}</section>`);
   pages.push(`<section class="rpage light flow"><div class="rp-head"><i></i><span>المؤشرات التنفيذية</span></div>
     <div class="rp-kpis"><div class="rk"><div class="rk-n">${ar(total)}</div><div class="rk-l">إجمالي المشاريع</div></div><div class="rk"><div class="rk-n">${fmtMs(tv)}</div><div class="rk-l">إجمالي قيمة المشاريع</div></div><div class="rk"><div class="rk-n">${ar(aAvg)}%</div><div class="rk-l">متوسط الإنجاز الفعلي</div></div></div>
     <div class="rp-kpis"><div class="rk"><div class="rk-n">${fmtMs(ds)}</div><div class="rk-l">إجمالي المنصرف</div></div><div class="rk"><div class="rk-n">${fmtMs(up)}</div><div class="rk-l">تحت الإجراء</div></div><div class="rk"><div class="rk-n">${fmtMs(rem)}</div><div class="rk-l">المتبقي من العقود</div></div></div>
@@ -5994,6 +6011,7 @@ function programReport(){ RERENDER=()=>programReport(); WEEKLY_MODE=false; CUR_P
       <div class="rbar"><span class="rbar-k wide">متوقفة</span><div class="rbar-tr"><i style="width:${Math.round(cStp/total*100)}%;background:#B5552F"></i></div><span class="rbar-v">${ar(cStp)}</span></div></div>
       <div class="rp-box"><div class="rp-bx-t">الميزانية الرأسمالية</div><div class="capbar"><div class="capbar-h"><span>المعتمد من السقف</span><b>${capUtil}%</b></div><div class="capbar-tr"><i style="width:${Math.min(100,capUtil)}%"></i></div></div><div class="capkv"><span>سقف الميزانية</span><b>${fmtMs(CAP_CEIL)}</b></div><div class="capkv"><span>إجمالي قيمة الرأسمالي (${ar(capN)} مشروع)</span><b>${fmtMs(capTotal)}</b></div><div class="capkv"><span>المعتمد (عدا الطرح)</span><b>${fmtMs(capVn)}</b></div><div class="capkv"><span>مرحلة الطرح</span><b>${fmtMs(capVt)}</b></div><div class="capkv save"><span>الوفر من السقف</span><b>${fmtMs(capSave)}</b></div></div></div>
     <div class="rp-foot"><span>برنامج ريف · ${monthLbl}</span></div></section>`);
+  progExtraPages(all,monthLbl).forEach(pg=>pages.push(pg));
   pages.push(`<section class="rpage light flow"><div class="rp-head"><i></i><span>المشاريع التشغيلية</span></div>
     <div class="rp-kpis"><div class="rk"><div class="rk-n">${ar(opN)}</div><div class="rk-l">عدد المشاريع التشغيلية</div></div><div class="rk"><div class="rk-n">${fmtMs(opTotal)}</div><div class="rk-l">إجمالي قيمة المشاريع التشغيلية</div></div><div class="rk"><div class="rk-n">${ar(opAvg)}%</div><div class="rk-l">متوسط الإنجاز الفعلي</div></div></div>
     <div class="rp-cols"><div class="rp-box"><div class="rp-bx-t">حالة المشاريع التشغيلية</div>
@@ -6019,14 +6037,14 @@ function programReport(){ RERENDER=()=>programReport(); WEEKLY_MODE=false; CUR_P
     <div class="rp-foot"><span>برنامج ريف · ${monthLbl}</span></div></section>`);
   sectorDetailPages(secRows,monthLbl).forEach(pg=>pages.push(pg));
   constructionImagePages(monthLbl).forEach(pg=>pages.push(pg));
-  PRINT_NAME="التقرير الشامل لمحفظة برنامج ريف - "+monthLbl;
+  PRINT_NAME=(REPORT_TITLE||"تقرير مشاريع برنامج ريف")+" - "+monthLbl;
   REPORT_CTX={title:REPORT_TITLE,cols:DEFAULT_COLS,projects:all,dim:'sector',dn:'القطاع',monthLbl,total,stopped,running,secRows:secRows.map(([k,a])=>[k,a.n]),top,tv,kind:null,name:null,isCustom:false,isProgram:true,finished:all.filter(isFinishedP),closing:all.filter(isClosingP)};
   IS_REPORT=true;
   REPORT_EDITING=false;
   const _kpiChkC=`<label class="rchk"><input type="checkbox" id="rShowKpis" ${SHOW_REPORT_KPIS?'checked':''} onchange="toggleReportKpis(this.checked)"><span>إظهار الكروت الإحصائية</span></label>`;
   const _editModeC=`<button class="rbedit rbedit-mode${REPORT_EDITING?' on':''}" id="rEditBtn" onclick="toggleReportEdit()" title="تحرير محتوى التقرير قبل التحميل (تغيير أرقام / حذف أقسام)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span id="rEditLbl">وضع التعديل</span></button>`;
   const controls=`<div class="rfilter noprint">${_kpiChkC}${reportBrandControls()}${_editModeC}<span class="rfl spacer">إجمالي المشاريع: ${ar(total)}</span><button class="rbedit wkfs" onclick="wkFullscreen()" title="عرض ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg> ملء الشاشة</button></div>`;
-  show(label("التقرير الشامل لمحفظة البرنامج")+controls+`<div class="report wkreport${SHOW_REPORT_KPIS?'':' hide-kpis'}" id="wkReport"><button class="wkfs-exit noprint" onclick="wkFullscreen()" title="خروج"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> خروج من ملء الشاشة</button>${pages.join("")}</div>`); }
+  show(label("تقرير مشاريع برنامج ريف")+controls+`<div class="report wkreport${SHOW_REPORT_KPIS?'':' hide-kpis'}" id="wkReport"><button class="wkfs-exit noprint" onclick="wkFullscreen()" title="خروج"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> خروج من ملء الشاشة</button>${pages.join("")}</div>`); }
 
 /* ================= بطاقات المشاريع ================= */
 var PC={ codes:[], cover:"", imgs:3, conOnly:false, sector:"", ctx:null };
@@ -8769,10 +8787,11 @@ function _rpCount(){ var n=_rpList().length, e=document.getElementById("rpN"); i
 function reportPrepOpen(keep){ try{ setNavActive("report"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=false; ANSWER_TITLE=""; if(!keep) RP.f={};
   var L=_rpList(), any=Object.keys(RP.f).some(function(k){ return (RP.f[k]||[]).length; });
   var filt=RP_FIELDS.map(function(x){ return '<div class="rp-f"><span>'+x[1]+'</span>'+_mselHTML("rp",x[0],x[2],_rpOpts(x[0]),RP.f[x[0]]||[],x[0]==="cat"?(RP.f.cat||[]).map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "):"")+'</div>'; }).join("");
-  var T=[["list","قائمة المشاريع","جدول بكل بيانات المشاريع المختارة، قابل للتعديل والتصدير Excel"],["dash","لوحة الأداء","لوحة الأداء العامة لهذه المشاريع فقط"],["pd","لوحات المشاريع","طباعة لوحة لكل مشروع — صفحة أفقية لكل مشروع"],["cards","بطاقات المشاريع","بطاقة لكل مشروع بالصور والمؤشرات"],["weekly","التقرير الأسبوعي","تقرير أسبوعي للمشاريع المختارة"],["program","تقرير البرنامج","تقرير شامل بالمحفظة المختارة"]];
+  var T=[["list","قائمة المشاريع","جدول بكل بيانات المشاريع المختارة، قابل للتعديل والتصدير Excel"],["pd","لوحات المشاريع","طباعة لوحة لكل مشروع — صفحة أفقية لكل مشروع"],["cards","بطاقات المشاريع","بطاقة لكل مشروع بالصور والمؤشرات"],["weekly","التقرير الأسبوعي","تقرير أسبوعي للمشاريع المختارة"],["general","تقرير عام","تقرير بمؤشرات المشاريع المختارة وتوزيعها وجدول تفاصيلها"]];
   var html='<div class="hb-page rp">'
     +'<div class="hb-head"><div><div class="hb-kick">التقارير</div><h1>إعداد تقرير</h1><div class="hb-sub">اختر المشاريع بالفلاتر ثم نوع التقرير، أو ابنِ تقريراً من البداية</div></div></div>'
     +_rpModes("f")
+    +'<button class="rp-port" onclick="programReport();_rpAfter()"><span class="rp-pi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 13h8M8 17h5M8 9h4"/></svg></span><span class="rp-pt"><b>تقرير مشاريع برنامج ريف</b><em>التقرير العام للمحفظة كاملة: المؤشرات التنفيذية، حالة الجدول، أداء القطاعات، المشاريع التي تتطلب متابعة، المواعيد، المالية، والتفاصيل</em></span><span class="rp-pg">إنشاء التقرير ←</span></button>'
     +'<section class="rp-card"><h3>1 · تقرير لأي مشاريع؟</h3><div class="rp-fs">'+filt+'</div>'
       +'<div class="rp-sum"><b id="rpN">'+ar(L.length)+' مشروع</b><span>'+esc(_rpTitle())+'</span>'+(any?'<button class="hb-clr" onclick="reportPrepOpen(false)">✕ مسح الفلاتر</button>':'')+'</div></section>'
     +'<section class="rp-card"><h3>2 · نوع التقرير</h3><div class="rp-types">'+T.map(function(x){ return '<button class="rp-t" '+(L.length?'':'disabled ')+'onclick="rpGo(\''+x[0]+'\')"><b>'+x[1]+'</b><span>'+x[2]+'</span></button>'; }).join("")+'</div></section></div>';
@@ -8785,6 +8804,8 @@ function rpGo(type){ var L=_rpList(); if(!L.length) return; PRINT_NAME=""; ANSWE
     ["region","sector","ptype","cat"].forEach(function(k){ if(!DASH_FILTER[k].length) DASH_FILTER[k]=""; });
     if(!simple) DASH_FILTER.codes=codes; execDashboard(); return; }
   if(type==="pd"){ rpPdView(L,ttl); return; }
+  if(type==="general"){ var _F=RP.f||{}, _dim=((_F.sector||[]).length===1&&!(_F.region||[]).length)?"region":"sector"; var _gt=((_F.sector||[]).length===1&&!(_F.region||[]).length&&ttl.indexOf("قطاع")<0)?"قطاع "+ttl:(((_F.region||[]).length===1&&!(_F.sector||[]).length&&ttl.indexOf("منطقة")<0)?"منطقة "+ttl:ttl); renderReportFrom(L,_gt,{dim:_dim,cols:DEFAULT_COLS,isCustom:true}); RERENDER=function(){ rpGo("general"); }; _rpAfter(); return; }
+  if(type==="portfolio"){ programReport(); _rpAfter(); return; }
   if(type==="cards"){ cardsBuilder(); setTimeout(function(){ _rpCheck(".pcchk",codes); try{ pcCount(); }catch(e){} try{ pcBuild(); }catch(e){} _rpAfter(); },80); return; }
   if(type==="weekly"){ weeklyBuilder(); setTimeout(function(){ _rpCheck(".wkchk",codes); try{ wkCount(); }catch(e){} try{ wkBuild(); }catch(e){} _rpAfter(); },80); return; }
   if(type==="program"){ reportBuilder(); setTimeout(function(){ _rpCheck(".rbchk",codes); try{ rbCount(); }catch(e){} try{ rbBuild(); }catch(e){} _rpAfter(); },80); return; } }
@@ -9107,6 +9128,41 @@ function hmList(k){ var rows=DATA.map(analyzeProject); rows.forEach(function(r){
   PRINT_NAME=ttl+" - "+MONTHLBL; ANSWER_TITLE=ttl; projectTable(P,ttl,"region",ttl);
   try{ setNavActive("home"); }catch(e){} }
 try{ window.hmList=hmList; }catch(e){}
+
+/* ===== التقرير العام: صفحات إضافية (حالة الجدول · أداء القطاعات · المتابعة · المواعيد) ===== */
+function progExtraPages(all,monthLbl){ var rows=all.map(analyzeProject); rows.forEach(function(r){ r.cat=_dxCatOf(r); r.dev=_dxDev(r.p); r.t=_dxTime(r.p); r.v=_dxBase(r.p); });
+  var foot='<div class="rp-foot"><span>'+'\u0628\u0631\u0646\u0627\u0645\u062c'+' ريف · '+monthLbl+'</span></div>', N=rows.length||1, pages=[];
+  var cats=["ok","watch","late","stumb","ns"].map(function(k){ return {k:k,l:DX_CAT[k].l,c:DX_CAT[k].c,n:rows.filter(function(r){ return r.cat===k; }).length,v:rows.filter(function(r){ return r.cat===k; }).reduce(function(s,r){ return s+r.v; },0)}; });
+  var off=rows.filter(function(r){ return /watch|late|stumb/.test(r.cat); }), overdue=rows.filter(function(r){ return r.overdue; }), soon=rows.filter(function(r){ return !r.done&&r.t.ok&&r.t.left>=0&&r.t.left<=90; });
+  var aA=_dxAvg(rows.map(function(r){ return r.a; }))||0, aP=_dxAvg(rows.map(function(r){ return r.pl==null?null:Math.min(1,r.pl); }))||0;
+  /* 1) حالة الجدول الزمني */
+  pages.push('<section class="rpage light flow"><div class="rp-head"><i></i><span>حالة الجدول الزمني للمشاريع</span></div>'
+    +'<div class="rp-kpis">'+cats.map(function(c){ return '<div class="rk"><div class="rk-n" style="color:'+c.c+'">'+ar(c.n)+'</div><div class="rk-l">'+c.l+'</div></div>'; }).join("")+'</div>'
+    +'<div class="rp-cols"><div class="rp-box"><div class="rp-bx-t">التوزيع حسب حالة الجدول <span class="sub">حسب عمود الحيود في المحفظة</span></div>'
+      +cats.map(function(c){ return '<div class="rbar"><span class="rbar-k wide">'+c.l+'</span><div class="rbar-tr"><i style="width:'+Math.round(c.n/N*100)+'%;background:'+c.c+'"></i></div><span class="rbar-v" style="white-space:nowrap;min-width:150px;text-align:left">'+ar(c.n)+' مشروع · '+_dxM(c.v)+'</span></div>'; }).join("")
+      +'<div class="rpx-note">منتظم: حيود حتى 15% · يحتاج متابعة: 15–25% · متأخر: 25–35% · متعثّر: أكثر من 35% · لم يبدأ: لم تبدأ أعماله</div></div>'
+    +'<div class="rp-box"><div class="rp-bx-t">مؤشرات الالتزام بالخطة</div>'
+      +'<div class="rpx-dual"><div><span>متوسط الإنجاز الفعلي</span><b>'+_dxPct(aA)+'</b><u><i style="width:'+(aA*100).toFixed(0)+'%"></i></u></div><div><span>متوسط الإنجاز المخطط</span><b>'+_dxPct(aP)+'</b><u><i class="p" style="width:'+(aP*100).toFixed(0)+'%"></i></u></div></div>'
+      +'<div class="rpx-mini"><div><b>'+ar(off.length)+'</b><span>تتطلب متابعة</span></div><div><b>'+ar(overdue.length)+'</b><span>تجاوزت تاريخ النهاية</span></div><div><b>'+ar(soon.length)+'</b><span>تنتهي خلال ٩٠ يوماً</span></div><div><b>'+ar(rows.filter(function(r){ return r.stopped; }).length)+'</b><span>متوقفة</span></div></div></div></div>'+foot+'</section>');
+  /* 2) أداء القطاعات */
+  var g={}; rows.forEach(function(r){ var k=r.p.sector||"غير محدد"; (g[k]=g[k]||[]).push(r); });
+  var secs=Object.keys(g).map(function(k){ var L=g[k], v=L.reduce(function(s,r){ return s+r.v; },0), d=L.reduce(function(s,r){ return s+_dxN(r.p.disbursed); },0); return {k:k,n:L.length,v:v,sp:v?d/v:0,a:_dxAvg(L.map(function(r){ return r.a; }))||0,p:_dxAvg(L.map(function(r){ return r.pl==null?null:Math.min(1,r.pl); }))||0,off:L.filter(function(r){ return /watch|late|stumb/.test(r.cat); }).length,ns:L.filter(function(r){ return r.cat==="ns"; }).length}; }).sort(function(a,b){ return b.v-a.v; });
+  pages.push('<section class="rpage light tablepage"><div class="rp-head"><i></i><span>أداء القطاعات</span></div>'
+    +'<div class="tablewrap"><table class="ptable rtable rpx-t"><thead><tr><th>القطاع</th><th>المشاريع</th><th>القيمة بعد التعديل</th><th>نسبة الصرف</th><th>الإنجاز الفعلي مقابل المخطط</th><th>الفارق</th><th>تتطلب متابعة</th><th>لم يبدأ</th></tr></thead><tbody>'
+    +secs.map(function(s){ var df=Math.round((s.a-s.p)*100); return '<tr><td class="nm">'+esc(s.k)+'</td><td class="c">'+ar(s.n)+'</td><td class="c nw">'+fmtMs(s.v)+'</td><td class="c">'+_dxPct(s.sp)+'</td><td><div class="rpx-ap"><u><i style="width:'+(s.a*100).toFixed(0)+'%"></i><s style="inset-inline-start:'+(s.p*100).toFixed(0)+'%"></s></u><em>'+_dxPct(s.a)+' / '+_dxPct(s.p)+'</em></div></td><td class="c" style="color:'+(df<=-15?'#B23B2E':(df<-5?'#8A6A00':'#00703C'))+'"><span dir="ltr">'+(df>0?'+':(df<0?'−':''))+ar(Math.abs(df))+'</span></td><td class="c">'+(s.off?'<b style="color:#B23B2E">'+ar(s.off)+'</b>':'—')+'</td><td class="c">'+(s.ns||'—')+'</td></tr>'; }).join("")
+    +'</tbody></table></div><div class="rpx-note">الخط الذهبي على الشريط = متوسط الإنجاز المخطط للقطاع · الفارق بالنقاط المئوية</div>'+foot+'</section>');
+  /* 3) المشاريع التي تتطلب متابعة */
+  if(off.length){ var o2=off.slice().sort(function(a,b){ return (b.dev||0)-(a.dev||0); });
+    pages.push('<section class="rpage light tablepage"><div class="rp-head"><i></i><span>المشاريع التي تتطلب متابعة ('+ar(off.length)+')</span></div>'
+      +'<div class="tablewrap"><table class="ptable rtable rpx-t"><thead><tr><th>المشروع</th><th>القطاع</th><th>المقاول</th><th>الفعلي</th><th>المخطط</th><th>الحيود</th><th>الحالة</th><th>النهاية</th></tr></thead><tbody>'
+      +o2.map(function(r){ var p=r.p, c=DX_CAT[r.cat]; return '<tr><td class="nm">'+esc(p.name)+'</td><td>'+esc(p.sector||"")+'</td><td class="sm">'+esc(_dxTxt(p.contractor)||"—")+'</td><td class="c">'+_dxPct(r.a)+'</td><td class="c">'+_dxPct(r.pl==null?0:Math.min(1,r.pl))+'</td><td class="c" style="color:'+c.c+'"><b dir="ltr">'+(r.dev==null?'—':'−'+ar(Math.round(r.dev*100))+'%')+'</b></td><td class="c"><span class="rpx-st" style="--c:'+c.c+'">'+c.l+'</span></td><td class="c nw">'+fmtDateTxt(endDateOf(p))+'</td></tr>'; }).join("")
+      +'</tbody></table></div>'+foot+'</section>'); }
+  /* 4) المواعيد: المتجاوزة والقادمة */
+  if(overdue.length||soon.length){ var tb=function(L,lbl,fn){ return '<div class="rp-box"><div class="rp-bx-t">'+lbl+' <span class="sub">'+ar(L.length)+' مشروع</span></div>'+(L.length?L.slice(0,12).map(function(r){ return '<div class="rpx-row"><span>'+esc(_rxSnRB(r.p))+'</span><em>'+fn(r)+'</em></div>'; }).join("")+(L.length>12?'<div class="rpx-note">و'+ar(L.length-12)+' مشاريع أخرى</div>':''):'<div class="rpx-note">لا يوجد</div>')+'</div>'; };
+    pages.push('<section class="rpage light flow"><div class="rp-head"><i></i><span>المواعيد: مشاريع تجاوزت النهاية ومشاريع تنتهي قريباً</span></div><div class="rp-cols">'
+      +tb(overdue.slice().sort(function(a,b){ return a.t.left-b.t.left; }),"تجاوزت تاريخ النهاية",function(r){ return 'متجاوز '+ar(-r.t.left)+' يوم · الإنجاز '+_dxPct(r.a); })
+      +tb(soon.slice().sort(function(a,b){ return a.t.left-b.t.left; }),"تنتهي خلال ٩٠ يوماً",function(r){ return (r.t.left<=0?'اليوم':'بعد '+ar(r.t.left)+' يوم')+' · الإنجاز '+_dxPct(r.a); })+'</div>'+foot+'</section>'); }
+  return pages; }
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
