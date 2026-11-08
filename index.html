@@ -9351,7 +9351,8 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn ic" onclick="pdPrintMenu(event)" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
     +(function(){ var ps=_pdPos(); return '<div class="pd-fsnav noprint"><button onclick="pdStep(-1)" title="المشروع السابق (→)">→</button><span>'+ar(ps.i+1)+' / '+ar(ps.n)+'</span><button onclick="pdStep(1)" title="المشروع التالي (←)">←</button></div>'; })();
   /* --- KPI --- */
-  var _pst=(sv==null?'لا تتوفر بيانات المخطط':(sv<=-0.15?'متأخر — يحتاج خطة تعويض':(sv<-0.05?'تأخّر بسيط':(sv<=0.05?'منتظم مع الخطة':'متقدّم على الخطة')))), _ptn=(sv==null?"":(sv<=-0.15?"bad":(sv<-0.05?"warn":"good")));
+  var _dv=_dxDev(p), _pst={ok:'منتظم مع الخطة',watch:'يحتاج متابعة',late:'متأخر',stumb:'متعثّر — يحتاج خطة تعويض',ns:'لم يبدأ'}[cat]||DX_CAT[cat].l, _ptn={ok:"good",watch:"warn",late:"bad",stumb:"bad",ns:""}[cat]||"";
+  if(_dv!=null) sv=-_dv;
   var _ms=_dxMs(after);
   var kpis='<div class="dx-kpis pd-kpis3">'
     +_dxKpi({ico:DX_ICO.money,l:"القيمة بعد التعديل",v:_ms[0],u:_ms[1],viz:(function(){ var mx=Math.max(after||0,orig||0)||1, base=Math.min(after||0,orig||0)/mx*100, ex=Math.abs((after||0)-(orig||0))/mx*100;
