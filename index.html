@@ -6260,7 +6260,7 @@ function _schedLbl(p){ var c=_dxCatOf({p:p}); return {k:c,l:{ok:"منتظم",wat
 function devEval(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0; const dv=_dxDev(p); const d=dv!=null?dv:(pl-a); return {d:Math.abs(d),behind:d>0,lbl:_schedLbl(p).l}; }
 function wkEvals(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0;
   let cp=pct(p.claims_pct); if(cp==null||cp===0){ const v=toNum(p.value)||0, d=toNum(p.disbursed)||0; cp=v?d/v:0; }
-  const _sl=_schedLbl(p); const sched={l:_sl.l,c:_sl.c};
+  const _sl=_schedLbl(p); const sched={l:_sl.l,c:_sl.c}; const _dv0=_dxDev(p); const sg=_dv0!=null?_dv0:(pl-a);
   const fg=a-cp; const fin=fg<0.30?{l:"طبيعي",c:"ok"}:(fg<=0.50?{l:"مقبول",c:"warn"}:{l:"مرتفع",c:"bad"});
   const ac=toNum(p.approved_claims)||0, tc=toNum(p.total_claims)||0, us=toNum(p.under_study)||0, dn=tc-us;
   const qr=dn>0?ac/dn:null;
