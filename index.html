@@ -4147,6 +4147,9 @@ body[data-theme="dark"] .pd-dur>div{background:rgba(255,255,255,.04);border-colo
 .dx.pdl .dx-health .dx-lg em{text-align:right}
 
 .dx.pdl .g-fin .pd-rows .pd-r>span,.dx.pdl .g-fin .pd-rows .pd-r>b{font-size:10px!important;padding:2.5px 0!important;line-height:1.35!important}
+
+.hm-sum>div[role="button"]{cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
+.hm-sum>div[role="button"]:hover{transform:translateY(-2px);box-shadow:0 8px 18px -12px rgba(8,45,26,.45);border-color:#B89968}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8230,10 +8233,10 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
   var al=[];
   overdue.sort(function(a,b){ return a.t.left-b.t.left; }).slice(0,3).forEach(function(r){ al.push({c:"bad",t:"تجاوز تاريخ النهاية بـ "+ar(-r.t.left)+" يوم",p:r.p}); });
   stopped.slice(0,2).forEach(function(r){ al.push({c:"bad",t:"مشروع متوقف",p:r.p}); });
-  soon.slice(0,3).forEach(function(r){ al.push({c:"warn",t:"ينتهي خلال "+ar(r.t.left)+" يوم · الإنجاز "+_dxPct(r.a),p:r.p}); });
+  soon.slice(0,3).forEach(function(r){ al.push({c:"warn",t:(r.t.left<=0?"ينتهي اليوم":"ينتهي خلال "+ar(r.t.left)+" يوم")+" · الإنجاز "+_dxPct(r.a),p:r.p}); });
   rows.filter(function(r){ return r.sr!=null&&r.a!=null&&r.sr>r.a+0.15&&!r.done; }).slice(0,2).forEach(function(r){ al.push({c:"warn",t:"الصرف "+_dxPct(r.sr)+" أعلى من الإنجاز "+_dxPct(r.a),p:r.p}); });
   var hl='<section class="hm-card"><header><h3>أبرز التنبيهات</h3><button onclick="execDashboard()">لوحة الأداء ←</button></header>'
-    +'<div class="hm-sum"><div class="bad"><b>'+ar(overdue.length)+'</b><span>متجاوز النهاية</span></div><div class="bad"><b>'+ar(stopped.length)+'</b><span>متوقف</span></div><div class="warn"><b>'+ar(soon.length)+'</b><span>ينتهي خلال ٦٠ يوماً</span></div><div><b>'+ar(varPend.length)+'</b><span>مغايرات تحت الإجراء</span></div></div>'
+    +'<div class="hm-sum"><div class="bad" role="button" onclick="hmList(\'overdue\')"><b>'+ar(overdue.length)+'</b><span>متجاوز النهاية</span></div><div class="bad" role="button" onclick="hmList(\'stopped\')"><b>'+ar(stopped.length)+'</b><span>متوقف</span></div><div class="warn" role="button" onclick="hmList(\'soon\')"><b>'+ar(soon.length)+'</b><span>ينتهي خلال ٦٠ يوماً</span></div><div role="button" onclick="hmList(\'var\')"><b>'+ar(varPend.length)+'</b><span>مغايرات تحت الإجراء</span></div></div>'
     +'<div class="hm-alerts">'+al.map(function(a){ return '<div class="hm-al '+a.c+'" role="button" onclick="projDash(\''+esc(a.p.code)+'\')"><i></i><div><b>'+esc(a.p.alias||a.p.name)+'</b><span>'+esc(a.t)+'</span></div></div>'; }).join("")+'</div></section>';
   var bySec=_dxGroup(rows,function(r){ return r.p.sector; });
   var secs=Object.keys(bySec).map(function(s){ var rs=bySec[s]; return {s:s,n:rs.length,a:_dxAvg(rs.map(function(r){return r.a;}))||0,v:rs.reduce(function(x,r){ return x+_dxBase(r.p); },0)}; }).sort(function(a,b){ return b.v-a.v; });
@@ -8972,6 +8975,18 @@ try{ (function(){
 function _rxClassicBar(){ if(!RX_ENABLED) return; try{ var c=document.querySelector("#answer .acard"); if(!c||c.querySelector(".rx-bar")) return; var d=document.createElement("div");
   d.innerHTML='<div class="rx-bar noprint rx-cb"><div class="rx-seg"><button onclick="rxSetMode(\'new\')">الملف التفاعلي</button><button class="on">التقرير الكلاسيكي</button></div></div>'; var rt=c.querySelector(":scope > .rtools"); c.insertBefore(d.firstChild,rt?rt.nextSibling:c.firstChild); }catch(e){} }
 try{ window.rxSetMode=rxSetMode; }catch(e){}
+
+/* قوائم كروت «أبرز التنبيهات» في الرئيسية */
+function hmList(k){ var rows=DATA.map(analyzeProject); rows.forEach(function(r){ r.t=_dxTime(r.p); });
+  var L=[], ttl="";
+  if(k==="overdue"){ L=rows.filter(function(r){ return r.overdue; }).sort(function(a,b){ return a.t.left-b.t.left; }); ttl="المشاريع المتجاوزة تاريخ النهاية"; }
+  else if(k==="stopped"){ L=rows.filter(function(r){ return r.stopped; }); ttl="المشاريع المتوقفة"; }
+  else if(k==="soon"){ L=rows.filter(function(r){ return !r.done&&r.t.ok&&r.t.left>=0&&r.t.left<=60; }).sort(function(a,b){ return a.t.left-b.t.left; }); ttl="المشاريع التي تنتهي خلال ٦٠ يوماً"; }
+  else { L=rows.filter(function(r){ return /إجراء|اجراء/.test(r.p.variations||"")||/إجراء|اجراء/.test(r.p.new_items||""); }); ttl="مشاريع بمغايرات أو بنود مستحدثة تحت الإجراء"; }
+  var P=L.map(function(r){ return r.p; }); if(!P.length) return;
+  PRINT_NAME=ttl+" - "+MONTHLBL; ANSWER_TITLE=ttl; projectTable(P,ttl,"region",ttl);
+  try{ setNavActive("home"); }catch(e){} }
+try{ window.hmList=hmList; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
