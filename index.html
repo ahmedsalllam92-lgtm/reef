@@ -6256,10 +6256,11 @@ function wkAll(v){ document.querySelectorAll(".wkchk").forEach(c=>c.checked=v); 
 function wkCount(){ const n=document.querySelectorAll(".wkchk:checked").length; const e=document.getElementById("wkCount"); if(e)e.textContent="("+ar(n)+" مشروع)"; }
 function wkFilter(){ const q=norm(document.getElementById("wkSearch").value); document.querySelectorAll(".rbitem").forEach(it=>{ it.style.display=(!q||norm(it.textContent).indexOf(q)>-1)?"":"none"; }); document.querySelectorAll(".rbgrp").forEach(gp=>{ const any=[...gp.querySelectorAll(".rbitem")].some(it=>it.style.display!=="none"); gp.style.display=any?"":"none"; }); }
 function wkBuild(){ const codes=[...document.querySelectorAll(".wkchk:checked")].map(c=>c.value); if(!codes.length){alert("اختر مشروعاً واحداً على الأقل.");return;} const cover=(document.getElementById("wkCover").value||"").trim(); weeklyReport(codes,cover); }
-function devEval(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0; const d=pl-a; const lbl=d<=0?"متقدّم عن الخطة":(d<=0.05?"منتظم":(d<=0.15?"تأخّر بسيط":"متأخّر")); return {d:Math.abs(d),behind:d>0,lbl}; }
+function _schedLbl(p){ var c=_dxCatOf({p:p}); return {k:c,l:{ok:"منتظم",watch:"يحتاج متابعة",late:"متأخر",stumb:"متعثّر",ns:"لم يبدأ"}[c]||"—",c:{ok:"ok",watch:"warn",late:"bad",stumb:"bad",ns:"ok"}[c]||"ok"}; }
+function devEval(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0; const dv=_dxDev(p); const d=dv!=null?dv:(pl-a); return {d:Math.abs(d),behind:d>0,lbl:_schedLbl(p).l}; }
 function wkEvals(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0;
   let cp=pct(p.claims_pct); if(cp==null||cp===0){ const v=toNum(p.value)||0, d=toNum(p.disbursed)||0; cp=v?d/v:0; }
-  const sg=pl-a; const sched=sg<=0?{l:"متقدّم",c:"ok"}:(sg<=0.05?{l:"منتظم",c:"ok"}:(sg<=0.15?{l:"تأخّر بسيط",c:"warn"}:{l:"متأخّر",c:"bad"}));
+  const _sl=_schedLbl(p); const sched={l:_sl.l,c:_sl.c};
   const fg=a-cp; const fin=fg<0.30?{l:"طبيعي",c:"ok"}:(fg<=0.50?{l:"مقبول",c:"warn"}:{l:"مرتفع",c:"bad"});
   const ac=toNum(p.approved_claims)||0, tc=toNum(p.total_claims)||0, us=toNum(p.under_study)||0, dn=tc-us;
   const qr=dn>0?ac/dn:null;
@@ -7475,7 +7476,7 @@ function analyzeProject(p){
   var sr=val>0?dis/val:null;
   var reasons=[], pts=[], score=0;
   if(_isStopped(p)){ reasons.push("المشروع متوقف"); pts.push(3); score+=3; }
-  if(!_isDone(p) && sv!=null && sv<=-0.15){ reasons.push("متأخر عن الخطة بنسبة "+ar(Math.round(Math.abs(sv)*100))+"%"); pts.push(2); score+=2; }
+  { var _dv=_dxDev(p); if(!_isDone(p) && _dv!=null && _dv>0.15){ reasons.push("حيود عن الخطة "+ar(Math.round(_dv*100))+"% ("+(_dv>0.35?"متعثّر":(_dv>0.25?"متأخر":"يحتاج متابعة"))+")"); pts.push(2); score+=2; } }
   if(_overdue(p)){ reasons.push("تجاوز تاريخ النهاية بـ"+ar(_daysOverdue(p))+" يوم دون اكتمال"); pts.push(3); score+=3; }
   if(sr!=null && a!=null && sr>a+0.10){ reasons.push("الصرف ("+ar(Math.round(sr*100))+"%) أعلى من الإنجاز ("+ar(Math.round(a*100))+"%)"); pts.push(2); score+=2; }
   var wc=_pnum(p.warn_count||p.warnings), ncr=_pnum(p.ncr);
@@ -9201,7 +9202,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   _dxSetHash("dashboard");
   var D=_dashFilt(), total=D.length;
   var rows=D.map(analyzeProject); rows.forEach(function(r){ r.cat=_dxCatOf(r); r.t=_dxTime(r.p); });
-  var cnt={ok:0,watch:0,late:0,stumb:0,ns:0}; rows.forEach(function(r){ cnt[r.cat]=(cnt[r.cat]||0)+1; }); cnt.done=rows.filter(function(r){ return r.done; }).length;
+  var cnt={ok:0,watch:0,late:0,stumb:0,ns:0}; rows.forEach(function(r){ cnt[r.cat]=(cnt[r.cat]||0)+1; }); cnt.done=rows.filter(function(r){ return r.done; }).length; cnt.run=rows.filter(function(r){ return /بدء/.test(r.p.status||"")&&!isFinishedP(r.p); }).length; cnt.stp=rows.filter(function(r){ return /إيقاف/.test(r.p.status||""); }).length;
   var orig=D.reduce(function(a,p){return a+_dxOrig(p);},0);
   var awarded=D.reduce(function(a,p){return a+_dxBase(p);},0);
   var chg=awarded-orig;
@@ -9222,7 +9223,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var kpis='<div class="dx-kpis">'
     +_dxKpi({ico:DX_ICO.proj,l:"إجمالي المشاريع",v:ar(total),u:"مشروع",
         viz:_dxStack(["ok","watch","late","stumb","ns"].map(function(k){ return {l:DX_CAT[k].l,v:cnt[k],c:DX_CAT[k].c,t:false}; }),7),
-        s:ar(cnt.done)+' مكتمل · '+ar(total-cnt.done)+' قيد التنفيذ'})
+        s:ar(cnt.done)+' مكتمل · '+ar(cnt.run)+' قيد التنفيذ · '+ar(cnt.stp)+' متوقف'})
     +_dxKpi({ico:DX_ICO.money,l:"القيمة بعد التعديل",v:_dxMs(awarded)[0],u:_dxMs(awarded)[1],
         viz:_dxBar(budget?Math.min(1,awarded/budget):0,null,DX.gold),
         s:(chg?('<span class="'+(chg>0?"up":"dn")+'">'+(chg>0?"▲ +":"▼ −")+_dxM(Math.abs(chg))+'</span> تغيير على الأصل'):'بدون تغيير على القيم الأصلية')})
@@ -9315,7 +9316,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var sumBody='<ul class="dx-ins">'+ins.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul>';
   /* ---- سياق PowerPoint ---- */
   try{ DASH_CTX={ v:2, monthLbl:MONTHLBL, total:total, cnt:cnt, onTrack:onT, offTrack:offT,
-      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(total-cnt.done)+" قيد التنفيذ"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" ريال"},{l:"مشاريع تتطلب متابعة",n:ar(offT),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
+      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" ريال"},{l:"مشاريع تتطلب متابعة",n:ar(offT),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
       kpis:[{l:"إجمالي المشاريع",n:ar(total),s:ar(cnt.done)+" مكتمل"},{l:"القيمة بعد التعديل",n:_dxM(awarded),s:"ريال"},
             {l:"متوسط الإنجاز",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)},
             {l:"مشاريع متعثّرة",n:ar(cnt.stumb),s:ar(stopped.length)+" متوقف",warn:cnt.stumb>0},{l:"متجاوزة النهاية",n:ar(overdue.length),s:"مشروع",warn:overdue.length>0}],
@@ -9332,7 +9333,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var fBox=function(cls,title,note,body){ return '<section class="dxf-p '+cls+'"><header><h3>'+esc(title)+'</h3>'+(note?'<span>'+note+'</span>':'')+'</header><div class="dxf-pb">'+body+'</div></section>'; };
   var awM=_dxMs(awarded);
   var kpiF='<div class="dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
-    +fK("إجمالي المشاريع",ar(total),"مشروع",ar(cnt.done)+" مكتمل · "+ar(total-cnt.done)+" قيد التنفيذ")
+    +fK("إجمالي المشاريع",ar(total),"مشروع",ar(cnt.done)+" مكتمل · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف")
     +fK("القيمة التعاقدية بعد التعديل",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة الأصلية"):"دون تغيير عن القيمة الأصلية")
     +fK("متوسط الإنجاز الفعلي",_dxPct(avgA),"","المخطط "+_dxPct(avgP)+" · الفارق "+(gap>=0?"+":"−")+ar(Math.abs(Math.round(gap*100)))+" نقطة",gap<-0.05?"warn":"")
     +fK("نسبة الصرف",_dxPct(spend),"","المنصرف "+_dxM(dis)+" "+RYL)
