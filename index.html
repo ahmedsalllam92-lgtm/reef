@@ -9296,7 +9296,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
         +'<div class="dxf-hl">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projDashOpen()">لوحة المشروع</button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
         +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'
       +kpiF
-      +'<div class="dx-gr dxf-r1">'+fBox("g-sec","الإنجاز حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","الوضع الجدولي","",schF)+fBox("g-fin","الوضع المالي","القيم بـ "+RYL,finF)+'</div>'
+      +'<div class="dx-gr dxf-r1">'+fBox("g-sec","الإنجاز حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","الوضع الجدولي","",schF)+fBox("g-fin","الوضع المالي","",finF)+'</div>'
       +'<div class="dx-gr dxf-r2">'+fBox("g-risk","مشاريع تتطلب متابعة","حسب حالة الجدول · مرتّبة بالأعلى حيوداً · اضغط لفتح لوحة المشروع",riskF)+fBox("g-reg","التوزيع الجغرافي","اضغط منطقة لتصفية اللوحة",ksaChoro(_dashFiltExcept("region"),DASH_FILTER.region))+'</div>'
       +'<div class="dxf-bottom"><span>المصدر: '+((typeof SHEET_CSV_URL!=="undefined"&&SHEET_CSV_URL)?"جدول متابعة المشاريع (مباشر)":"نسخة البيانات المدمجة")+'</span><span>برنامج ريف · '+esc(MONTHLBL)+'</span></div>'
     +'</div></div>');
@@ -9427,7 +9427,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var imgs=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean);
   var galBody='<div class="pd-gal" data-proj="'+esc(p.name||"")+'">'+(imgs.length?imgs.map(function(u){ return '<div class="gph"><img loading="lazy" referrerpolicy="no-referrer" src="'+u+'" onclick="lightbox(this.src)" onerror="this.parentNode.style.display=\'none\'"></div>'; }).join(""):'<div class="dx-empty">لا توجد صور مرفوعة لهذا المشروع</div>')+'</div>';
   _dxShow('<div class="dash dash3 dx dx-land pd pdl">'+tools+'<div class="dx-canvas">'+head+kpis
-    +'<div class="dx-gr pdl-g">'+_dxCard("الجدول الزمني",esc(dur||""),tlBody,"g-tl")+_dxCard("الوضع المالي","القيم بـ "+RYL,finBody,"g-fin")+_dxCard("المطالبات والجودة","",qBody,"g-cl")
+    +'<div class="dx-gr pdl-g">'+_dxCard("الجدول الزمني",esc(dur||""),tlBody,"g-tl")+_dxCard("الوضع المالي","",finBody,"g-fin")+_dxCard("المطالبات والجودة","",qBody,"g-cl")
       +_dxCard("آخر المستجدات","",ntBody,"g-nt")+_dxCard("صور الموقع",imgs.length?ar(imgs.length)+" صور":"",galBody,"pd-gcard g-ph")
       +_dxCard("موقع المشروع",esc(p.region||""),ksaProjMap(p),"g-cmp g-map")+_dxCard("تحليل المخاطر","",rkBody,"g-rk")+_dxCard("بيانات المشروع","",ptBody,"g-pt")+'</div>'
     +'<div class="dx-foot">برنامج ريف · لوحة المشروع · '+esc(MONTHLBL)+'</div>'
