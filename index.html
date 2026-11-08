@@ -4150,6 +4150,56 @@ body[data-theme="dark"] .pd-dur>div{background:rgba(255,255,255,.04);border-colo
 
 .hm-sum>div[role="button"]{cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
 .hm-sum>div[role="button"]:hover{transform:translateY(-2px);box-shadow:0 8px 18px -12px rgba(8,45,26,.45);border-color:#B89968}
+
+/* ===== صفحة القوائم ===== */
+.tlp{display:flex;flex-direction:column;gap:12px}
+.tlp-kick{display:flex;align-items:center;gap:10px;font-size:11.5px;color:#A68A55}.tlp-kick span{padding:3px 11px;border-radius:99px;border:1px solid #E6D6B4;background:#FBF6EC}.tlp-kick b{color:#7D8A82;font-weight:500!important}
+.tlp .tblcap{margin:0!important;padding:0!important;justify-content:flex-start!important}
+.tlp .tblcap .alabel{display:flex;align-items:center;gap:10px;margin:0!important;padding:0!important;background:none!important;border:0!important}
+.tlp .tblcap .alabel>i{display:none!important}
+.tlp .tbl-title-in{font-size:24px!important;font-weight:800!important;color:#0B3D27!important;border:0!important;border-bottom:1px dashed transparent!important;background:none!important;padding:2px 0!important;min-width:0;width:auto;field-sizing:content;max-width:100%}
+.tlp .tbl-title-in:hover,.tlp .tbl-title-in:focus{border-bottom-color:#C9A96E!important;outline:none}
+.tlp .tbl-title-ed{width:30px;height:30px;border-radius:9px;border:1px solid #E3E8E3;background:#fff;color:#7D8A82;display:grid;place-items:center;cursor:pointer}
+.tlp .stats.tlk{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;margin:0!important}
+.tlp .tlk .stat{position:relative;display:flex!important;flex-direction:column;align-items:flex-start!important;text-align:right!important;gap:2px;padding:13px 16px 12px!important;border-radius:14px!important;background:#fff!important;border:1px solid #E3E8E3!important;box-shadow:0 1px 2px rgba(8,45,26,.04)!important;min-height:0!important}
+.tlp .tlk .tk-i{position:absolute;top:12px;inset-inline-end:12px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#E8F1EB;color:#0E4A2F}
+.tlp .tlk .l{order:0;font-size:11.5px!important;color:#6E7B73!important;margin:0!important}
+.tlp .tlk .n{order:1;font-size:24px!important;font-weight:800!important;color:#0B3D27!important;line-height:1.25!important;margin:0!important;white-space:nowrap}
+.tlp .tlk .n small{font-size:11px;color:#7D8A82;margin-inline-start:4px;font-weight:500!important}
+.tlp .tlk .n .ryl{height:.7em;opacity:.75}
+.tlp .tk-b{order:2;width:100%;height:5px;border-radius:99px;background:#EDF1EE;margin-top:6px;overflow:hidden}.tlp .tk-b u{display:block;height:100%;border-radius:99px;background:#5B86A6}.tlp .tk-b u.g{background:linear-gradient(270deg,#2E7D52,#0B3D27)}
+.tlp .tk-s{order:3;font-size:10.5px;color:#7D8A82;margin-top:2px}
+.tlp .filterbar{display:flex!important;flex-wrap:wrap;align-items:center;gap:8px!important;padding:10px 12px!important;border-radius:14px!important;background:#F6F8F5!important;border:1px solid #E6EAE6!important;margin:0!important}
+.tlp .filterbar .finp{flex:1 1 220px;height:36px!important;border-radius:10px!important;border:1px solid #E1E6E1!important;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237D8A82' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>") no-repeat right 11px center!important;padding:0 34px 0 12px!important;font-size:12.5px!important}
+.tlp .filterbar .rcols-btn,.tlp .filterbar .rbedit,.tlp .filterbar .rchk{height:36px!important;border-radius:10px!important;font-size:12px!important;background:#fff!important;border:1px solid #E1E6E1!important;color:#33443A!important;display:inline-flex!important;align-items:center;gap:6px;padding:0 12px!important;box-shadow:none!important}
+.tlp .filterbar .xlbtn{background:#0B3D27!important;border-color:#0B3D27!important;color:#fff!important}
+.tlp .filterbar .fcount{margin-inline-start:auto;font-size:12px;color:#5F6D64;padding:0 6px}.tlp .filterbar .fcount b{color:#0B3D27;font-size:14px}
+.tlp .tablewrap{border:1px solid #E3E8E3!important;border-radius:14px!important;overflow:auto!important;background:#fff;box-shadow:0 10px 26px -22px rgba(8,45,26,.4)}
+.tlp .ptable{font-size:12px!important}
+.tlp .ptable th{position:sticky;top:0;z-index:1;background:#F3F6F3!important;color:#0B3D27!important;font-size:11.5px!important;font-weight:800!important;padding:11px 12px!important;border-bottom:1px solid #E3E8E3}
+.tlp .ptable th:first-child,.tlp .ptable td:first-child{width:34px;text-align:center;color:#A3AEA8}
+.tlp .ptable td{padding:10px 12px!important;border-top:1px solid #EEF1EE!important;vertical-align:middle!important}
+.tlp .ptable tbody tr:nth-child(even){background:#FBFCFA!important}
+.tlp .ptable tbody tr.prow:hover>td{background:#F1F6F2!important}
+.tlp .ptable td.nm{font-weight:800!important;color:#14241B;line-height:1.55}
+.tlp .ptable .pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:10.5px;white-space:nowrap;border:1px solid transparent}
+.tlp .ptable .pill.ps-run{background:#E7F2EB;color:#1E5B3A;border-color:#CDE4D6}
+.tlp .ptable .pill.ps-dn{background:#0B3D27;color:#fff}
+.tlp .ptable .pill.ps-stp{background:#EEF0EF;color:#5F6B65;border-color:#DADFDC}
+.tlp .ptable .pill.ps-pre{background:#FBF4E4;color:#8A6420;border-color:#EEDDB8}
+.tlp .ptable td .ryl{height:.75em;opacity:.7}
+body[data-theme="dark"] .tlp .tlk .stat,body[data-theme="dark"] .tlp .tablewrap,body[data-theme="dark"] .tlp .filterbar .finp,body[data-theme="dark"] .tlp .filterbar .rcols-btn,body[data-theme="dark"] .tlp .filterbar .rbedit,body[data-theme="dark"] .tlp .filterbar .rchk,body[data-theme="dark"] .tlp .tbl-title-ed{background-color:rgba(255,255,255,.04)!important;border-color:#2B363B!important;color:#E6EEF0!important}
+body[data-theme="dark"] .tlp .filterbar{background:rgba(255,255,255,.03)!important;border-color:#2B363B!important}
+body[data-theme="dark"] .tlp .tlk .n,body[data-theme="dark"] .tlp .tbl-title-in,body[data-theme="dark"] .tlp .ptable td.nm{color:#E6EEF0!important}
+body[data-theme="dark"] .tlp .ptable th{background:#1B272C!important;color:#A9E2C0!important;border-color:#2B363B}
+body[data-theme="dark"] .tlp .ptable tbody tr:nth-child(even){background:rgba(255,255,255,.02)!important}body[data-theme="dark"] .tlp .ptable tbody tr.prow:hover>td{background:rgba(255,255,255,.05)!important}
+body[data-theme="dark"] .tlp .tlk .tk-i{background:rgba(143,211,168,.1);color:#A9E2C0}body[data-theme="dark"] .tlp .tk-b{background:rgba(255,255,255,.08)}
+body[data-theme="dark"] .tlp .filterbar .xlbtn{background:#1E5B3A!important}
+@media screen and (max-width:900px){.tlp .stats.tlk{grid-template-columns:repeat(2,minmax(0,1fr))!important}.tlp .tbl-title-in{font-size:19px!important}}
+@media print{.tlp .tablewrap{box-shadow:none;overflow:visible!important}.tlp .ptable th{position:static}.tlp-kick{display:none}}
+
+.tlp .tblcap{display:flex!important;justify-content:flex-start!important;text-align:right!important;width:100%}
+.tlp .tblcap .alabel{margin-inline-start:0!important;margin-inline-end:auto!important;justify-content:flex-start!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -5064,10 +5114,11 @@ function bigStat(num,unit,sub){ return `<div class="big">${num}<small>${unit||""
 function kpis(sub){ const tv=sub.reduce((a,p)=>a+(toNum(p.value)||0),0);
   const av=sub.map(p=>pct(p.actual)).filter(v=>v!=null); const avg=av.length?Math.round(av.reduce((a,b)=>a+b,0)/av.length*100):0;
   const ds=sub.reduce((a,p)=>a+(toNum(p.disbursed)||0),0);
-  return `<div class="stats"><div class="stat"><div class="n">${ar(sub.length)}</div><div class="l">مشروع</div></div>
-    <div class="stat"><div class="n">${fmtMs(tv)}</div><div class="l">إجمالي القيمة</div></div>
-    <div class="stat"><div class="n">${ar(avg)}%</div><div class="l">متوسط الإنجاز</div></div>
-    <div class="stat"><div class="n">${fmtMs(ds)}</div><div class="l">المنصرف</div></div></div>`; }
+  const sp=tv?Math.round(ds/tv*100):0, I=(d)=>'<i class="tk-i"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg></i>';
+  return `<div class="stats tlk"><div class="stat">${I('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>')}<div class="l">عدد المشاريع</div><div class="n">${ar(sub.length)}<small>مشروع</small></div></div>
+    <div class="stat">${I('<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/>')}<div class="l">إجمالي القيمة</div><div class="n">${fmtMs(tv)}</div></div>
+    <div class="stat">${I('<path d="M12 3v18M5 10l7-7 7 7"/>')}<div class="l">المنصرف</div><div class="n">${fmtMs(ds)}</div><div class="tk-b"><u style="width:${Math.min(100,sp)}%"></u></div><div class="tk-s">${ar(sp)}% من القيمة</div></div>
+    <div class="stat">${I('<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>')}<div class="l">متوسط الإنجاز</div><div class="n">${ar(avg)}%</div><div class="tk-b"><u class="g" style="width:${Math.min(100,avg)}%"></u></div></div></div>`; }
 
 /* ---- interactive table with filters ---- */
 let TBL=[], TBL_FILTERED=[], TBLDIM="region", TABLE_COLS=null, TBLDEFS=[], TBL_SHOW_KPIS=true, TBL_EDITING=false, TBL_EDIT_DATA=null;
@@ -5077,7 +5128,7 @@ function tblColDefs(sub,col){ let keys=(TABLE_COLS&&TABLE_COLS.length)?TABLE_COL
   const stopped=sub.length>0&&sub.every(p=>/إيقاف|الإمتثال/.test(p.status||""));
   if(stopped&&!(TABLE_COLS&&TABLE_COLS.length)){ let done=false; keys=keys.map(k=>{ if((k==='region'||k==='sector')&&!done){done=true;return 'stop_date';} return k; }); if(!done&&keys.indexOf('stop_date')<0) keys.splice(1,0,'stop_date'); }
   return keys.map(k=>ALL_COLS.find(c=>c.k===k)).filter(Boolean); }
-function tCellHTML(d,p){ const v=d.g(p); if(d.pill) return '<td><span class="pill">'+v+'</span></td>'; return '<td'+(d.cls?' class="'+d.cls+'"':'')+'>'+v+'</td>'; }
+function tCellHTML(d,p){ const v=d.g(p); if(d.pill){ const s=String(v||""), c=/إيقاف|موقوف|متوقف/.test(s)?"stp":(/إنتهاء|انتهاء|منته|مكتمل/.test(s)?"dn":(/بدء|تنفيذ/.test(s)?"run":"pre")); return '<td><span class="pill ps-'+c+'">'+v+'</span></td>'; } return '<td'+(d.cls?' class="'+d.cls+'"':'')+'>'+v+'</td>'; }
 function tRowHTML(p,i,defs){ const oc=p&&p.code?' class="prow" onclick="openProjRow(\''+String(p.code).replace(/'/g,"")+'\')"':''; return '<tr'+oc+'><td class="c mut">'+ar(i+1)+'</td>'+defs.map(d=>tCellHTML(d,p)).join("")+'</tr>'; }
 function openProjRow(code){ try{ const p=DATA.find(x=>String(x.code)===String(code)); if(!p)return; PROJ_MODE='general'; REPORT_CTX=null; projectCard(p,false); try{window.scrollTo({top:0,behavior:"smooth"});}catch(e){} }catch(e){} }
 function tBodyHTML(arr,defs){ return arr.slice(0,300).map((p,i)=>tRowHTML(p,i,defs)).join("")||'<tr><td colspan="'+(defs.length+1)+'" style="text-align:center;color:#8a958d;padding:14px">لا نتائج مطابقة للفلاتر.</td></tr>'; }
@@ -5155,7 +5206,7 @@ function tableBlock(sub,col){ sub=sub.slice().sort((a,b)=>(pct(b.actual)||0)-(pc
 function tblEditTitle(t){ ANSWER_TITLE=t; return '<div class="tblcap"><div class="alabel"><i></i><input class="tbl-title-in" id="listTitleIn" value="'+esc(t)+'" oninput="onListTitle(this.value)" title="اضغط لتغيير عنوان القائمة"><button class="tbl-title-ed" onclick="var i=document.getElementById(\'listTitleIn\');if(i){i.focus();i.select();}" title="تغيير العنوان"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></div>'; }
 function onListTitle(v){ v=(v==null?"":String(v)).trim(); const t=v||"قائمة المشاريع"; ANSWER_TITLE=t; PRINT_NAME=(/^تقرير/.test(t)?t:("تقرير "+t))+" - "+MONTHLBL; try{document.title=PRINT_NAME;}catch(e){} try{ const cov=document.querySelector("#answer .pcover .cv-title"); if(cov) cov.textContent=t; }catch(e){} }
 function projectTable(sub,title,dim,cov){ if(!sub.length) return show(label("نتيجة")+`<div class="atext">لا توجد مشاريع مطابقة لـ <strong>${title}</strong>.</div>`);
-  const cap=cov||("جدول — "+title); TBL_EDITING=false; show(tblEditTitle(cap)+'<div id="tblKpis">'+(TBL_SHOW_KPIS?kpis(sub):'')+'</div>'+tableBlock(sub,dim||'region')); }
+  const cap=cov||("جدول — "+title); TBL_EDITING=false; show('<div class="tlp"><div class="tlp-kick"><span>قائمة مشاريع</span><b>'+esc(MONTHLBL)+'</b></div>'+tblEditTitle(cap)+'<div id="tblKpis">'+(TBL_SHOW_KPIS?kpis(sub):'')+'</div>'+tableBlock(sub,dim||'region')+'</div>'); }
 
 /* ---- breakdown ---- */
 function breakdownBlock(sub,dim){ const g={}; sub.forEach(p=>{ const k=p[dim]||"غير محدد"; (g[k]=g[k]||[]).push(p); });
