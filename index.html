@@ -4447,6 +4447,8 @@ function _cancelCodeSet(){ var s={}; try{ var L=(typeof CANCELLED_BASE!=="undefi
   if(typeof PF!=="undefined"&&PF&&PF.data) PF.data.forEach(function(p){ delete s[p.code]; }); }catch(e){} return s; }
 function capPlannedData(arr){ try{ var _cc=_cancelCodeSet(); if(Object.keys(_cc).length) arr=(arr||[]).filter(function(p){ return !(p&&_cc[p.code]); }); }catch(e){}
   try{ (arr||[]).forEach(p=>{ if(!p) return;
+    /* نسبة الإنجاز المخططة تؤخذ من عمود «نسبة الإنجاز المخططة» في المحفظة */
+    { const _pa=p.planned_adj; if(_pa!=null&&String(_pa).trim()!==""&&!isNaN(parseFloat(String(_pa).replace(/[%٪]/g,"")))){ if(p.planned_calc==null) p.planned_calc=p.planned; p.planned=_pa; } }
     /* كسر عشري أكبر من 1 (مثل 1.4868 = 149%) يعني تجاوز المخطط 100% — وليس 1.49% */
     ["planned","actual"].forEach(k=>{ const v=p[k]; if(typeof v==="number"&&v>1&&v<5) p[k]=1; });
     if(pct(p.planned)>1) p.planned=1; }); }catch(e){} try{ if(typeof _applyEdits==="function") arr=_applyEdits(arr); }catch(e){} return arr; }
