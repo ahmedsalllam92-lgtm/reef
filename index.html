@@ -4248,6 +4248,11 @@ body[data-theme="dark"] .rb-chips,body[data-theme="dark"] .rb-in{background:#141
 body[data-theme="dark"] .rb-grid div,body[data-theme="dark"] .rb-ct th,body[data-theme="dark"] .rb-ct td{border-color:#253036}body[data-theme="dark"] .rb-ph{border-color:#2B363B}
 @media (max-width:600px){#rbWin{left:8px!important;right:8px!important;top:auto!important;bottom:84px!important;width:auto}#rbFab{left:14px;bottom:14px}}
 @media print{#rbFab,#rbWin{display:none!important}}
+#rbFab{display:none!important}
+#rbWin{left:auto;right:270px;bottom:18px}
+.ra-btn.on{box-shadow:0 0 0 2px #D9BC84 inset}
+@media (max-width:760px){#rbWin{right:8px!important;left:8px!important;bottom:12px!important}}
+
 
 .df-codes{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #E6D6B4;background:#FBF6EC;color:#8A6420;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
 .df-codes b{width:18px;height:18px;border-radius:50%;background:#C9A96E;color:#fff;display:grid;place-items:center;font-size:10px}
@@ -9119,7 +9124,7 @@ function askOpen(){ try{ if(typeof MREC!=="undefined"&&MREC.on) meetStop(); }cat
 try{ window.askOpen=askOpen; }catch(e){}
 var RA={open:false,msgs:[]};
 var RA_SUG=["افتح لوحة الأداء","المشاريع المتأخرة","أعلى 5 مشاريع قيمة","مشاريع قطاع العسل","افتح سجل المشاريع","التقرير الأسبوعي","المشاريع الملغاة","كم عدد المشاريع المتوقفة؟"];
-function raOpen(v){ if(v!==false){ askOpen(); return; } RA.open=(v==null)?!RA.open:!!v; var p=document.getElementById("raPanel"); if(!p) return; p.classList.toggle("open",RA.open); document.body.classList.toggle("ra-on",RA.open);
+function raOpen(v){ if(v!==false&&typeof rbToggle==="function"){ rbToggle(v===true?true:undefined); return; } if(v!==false){ askOpen(); return; } RA.open=(v==null)?!RA.open:!!v; var p=document.getElementById("raPanel"); if(!p) return; p.classList.toggle("open",RA.open); document.body.classList.toggle("ra-on",RA.open);
   if(RA.open){ if(!RA.msgs.length) raBot('أهلاً بك 👋 أنا <b>مساعد ريف</b>. اسألني عن أي مشروع أو قطاع أو مقاول، أو اطلب فتح أي تقرير أو لوحة.',true); raRender(); setTimeout(function(){ var i=document.getElementById("raIn"); if(i) i.focus(); },60); } }
 function raBot(html,sug){ RA.msgs.push({who:"bot",html:html,sug:!!sug}); raRender(); }
 function raRender(){ var b=document.getElementById("raMsgs"); if(!b) return;
@@ -13107,9 +13112,10 @@ function rbMount(){ if(document.getElementById("rbFab")) return;
   _rbDrag(w,document.getElementById("rbHd"));
   try{ var h=JSON.parse(sessionStorage.getItem("reef_rb")||"[]"); RB.msgs=h.slice(-30); }catch(e){} _rbPaint(); }
 function _rbDrag(w,h){ var sx,sy,ox,oy,on=false; h.addEventListener("mousedown",function(e){ if(e.target.closest("button")) return; on=true; var r=w.getBoundingClientRect(); sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top; e.preventDefault(); });
-  document.addEventListener("mousemove",function(e){ if(!on) return; w.style.left=Math.max(4,Math.min(innerWidth-w.offsetWidth-4,ox+e.clientX-sx))+"px"; w.style.top=Math.max(4,Math.min(innerHeight-60,oy+e.clientY-sy))+"px"; w.style.right="auto"; w.style.bottom="auto"; });
+  document.addEventListener("mousemove",function(e){ if(!on) return; w._moved=true; w.style.left=Math.max(4,Math.min(innerWidth-w.offsetWidth-4,ox+e.clientX-sx))+"px"; w.style.top=Math.max(4,Math.min(innerHeight-60,oy+e.clientY-sy))+"px"; w.style.right="auto"; w.style.bottom="auto"; });
   document.addEventListener("mouseup",function(){ on=false; }); }
-function rbToggle(v){ rbMount(); RB.open=v==null?!RB.open:!!v; document.getElementById("rbWin").classList.toggle("open",RB.open); document.getElementById("rbFab").classList.toggle("on",RB.open); if(RB.open){ _rbChips(); setTimeout(function(){ var i=document.getElementById("rbQ"); if(i) i.focus(); },60); if(!RB.msgs.length) _rbPush("b",'أهلاً 👋 أنا مساعد ريف. أقدر أجاوب عن أي مشروع، وأفتح الصفحات، وأطبّق الفلاتر، وأقارن، وأجهّز التقارير، وأعدّل البيانات.<br><small>جرّب: «كام الحيود لمزاد الرايس» · «افتح لوحة الأداء واعرض المتأخرة فقط» · «مين المقاول بتاعه؟»</small>'); } }
+function rbToggle(v){ rbMount(); RB.open=v==null?!RB.open:!!v; var _w=document.getElementById("rbWin"); _w.classList.toggle("open",RB.open); try{ document.querySelectorAll(".ra-btn").forEach(function(b){ b.classList.toggle("on",RB.open); }); }catch(e){}
+  if(RB.open&&!_w._moved){ var sb=document.getElementById("sidebar"), r=sb&&sb.getBoundingClientRect(); var right=(r&&r.width>0&&r.left<innerWidth&&innerWidth>760)?(innerWidth-r.left+14):12; _w.style.right=right+"px"; _w.style.left="auto"; _w.style.bottom="18px"; _w.style.top="auto"; } if(RB.open){ _rbChips(); setTimeout(function(){ var i=document.getElementById("rbQ"); if(i) i.focus(); },60); if(!RB.msgs.length) _rbPush("b",'أهلاً 👋 أنا مساعد ريف. أقدر أجاوب عن أي مشروع، وأفتح الصفحات، وأطبّق الفلاتر، وأقارن، وأجهّز التقارير، وأعدّل البيانات.<br><small>جرّب: «كام الحيود لمزاد الرايس» · «افتح لوحة الأداء واعرض المتأخرة فقط» · «مين المقاول بتاعه؟»</small>'); } }
 function rbClear(){ RB.msgs=[]; RB.ctx=null; _rbSave(); _rbPaint(); rbToggle(true); }
 function _rbSave(){ try{ sessionStorage.setItem("reef_rb",JSON.stringify(RB.msgs.slice(-30))); }catch(e){} }
 function _rbPush(who,html){ RB.msgs.push({w:who,h:html}); _rbSave(); _rbPaint(); if(who==="b"&&RB.speak) _rbSay(html); }
