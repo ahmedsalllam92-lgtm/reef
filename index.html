@@ -4253,6 +4253,8 @@ body[data-theme="dark"] .rb-grid div,body[data-theme="dark"] .rb-ct th,body[data
 .df-codes b{width:18px;height:18px;border-radius:50%;background:#C9A96E;color:#fff;display:grid;place-items:center;font-size:10px}
 .df-codes:hover{border-color:#C9A96E}
 body[data-theme="dark"] .df-codes{background:#2A2618;border-color:#4A3F25;color:#E3C88E}
+.dx .pd-chip{justify-content:center!important;text-align:center}
+.dx .pd-chip.c-watch i,.dx .pd-chip.c-late i,.dx .pd-chip.c-stumb i{display:none!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9474,7 +9476,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +'<span class="pd-nav"><button class="dx-btn" onclick="pdStep(-1)" title="السابق">→</button><button class="dx-btn" onclick="pdStep(1)" title="التالي">←</button></span>'
     +'<span class="df-count">'+ar(list.findIndex(function(x){return x===p;})+1)+' / '+ar(list.length)+'</span><span class="dxbar-x"></span></div>';
   /* --- الرأس --- */
-  var chips='<span class="pd-chip st">'+esc(p.status||"—")+'</span><span class="pd-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+'</span><span class="pd-chip">مستوى المخاطر: '+esc(r.level)+'</span>';
+  var chips='<span class="pd-chip st">'+esc(p.status||"—")+'</span><span class="pd-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+'</span>';
   var head='<div class="pd-head"><span class="pd-fx" aria-hidden="true"><i></i><i></i><i></i></span><div class="pd-ht"><div class="dx-kick">لوحة المشروع'+(p.code?' · <span class="ltr">'+esc(p.code)+'</span>':'')+'</div><h1>'+esc(p.name)+'</h1>'
     +'<div class="pd-meta">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div><div class="pd-chips">'+chips+'</div></div>'
     +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxSrc()+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn ic" onclick="pdPrintMenu(event)" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
