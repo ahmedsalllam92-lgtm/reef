@@ -6206,7 +6206,7 @@ function _pcCard(p,monthLbl){
             +'<p class="wnote">المطالبات تمثّل <b>'+cpPct+'%</b> من قيمة العقد</p></div>'
           +'<div class="pc-duo-c"><div class="pc-duo-t">الجودة والاعتمادات</div>'
             +'<div class="wdrow"><div class="wdchart">'+donutSVG(clSegs,ar(tc),"اعتماد",80)+'</div>'+donutLeg(clSegs)+'</div>'
-            +'<p class="wnote">المستخلصات <b>'+ar(toNum(p.claims_count)||0)+'</b> · الإنجاز بالمستخلصات <b>'+cpPct+'%</b></p></div>'
+            +'<p class="wnote">نسبة اعتماد الطلبات <b>'+(apprRate(p)==null?'—':ar(Math.round(apprRate(p)*100))+'%')+'</b> من إجمالي الطلبات (بعد استبعاد تحت الدراسة)</p></div>'
         +'</div>'
       +'</div>'
     +'</div>'
@@ -6350,14 +6350,15 @@ function wkAll(v){ document.querySelectorAll(".wkchk").forEach(c=>c.checked=v); 
 function wkCount(){ const n=document.querySelectorAll(".wkchk:checked").length; const e=document.getElementById("wkCount"); if(e)e.textContent="("+ar(n)+" مشروع)"; }
 function wkFilter(){ const q=norm(document.getElementById("wkSearch").value); document.querySelectorAll(".rbitem").forEach(it=>{ it.style.display=(!q||norm(it.textContent).indexOf(q)>-1)?"":"none"; }); document.querySelectorAll(".rbgrp").forEach(gp=>{ const any=[...gp.querySelectorAll(".rbitem")].some(it=>it.style.display!=="none"); gp.style.display=any?"":"none"; }); }
 function wkBuild(){ const codes=[...document.querySelectorAll(".wkchk:checked")].map(c=>c.value); if(!codes.length){alert("اختر مشروعاً واحداً على الأقل.");return;} const cover=(document.getElementById("wkCover").value||"").trim(); weeklyReport(codes,cover); }
+/* نسبة اعتماد الطلبات = المعتمد ÷ (إجمالي الطلبات − تحت الدراسة) — مصدر موحّد لكل التقارير */
+function apprRate(p){ var a=_dxN(p.approved_claims), r=_dxN(p.returned_claims), s=_dxN(p.under_study), t=_dxN(p.total_claims)||(a+r+s), d=t-s; return d>0?Math.min(1,a/d):null; }
 function _schedLbl(p){ var c=_dxCatOf({p:p}); return {k:c,l:{ok:"منتظم",watch:"يحتاج متابعة",late:"متأخر",stumb:"متعثّر",ns:"لم يبدأ"}[c]||"—",c:{ok:"ok",watch:"warn",late:"bad",stumb:"bad",ns:"ok"}[c]||"ok"}; }
 function devEval(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0; const dv=_dxDev(p); const d=dv!=null?dv:(pl-a); return {d:Math.abs(d),behind:d>0,lbl:_schedLbl(p).l}; }
 function wkEvals(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0;
   let cp=pct(p.claims_pct); if(cp==null||cp===0){ const v=toNum(p.value)||0, d=toNum(p.disbursed)||0; cp=v?d/v:0; }
   const _sl=_schedLbl(p); const sched={l:_sl.l,c:_sl.c}; const _dv0=_dxDev(p); const sg=_dv0!=null?_dv0:(pl-a);
   const fg=a-cp; const fin=fg<0.30?{l:"طبيعي",c:"ok"}:(fg<=0.50?{l:"مقبول",c:"warn"}:{l:"مرتفع",c:"bad"});
-  const ac=toNum(p.approved_claims)||0, tc=toNum(p.total_claims)||0, us=toNum(p.under_study)||0, dn=tc-us;
-  const qr=dn>0?ac/dn:null;
+  const qr=apprRate(p);
   const qual=qr==null?{l:"غير متاح",c:"na"}:(qr>0.70?{l:"جيد",c:"ok"}:(qr>=0.60?{l:"متوسط",c:"warn"}:(qr>=0.50?{l:"مقبول",c:"warn"}:{l:"ضعيف",c:"bad"})));
   return {sched:Object.assign({v:ar(Math.round(Math.abs(sg)*100))+"%"},sched), fin:Object.assign({v:ar(Math.round(Math.abs(fg)*100))+"%"},fin), qual:Object.assign({v:qr==null?"—":ar(Math.round(qr*100))+"%"},qual)}; }
 function wEval(title,e){ return `<div class="weval ${e.c}"><div class="weval-t">${title}</div><div class="weval-v">${e.v}</div><div class="weval-p">${e.l}</div></div>`; }
@@ -9048,11 +9049,11 @@ function rxProject(p){
     +'<div class="rx-quote">'+(bs?'<blockquote><span>الموقف الحالي</span><p>'+esc(bs).replace(/\|/g," · ").replace(/\n+/g,"<br>")+'</p></blockquote>':'')+(ex&&!_dxSame(ex,bs)?'<div class="rx-ex"><span>الملخص التنفيذي</span><p>'+esc(ex).replace(/\|/g," · ").replace(/\n+/g,"<br>")+'</p></div>':'')
       +'<div class="rx-tags">'+[["المغايرات",p.variations],["البنود المستحدثة",p.new_items],["الالتزام البيئي",p.env]].filter(function(x){ return _dxTxt(x[1]); }).map(function(x){ return '<div><span>'+x[0]+'</span><b>'+_pdNoteV(x[0],_dxTxt(x[1]))+'</b></div>'; }).join("")+'</div></div></div>';
   /* 6 · المخاطر والجودة */
-  var app=_dxN(p.approved_claims), ret=_dxN(p.returned_claims), stu=_dxN(p.under_study), qr=(app+ret)>0?app/(app+ret):null;
+  var app=_dxN(p.approved_claims), ret=_dxN(p.returned_claims), stu=_dxN(p.under_study), qr=apprRate(p);
   var lvI={"سليم":0,"منخفض":1,"متوسط":2,"عالي":3}[r.level]||0;
   var risk='<div class="rx-risk"><div class="rx-rl"><div class="rx-meter">'+["سليم","منخفض","متوسط","عالي"].map(function(l,i){ return '<i class="'+(i<=lvI?"on l"+i:"")+'"><span>'+l+'</span></i>'; }).join("")+'</div><b>'+esc(r.level)+'</b><em>درجة المخاطر '+ar(r.score)+' نقطة</em>'
     +(r.reasons.length?'<ul>'+r.reasons.map(function(x,i){ return '<li><b>+'+ar((r.pts||[])[i]||0)+'</b>'+esc(x)+'</li>'; }).join("")+'</ul>':'<div class="rx-ok">✓ لا توجد مؤشرات خطر على المشروع</div>')+'</div>'
-    +'<div class="rx-q"><div><b>'+ar(app)+'</b><span>اعتماد معتمد</span></div><div><b>'+ar(ret)+'</b><span>يُعاد التسليم</span></div><div><b>'+ar(stu)+'</b><span>تحت الدراسة</span></div><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>جودة الاعتماد</span></div>'
+    +'<div class="rx-q"><div><b>'+ar(app)+'</b><span>اعتماد معتمد</span></div><div><b>'+ar(ret)+'</b><span>يُعاد التسليم</span></div><div><b>'+ar(stu)+'</b><span>تحت الدراسة</span></div><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>نسبة الاعتماد</span></div>'
     +'<div class="'+(_dxN(p.ncr)?"w":"")+'"><b>'+ar(_dxN(p.ncr))+'</b><span>عدم مطابقة</span></div><div class="'+(_dxN(p.warn_count||p.warnings)?"b":"")+'"><b>'+ar(_dxN(p.warn_count||p.warnings))+'</b><span>إنذارات</span></div></div></div>';
   /* 7 · فريق المشروع */
   var crd=[["المقاول",p.contractor],["الاستشاري",p.consultant],["مدير المشروع",p.pm],["الإشراف",p.supervision]].map(function(x){ var v=_dxTxt(x[1]); return '<div class="rx-cr"><span>'+x[0]+'</span><b>'+(v?esc(v).replace(/\n+/g," · "):"—")+'</b></div>'; }).join("");
@@ -9423,10 +9424,10 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var totC=D.reduce(function(a,p){return a+_dxN(p.total_claims);},0)||(app+ret+stu);
   var ncr=D.reduce(function(a,p){return a+_dxN(p.ncr);},0), warns=D.reduce(function(a,p){return a+_dxN(p.warn_count||p.warnings);},0);
   var site=D.reduce(function(a,p){return a+_dxN(p.site_reports);},0), dchg=D.reduce(function(a,p){return a+_dxN(p.design_changes);},0);
-  var qr=(app+ret)>0?app/(app+ret):null;
+  var qr=(totC-stu)>0?Math.min(1,app/(totC-stu)):null;
   var cSegs=[{l:"معتمد",v:app,c:DX.g},{l:"يُعاد التسليم",v:ret,c:DX.amber},{l:"تحت الدراسة",v:stu,c:"#D8D0BE"}];
   var clBody='<div class="dx-health sm">'+_dxDonut(cSegs,ar(totC),"اعتماد",150,18)+_dxLeg(cSegs)+'</div>'
-    +'<div class="dx-tiles"><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>جودة الاعتماد</span></div><div><b>'+ar(site)+'</b><span>زيارات ميدانية</span></div>'
+    +'<div class="dx-tiles"><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>نسبة الاعتماد</span></div><div><b>'+ar(site)+'</b><span>زيارات ميدانية</span></div>'
     +'<div class="'+(ncr?"warn":"")+'"><b>'+ar(ncr)+'</b><span>عدم مطابقة</span></div><div class="'+(warns?"bad":"")+'"><b>'+ar(warns)+'</b><span>إنذارات</span></div></div>';
   /* ---- المشاريع الأعلى مخاطرة ---- */
   var risk=rows.filter(function(r){return !r.done&&(r.score>=2||r.cat==="late");}).sort(function(a,b){ return b.score-a.score||(a.sv||0)-(b.sv||0); }).slice(0,7);
@@ -9611,11 +9612,11 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +_pdRow("عدد المستخلصات",ar(_dxN(p.claims_count)))+'</div>';
   /* --- المطالبات والجودة --- */
   var app=_dxN(p.approved_claims), ret=_dxN(p.returned_claims), stu=_dxN(p.under_study), totC=_dxN(p.total_claims)||(app+ret+stu);
-  var qr=(app+ret)>0?app/(app+ret):null;
+  var qr=(totC-stu)>0?Math.min(1,app/(totC-stu)):null;
   var cSegs=[{l:"معتمد",v:app,c:DX.g},{l:"يُعاد التسليم",v:ret,c:DX.amber},{l:"تحت الدراسة",v:stu,c:"#D8D0BE"}];
   var wc=_dxN(p.warn_count||p.warnings), ncr=_dxN(p.ncr), site=_dxN(p.site_reports), dc=_dxN(p.design_changes);
   var qBody=(totC?('<div class="dx-health sm">'+_dxDonut(cSegs,ar(totC),"اعتماد",150,18)+_dxLeg(cSegs)+'</div>'):'<div class="dx-empty">لا توجد اعتمادات مسجّلة</div>')
-    +'<div class="dx-tiles"><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>جودة الاعتماد</span></div><div><b>'+ar(site)+'</b><span>ملاحظات الموقع</span></div>'
+    +'<div class="dx-tiles"><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>نسبة الاعتماد</span></div><div><b>'+ar(site)+'</b><span>ملاحظات الموقع</span></div>'
     +'<div class="'+(ncr?"warn":"")+'"><b>'+ar(ncr)+'</b><span>عدم مطابقة</span></div><div class="'+(wc?"bad":"")+'"><b>'+ar(wc)+'</b><span>إنذارات</span></div></div>'
     +(dc?'<div class="dx-note">التغييرات التصميمية: <b>'+ar(dc)+'</b></div>':'');
   /* --- مقارنة بالقطاع --- */
