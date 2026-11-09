@@ -8254,6 +8254,8 @@ function _hbThumb(p){ var u=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(B
 var PR={view:"table",q:"",sector:"",region:"",status:"",ptype:"",sort:"code",dir:1};
 function prSet(k,v){ PR[k]=v; projRegOpen(true); }
 function prSort(k){ if(PR.sort===k) PR.dir=-PR.dir; else { PR.sort=k; PR.dir=1; } projRegOpen(true); }
+var PF_SEC_ORDER=["الورد","المواشي","المحاصيل البعلية","القيمة المضافة","الفاكهة","العسل","البن العربي","الأسماك"];
+function _pfOrder(p){ var s=PF_SEC_ORDER.indexOf(String(p.sector||"").trim()); if(s<0) s=99; var i=(DATA||[]).indexOf(p); var m=String(p.code||"").match(/(\d+)/); return s*100000+(i<0?0:i)*10+(m?0:0); }
 function _prList(){ var q=_lcNorm(PR.q);
   var L=DATA.filter(function(p){
     var _s=_prArr("sector"), _r=_prArr("region"), _t=_prArr("ptype"), _u=_prArr("status"), _k=_prArr("cat"); if(_k.length&&_k.indexOf(_dxCatOf(analyzeProject(p)))<0) return false;
@@ -8264,6 +8266,7 @@ function _prList(){ var q=_lcNorm(PR.q);
   var key=PR.sort, d=PR.dir, val=function(p){
     if(key==="actual") return pct(p.actual)||0; if(key==="value") return _dxBase(p); if(key==="spend"){ var v=_dxBase(p); return v?(_dxN(p.disbursed)/v):0; }
     if(key==="end"){ var x=_dxDt(endDateOf(p)); return x?x.getTime():0; } if(key==="upd"){ var u=_dxDt(p.last_update); return u?u.getTime():0; }
+    if(key==="code") return _pfOrder(p);
     return String(p[key]||""); };
   L.sort(function(a,b){ var x=val(a), y=val(b); return (typeof x==="number"?(x-y):String(x).localeCompare(String(y),"ar"))*d; });
   return L; }
