@@ -9593,15 +9593,15 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var tl='';
   if(t.ok){ var nowF=_dxClamp(t.raw,0,1);
     tl='<div class="pd-tl"><div class="pd-tlh"><span>البداية<b>'+fmtDateTxt(p.start_date)+'</b></span>'+(!r.done?'<span class="pd-today'+(t.raw>1?' over':'')+'"><i></i>اليوم<b>'+fmtDateTxt(new Date().toISOString().slice(0,10))+'</b></span>':'')+'<span class="e">النهاية<b>'+fmtDateTxt(endDateOf(p))+'</b></span></div>'
-      +'<div class="pd-tlb"><i class="el" style="width:'+(nowF*100).toFixed(1)+'%"></i><i class="ac" style="width:'+(_dxClamp(a,0,1)*100).toFixed(1)+'%"></i>'
+      +'<div class="pd-tlb"><i class="el" style="width:'+(nowF*100).toFixed(1)+'%"></i>'
       +(!r.done?'<b class="now'+(t.raw>1?' over':'')+'" style="inset-inline-start:'+(nowF*100).toFixed(1)+'%"></b>':'')+'</div>'
-      +'<div class="pd-tll"><span class="pd-left'+(t.left<0&&!r.done?' over':'')+'">'+(r.done?'انتهت المدة':(t.left>=0?'المدة المتبقية <b>'+ar(t.left)+' يوم</b>':'متجاوز المدة بـ <b>'+ar(-t.left)+' يوم</b>'))+'</span><span><i class="el"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span><span><i class="ac"></i>الإنجاز '+_dxPct(a)+'</span></div></div>'; }
+      +'<div class="pd-tll"><span class="pd-left'+(t.left<0&&!r.done?' over':'')+'">'+(r.done?'انتهت المدة':(t.left>=0?'المدة المتبقية <b>'+ar(t.left)+' يوم</b>':'متجاوز المدة بـ <b>'+ar(-t.left)+' يوم</b>'))+'</span><span><i class="el"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span></div></div>'; }
   else tl='<div class="dx-empty">تواريخ البداية/النهاية غير مكتملة في الشيت</div>';
   var dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):_dxTxt(p.duration);
   var stp=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+(calParts(p.resume_date)?fmtDate(p.resume_date):"لم يُستأنف")):"لا يوجد";
   var tlBody=tl+'<div class="pd-rows two">'
     +_pdRow("النهاية التعاقدية",fmtDate(p.end_contractual),true)+_pdRow("النهاية بعد التمديد",fmtDate(p.end_after_ext||p.end_date),true)
-    +_pdRow("تاريخ الترسية",fmtDate(p.award_date),true)+_pdRow("تسليم الموقع",fmtDate(p.site_handover),true)
+    +_pdRow("تاريخ الترسية",_dxTxt(p.award_alt)?'<span style="direction:ltr;unicode-bidi:isolate;display:inline-block">'+esc(_dxTxt(p.award_alt))+'</span>'+(/14\d\d/.test(String(p.award_alt))?'<span style="margin-inline-start:4px">هـ</span>':""):fmtDate(p.award_date),true)
     +'<div class="pd-r pd-stop"><span>الإيقاف ← الاستئناف</span><b>'+stp+'</b></div></div>';
   /* --- المالية --- */
   var fSegs=[{l:"المنصرف",v:dis,c:DX.g},{l:"تحت الإجراء",v:under,c:DX.blue},{l:"المتبقي",v:remain,c:"#D8D0BE"}];
