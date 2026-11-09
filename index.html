@@ -8814,7 +8814,7 @@ function reportPrepOpen(keep){ try{ setNavActive("report"); }catch(e){} RERENDER
     +'<section class="rp-card"><h3>2 · نوع التقرير</h3><div class="rp-types">'+T.map(function(x){ return '<button class="rp-t" '+(L.length?'':'disabled ')+'onclick="rpGo(\''+x[0]+'\')"><b>'+x[1]+'</b><span>'+x[2]+'</span></button>'; }).join("")+'</div></section></div>';
   show(html); }
 function _rpCheck(sel,codes){ var S={}; codes.forEach(function(c){ S[c]=1; }); document.querySelectorAll(sel).forEach(function(c){ c.checked=!!S[c.value]; }); }
-function rpGo(type){ var L=_rpList(); if(!L.length) return; PRINT_NAME=""; ANSWER_TITLE=""; var codes=L.map(function(p){ return p.code; }), ttl=_rpTitle();
+function rpGo(type){ try{ mselFlushRP(); }catch(e){} var L=_rpList(); if(!L.length) return; PRINT_NAME=""; ANSWER_TITLE=""; var codes=L.map(function(p){ return p.code; }), ttl=_rpTitle();
   if(type==="list"){ projectTable(L,ttl,"region","قائمة مشاريع "+ttl); _rpAfter(); return; }
   if(type==="dash"){ var F=RP.f, simple=!((F.status||[]).length||(F.contractor||[]).length||(F.consultant||[]).length);
     DASH_FILTER={region:(F.region||[]).slice(),sector:(F.sector||[]).slice(),ptype:(F.ptype||[]).slice(),cat:(F.cat||[]).slice()};
@@ -9287,7 +9287,12 @@ function _mselHTML(ns,k,allLbl,opts,sel,selLbl){ var on=sel.length&&sel.length<o
     +'<div class="msel-p" onclick="event.stopPropagation()"><label class="msel-all"><input type="checkbox" onchange="mselAll(this)"'+((!sel.length||sel.length===opts.length)?' checked':'')+'><b>تحديد الكل</b></label>'
     +'<div class="msel-l">'+opts.map(function(o){ var ck=!sel.length||sel.indexOf(o.v)>-1; return '<label><input type="checkbox" value="'+esc(o.v)+'"'+(ck?' checked':'')+' onchange="mselSync(this)">'+(o.c?'<i style="background:'+o.c+'"></i>':'')+'<span>'+esc(o.l)+'</span><em>'+ar(o.n)+'</em></label>'; }).join("")+'</div>'
     +'<div class="msel-a"><button type="button" onclick="mselNone(this)">مسح</button><button type="button" class="ok" onclick="mselApply(this)">تطبيق</button></div></div></div>'; }
-function mselOpen(e,k){ if(e) e.stopPropagation(); var w=e&&e.target.closest(".msel"); var was=w&&w.classList.contains("open"); document.querySelectorAll(".msel.open").forEach(function(x){ x.classList.remove("open"); }); if(w&&!was) w.classList.add("open"); }
+function _mselCk(w){ return [].slice.call(w.querySelectorAll(".msel-l input:checked")).map(function(x){ return x.value; }).join("\u0001"); }
+function _mselPending(w){ return w&&w._init!=null&&_mselCk(w)!==w._init; }
+function mselOpen(e,k){ if(e) e.stopPropagation(); var w=e&&e.target.closest(".msel"); var was=w&&w.classList.contains("open"); document.querySelectorAll(".msel.open").forEach(function(x){ if(x!==w&&_mselPending(x)){ var bb=x.querySelector('[onclick="mselApply(this)"]'); if(bb){ mselApply(bb); return; } } x.classList.remove("open"); }); if(w&&!was){ w.classList.add("open"); w._init=_mselCk(w); } }
+/* يطبّق أي اختيارات مفتوحة لم يُضغط «تطبيق» عليها (للتقارير بدون إعادة رسم) */
+function mselFlushRP(){ document.querySelectorAll('.msel[data-ns="rp"]').forEach(function(w){ if(!_mselPending(w)&&!w.classList.contains("open")) return; var k=w.getAttribute("data-k"), all=w.querySelectorAll(".msel-l input"), ck=[].slice.call(w.querySelectorAll(".msel-l input:checked")).map(function(x){ return x.value; });
+  if(_mselPending(w)){ RP.f[k]=(ck.length===all.length||!ck.length)?[]:ck; } w.classList.remove("open"); w._init=null; }); }
 function mselSync(inp){ var p=inp.closest(".msel-p"), all=p.querySelectorAll(".msel-l input"), ck=p.querySelectorAll(".msel-l input:checked"); p.querySelector(".msel-all input").checked=(ck.length===all.length); }
 function mselAll(inp){ inp.closest(".msel-p").querySelectorAll(".msel-l input").forEach(function(x){ x.checked=inp.checked; }); }
 function mselNone(b){ var p=b.closest(".msel-p"); p.querySelectorAll("input").forEach(function(x){ x.checked=false; }); }
@@ -9295,7 +9300,7 @@ function mselApply(b){ var w=b.closest(".msel"), k=w.getAttribute("data-k"), p=w
   var all=p.querySelectorAll(".msel-l input"), ck=[].slice.call(p.querySelectorAll(".msel-l input:checked")).map(function(x){ return x.value; });
   w.classList.remove("open"); var val=(ck.length===all.length||!ck.length)?"":ck, ns=w.getAttribute("data-ns")||"dash";
   if(ns==="dash") dashSetFilter(k,val); else if(ns==="pr") prSet(k,val); else if(typeof window[ns+"MSet"]==="function") window[ns+"MSet"](k,val,w); }
-try{ document.addEventListener("click",function(e){ if(!e.target.closest(".msel")) document.querySelectorAll(".msel.open").forEach(function(x){ x.classList.remove("open"); }); }); }catch(e){}
+try{ document.addEventListener("click",function(e){ if(!e.target.closest(".msel")) document.querySelectorAll(".msel.open").forEach(function(x){ if(_mselPending(x)){ var bb=x.querySelector('[onclick="mselApply(this)"]'); if(bb){ mselApply(bb); return; } } x.classList.remove("open"); }); }); }catch(e){}
 try{ window.mselOpen=mselOpen; window.mselSync=mselSync; window.mselAll=mselAll; window.mselNone=mselNone; window.mselApply=mselApply; }catch(e){}
 function mapToggleRegion(r){ var a=_dfArr("region"); var i=a.indexOf(r); if(i>-1) a.splice(i,1); else a.push(r); dashSetFilter("region",a.length?a:""); }
 try{ window.mapToggleRegion=mapToggleRegion; }catch(e){}
