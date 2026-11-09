@@ -4302,6 +4302,20 @@ body[data-theme="dark"] .df-codes{background:#2A2618;border-color:#4A3F25;color:
 .dx .pd-chip.st.s-done{background:#0B5A35!important;border-color:#2E8B57!important;color:#fff!important}
 .dx .pd-chip.st.s-pre{background:#F2D67A!important;border-color:#F2D67A!important;color:#4A3800!important}
 .dx .pd-chip.st.s-stop{background:#111!important;border-color:#111!important;color:#fff!important}
+
+/* آخر المستجدات: البنود القصيرة أفقياً حتى لا تُقص */
+.dx .g-nt .pd-notes .pd-note.pd-short{display:grid!important;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);grid-template-columns:none!important;align-content:center;align-items:start;column-gap:8px;row-gap:0;padding:8px 10px!important;overflow:hidden}
+.dx .g-nt .pd-notes .pd-note.pd-short>div{display:flex!important;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;border:0!important;padding:0!important}
+.dx .g-nt .pd-notes .pd-note.pd-short>div>span,.dx .g-nt .pd-notes .pd-note.pd-short>div>b{border:0!important;padding:0!important;display:block!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;max-width:100%!important;line-height:1.4!important}
+.dx .g-nt .pd-notes .pd-note.pd-short>div>span{font-size:9.5px!important;color:var(--dx-mut,#7D8A82)}
+.dx .g-nt .pd-notes .pd-note.pd-short>div>b{font-size:10px!important}
+
+/* آخر المستجدات: البنود القصيرة صفوف مضغوطة تتسع داخل البطاقة */
+.dx .g-nt .pd-notes .pd-note.pd-short{grid-auto-flow:row!important;grid-auto-columns:auto!important;grid-template-columns:max-content minmax(0,1fr)!important;column-gap:8px!important;row-gap:3px!important;align-content:center!important;align-items:center!important;padding:6px 10px!important}
+.dx .g-nt .pd-notes .pd-note.pd-short>div{display:contents!important}
+.dx .g-nt .pd-notes .pd-note.pd-short>div>span,.dx .g-nt .pd-notes .pd-note.pd-short>div>b{white-space:nowrap!important;line-height:1.25!important}
+.dx .g-nt .pd-notes .pd-note.pd-short>div>b{overflow:hidden!important;text-overflow:ellipsis!important}
+.dx .g-nt .pd-note.pd-short .pd-pill{height:15px!important;padding:0 7px!important;font-size:9px!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
