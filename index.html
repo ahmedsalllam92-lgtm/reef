@@ -4341,6 +4341,9 @@ body[data-theme="dark"] .hb-cm .hb-sec{color:#1A1A1A}
 .pcs-th button.on{border-color:#B89968;opacity:1}.pcs-th button:hover{opacity:1}
 .pcs-th img{width:100%;height:100%;object-fit:cover;display:block}
 @media print{.pcs-th,.pcs-nav,.pcs-pb,.pcs-cnt{display:none!important}}
+
+.hb-t td.cd .hb-cdp{display:inline-block;padding:2px 10px;border-radius:99px;background:var(--sc);color:#1F2A24;font-size:12px;white-space:nowrap;direction:ltr}
+body[data-theme="dark"] .hb-t td.cd .hb-cdp{color:#1A1A1A}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8372,7 +8375,7 @@ function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDa
         +'<div class="hb-cc">'+esc(_dxTxt(p.contractor)||"—")+'</div></div></article>'; }).join("")+'</div>';
   else body='<div class="hb-tw"><table class="hb-t"><thead><tr>'+th("code","الكود")+th("name","المشروع")+th("region","المنطقة")+'<th>الحالة</th>'+th("contractor","المقاول")+th("value","القيمة بعد التعديل")+th("actual","الإنجاز")+th("spend","الصرف")+th("end","النهاية")+'<th class="go"></th></tr></thead><tbody>'
     +L.map(function(p){ var v=_dxBase(p);
-      return '<tr'+(_isStopped(p)?' class="stp" title="مشروع موقوف"':'')+' onclick="projCard(\''+esc(p.code)+'\')"><td class="cd">'+esc(p.code)+'</td><td class="nm"><b>'+esc(p.name)+'</b><small>'+esc(p.sector||"")+(p.ptype?(" · "+esc(p.ptype)):"")+'</small></td><td>'+esc(p.region||"—")+'</td><td>'+_hbBadge(_hbStatus(p))+(_isStopped(p)?'<span class="hb-stp">⏸ موقوف</span>':'')+'</td>'
+      return '<tr'+(_isStopped(p)?' class="stp" title="مشروع موقوف"':'')+' onclick="projCard(\''+esc(p.code)+'\')"><td class="cd"><span class="hb-cdp" style="--sc:'+(SEC_PASTEL[String(p.sector||"").trim()]||"#DDE3DE")+'" title="'+esc(p.sector||"")+'">'+esc(p.code)+'</span></td><td class="nm"><b>'+esc(p.name)+'</b><small>'+esc(p.sector||"")+(p.ptype?(" · "+esc(p.ptype)):"")+'</small></td><td>'+esc(p.region||"—")+'</td><td>'+_hbBadge(_hbStatus(p))+(_isStopped(p)?'<span class="hb-stp">⏸ موقوف</span>':'')+'</td>'
         +'<td class="ct">'+esc(_dxTxt(p.contractor)||"—")+'</td><td class="n">'+_dxM(v)+'</td><td>'+_hbProg(p)+'</td><td class="n">'+_dxPct(v?_dxN(p.disbursed)/v:0)+'</td><td class="n">'+fmtDateTxt(endDateOf(p))+'</td><td class="go"><button title="لوحة المشروع" onclick="event.stopPropagation();projDash(\''+esc(p.code)+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button></td></tr>'; }).join("")
     +'</tbody></table></div>';
   var html='<div class="hb-page"><div class="hb-head"><div><div class="hb-kick">السجلات</div><h1>سجل المشاريع</h1><div class="hb-sub">كل مشاريع المحفظة ببياناتها — اضغط على أي مشروع لفتح لوحته</div></div><div class="hb-hr">'+_dxSrc()+_hbBtns()+'</div></div>'
