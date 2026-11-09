@@ -4489,6 +4489,19 @@ body[data-theme="dark"] .sg-mt td.t-bad{background:rgba(192,57,43,.1)}body[data-
 .sg .sg-kt{min-width:0;display:flex;flex-direction:column;gap:1px}
 .sg .sg-k.bad b{color:#B23B2E}.sg .sg-k.warn b{color:#8A6A00}
 body[data-theme="dark"] .sg .sg-k{background:rgba(255,255,255,.04)!important}body[data-theme="dark"] .sg .sg-ki{background:rgba(143,211,168,.1);color:#A9E2C0}
+
+/* الطباعة تتبع الوضع الحالي: في الداكن تُطبع داكنة */
+@media print{
+ body[data-theme="dark"],body[data-theme="dark"] #mainpane,body[data-theme="dark"] #answer,body[data-theme="dark"] .acard{background:#11181C!important;color:#E6EEF0!important}
+ body[data-theme="dark"] *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+
+@media print{
+ html:has(body[data-theme="dark"]){background:#11181C!important}
+ body[data-theme="dark"] .dx,body[data-theme="dark"] .dx .dx-canvas,body[data-theme="dark"] .hb-page,body[data-theme="dark"] .sg,body[data-theme="dark"] .tlp{background:#11181C!important}
+ body[data-theme="dark"] .dx-card,body[data-theme="dark"] .dxf-p,body[data-theme="dark"] .dx-kpi,body[data-theme="dark"] .pd-note,body[data-theme="dark"] .pc4-card,body[data-theme="dark"] .pc4-info>div,body[data-theme="dark"] .pc4-k,body[data-theme="dark"] .pc4-ph,body[data-theme="dark"] .sg-c,body[data-theme="dark"] .sg-k,body[data-theme="dark"] .hm-card,body[data-theme="dark"] .hm-k,body[data-theme="dark"] .hb-card,body[data-theme="dark"] .hb-tw,body[data-theme="dark"] .tablewrap,body[data-theme="dark"] .fu-col,body[data-theme="dark"] .dx-tiles>div{background:#18242A!important;border-color:#2B363B!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+ body[data-theme="dark"] .sg th,body[data-theme="dark"] .hb-t th,body[data-theme="dark"] .ptable th{background:#1F2E34!important}
+}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8984,7 +8997,7 @@ try{ window.pdPrintMenu=pdPrintMenu; window.pdPrintOne=pdPrintOne; window.pdPrin
 
 /* الطباعة دائماً بالوضع الفاتح حتى لو كان الوضع الداكن مفعّلاً */
 var _PRINT_DARK=false;
-try{ window.addEventListener("beforeprint",function(){ try{ if(document.body.getAttribute("data-theme")==="dark"){ _PRINT_DARK=true; applyTheme("light"); try{ if(document.querySelector("#answer .dx-land")) dxLandFit("print"); }catch(e){} } }catch(e){} });
+try{ window.addEventListener("beforeprint",function(){ try{ if(false&&document.body.getAttribute("data-theme")==="dark"){ _PRINT_DARK=true; applyTheme("light"); try{ if(document.querySelector("#answer .dx-land")) dxLandFit("print"); }catch(e){} } }catch(e){} });
   window.addEventListener("afterprint",function(){ try{ if(_PRINT_DARK){ _PRINT_DARK=false; applyTheme("dark"); setTimeout(function(){ try{ dxLandFit(); }catch(e){} },60); } }catch(e){} }); }catch(e){}
 
 /* ================= إعداد تقرير ================= */
