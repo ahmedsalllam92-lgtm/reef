@@ -4291,6 +4291,11 @@ body[data-theme="dark"] .df-codes{background:#2A2618;border-color:#4A3F25;color:
 .dxf2 .dx-actions .rtool .rtool-hint,.dxf2 .rtool-hint{display:none!important}
 .acard:has(.dxf2) > .rtools{display:none!important}
 @media print{.dxf2 .dxf-flt{display:none!important}}
+
+.pc-pl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-2px 0 6px;font-size:10.5px;color:#6E7D74}
+.pc-pl b{font-weight:800!important;color:#14241B;margin-inline-start:3px}
+.pc-pl .pc-st{margin-inline-start:auto;padding:1px 9px;border-radius:99px;font-size:10px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pc-act i{position:relative}.pc-act i s{position:absolute;top:-3px;bottom:-3px;width:2px;background:#B89968;border-radius:2px}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -6173,7 +6178,9 @@ function _pcCard(p,monthLbl){
     +'<div class="pc-main">'
       +'<div class="wbox pc-data"><div class="wbox-t">بيانات المشروع</div>'
         +'<div class="pc-act"><span>الإنجاز الفعلي</span><b>'+ar(Math.round(a*100))+'%</b>'
-          +'<i><b style="width:'+Math.max(0,Math.min(100,Math.round(a*100)))+'%"></b></i></div>'
+          +'<i><b style="width:'+Math.max(0,Math.min(100,Math.round(a*100)))+'%"></b>'+(pct(p.planned)!=null?'<s style="inset-inline-start:'+Math.max(0,Math.min(100,Math.round(Math.min(1,pct(p.planned))*100)))+'%"></s>':'')+'</i></div>'
+        +(function(){ var _pl=pct(p.planned), _dv=_dxDev(p), _ct=_dxCatOf({p:p}), _C=DX_CAT[_ct];
+            return '<div class="pc-pl"><span>المخطط <b>'+(_pl==null?'—':ar(Math.round(Math.min(1,_pl)*100))+'%')+'</b></span><span>الحيود <b dir="ltr" style="color:'+_C.c+'">'+(_dv==null?'—':((_dv>0?'−':'+')+ar(Math.abs(Math.round(_dv*100)))+'%'))+'</b></span><span class="pc-st" style="--c:'+_C.c+'">'+_C.l+'</span></div>'; })()
         +_pcRow("القطاع",p.sector)
         +_pcRow("المنطقة",p.region)
         +_pcRow("نوع المشروع",p.ptype)
