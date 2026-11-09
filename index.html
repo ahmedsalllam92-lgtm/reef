@@ -4417,6 +4417,71 @@ body[data-theme="dark"] .stg-node,body[data-theme="dark"] .stg-pc{background:rgb
 @media screen and (max-width:1100px){.stg-hero{grid-template-columns:1fr}.stg-river{flex-direction:column;gap:8px}.stg-arrow{display:none}.stg-lanes{grid-template-columns:1fr 1fr}.stg-gr{grid-template-columns:140px minmax(0,1fr) 44px}}
 @media screen and (max-width:640px){.stg-lanes{grid-template-columns:1fr}.stg-heat{font-size:10px;grid-template-columns:90px repeat(5,minmax(0,1fr))}}
 @media print{.stg-chips,.stg-sort{display:none!important}.stg-lb,.stg-gw{max-height:none!important;overflow:visible!important}.stg *{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important}}
+
+/* ===== تتبع المراحل — عرض تنفيذي ===== */
+.sg{display:flex;flex-direction:column;gap:14px;--ink:#14241B;--mut:#6E7B73;--ln:#E3E8E3;--ok:#2E8B57;--warn:#D4A017;--bad:#C0392B}
+.sg-top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-bottom:12px;border-bottom:2px solid #C9A96E}
+.sg-kick{font-size:11px;color:#A68A55}.sg-top h1{margin:2px 0 4px;font-size:24px;font-weight:800!important;color:#0B3D27}.sg-top p{margin:0;font-size:11.5px;color:var(--mut)}
+.sg-flt{display:flex;align-items:center;gap:8px}.sg-flt label{font-size:11px;color:var(--mut)}
+.sg-flt select{height:34px;border-radius:10px;border:1px solid var(--ln);background:#fff;padding:0 10px;font:inherit;font-size:12px;color:var(--ink);min-width:160px}
+.sg-ic{width:34px;height:34px;border-radius:10px;border:1px solid var(--ln);background:#fff;color:#1E5B3A;display:grid;place-items:center;cursor:pointer}
+.sg-ks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sg-k{padding:13px 16px;border-radius:14px;border:1px solid var(--ln);background:#fff;display:flex;flex-direction:column;gap:2px;border-top:3px solid #1E5B3A}
+.sg-k.bad{border-top-color:var(--bad)}.sg-k.warn{border-top-color:var(--warn)}
+.sg-k span{font-size:11.5px;color:var(--mut)}.sg-k b{font-size:26px;font-weight:800!important;color:#0B3D27;line-height:1.25}.sg-k b small{font-size:11px;color:var(--mut);margin-inline-start:4px;font-weight:500!important}
+.sg-k em{font-style:normal;font-size:10.5px;color:var(--mut);line-height:1.6}.sg-k em i{font-style:normal}.sg-k em i.bad{color:var(--bad)}.sg-k em i.ok{color:var(--ok)}
+.sg-c{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px 18px}
+.sg-c>header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}.sg-c>header h3{margin:0;font-size:15px;font-weight:800!important;color:#0B3D27}.sg-c>header>span{font-size:11px;color:var(--mut)}
+.sg table{width:100%;border-collapse:collapse;font-size:12px}
+.sg th{font-size:11px;color:var(--mut);font-weight:800!important;text-align:right;padding:8px 10px;border-bottom:1px solid var(--ln);white-space:nowrap;background:#F7F9F7}
+.sg th small{display:block;font-weight:500!important;font-size:9.5px;color:#9AA6A0}
+.sg td{padding:9px 10px;border-bottom:1px solid #EEF1EE;vertical-align:middle;color:var(--ink)}
+.sg td.n{white-space:nowrap}.sg td.w,.sg th.w{width:34%}
+.sg td.nm b{display:block;font-size:12px;line-height:1.5}.sg td.nm small{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mut);direction:ltr;justify-content:flex-end}.sg td.nm small i{width:8px;height:8px;border-radius:2px}
+.sg-pt td.nm{font-weight:800!important;white-space:nowrap}.sg-pt td.nm i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:7px;vertical-align:-1px}
+.sg td.t-ok b{color:var(--ok)}.sg td.t-warn b{color:#8A6A00}.sg td.t-bad b{color:var(--bad)}
+.sg-pt td em{font-style:normal;font-size:10px;color:var(--bad);margin-inline-start:6px;padding:1px 6px;border-radius:99px;background:#FBECEA}
+.sg-pt td small{color:var(--mut);font-size:10px}
+.sg-bul{position:relative;height:18px}.sg-bul .std{position:absolute;inset-block:3px;inset-inline-start:0;background:#E7ECE8;border-radius:4px}
+.sg-bul .act{position:absolute;inset-block:6px;inset-inline-start:0;border-radius:3px}.sg-bul .act.t-ok{background:var(--ok)}.sg-bul .act.t-warn{background:var(--warn)}.sg-bul .act.t-bad{background:var(--bad)}
+.sg-bul .mk{position:absolute;top:0;bottom:0;width:2px;background:#0B3D27}
+.sg-lnk{border:0;background:#EEF4EF;color:#1E5B3A;border-radius:99px;padding:2px 10px;font:inherit;font-size:11.5px;cursor:pointer}.sg-lnk i{font-style:normal;color:var(--bad);font-size:10.5px}
+.sg-lg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:10.5px;color:var(--mut)}.sg-lg i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-inline-end:5px;vertical-align:-2px}
+.sg-lg i.std{background:#E7ECE8;border-inline-start:2px solid #0B3D27}.sg-lg i.ok{background:var(--ok)}.sg-lg i.warn{background:var(--warn)}.sg-lg i.bad{background:var(--bad)}.sg-lg i.live{background:#fff;border:2px solid #1E5B3A;border-radius:50%}
+.sg-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:3px;border-radius:10px;background:#F1F4F1}.sg-tabs button{border:0;background:none;font:inherit;font-size:11px;padding:5px 11px;border-radius:8px;cursor:pointer;color:#4F5D55;white-space:nowrap}.sg-tabs button.on{background:#0B3D27;color:#fff}
+.sg-ot tbody tr,.sg-mt tbody tr{cursor:pointer}.sg-ot tbody tr:hover td,.sg-mt tbody tr:hover td{background:#F7FAF8}
+.sg-sec{display:inline-block;padding:2px 9px;border-radius:99px;background:var(--sc);color:#2B2B2B;font-size:10.5px;white-space:nowrap}
+.sg-stg{display:inline-flex;align-items:center;gap:6px;font-size:11px;white-space:nowrap}.sg-stg:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+.sg-prog{height:8px;border-radius:99px;background:#EEF1EE;overflow:hidden}.sg-prog i{display:block;height:100%;border-radius:99px}.sg-prog.t-ok i{background:var(--ok)}.sg-prog.t-warn i{background:var(--warn)}.sg-prog.t-bad i{background:var(--bad)}
+.sg-pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10.5px;white-space:nowrap}.sg-pill.bad{background:#FBECEA;color:#B23B2E}.sg-pill.ok{background:#E7F3EC;color:#1E5B3A}
+.sg-empty{text-align:center;color:var(--mut);font-size:12px;padding:20px}
+.sg-mw{overflow:auto;max-height:640px;border:1px solid var(--ln);border-radius:12px}
+.sg-mt thead th{position:sticky;top:0;z-index:1;text-align:center}.sg-mt thead th.nm{text-align:right}.sg-mt th i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-inline-end:5px}
+.sg-mt td.sx,.sg-mt td.tot{text-align:center;position:relative;min-width:96px}
+.sg-mt td.sx b,.sg-mt td.tot b{font-size:12.5px}
+.sg-mt td.sx u{display:block;position:relative;height:4px;margin:4px auto 0;width:70%;border-radius:9px;background:#EEF1EE;text-decoration:none}
+.sg-mt td.sx u i{display:block;height:100%;border-radius:9px}.sg-mt td.sx u s{position:absolute;top:-2px;width:1.5px;height:8px;background:#0B3D27}
+.sg-mt td.t-ok u i{background:var(--ok)}.sg-mt td.t-warn u i{background:var(--warn)}.sg-mt td.t-bad u i{background:var(--bad)}
+.sg-mt td.t-bad{background:#FDF5F4}.sg-mt td.t-warn{background:#FFFBEF}
+.sg-mt td.na{color:#B7C0BB}
+.sg-mt td.op b:after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#1E5B3A;margin-inline-start:5px;vertical-align:1px;animation:stgP 1.6s infinite}
+.sx-live{display:none}
+.sg-mt td.tot{border-inline-start:2px solid var(--ln)}.sg-mt td.tot small{display:block;font-size:9.5px;color:var(--mut)}
+.sg-foot{text-align:center;font-size:10.5px;color:var(--mut)}
+body[data-theme="dark"] .sg{--ink:#E6EEF0;--mut:#9AAAA6;--ln:#2B363B}
+body[data-theme="dark"] .sg-c,body[data-theme="dark"] .sg-k,body[data-theme="dark"] .sg-flt select,body[data-theme="dark"] .sg-ic{background:rgba(24,34,39,.62);border-color:#2B363B;color:#E6EEF0}
+body[data-theme="dark"] .sg th{background:#1B272C}body[data-theme="dark"] .sg td{border-color:#253036}body[data-theme="dark"] .sg-top h1,body[data-theme="dark"] .sg-c>header h3,body[data-theme="dark"] .sg-k b{color:#A9E2C0}
+body[data-theme="dark"] .sg-mt td.t-bad{background:rgba(192,57,43,.1)}body[data-theme="dark"] .sg-mt td.t-warn{background:rgba(212,160,23,.08)}body[data-theme="dark"] .sg-ot tbody tr:hover td,body[data-theme="dark"] .sg-mt tbody tr:hover td{background:rgba(255,255,255,.04)}
+@media screen and (max-width:1000px){.sg-ks{grid-template-columns:1fr 1fr}.sg td.w,.sg th.w{width:auto}.sg-c{overflow-x:auto}}
+@media print{.sg-flt,.sg-tabs,.sg-lnk{display:none!important}.sg-mw{max-height:none;overflow:visible}.sg *{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important}}
+
+.sg-prog{position:relative;overflow:visible!important}.sg-prog s{position:absolute;top:-3px;bottom:-3px;inset-inline-start:33.3%;width:2px;background:#0B3D27;border-radius:2px}
+.sg-px{font-size:10px;color:var(--mut);margin-top:3px}
+
+.sg-mt td.sx u{display:none!important}
+.sg-mt td.sx,.sg-mt td.tot{padding:10px 8px!important}
+.sg-mt td.sx b,.sg-mt td.tot b{font-size:13px}
+.sg-mt td.t-ok{background:#F1F8F3}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9432,6 +9497,74 @@ function _stgSave(o){ if(!o) return; STG.data=o; STG.src="excel"; try{ localStor
 function _stgLive(){ if(typeof SHEET_CSV_URL==="undefined"||STG.live) return; STG.live=true; var u=String(SHEET_CSV_URL).replace(/\/pub\?.*$/,"/pub?output=xlsx");
   loadXLSX().then(function(){ return fetch(u,{cache:"no-store"}); }).then(function(r){ if(!r.ok) throw 0; return r.arrayBuffer(); }).then(function(b){ var wb=XLSX.read(new Uint8Array(b),{type:"array",cellDates:true}); var o=_stgFromWB(wb); if(o){ STG.data=o; STG.src="live"; try{ if(document.querySelector("#answer .stg")) stageTrackOpen(); }catch(e){} } }).catch(function(){}); }
 try{ window.stageTrackOpen=stageTrackOpen; setTimeout(_stgLive,2500); }catch(e){}
+/* ===== تتبع المراحل — عرض تنفيذي ===== */
+STG.view=STG.view||"open";
+function _stgSecs(){ var s=[]; stgRows().forEach(function(x){ if(s.indexOf(x.p.sector)<0) s.push(x.p.sector); }); if(typeof PF_SEC_ORDER!=="undefined") s.sort(function(a,b){ return PF_SEC_ORDER.indexOf(a)-PF_SEC_ORDER.indexOf(b); }); return s; }
+function _stgCell(s){ if(!s||s.days==null) return '<td class="sx na">'+(s&&s.state==="miss"?'<span title="التاريخ غير مسجّل">؟</span>':'—')+'</td>';
+  var r=s.std?s.days/s.std:0, tone=_stgTone(s.days,s.std);
+  return '<td class="sx t-'+tone+(s.state==="open"?' op':'')+'" title="'+s.days+' يوم · القياسي '+s.std+(s.days>s.std?' · زيادة '+(s.days-s.std):'')+(s.state==="open"?' · المرحلة جارية':'')+'"><b>'+ar(s.days)+'</b>'+(s.state==="open"?'<i class="sx-live"></i>':'')+'<u><i style="width:'+Math.min(100,r*100/3).toFixed(1)+'%"></i><s style="inset-inline-start:33.3%"></s></u></td>'; }
+stageTrackOpen=function(){ try{ setNavActive("stages"); }catch(e){} RERENDER=function(){ stageTrackOpen(); }; ANSWER_TITLE="تتبع المراحل"; PRINT_NAME="تتبع المراحل - "+MONTHLBL; IS_REPORT=false; REPORT_CTX=null;
+  var all=stgRows(), R=STG.sec?all.filter(function(x){ return x.p.sector===STG.sec; }):all, std=_stgStd(), stdTot=std.reduce(function(a,b){ return a+b; },0);
+  var openR=R.filter(function(x){ return x.open; }), compR=R.filter(function(x){ return x.complete; });
+  var avgTot=compR.length?Math.round(compR.reduce(function(a,x){ return a+x.total; },0)/compR.length):0;
+  var onTime=compR.filter(function(x){ return x.total<=stdTot; }).length;
+  var openLate=openR.filter(function(x){ return x.open.days>x.open.std; }).length;
+  var med=function(a){ if(!a.length) return 0; a=a.slice().sort(function(x,y){ return x-y; }); var m=Math.floor(a.length/2); return a.length%2?a[m]:Math.round((a[m-1]+a[m])/2); };
+  var SS=STG_DEF.map(function(d,i){ var done=R.map(function(x){ return x.st[i]; }).filter(function(s){ return s.state==="done"; }).map(function(s){ return s.days; });
+    var now=R.filter(function(x){ return x.open&&x.open.i===i; });
+    return {d:d,i:i,std:std[i],n:done.length,avg:done.length?Math.round(done.reduce(function(a,b){ return a+b; },0)/done.length):0,med:med(done),ok:done.filter(function(v){ return v<=std[i]; }).length,now:now.length,nowLate:now.filter(function(x){ return x.open.days>std[i]; }).length}; });
+  var secs=_stgSecs(), today=fmtDateTxt(new Date().toISOString().slice(0,10));
+  var srcL=STG.src==="excel"?"المحفظة المرفوعة":(STG.src==="live"?"المحفظة المباشرة":"لقطة المحفظة");
+  /* الرأس */
+  var head='<div class="sg-top"><div><div class="sg-kick">المشاريع</div><h1>تتبع المراحل</h1><p>من الطرح حتى إشعار المباشرة · المدد تتحدّث يومياً للمراحل الجارية · '+esc(today)+' · المصدر: '+srcL+'</p></div>'
+    +'<div class="sg-flt"><label>القطاع</label><select onchange="STG.sec=this.value;stageTrackOpen()"><option value="">كل القطاعات</option>'+secs.map(function(s){ return '<option'+(STG.sec===s?' selected':'')+'>'+esc(s)+'</option>'; }).join("")+'</select>'
+    +'<button class="sg-ic" onclick="printAnswer()" title="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button></div></div>';
+  var kpi=function(l,v,u,s,cls){ return '<div class="sg-k'+(cls?" "+cls:"")+'"><span>'+l+'</span><b>'+v+(u?'<small>'+u+'</small>':'')+'</b><em>'+s+'</em></div>'; };
+  var kpis='<div class="sg-ks">'
+    +kpi("المدة القياسية حتى المباشرة",ar(stdTot),"يوم","مجموع المدد القياسية للمراحل الأربع")
+    +kpi("متوسط المدة الفعلية",ar(avgTot),"يوم",compR.length?'للمشاريع التي أتمّت المراحل ('+ar(compR.length)+') · '+(avgTot>stdTot?'<i class="bad">+'+ar(avgTot-stdTot)+' يوم</i>':'<i class="ok">ضمن القياسي</i>'):'—',avgTot>stdTot?"bad":"")
+    +kpi("الالتزام بالمدة القياسية",compR.length?ar(Math.round(onTime/compR.length*100))+"%":"—","",ar(onTime)+" من "+ar(compR.length)+" مشروع أنهت المراحل ضمن 210 يوم".replace("210",ar(stdTot)))
+    +kpi("مشاريع في المراحل الآن",ar(openR.length),"مشروع",ar(openLate)+" منها تجاوزت المدة القياسية لمرحلتها",openLate?"warn":"")+'</div>';
+  /* أداء المراحل (مخطط رصاصي) */
+  var mxA=Math.max.apply(null,SS.map(function(s){ return Math.max(s.avg,s.std); }).concat([1]))*1.08;
+  var perf='<section class="sg-c"><header><h3>أداء المراحل مقارنة بالمدد القياسية</h3><span>متوسط المدة الفعلية للمشاريع التي أنهت كل مرحلة</span></header>'
+    +'<table class="sg-pt"><thead><tr><th>المرحلة</th><th>القياسية</th><th class="w">المتوسط الفعلي مقابل القياسي</th><th>المتوسط</th><th>الوسيط</th><th>ضمن القياسي</th><th>جارية الآن</th></tr></thead><tbody>'
+    +SS.map(function(s){ var tone=_stgTone(s.avg,s.std);
+      return '<tr><td class="nm"><i style="background:'+s.d.c+'"></i>'+ar(s.i+1)+'. '+s.d.l+'</td><td class="n">'+ar(s.std)+' يوم</td>'
+        +'<td class="w"><div class="sg-bul"><span class="std" style="width:'+(s.std/mxA*100).toFixed(1)+'%"></span><span class="act t-'+tone+'" style="width:'+(s.avg/mxA*100).toFixed(1)+'%"></span><span class="mk" style="inset-inline-start:'+(s.std/mxA*100).toFixed(1)+'%"></span></div></td>'
+        +'<td class="n t-'+tone+'"><b>'+ar(s.avg)+'</b> يوم'+(s.avg>s.std?'<em>×'+ar(Math.round(s.avg/s.std*10)/10)+'</em>':'')+'</td><td class="n">'+ar(s.med)+' يوم</td>'
+        +'<td class="n">'+(s.n?ar(Math.round(s.ok/s.n*100))+'%<small> ('+ar(s.ok)+'/'+ar(s.n)+')</small>':'—')+'</td>'
+        +'<td class="n">'+(s.now?'<button class="sg-lnk" onclick="STG.view=\'open\';STG.stage='+s.i+';stageTrackOpen();setTimeout(function(){var e=document.getElementById(\'sgOpen\');if(e)e.scrollIntoView({behavior:\'smooth\'});},50)">'+ar(s.now)+(s.nowLate?' <i>('+ar(s.nowLate)+' متأخر)</i>':'')+'</button>':'—')+'</td></tr>'; }).join("")
+    +'</tbody></table><div class="sg-lg"><span><i class="std"></i>المدة القياسية</span><span><i class="ok"></i>ضمن القياسي</span><span><i class="warn"></i>حتى 1.5× القياسي</span><span><i class="bad"></i>أكثر من 1.5×</span></div></section>';
+  /* المشاريع الجارية */
+  var st=STG.stage, OL=openR.filter(function(x){ return st==null||st===""||x.open.i===st; }).sort(function(a,b){ return (b.open.days-b.open.std)-(a.open.days-a.open.std); });
+  var open='<section class="sg-c" id="sgOpen"><header><h3>المشاريع الجارية في المراحل</h3><div class="sg-tabs"><button class="'+(st==null||st===""?'on':'')+'" onclick="STG.stage=null;stageTrackOpen()">الكل '+ar(openR.length)+'</button>'
+      +STG_DEF.map(function(d,i){ var n=openR.filter(function(x){ return x.open.i===i; }).length; return '<button class="'+(st===i?'on':'')+'" onclick="STG.stage='+i+';stageTrackOpen()">'+d.l+' '+ar(n)+'</button>'; }).join("")+'</div></header>'
+    +(OL.length?'<table class="sg-ot"><thead><tr><th>المشروع</th><th>القطاع</th><th>المرحلة الحالية</th><th>بدأت في</th><th>المدة حتى اليوم</th><th>القياسية</th><th class="w">المدة مقابل القياسي<small>الخط = المدة القياسية · نهاية الشريط = 3×</small></th><th>الحالة</th></tr></thead><tbody>'
+      +OL.map(function(x){ var o=x.open, d=STG_DEF[o.i], tone=_stgTone(o.days,o.std), r=o.days/o.std;
+        return '<tr onclick="projCard(\''+esc(x.p.code)+'\')"><td class="nm"><b>'+esc(x.p.name)+'</b><small>'+esc(x.p.code)+'</small></td><td><span class="sg-sec" style="--sc:'+_stgSecC(x.p.sector)+'">'+esc(x.p.sector)+'</span></td>'
+          +'<td><span class="sg-stg" style="--c:'+d.c+'">'+d.l+'</span></td><td class="n">'+fmtDateTxt(o.from.toISOString().slice(0,10))+'</td><td class="n"><b class="stg-tick" data-v="'+o.days+'">'+ar(o.days)+'</b> يوم</td><td class="n">'+ar(o.std)+' يوم</td>'
+          +'<td class="w"><div class="sg-prog t-'+tone+'"><i style="width:'+Math.min(100,r/3*100).toFixed(1)+'%"></i><s></s></div><div class="sg-px"><span>'+(r>=1?'×'+ar(Math.round(r*10)/10):ar(Math.round(r*100))+'%')+' من القياسي</span></div></td>'
+          +'<td class="n">'+(o.days>o.std?'<span class="sg-pill bad">متأخر '+ar(o.days-o.std)+' يوم</span>':'<span class="sg-pill ok">متبقٍ '+ar(o.std-o.days)+' يوم</span>')+'</td></tr>'; }).join("")+'</tbody></table>'
+      :'<div class="sg-empty">لا توجد مشاريع جارية في هذه المرحلة</div>')+'</section>';
+  /* مصفوفة المدد */
+  var rows=R.filter(function(x){ return x.st.some(function(s){ return s.days!=null; }); });
+  if(STG.sort==="over") rows.sort(function(a,b){ return b.over-a.over; }); else if(STG.sort==="sec") rows.sort(function(a,b){ return (PF_SEC_ORDER.indexOf(a.p.sector)-PF_SEC_ORDER.indexOf(b.p.sector))||(DATA.indexOf(a.p)-DATA.indexOf(b.p)); }); else rows.sort(function(a,b){ return b.total-a.total; });
+  var mat='<section class="sg-c"><header><h3>مدة كل مرحلة لكل مشروع</h3><div class="sg-tabs">'+[["total","الأطول إجمالاً"],["over","الأكثر تجاوزاً"],["sec","حسب القطاع"]].map(function(o){ return '<button class="'+((STG.sort||"total")===o[0]?'on':'')+'" onclick="STG.sort=\''+o[0]+'\';stageTrackOpen()">'+o[1]+'</button>'; }).join("")+'</div></header>'
+    +'<div class="sg-mw"><table class="sg-mt"><thead><tr><th class="nm">المشروع</th>'+STG_DEF.map(function(d,i){ return '<th><i style="background:'+d.c+'"></i>'+d.l+'<small>القياسي '+ar(std[i])+'</small></th>'; }).join("")+'<th>الإجمالي<small>القياسي '+ar(stdTot)+'</small></th></tr></thead><tbody>'
+    +rows.map(function(x){ var tt=_stgTone(x.complete?x.total:null,stdTot);
+      return '<tr onclick="projCard(\''+esc(x.p.code)+'\')"><td class="nm"><b>'+esc(_rxSnRB(x.p))+'</b><small><i style="background:'+_stgSecC(x.p.sector)+'"></i>'+esc(x.p.code)+'</small></td>'+x.st.map(_stgCell).join("")
+        +'<td class="tot t-'+(x.complete?tt:'na')+'"><b>'+ar(x.total)+'</b>'+(x.complete?'':'<small>جارٍ</small>')+'</td></tr>'; }).join("")+'</tbody></table></div>'
+    +'<div class="sg-lg"><span><i class="ok"></i>ضمن القياسي</span><span><i class="warn"></i>حتى 1.5×</span><span><i class="bad"></i>أكثر من 1.5×</span><span><i class="live"></i>مرحلة جارية (تزيد يومياً)</span><span>؟ تاريخ غير مسجّل</span></div></section>';
+  /* القطاعات */
+  var secT='<section class="sg-c"><header><h3>متوسط المدد حسب القطاع</h3><span>بالأيام للمشاريع التي أنهت المرحلة</span></header><div class="sg-mw"><table class="sg-mt sg-st"><thead><tr><th class="nm">القطاع</th>'+STG_DEF.map(function(d,i){ return '<th>'+d.l+'<small>القياسي '+ar(std[i])+'</small></th>'; }).join("")+'<th>الإجمالي</th><th>جارية</th></tr></thead><tbody>'
+    +secs.map(function(s){ var L=all.filter(function(x){ return x.p.sector===s; });
+      var cells=STG_DEF.map(function(d,i){ var v=L.map(function(x){ return x.st[i]; }).filter(function(z){ return z.state==="done"; }); var av=v.length?Math.round(v.reduce(function(a,z){ return a+z.days; },0)/v.length):null; return _stgCell(av==null?null:{days:av,std:std[i],state:"done"}); }).join("");
+      var C=L.filter(function(x){ return x.complete; }), tav=C.length?Math.round(C.reduce(function(a,x){ return a+x.total; },0)/C.length):null;
+      return '<tr><td class="nm"><span class="sg-sec" style="--sc:'+_stgSecC(s)+'">'+esc(s)+'</span><small>'+ar(L.length)+' مشروع</small></td>'+cells+'<td class="tot t-'+_stgTone(tav,stdTot)+'"><b>'+(tav==null?'—':ar(tav))+'</b></td><td class="n">'+ar(L.filter(function(x){ return x.open; }).length)+'</td></tr>'; }).join("")+'</tbody></table></div></section>';
+  show('<div class="sg">'+head+kpis+perf+open+mat+secT+'<div class="sg-foot">المدد القياسية من جدول «المراحل» في المحفظة · تواريخ المراحل من تبويب «إحصائيات أداء»</div></div>'); _stgTicks(); };
+try{ window.stageTrackOpen=stageTrackOpen; }catch(e){}
+
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
