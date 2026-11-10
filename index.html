@@ -4628,6 +4628,13 @@ body[data-theme="dark"] .gd-run .gd-c{fill:#3CC489}body[data-theme="dark"] .gd-r
 body[data-theme="dark"] .gm-nt{fill:#A9B7B0}
 body[data-theme="dark"] .gm-lg{color:#C9D6CF}body[data-theme="dark"] .gm-lg .lg-done{background:#EAF2EC}
 body[data-theme="dark"] .geo-cur{background:#16201D}body[data-theme="dark"] .geo-today b{color:#E3C88E}
+
+/* عرض تلقائي للمشاريع في ملء الشاشة */
+.pd-fsnav{position:fixed;overflow:hidden}
+.pd-fsnav .pd-play{background:#D9BC84!important;color:#05271A!important;font-size:12px!important;margin-inline-start:4px}
+.pd-fsnav .pd-play.on{background:rgba(255,255,255,.16)!important;color:#EAD7AE!important}
+.pd-fsnav .pd-autobar{position:absolute;bottom:0;inset-inline-start:0;height:3px;width:100%;background:#D9BC84;transform-origin:right;animation:pdAutoBar 3s linear forwards;border-radius:2px}
+@keyframes pdAutoBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -10162,6 +10169,12 @@ function projDashOpen(){ var p=null;
   if(!p){ var r=DATA.map(analyzeProject).filter(function(x){return !x.done;}).sort(function(a,b){return b.score-a.score;})[0]; p=r?r.p:DATA[0]; }
   if(p) projDash(p.code); }
 function pdSetSector(v){ PD.sector=v; var list=DATA.filter(function(p){return !v||p.sector===v;}); if(list.length) projDashSel(list[0].code); }
+var PD_AUTO=null;
+function _pdIsFs(){ return !!(document.fullscreenElement||document.webkitFullscreenElement||document.querySelector('.acard.wkfs-fallback')); }
+function pdAutoStop(){ if(PD_AUTO){ clearInterval(PD_AUTO); PD_AUTO=null; } document.querySelectorAll('.pd-play').forEach(function(b){ b.classList.remove('on'); b.textContent='▶'; b.title='عرض تلقائي للمشاريع · كل 3 ثوانٍ'; }); document.querySelectorAll('.pd-autobar').forEach(function(x){ x.remove(); }); }
+function pdAuto(){ if(PD_AUTO){ pdAutoStop(); return; } PD_AUTO=setInterval(function(){ if(!_pdIsFs()||!document.querySelector('.pd-fsnav')){ pdAutoStop(); return; } pdStep(1); },3000);
+  document.querySelectorAll('.pd-play').forEach(function(b){ b.classList.add('on'); b.textContent='❚❚'; b.title='إيقاف العرض'; var n=b.parentNode; if(n&&!n.querySelector('.pd-autobar')){ var i=document.createElement('i'); i.className='pd-autobar'; n.appendChild(i); } }); }
+try{ document.addEventListener("fullscreenchange",function(){ if(!_pdIsFs()) pdAutoStop(); }); document.addEventListener("webkitfullscreenchange",function(){ if(!_pdIsFs()) pdAutoStop(); }); window.pdAuto=pdAuto; }catch(e){}
 function pdStep(d){ var list=DATA.filter(function(p){return !PD.sector||p.sector===PD.sector;}); var i=list.findIndex(function(p){return String(p.code)===String(PD.code);});
   if(!list.length) return; i=(i+d+list.length)%list.length; projDashSel(list[i].code); }
 function pdSearch(inp){ var q=norm(inp.value||""); if(!q) return; var hit=DATA.find(function(p){ return norm(p.name).indexOf(q)>-1||norm(p.alias||"").indexOf(q)>-1||String(p.code).toLowerCase()===String(inp.value).trim().toLowerCase(); });
@@ -10202,7 +10215,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var head='<div class="pd-head"><span class="pd-fx" aria-hidden="true"><i></i><i></i><i></i></span><div class="pd-ht"><div class="dx-kick">لوحة المشروع'+(p.code?' · <span class="ltr">'+esc(p.code)+'</span>':'')+'</div><h1>'+esc(p.name)+'</h1>'
     +'<div class="pd-meta">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div><div class="pd-chips">'+chips+'</div></div>'
     +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn ic" onclick="pdPrintMenu(event)" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
-    +(function(){ var ps=_pdPos(); return '<div class="pd-fsnav noprint"><button onclick="pdStep(-1)" title="المشروع السابق (→)">→</button><span>'+ar(ps.i+1)+' / '+ar(ps.n)+'</span><button onclick="pdStep(1)" title="المشروع التالي (←)">←</button></div>'; })();
+    +(function(){ var ps=_pdPos(); return '<div class="pd-fsnav noprint"><button onclick="pdStep(-1)" title="المشروع السابق (→)">→</button><span>'+ar(ps.i+1)+' / '+ar(ps.n)+'</span><button onclick="pdStep(1)" title="المشروع التالي (←)">←</button><button class="pd-play'+(PD_AUTO?' on':'')+'" onclick="pdAuto()" title="'+(PD_AUTO?'إيقاف العرض':'عرض تلقائي للمشاريع · كل 3 ثوانٍ')+'">'+(PD_AUTO?'❚❚':'▶')+'</button>'+(PD_AUTO?'<i class="pd-autobar"></i>':'')+'</div>'; })();
   /* --- KPI --- */
   var _dv=_dxDev(p), _pst={ok:'منتظم مع الخطة',watch:'يحتاج متابعة',late:'متأخر',stumb:'متعثّر — يحتاج خطة تعويض',ns:'لم يبدأ'}[cat]||DX_CAT[cat].l, _ptn={ok:"good",watch:"warn",late:"bad",stumb:"bad",ns:""}[cat]||"";
   if(_dv!=null) sv=-_dv;
