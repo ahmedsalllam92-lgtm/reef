@@ -6241,7 +6241,7 @@ function distBox(title,sub,rows,max){ return `<div class="rp-box"><div class="rp
 const _CORNERS='<div class="rg-corner tl"></div><div class="rg-corner tr"></div><div class="rg-corner bl"></div><div class="rg-corner br"></div>';
 
 /* --- completed (منتهية) vs closing (قيد الإغلاق) --- */
-function isFinishedP(p){ const st=String(p.status||""); return /إنتهاء|انتهاء|منته|مكتمل/.test(st) || ((pct(p.actual)||0)>=0.9995 && !/إيقاف/.test(st)); }
+function isFinishedP(p){ const st=String(p.status||""); return /إنتهاء|انتهاء|منته|مكتمل/.test(st); }
 function isClosingP(p){ return !isFinishedP(p) && (pct(p.actual)||0) > 0.85; }
 function completedClosingData(projects){
   const fin=(projects||[]).filter(isFinishedP).slice().sort((a,b)=>(pct(b.actual)||0)-(pct(a.actual)||0));
@@ -8042,7 +8042,8 @@ function initProjMap(list){
 }
 /* ================= ANALYTICS ENGINE (تحليل ورؤى) ================= */
 function _pnum(v){ var n=toNum(v); return n==null?0:n; }
-function _isDone(p){ return /إنتهاء|انتهاء|مكتمل/.test(p.status||"") || (pct(p.actual)!=null && pct(p.actual)>=1); }
+/* المنتهي = حالته «انتهاء المشروع» فقط (لا يُعتمد على نسبة الإنجاز) */
+function _isDone(p){ return /إنتهاء|انتهاء|مكتمل/.test(p.status||""); }
 function _isStopped(p){ return /إيقاف|متوقف|معلّق|معلق/.test(p.status||""); }
 function _overdue(p){ if(_isDone(p))return false; var d=endDateOf(p); if(!d||!/^\d{4}-\d{2}-\d{2}/.test(d))return false; try{ return new Date(d) < new Date(); }catch(e){ return false; } }
 function _daysOverdue(p){ try{ return Math.round((new Date()-new Date(endDateOf(p)))/86400000); }catch(e){ return 0; } }
