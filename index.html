@@ -9795,7 +9795,7 @@ function _geoInner(){ var list=GEO.list||[], at=GEO.t?new Date(GEO.t):null, R=_g
   for(i=R.nowI;i<=R.months;i++) pf+=" L"+X(i)+","+Y(ser[i]); pf+=" L"+X(R.months)+","+H+"Z";
   var pc=(cur/R.months*100).toFixed(2), pn=(R.nowI/R.months*100).toFixed(2);
   var ticks=""; for(var y=R.from.getFullYear()+1;y<=R.to.getFullYear();y++){ var mi=(y-R.from.getFullYear())*12-R.from.getMonth(); if(mi>0&&mi<R.months) ticks+='<i style="inset-inline-start:'+(mi/R.months*100).toFixed(2)+'%"></i>'; if(mi-6>0&&mi-6<R.months&&y-1>=R.from.getFullYear()) ticks+='<em style="inset-inline-start:'+((mi-6)/R.months*100).toFixed(2)+'%">'+(y-1)+'</em>'; } (function(){ var m=(R.to.getFullYear()-R.from.getFullYear())*12-R.from.getMonth()+6; if(m<R.months) ticks+='<em style="inset-inline-start:'+(m/R.months*100).toFixed(2)+'%">'+R.to.getFullYear()+'</em>'; })();
-  var legend='<div class="gm-lg"><span><i class="lg-run"></i>قيد التنفيذ (نابض)</span><span><i class="lg-done"></i>منتهٍ</span><span><i class="lg-award"></i>ترسية وتعاقد</span><span><i class="lg-tender"></i>في الطرح</span><span><i class="lg-late">!</i>تجاوز موعد نهايته</span>'+'<span><i class="lg-ln"></i>رابط قطاع بين منطقتين</span>'+'<em>حجم النقطة = قيمة العقد · اضغط النقطة لفتح المشروع</em></div>';
+  var legend='<div class="gm-lg"><span><i class="lg-run"></i>قيد التنفيذ</span><span><i class="lg-done"></i>منتهٍ</span><span><i class="lg-award"></i>ترسية وتعاقد</span><span><i class="lg-tender"></i>في الطرح</span><span><i class="lg-late">!</i>تجاوز موعد نهايته</span>'+'<span><i class="lg-ln"></i>رابط قطاع بين منطقتين</span>'+'</div>';
   return '<div class="geo-map'+(at?' past':'')+(fut?' fut':'')+'"><div class="km">'+_geoMapSVG(S,at)+'</div>'+legend
       +(at?'<span class="geo-stamp">'+lbl+(fut?' · إسقاط':'')+'</span><span class="geo-note">* '+(fut?'حسب الجدول المخطط — تقديري':'نسبة الإنجاز تقديرية للفترة المختارة')+'</span>':'')+'</div>'
     +'<div class="geo-k"><div><b>'+ar(S.length)+'</b><span>مشروع</span></div><div class="t"><b>'+ar(c.tender)+'</b><span>في الطرح</span></div><div class="a"><b>'+ar(c.award)+'</b><span>ترسية وتعاقد</span></div><div class="r"><b>'+ar(c.run)+'</b><span>قيد التنفيذ'+(late?' · '+ar(late)+' متأخر':'')+'</span></div><div class="d"><b>'+ar(c.done)+'</b><span>منتهية</span></div>'
@@ -10024,7 +10024,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +'<div class="dx-note"><i class="dx-mkk"></i> العلامة الذهبية = الإنجاز المخطط · اضغط على القطاع للتصفية</div></div>';
   /* ---- صحة المحفظة ---- */
   var hSegs=["ok","watch","late","stumb","ns"].map(function(k){ return {l:DX_CAT[k].l,v:cnt[k],c:DX_CAT[k].c,k:k}; });
-  var onT=cnt.ok, offT=cnt.watch+cnt.late+cnt.stumb;
+  var onT=cnt.ok, offT=cnt.late+cnt.stumb;
   var healthBody='<div class="dx-health">'+_dxDonut(hSegs,ar(total),"مشروع",176,22)
     +'<div class="dx-hleg">'+hSegs.map(function(s){ return '<button class="dx-hli'+(_dfArr('cat').indexOf(s.k)>-1?" on":"")+'" onclick="dashSetFilter(\'cat\',\''+(DASH_FILTER.cat===s.k?"":s.k)+'\')"><i style="background:'+s.c+'"></i><span>'+esc(s.l)+'</span><b>'+ar(s.v)+'</b><em>'+_dxPct(total?s.v/total:0)+'</em></button>'; }).join("")+'</div></div>'
     +'<div class="dx-split"><div class="ok"><b>'+ar(onT)+'</b><span>ضمن المسار</span></div><div class="bad"><b>'+ar(offT)+'</b><span>خارج المسار</span></div></div>';
@@ -10080,12 +10080,12 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   ins.push('متوسط الإنجاز الفعلي <b>'+_dxPct(avgA)+'</b> مقابل <b>'+_dxPct(avgP)+'</b> مخطط، ونسبة الصرف <b>'+_dxPct(spend)+'</b> من القيمة التعاقدية.');
   if(topV) ins.push('أكبر القطاعات قيمةً <b>'+esc(topV.l)+'</b> بـ <b>'+_dxM(topV.v)+'</b> ('+_dxPct(awarded?topV.v/awarded:0)+' من المحفظة).');
   if(low&&(low.a-low.pl)<0) ins.push('أكبر فجوة عن المخطط في قطاع <b>'+esc(low.l)+'</b> بفارق <b>'+ar(Math.abs(Math.round((low.a-low.pl)*100)))+'</b> نقطة.');
-  ins.push('<b>'+ar(offT)+'</b> مشروعاً خارج المسار ('+ar(cnt.stumb)+' متعثّر، '+ar(cnt.late)+' متأخر، '+ar(cnt.watch)+' يحتاج متابعة)، و<b>'+ar(overdue.length)+'</b> تجاوزت تاريخ النهاية، و<b>'+ar(stopped.length)+'</b> متوقفة.');
+  ins.push('<b>'+ar(offT)+'</b> مشروعاً خارج المسار ('+ar(cnt.stumb)+' متعثّر، '+ar(cnt.late)+' متأخر)، و<b>'+ar(cnt.watch)+'</b> يحتاج متابعة، و<b>'+ar(overdue.length)+'</b> تجاوزت تاريخ النهاية، و<b>'+ar(stopped.length)+'</b> متوقفة.');
   if(ncr||warns) ins.push('رصدت فرق الإشراف <b>'+ar(ncr)+'</b> تقرير عدم مطابقة و<b>'+ar(warns)+'</b> إنذاراً و<b>'+ar(dchg)+'</b> تغييراً تصميمياً.');
   var sumBody='<ul class="dx-ins">'+ins.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul>';
   /* ---- سياق PowerPoint ---- */
   try{ DASH_CTX={ v:2, monthLbl:MONTHLBL, total:total, cnt:cnt, onTrack:onT, offTrack:offT,
-      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" ريال"},{l:"مشاريع تتطلب متابعة",n:ar(offT),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
+      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" ريال"},{l:"مشاريع تتطلب متابعة",n:ar(offT+cnt.watch),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
       kpis:[{l:"إجمالي المشاريع",n:ar(total),s:ar(cnt.done)+" مكتمل"},{l:"القيمة بعد التعديل",n:_dxM(awarded),s:"ريال"},
             {l:"متوسط الإنجاز",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)},
             {l:"مشاريع متعثّرة",n:ar(cnt.stumb),s:ar(stopped.length)+" متوقف",warn:cnt.stumb>0},{l:"متجاوزة النهاية",n:ar(overdue.length),s:"مشروع",warn:overdue.length>0}],
@@ -10106,7 +10106,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +fK("القيمة التعاقدية بعد التعديل",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة الأصلية"):"دون تغيير عن القيمة الأصلية")
     +fK("متوسط الإنجاز الفعلي",_dxPct(avgA),"","المخطط "+_dxPct(avgP)+" · الفارق "+(gap>=0?"+":"−")+ar(Math.abs(Math.round(gap*100)))+" نقطة",gap<-0.05?"warn":"")
     +fK("نسبة الصرف",_dxPct(spend),"","المنصرف "+_dxM(dis)+" "+RYL)
-    +fK("مشاريع تتطلب متابعة",ar(offT),"مشروع",ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة · "+ar(overdue.length)+" تجاوز تاريخ النهاية",offT?"bad":"")
+    +fK("مشاريع تتطلب متابعة",ar(offT+cnt.watch),"مشروع",ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة · "+ar(overdue.length)+" تجاوز تاريخ النهاية",offT?"bad":"")
     +'</div>';
   /* الإنجاز حسب القطاع */
   var _svT=secs.reduce(function(a,s){ return a+s.v; },0)||1, _svM=Math.max.apply(null,secs.map(function(s){ return s.v; }).concat([1]));
