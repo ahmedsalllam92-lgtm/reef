@@ -4550,7 +4550,7 @@ body[data-theme="dark"] .geo-k>div,body[data-theme="dark"] .geo-tl{background:rg
 body[data-theme="dark"] .geo-k b,body[data-theme="dark"] .geo-lb{color:#E6EEF0}body[data-theme="dark"] .geo-k .t b{color:#8FB6D4}body[data-theme="dark"] .geo-k .a b{color:#E3C88E}body[data-theme="dark"] .geo-k .r b{color:#A9E2C0}
 body[data-theme="dark"] .geo-now{background:#2A2618;border-color:#4A3F25;color:#E3C88E}
 @media (max-width:900px){.geo-k{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.geo-note{position:absolute;bottom:2px;inset-inline-start:4px;font-size:9.5px;color:#8A968F}
+.geo-note{position:absolute;top:8px;inset-inline-end:4px;font-size:9.5px;color:#8A968F}
 
 /* لوحة الأداء: شبكة جديدة — الخريطة بطول صفين */
 .dxf .dxf-g3{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.35fr)!important;grid-template-rows:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"sec sch reg" "fin cl reg";gap:12px}
@@ -4575,6 +4575,55 @@ body[data-theme="dark"] .dxf .g-cl .dx-tiles>div{background:rgba(255,255,255,.04
 .dxf .dxf-g3 .geo-k{grid-template-columns:repeat(4,minmax(0,1fr))!important}
 .dxf .dxf-g3 .geo-k>div:last-child{grid-column:span 2}
 .dxf .dxf-g3 .geo-k b{font-size:14px}
+
+/* الأطلس الزمني داخل اللوحة: نقاط المشاريع + منحنى الزمن */
+.gm-r{stroke:#fff;stroke-width:1.3;cursor:pointer;transition:fill .25s,opacity .2s}
+.gm-r:hover{stroke:#B89968;stroke-width:2.2}.gm-r.on{stroke:#B89968;stroke-width:3}.gm-r.dim,.gm-a.dim{opacity:.4}
+.gm-c0{fill:#EEF2EE}.gm-c1{fill:#E2EAE3}.gm-c2{fill:#D3E1D6}.gm-c3{fill:#C1D5C6}.gm-c4{fill:#A9C6B1}
+.gm-a{font-size:12px;font-weight:700;fill:#43544A;text-anchor:middle;cursor:pointer;paint-order:stroke;stroke:rgba(255,255,255,.75);stroke-width:3px}
+.gm-a.sm{font-size:9.5px}.gm-a tspan{fill:#8A6A2E;font-weight:800}
+.gm-ln{fill:none;stroke:#B89968;stroke-width:1.3;stroke-dasharray:3 4;opacity:.75;pointer-events:none}
+.gd{cursor:pointer}.gd .gd-c{stroke:#fff;stroke-width:1.2;transition:r .3s}
+.gd:hover .gd-c{stroke:#B89968;stroke-width:2.4}
+.gd-run .gd-c{fill:#1F9D63}.gd-run .gd-pl{fill:none;stroke:#1F9D63;stroke-width:1.6;transform-box:fill-box;transform-origin:center;animation:gdPulse 2.2s ease-out infinite;pointer-events:none}
+.gd-done .gd-c{fill:#0B3D27}
+.gd-award .gd-c{fill:#C9A24E}
+.gd-tender .gd-c{fill:rgba(91,134,166,.12);stroke:#5B86A6;stroke-width:1.4;stroke-dasharray:2 2}
+.gd-late .gd-c{fill:#E07A3E;stroke:#FBE3D3;stroke-width:1.6}.gd-x{fill:#fff;font-size:10px;font-weight:900;text-anchor:middle;pointer-events:none}
+@keyframes gdPulse{0%{transform:scale(1);opacity:.85}100%{transform:scale(2);opacity:0}}
+.gm-nat{cursor:pointer}.gm-nt{font-size:11px;font-weight:700;fill:#5D6D64}.gm-nat.on .gm-nt{fill:#8A6420}
+.geo-map{position:relative}
+.gm-lg{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:3px 10px;padding:2px 4px 0;font-size:10px;color:#4F5E56;pointer-events:none}.geo-map{flex-direction:column}
+.gm-lg span{display:flex;align-items:center;gap:5px;white-space:nowrap}.gm-lg em{font-style:normal;font-size:9px;color:#8A968F;flex-basis:100%;text-align:center}
+.geo-tk em{position:absolute;top:3px;transform:translateX(50%);font-style:normal;font-size:9px;color:#8A968F}
+.gm-lg i{flex:none;width:9px;height:9px;border-radius:50%;display:inline-grid;place-items:center;font-style:normal}
+.gm-lg .lg-run{background:#1F9D63;box-shadow:0 0 0 3px rgba(31,157,99,.22)}.gm-lg .lg-done{background:#0B3D27}.gm-lg .lg-award{background:#C9A24E}
+.gm-lg .lg-tender{border:1.4px dashed #5B86A6;box-sizing:border-box}.gm-lg .lg-late{background:#E07A3E;color:#fff;font-size:7px;font-weight:900;width:11px;height:11px}
+.gm-lg .lg-ln{width:14px;height:0;border-radius:0;border-top:1.4px dashed #B89968}
+.geo-map.fut .gm-svg{filter:saturate(.8)}
+.geo-tl{align-items:stretch!important}
+.geo-sl{padding-bottom:14px!important;padding-top:10px}
+.geo-ar{position:relative;height:40px;border-radius:8px;overflow:visible}
+.geo-ar svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ga-p{fill:rgba(31,157,99,.22);stroke:#1F9D63;stroke-width:1.3;vector-effect:non-scaling-stroke}
+.ga-f{fill:rgba(184,153,104,.14);stroke:#B89968;stroke-width:1.1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+.geo-ar input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;direction:rtl}
+.geo-today{position:absolute;top:-2px;bottom:0;width:0;border-inline-start:1.5px solid #B89968;pointer-events:none}
+.geo-today b{position:absolute;top:-13px;transform:translateX(50%);right:0;font-size:9px;color:#8A6420;font-weight:800!important;white-space:nowrap}
+.geo-fut{position:absolute;top:3px;margin-inline-start:8px;font-size:8.5px;color:#A68A55;white-space:nowrap;pointer-events:none;opacity:.9}
+.geo-cur{position:absolute;bottom:-6px;width:13px;height:13px;margin-inline-start:-6.5px;border-radius:50%;background:#fff;border:3px solid #1F9D63;box-shadow:0 2px 8px -2px rgba(0,0,0,.35);pointer-events:none}
+.geo-cur::before{content:"";position:absolute;bottom:10px;left:50%;width:1.5px;height:34px;background:#1F9D63;opacity:.55;transform:translateX(-50%)}
+.geo-tk{bottom:0!important;inset-inline:0!important}
+.geo-sd{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:86px}
+.geo-hint{font-size:9px;color:#8A968F;white-space:nowrap}
+body[data-theme="dark"] .gm-r{stroke:rgba(255,255,255,.18)}
+body[data-theme="dark"] .gm-c0{fill:#1B2A26}body[data-theme="dark"] .gm-c1{fill:#21362F}body[data-theme="dark"] .gm-c2{fill:#284438}body[data-theme="dark"] .gm-c3{fill:#2F5444}body[data-theme="dark"] .gm-c4{fill:#3A6853}
+body[data-theme="dark"] .gm-a{fill:#C9D6CF;stroke:rgba(0,0,0,.35)}body[data-theme="dark"] .gm-a tspan{fill:#E3C88E}
+body[data-theme="dark"] .gd .gd-c{stroke:rgba(10,20,18,.8)}body[data-theme="dark"] .gd-done .gd-c{fill:#EAF2EC}
+body[data-theme="dark"] .gd-run .gd-c{fill:#3CC489}body[data-theme="dark"] .gd-run .gd-pl{stroke:#3CC489}
+body[data-theme="dark"] .gm-nt{fill:#A9B7B0}
+body[data-theme="dark"] .gm-lg{color:#C9D6CF}body[data-theme="dark"] .gm-lg .lg-done{background:#EAF2EC}
+body[data-theme="dark"] .geo-cur{background:#16201D}body[data-theme="dark"] .geo-today b{color:#E3C88E}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9674,31 +9723,85 @@ function _geoState(p,at){ var d=_geoDates(p), now=new Date(), ns=_geoNowSt(p); i
   var st=done?"done":(d.m&&d.m<=at?"run":(d.a&&d.a<=at?"award":"tender")); if(GEO_RANK[st]>GEO_RANK[ns]) st=ns;
   var a=0, A=pct(p.actual)||0; if(st==="done") a=A; else if(st==="run"&&d.m){ var span=Math.max(1,now-d.m); a=Math.max(0,Math.min(A,A*(at-d.m)/span)); }
   return {on:true,st:st,a:a}; }
-function _geoRange(list){ var mn=null; (list||[]).forEach(function(p){ var d=_geoDates(p); if(d.t&&(!mn||d.t<mn)) mn=d.t; }); var now=new Date(); if(!mn) mn=new Date(now.getFullYear()-3,0,1); return {from:new Date(mn.getFullYear(),mn.getMonth(),1),to:now}; }
+function _geoRange(list){ var mn=null,mx=null; (list||[]).forEach(function(p){ var d=_geoDates(p); if(d.t&&(!mn||d.t<mn)) mn=d.t; if(d.e&&(!mx||d.e>mx)) mx=d.e; });
+  var now=new Date(); if(!mn) mn=new Date(now.getFullYear()-3,0,1); var cap=new Date(now.getFullYear()+5,11,1); if(!mx||mx<now) mx=now; if(mx>cap) mx=cap;
+  var from=new Date(mn.getFullYear(),mn.getMonth(),1), to=new Date(mx.getFullYear(),mx.getMonth(),1);
+  var mi=function(d){ return (d.getFullYear()-from.getFullYear())*12+(d.getMonth()-from.getMonth()); };
+  var nowI=mi(now), months=Math.max(nowI+1,mi(to)); return {from:from,to:to,now:now,months:months,nowI:nowI,mi:mi}; }
+function _geoAt(R,i){ return new Date(R.from.getFullYear(),R.from.getMonth()+i+1,0); }
+function _geoEffE(d){ var now=new Date(); return d.e&&d.e<now?new Date(now.getFullYear(),now.getMonth()+6,1):d.e; }
+function _geoSt(p,at){ if(at&&at>new Date()){ var ns=_geoNowSt(p), d=_geoDates(p), A=pct(p.actual)||0, now=new Date(), st=ns, a=(ns==="run"||ns==="done")?A:0; d={e:_geoEffE(d)};
+    if(ns==="run"&&d.e&&d.e<=at){ st="done"; a=Math.max(A,1); } else if(ns==="run"&&d.e){ a=Math.min(1,A+(1-A)*(at-now)/Math.max(1,d.e-now)); }
+    return {on:true,st:st,a:a,proj:true,late:false}; }
+  var s=_geoState(p,at); if(s.on&&s.st==="run"){ var e=_geoDates(p).e; s.late=!!(e&&e<(at||new Date())); } return s; }
+function _geoSeries(list,R){ var key=list.length+"|"+R.months+"|"+R.from.getTime(); if(GEO._sk===key&&GEO._ser) return GEO._ser;
+  var D=list.map(function(p){ return {d:_geoDates(p),done:_isDone(p),ns:_geoNowSt(p)}; }), out=[];
+  for(var i=0;i<=R.months;i++){ var at=_geoAt(R,i), fut=i>R.nowI, n=0;
+    D.forEach(function(x){ var d=x.d; if(fut){ var ee=_geoEffE(d); if(x.ns==="run"&&!(ee&&ee<=at)) n++; return; }
+      if(i===R.nowI){ if(x.ns==="run") n++; return; }
+      if(x.ns!=="run"&&x.ns!=="done") return; if(d.m&&d.m<=at&&!(x.done&&d.e&&d.e<=at)) n++; }); out.push(n); }
+  GEO._sk=key; GEO._ser=out; return out; }
+var GEO_LBL={tender:"في الطرح",award:"ترسية وتعاقد",run:"قيد التنفيذ",done:"منتهٍ"};
+function _geoMapSVG(S,at){ var SA=Array.isArray(GEO.sel)?GEO.sel:(GEO.sel?[GEO.sel]:[]);
+  var cnt={}, grp={}, nat=[], links=[]; KSA_REG.r.forEach(function(r){ cnt[r.ar]=0; grp[r.ar]=[]; });
+  S.forEach(function(x){ var rs=KSA_REG.r.filter(function(r){ return _regionHas(x.p.region,r.ar); });
+    if(!rs.length){ if(_isNational(x.p.region)) nat.push(x); return; } rs.forEach(function(r){ cnt[r.ar]++; }); grp[rs[0].ar].push(x); if(rs.length>1) links.push(rs); });
+  var vmax=Math.max.apply(null,[1].concat(S.map(function(x){ return _dxBase(x.p)||0; })));
+  var rad=function(p){ return 4.6+9.5*Math.sqrt(Math.max(0,_dxBase(p)||0)/vmax); };
+  var mx=Math.max(1,Math.max.apply(null,KSA_REG.r.map(function(r){ return cnt[r.ar]; })));
+  var cls=function(v){ if(!v) return 0; var f=v/mx; return f>0.66?4:(f>0.4?3:(f>0.18?2:1)); };
+  var dot=function(x,cx,cy,sc){ var p=x.p, s=x.s, r=rad(p)*(sc||1), k=s.late?"late":s.st, q=String(p.code).replace(/'/g,"\\'");
+    var t=esc(p.name||p.code)+" · "+(s.late?"متأخر عن موعد نهايته":GEO_LBL[s.st])+" · "+_dxM(_dxBase(p))+(s.st==="run"||s.st==="done"?" · إنجاز "+_dxPct(s.a):"");
+    return '<g class="gd gd-'+k+'" onclick="event.stopPropagation();projDash(\''+q+'\')"><title>'+t+'</title>'
+      +(s.st==="run"?'<circle class="gd-pl" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+r.toFixed(1)+'"/>':'')
+      +'<circle class="gd-c" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+r.toFixed(1)+'"/>'
+      +(s.late&&r>=4.6?'<text class="gd-x" x="'+cx.toFixed(1)+'" y="'+(cy+3.4).toFixed(1)+'">!</text>':'')+'</g>'; };
+  var paths="", names="", dots="", lns="", nm={}, nmQ=[];
+  KSA_REG.r.forEach(function(r){ var v=cnt[r.ar], on=SA.indexOf(r.ar)>-1, dim=SA.length&&!on, q=esc(r.ar).replace(/'/g,"\\'"), ck="mapToggleRegion('"+q+"')", sm=/الباحة|جازان/.test(r.ar);
+    paths+='<path class="gm-r gm-c'+cls(v)+(on?' on':'')+(dim?' dim':'')+'" d="'+r.d+'" onclick="'+ck+'"><title>'+esc(r.ar)+': '+ar(v)+' مشروع</title></path>';
+    nmQ.push([r,sm,dim,ck,v]);
+    var g=grp[r.ar].slice().sort(function(a,b){ return (_dxBase(b.p)||0)-(_dxBase(a.p)||0); }), sc=sm?(g.length>8?0.5:0.7):(g.length>12?0.8:1), step=(sm?4.4:9.6)*(sm?1:sc);
+    g.forEach(function(x,i){ var ang=i*2.39996, d=i?step*Math.sqrt(i)+3:0; dots+=dot(x,r.x+d*Math.cos(ang),r.y+4+d*Math.sin(ang)*0.82,sc); });
+    var cr=g.length?(g.length>1?step*Math.sqrt(g.length-1)+3:0)*0.82+14*sc+4:0; nm[r.ar]=Math.max(sm?9:15,cr); });
+  nmQ.forEach(function(z){ var r=z[0], sm=z[1]; names+='<text class="gm-a'+(sm?' sm':'')+(z[2]?' dim':'')+'" x="'+r.x+'" y="'+(r.y+4-nm[r.ar]).toFixed(1)+'" onclick="'+z[3]+'">'+esc(r.ar)+(z[4]?' <tspan>'+ar(z[4])+'</tspan>':'')+'</text>'; });
+  links.forEach(function(rs){ var a=rs[0]; rs.slice(1).forEach(function(b){ var mx2=(a.x+b.x)/2, my=(a.y+b.y)/2, dx=b.x-a.x, dy=b.y-a.y, L=Math.sqrt(dx*dx+dy*dy)||1, o=Math.min(60,L*0.22);
+    lns+='<path class="gm-ln" d="M'+a.x+','+(a.y+4)+' Q'+(mx2-dy/L*o).toFixed(1)+','+(my+dx/L*o).toFixed(1)+' '+b.x+','+(b.y+4)+'"/>'; }); });
+  var natS=""; if(nat.length){ var natOn=SA.some(function(x){ return !KSA_KW[x]&&_isNational(x); });
+    natS='<g class="gm-nat'+(natOn?' on':'')+'" onclick="mapToggleRegion(\'مناطق المملكة\')"><text class="gm-nt" x="16" y="512">على مستوى المملكة · '+ar(nat.length)+'</text>';
+    nat.slice().sort(function(a,b){ return (_dxBase(b.p)||0)-(_dxBase(a.p)||0); }).slice(0,30).forEach(function(x,i){ natS+=dot(x,24+(i%10)*15,530+Math.floor(i/10)*16,0.62); }); natS+='</g>'; }
+  return '<svg class="km-svg gm-svg" viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr" xmlns="http://www.w3.org/2000/svg">'+paths+lns+names+dots+natS+'</svg>'; }
 function geoBox(list,sel){ GEO.list=list; GEO.sel=sel; return '<div class="geo" id="geoBox">'+_geoInner()+'</div>'; }
-function _geoInner(){ var list=GEO.list||[], at=GEO.t?new Date(GEO.t):null, R=_geoRange(list);
-  var S=list.map(function(p){ return {p:p,s:_geoState(p,at)}; }).filter(function(x){ return x.s.on; });
-  var vis=S.map(function(x){ return x.p; });
-  var c={tender:0,award:0,run:0,done:0}; S.forEach(function(x){ c[x.s.st]++; });
+function _geoInner(){ var list=GEO.list||[], at=GEO.t?new Date(GEO.t):null, R=_geoRange(list), fut=!!(at&&at>R.now);
+  var S=list.map(function(p){ return {p:p,s:_geoSt(p,at)}; }).filter(function(x){ return x.s.on; });
+  var c={tender:0,award:0,run:0,done:0}, late=0; S.forEach(function(x){ c[x.s.st]++; if(x.s.late) late++; });
   var val=S.filter(function(x){ return x.s.st!=="tender"; }).reduce(function(a,x){ return a+_dxBase(x.p); },0);
   var ra=S.filter(function(x){ return x.s.st==="run"||x.s.st==="done"; }), avgA=ra.length?ra.reduce(function(a,x){ return a+x.s.a; },0)/ra.length:0;
-  var months=Math.max(1,(R.to.getFullYear()-R.from.getFullYear())*12+(R.to.getMonth()-R.from.getMonth())), cur=at?((at.getFullYear()-R.from.getFullYear())*12+(at.getMonth()-R.from.getMonth())):months;
+  var cur=at?Math.max(0,Math.min(R.months,R.mi(at))):R.nowI;
   var MO=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"], lbl=at?(MO[at.getMonth()]+" "+at.getFullYear()):"اليوم";
-  var ticks=""; for(var y=R.from.getFullYear()+1;y<=R.to.getFullYear();y++){ var mi=(y-R.from.getFullYear())*12-R.from.getMonth(); ticks+='<i style="inset-inline-start:'+(mi/months*100).toFixed(2)+'%"><b>'+y+'</b></i>'; }
-  return '<div class="geo-map'+(at?' past':'')+'">'+ksaChoro(vis,GEO.sel)+(at?'<span class="geo-stamp">'+lbl+'</span><span class="geo-note">* نسبة الإنجاز تقديرية للفترة المختارة</span>':'')+'</div>'
-    +'<div class="geo-k"><div><b>'+ar(S.length)+'</b><span>مشروع</span></div><div class="t"><b>'+ar(c.tender)+'</b><span>في الطرح</span></div><div class="a"><b>'+ar(c.award)+'</b><span>ترسية وتعاقد</span></div><div class="r"><b>'+ar(c.run)+'</b><span>قيد التنفيذ</span></div><div class="d"><b>'+ar(c.done)+'</b><span>منتهية</span></div>'
+  /* شريط الزمن: منحنى المشاريع قيد التنفيذ */
+  var ser=_geoSeries(list,R), smx=Math.max(1,Math.max.apply(null,ser)), W=1000, H=44, X=function(i){ return (W-i/R.months*W).toFixed(1); }, Y=function(v){ return (H-2-v/smx*(H-8)).toFixed(1); };
+  var pa="M"+X(0)+","+H, pf="M"+X(R.nowI)+","+H; for(var i=0;i<=R.nowI;i++) pa+=" L"+X(i)+","+Y(ser[i]); pa+=" L"+X(R.nowI)+","+H+"Z";
+  for(i=R.nowI;i<=R.months;i++) pf+=" L"+X(i)+","+Y(ser[i]); pf+=" L"+X(R.months)+","+H+"Z";
+  var pc=(cur/R.months*100).toFixed(2), pn=(R.nowI/R.months*100).toFixed(2);
+  var ticks=""; for(var y=R.from.getFullYear()+1;y<=R.to.getFullYear();y++){ var mi=(y-R.from.getFullYear())*12-R.from.getMonth(); if(mi>0&&mi<R.months) ticks+='<i style="inset-inline-start:'+(mi/R.months*100).toFixed(2)+'%"></i>'; if(mi-6>0&&mi-6<R.months&&y-1>=R.from.getFullYear()) ticks+='<em style="inset-inline-start:'+((mi-6)/R.months*100).toFixed(2)+'%">'+(y-1)+'</em>'; } (function(){ var m=(R.to.getFullYear()-R.from.getFullYear())*12-R.from.getMonth()+6; if(m<R.months) ticks+='<em style="inset-inline-start:'+(m/R.months*100).toFixed(2)+'%">'+R.to.getFullYear()+'</em>'; })();
+  var legend='<div class="gm-lg"><span><i class="lg-run"></i>قيد التنفيذ (نابض)</span><span><i class="lg-done"></i>منتهٍ</span><span><i class="lg-award"></i>ترسية وتعاقد</span><span><i class="lg-tender"></i>في الطرح</span><span><i class="lg-late">!</i>تجاوز موعد نهايته</span>'+(list.length?'<span><i class="lg-ln"></i>يمتد لأكثر من منطقة</span>':'')+'<em>حجم النقطة = قيمة العقد · اضغط النقطة لفتح المشروع</em></div>';
+  return '<div class="geo-map'+(at?' past':'')+(fut?' fut':'')+'"><div class="km">'+_geoMapSVG(S,at)+'</div>'+legend
+      +(at?'<span class="geo-stamp">'+lbl+(fut?' · إسقاط':'')+'</span><span class="geo-note">* '+(fut?'حسب الجدول المخطط — تقديري':'نسبة الإنجاز تقديرية للفترة المختارة')+'</span>':'')+'</div>'
+    +'<div class="geo-k"><div><b>'+ar(S.length)+'</b><span>مشروع</span></div><div class="t"><b>'+ar(c.tender)+'</b><span>في الطرح</span></div><div class="a"><b>'+ar(c.award)+'</b><span>ترسية وتعاقد</span></div><div class="r"><b>'+ar(c.run)+'</b><span>قيد التنفيذ'+(late?' · '+ar(late)+' متأخر':'')+'</span></div><div class="d"><b>'+ar(c.done)+'</b><span>منتهية</span></div>'
       +'<div><b>'+_dxM(val)+'</b><span>المتعاقد عليه</span></div><div><b>'+_dxPct(avgA)+'</b><span>إنجاز المنفّذة'+(at?'*':'')+'</span></div></div>'
     +'<div class="geo-tl noprint"><button class="geo-pl" onclick="geoPlay()" title="'+(GEO.play?'إيقاف':'تشغيل عبر الزمن')+'">'+(GEO.play?'❚❚':'▶')+'</button>'
-      +'<div class="geo-sl"><input type="range" min="0" max="'+months+'" value="'+cur+'" oninput="geoSet(+this.value)"><div class="geo-tk">'+ticks+'</div></div>'
-      +'<span class="geo-lb">'+lbl+'</span>'+(at?'<button class="geo-now" onclick="geoNow()">العودة لليوم ↺</button>':'')+'</div>'; }
+      +'<div class="geo-sl"><div class="geo-ar"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><path class="ga-p" d="'+pa+'"/><path class="ga-f" d="'+pf+'"/></svg>'
+        +'<span class="geo-today" style="inset-inline-start:'+pn+'%"><b>اليوم</b></span><span class="geo-fut" style="inset-inline-start:'+pn+'%">الجدول المستقبلي (إسقاط)</span>'
+        +'<span class="geo-cur" style="inset-inline-start:'+pc+'%"></span>'
+        +'<input type="range" min="0" max="'+R.months+'" value="'+cur+'" oninput="geoSet(+this.value)" aria-label="الزمن"></div><div class="geo-tk">'+ticks+'</div></div>'
+      +'<div class="geo-sd"><span class="geo-lb">'+lbl+'</span>'+(at?'<button class="geo-now" onclick="geoNow()">العودة لليوم ↺</button>':'<span class="geo-hint">منحنى المشاريع قيد التنفيذ</span>')+'</div></div>'; }
 function _geoRedraw(){ var b=document.getElementById("geoBox"); if(!b) { geoStop(); return; } var s=b.querySelector('input[type=range]'), had=document.activeElement===s; b.innerHTML=_geoInner(); if(had){ var n=b.querySelector('input[type=range]'); if(n) n.focus(); } }
-function geoSet(i){ var R=_geoRange(GEO.list), months=Math.max(1,(R.to.getFullYear()-R.from.getFullYear())*12+(R.to.getMonth()-R.from.getMonth()));
-  if(i>=months){ GEO.t=null; } else { var d=new Date(R.from.getFullYear(),R.from.getMonth()+i+1,0); GEO.t=d.getTime(); } _geoRedraw(); }
+function geoSet(i){ var R=_geoRange(GEO.list); GEO.t=(i===R.nowI)?null:_geoAt(R,i).getTime(); _geoRedraw(); }
 function geoNow(){ geoStop(); GEO.t=null; _geoRedraw(); }
 function geoStop(){ if(GEO.play){ clearInterval(GEO.play); GEO.play=null; } }
-function geoPlay(){ if(GEO.play){ geoStop(); _geoRedraw(); return; } var R=_geoRange(GEO.list), months=Math.max(1,(R.to.getFullYear()-R.from.getFullYear())*12+(R.to.getMonth()-R.from.getMonth())), i=0;
-  if(GEO.t){ var at=new Date(GEO.t); i=(at.getFullYear()-R.from.getFullYear())*12+(at.getMonth()-R.from.getMonth()); if(i>=months-1) i=0; }
-  GEO.play=setInterval(function(){ if(!document.getElementById("geoBox")){ geoStop(); return; } i++; if(i>=months){ geoStop(); GEO.t=null; _geoRedraw(); return; } var d=new Date(R.from.getFullYear(),R.from.getMonth()+i+1,0); GEO.t=d.getTime(); _geoRedraw(); },550); _geoRedraw(); }
+function geoPlay(){ if(GEO.play){ geoStop(); _geoRedraw(); return; } var R=_geoRange(GEO.list), i=0;
+  if(GEO.t){ i=R.mi(new Date(GEO.t)); if(i>=R.months-1) i=0; }
+  GEO.play=setInterval(function(){ if(!document.getElementById("geoBox")){ geoStop(); return; } i++; if(i>R.months){ geoStop(); GEO.t=null; _geoRedraw(); return; } GEO.t=(i===R.nowI)?null:_geoAt(R,i).getTime(); _geoRedraw(); },420); _geoRedraw(); }
 try{ window.geoSet=geoSet; window.geoNow=geoNow; window.geoPlay=geoPlay; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
@@ -10031,10 +10134,9 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
         +'<div class="dxf-hl">'+_dxBtns('<span class="dxbar-x"></span><button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="projDashOpen()" title="لوحة المشروع" aria-label="لوحة المشروع"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
         +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'
       +kpiF
-      +'<div class="dx-gr dxf-g3">'+fBox("g-sec","المشاريع حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","الوضع الجدولي","",schF)
+      +'<div class="dx-gr dxf-g3">'+fBox("g-sec","المشاريع حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","وضع المشاريع","",schF)
         +fBox("g-reg","التوزيع الجغرافي عبر الزمن","حرّك الشريط للعودة بالزمن · اضغط منطقة للتصفية",geoBox(_dashFiltExcept("region"),DASH_FILTER.region))
         +fBox("g-fin","الوضع المالي","",finF)+fBox("g-cl","إحصائيات الجودة والاعتمادات",ar(D.length)+" مشروع",clBody)+'</div>'
-      +'<div class="dxf-bottom"><span>المصدر: '+((typeof SHEET_CSV_URL!=="undefined"&&SHEET_CSV_URL)?"جدول متابعة المشاريع (مباشر)":"نسخة البيانات المدمجة")+'</span><span>برنامج ريف · '+esc(MONTHLBL)+'</span></div>'
     +'</div></div>');
 }
 
