@@ -9814,6 +9814,9 @@ function geoPlay(){ if(GEO.play){ geoStop(); _geoRedraw(); return; } var R=_geoR
   if(GEO.t){ i=R.mi(new Date(GEO.t)); if(i>=R.months-1) i=0; }
   GEO.play=setInterval(function(){ if(!document.getElementById("geoBox")){ geoStop(); return; } i++; if(i>R.months){ geoStop(); GEO.t=null; _geoRedraw(); return; } GEO.t=(i===R.nowI)?null:_geoAt(R,i).getTime(); _geoRedraw(); },420); _geoRedraw(); }
 try{ window.geoSet=geoSet; window.geoNow=geoNow; window.geoPlay=geoPlay; }catch(e){}
+/* الطباعة: الخريطة دائماً على الوقت الحالي ثم تعود لما كانت عليه */
+try{ window.addEventListener("beforeprint",function(){ if(GEO.t!=null) GEO._pt=GEO.t; geoStop(); if(GEO.t!=null){ GEO.t=null; _geoRedraw(); } });
+  window.addEventListener("afterprint",function(){ if(GEO._pt!=null){ GEO.t=GEO._pt; GEO._pt=null; _geoRedraw(); } }); }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
