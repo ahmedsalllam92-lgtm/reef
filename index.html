@@ -4799,6 +4799,21 @@ body[data-theme="dark"] .fmodal-card .fm-x{background:#232C31;border-color:#2F3A
 
 /* مخفي حالياً: التحليل والرؤى */
 .side-nav .navitem[data-nav="analysis"]{display:none!important}
+
+/* سجل المشاريع: كارت أخضر واحد للمؤشرات */
+.hb-hero{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 14px;border-radius:20px;background:linear-gradient(120deg,#0B3D27 0%,#155C3B 60%,#1E6B45 100%);color:#fff;box-shadow:0 18px 40px -24px rgba(11,61,39,.7);position:relative;overflow:hidden}
+.hb-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 0% 0%,rgba(217,188,132,.18),transparent 60%);pointer-events:none}
+.hb-hero>div{padding:20px 24px;display:flex;flex-direction:column;gap:6px;position:relative;z-index:1;min-width:0}
+.hb-hero>div+div{border-inline-start:1px solid rgba(255,255,255,.14)}
+.hb-hero span{font-size:13px;color:#CFE3D6;font-weight:600}
+.hb-hero b{font-size:32px;font-weight:900!important;line-height:1.1;color:#fff;display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.hb-hero b small{font-size:14px;font-weight:600;color:#E3C88E;display:inline-flex;align-items:center;gap:3px}
+.hb-hero b small svg{width:14px;height:14px;fill:currentColor}
+.hb-hero em{font-style:normal;font-size:12px;color:#CFE3D6}
+.hb-hero .hb-hb{height:6px;border-radius:9px;background:rgba(255,255,255,.16);overflow:hidden;margin-top:4px}
+.hb-hero .hb-hb u{display:block;height:100%;background:#E3C88E;border-radius:9px}
+body[data-theme="dark"] .hb-hero{background:linear-gradient(120deg,#123A2A,#1A4D37 60%,#1F5A40)}
+@media (max-width:760px){.hb-hero{grid-template-columns:1fr 1fr}.hb-hero>div:nth-child(3){border-inline-start:0}.hb-hero>div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8765,7 +8780,7 @@ function _hbProg(p){ var a=pct(p.actual)||0, pl=pct(p.planned); a=Math.max(0,Mat
 function _hbThumb(p){ var u=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean)[0]; return u||""; }
 
 /* ---------------- سجل المشاريع ---------------- */
-var PR={view:"table",q:"",sector:"",region:"",status:"",ptype:"",sort:"code",dir:1};
+var PR={view:"cards",q:"",sector:"",region:"",status:"",ptype:"",sort:"code",dir:1};
 function prSet(k,v){ PR[k]=v; projRegOpen(true); }
 function prSort(k){ if(PR.sort===k) PR.dir=-PR.dir; else { PR.sort=k; PR.dir=1; } projRegOpen(true); }
 /* ألوان القطاعات (درجات باستيل هادئة من ألوان المحفظة) */
@@ -8808,17 +8823,15 @@ function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDa
   var avg=_dxAvg(all.map(function(p){ return pct(p.actual); }))||0, ctr={}; all.forEach(function(p){ var c=_dxTxt(p.contractor); if(c) ctr[c]=1; });
   var sel=function(k,lbl,vals){ return '<select class="hb-sel" onchange="prSet(\''+k+'\',this.value)"><option value="">'+lbl+'</option>'+vals.map(function(v){ return '<option value="'+esc(v)+'"'+(PR[k]===v?" selected":"")+'>'+esc(v)+'</option>'; }).join("")+'</select>'; };
   var _tvm=_dxMs(tv), _sp=tv?td/tv:0;
-  var stats='<div class="hb-kpis">'
-    +'<div class="hb-kt main"><span>مشاريع المحفظة</span><b>'+ar(all.length)+'<small>مشروع</small></b><em>'+ar(cancelledAll().length)+' مشروع في سجل الملغاة</em></div>'
-    +'<div class="hb-kt"><span>القيمة بعد التعديل</span><b>'+_tvm[0]+'<small>'+_rU(_tvm[1])+'</small></b><em>المنصرف '+_dxM(td)+'</em></div>'
-    +'<div class="hb-kt"><span>متوسط الإنجاز</span><b>'+_dxPct(avg)+'</b><div class="hb-kb"><u style="width:'+(Math.min(1,avg)*100).toFixed(1)+'%"></u></div></div>'
-    +'<div class="hb-kt"><span>نسبة الصرف</span><b>'+_dxPct(_sp)+'</b><div class="hb-kb"><u style="width:'+(Math.min(1,_sp)*100).toFixed(1)+'%"></u></div></div>'
-    +'<div class="hb-kt"><span>المقاولون</span><b>'+ar(Object.keys(ctr).length)+'<small>جهة</small></b><em>جهات منفّذة للمشاريع</em></div></div>'
+  var stats='<div class="hb-hero">'
+    +'<div><span>عدد المشاريع</span><b>'+ar(all.length)+'<small>مشروع</small></b></div>'
+    +'<div><span>القيمة بعد التعديل</span><b>'+_tvm[0]+'<small>'+_rU(_tvm[1])+'</small></b><em>المنصرف '+_dxM(td)+'</em></div>'
+    +'<div><span>نسبة الصرف</span><b>'+_dxPct(_sp)+'</b><div class="hb-hb"><u style="width:'+(Math.min(1,_sp)*100).toFixed(1)+'%"></u></div></div>'
+    +'<div><span>المقاولون</span><b>'+ar(Object.keys(ctr).length)+'<small>جهة</small></b><em>جهات منفّذة للمشاريع</em></div></div>'
     +'<div class="hb-stchips solo"><button class="hb-chip'+(!anyF?" on":"")+'" onclick="prClear()" title="كل المشاريع بدون أي فلتر"><b>'+ar(all.length)+'</b>الكل</button>'
       +sts.map(function(s){ return '<button class="hb-chip'+(_prArr('status').indexOf(s)>-1?" on":"")+'" style="--c:'+_hbStCol(s)+'" onclick="prTogStatus(\''+esc(s).replace(/'/g,"\\'")+'\')"><i></i><b>'+ar(bySt[s])+'</b>'+esc(s)+'</button>'; }).join("")+'</div>';
   var tools='<div class="hb-tools noprint"><input class="hb-q" placeholder="ابحث بالاسم أو الكود أو المقاول…" value="'+esc(PR.q)+'" oninput="PR.q=this.value;clearTimeout(window._prT);window._prT=setTimeout(function(){projRegOpen(true);var i=document.querySelector(\'.hb-q\');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)">'
     +_mselHTML("pr","sector","كل القطاعات",_prOpts("sector"),_prArr("sector"))+_mselHTML("pr","region","كل المناطق",_prOpts("region"),_prArr("region"))+_mselHTML("pr","ptype","كل الأنواع",_prOpts("ptype"),_prArr("ptype"))+_mselHTML("pr","status","كل الحالات",_prOpts("status"),_prArr("status"))+_mselHTML("pr","cat","كل حالات الجدول",_dfOpts("cat"),_prArr("cat"),_prArr("cat").map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "))
-    +'<span class="hb-count">'+ar(L.length)+(L.length!==all.length?(' من '+ar(all.length)):'')+' مشروع</span>'
     +(anyF?'<button class="hb-clr" onclick="prClear()">✕ مسح الفلاتر</button>':'')
     +'<div class="hb-vt"><button class="'+(PR.view==="table"?"on":"")+'" onclick="prSet(\'view\',\'table\')">جدول</button><button class="'+(PR.view==="cards"?"on":"")+'" onclick="prSet(\'view\',\'cards\')">بطاقات</button></div>'
     +'<button class="hb-btn" onclick="prExport()">تصدير Excel</button></div>';
@@ -9446,7 +9459,7 @@ function _pfWriteEdits(zip,E,codes){ var P=new DOMParser(), S=new XMLSerializer(
       return st; }); }); }
 try{ window.pfExportXlsx=pfExportXlsx; }catch(e){}
 /* فلتر حالة الجدول في سجل المشاريع */
-function prOpenCat(arr){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; PR.cat=arr; PR.view=PR.view||"table"; projRegOpen(true); }
+function prOpenCat(arr){ PR.q=""; PR.sector=""; PR.region=""; PR.status=""; PR.ptype=""; PR.cat=arr; PR.view=PR.view||"cards"; projRegOpen(true); }
 try{ window.prOpenCat=prOpenCat; }catch(e){}
 
 /* ---------------- معرض صور المشاريع في الرئيسية ---------------- */
