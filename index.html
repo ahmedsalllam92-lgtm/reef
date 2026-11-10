@@ -4551,6 +4551,30 @@ body[data-theme="dark"] .geo-k b,body[data-theme="dark"] .geo-lb{color:#E6EEF0}b
 body[data-theme="dark"] .geo-now{background:#2A2618;border-color:#4A3F25;color:#E3C88E}
 @media (max-width:900px){.geo-k{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .geo-note{position:absolute;bottom:2px;inset-inline-start:4px;font-size:9.5px;color:#8A968F}
+
+/* لوحة الأداء: شبكة جديدة — الخريطة بطول صفين */
+.dxf .dxf-g3{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.35fr)!important;grid-template-rows:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"sec sch reg" "fin cl reg";gap:12px}
+.dxf .dxf-g3>.g-sec{grid-area:sec}.dxf .dxf-g3>.g-sch{grid-area:sch}.dxf .dxf-g3>.g-reg{grid-area:reg}.dxf .dxf-g3>.g-fin{grid-area:fin}.dxf .dxf-g3>.g-cl{grid-area:cl}
+.dxf .dx-canvas.fit .dxf-g3{flex:2 1 0;min-height:0}
+.dxf .dxf-g3>section{min-height:0;min-width:0}
+.dxf .g-cl .dxf-pb{display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:0}
+.dxf .g-cl .dx-health{display:flex;align-items:center;gap:14px}.dxf .g-cl .dx-donut{width:118px!important;height:118px!important;flex:none}
+.dxf .g-cl .dx-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dxf .g-cl .dx-tiles>div{text-align:center;padding:7px 4px;border-radius:10px;background:var(--f-soft,#F6F8F5);border:1px solid var(--f-line,#E8ECE8)}
+.dxf .g-cl .dx-tiles b{display:block;font-size:16px;font-weight:800!important;color:#0B3D27}.dxf .g-cl .dx-tiles span{font-size:10px;color:var(--f-mut,#7D8A82)}
+.dxf .g-cl .dx-tiles .warn b{color:#8A6A00}.dxf .g-cl .dx-tiles .bad b{color:#B23B2E}
+body[data-theme="dark"] .dxf .g-cl .dx-tiles>div{background:rgba(255,255,255,.04);border-color:#2B363B}body[data-theme="dark"] .dxf .g-cl .dx-tiles b{color:#E6EEF0}
+.dxf .dx-canvas:not(.fit) .dxf-g3{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto;grid-template-areas:"sec sch" "fin cl" "reg reg"}
+@media screen and (max-width:900px){.dxf .dxf-g3{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"sec" "sch" "fin" "cl" "reg"!important}}
+
+/* خريطة الزمن داخل الشبكة الجديدة: احتواء كامل + مؤشرات بصفين */
+.dxf .dxf-g3 .geo-map{min-width:0;overflow:hidden}
+.dxf .dxf-g3 .geo-map>.km{flex-direction:column;min-width:0;width:100%;gap:4px}
+.dxf .dxf-g3 .geo-map .km-svg{flex:1 1 0;width:100%;min-width:0;min-height:0;height:auto}
+.dxf .dxf-g3 .geo-map>.km{position:relative}.dxf .dxf-g3 .geo-map .km-side{position:absolute;left:2px;bottom:2px;width:auto;align-items:flex-start;gap:6px}
+.dxf .dxf-g3 .geo-k{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.dxf .dxf-g3 .geo-k>div:last-child{grid-column:span 2}
+.dxf .dxf-g3 .geo-k b{font-size:14px}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -10007,8 +10031,9 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
         +'<div class="dxf-hl">'+_dxBtns('<span class="dxbar-x"></span><button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="projDashOpen()" title="لوحة المشروع" aria-label="لوحة المشروع"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
         +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'
       +kpiF
-      +'<div class="dx-gr dxf-r1">'+fBox("g-sec","المشاريع حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","الوضع الجدولي","",schF)+fBox("g-fin","الوضع المالي","",finF)+'</div>'
-      +'<div class="dx-gr dxf-r2">'+fBox("g-risk","مشاريع تتطلب متابعة","حسب حالة الجدول · مرتّبة بالأعلى حيوداً · اضغط لفتح لوحة المشروع",riskF)+fBox("g-reg","التوزيع الجغرافي عبر الزمن","حرّك الشريط للعودة بالزمن · اضغط منطقة للتصفية",geoBox(_dashFiltExcept("region"),DASH_FILTER.region))+'</div>'
+      +'<div class="dx-gr dxf-g3">'+fBox("g-sec","المشاريع حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","الوضع الجدولي","",schF)
+        +fBox("g-reg","التوزيع الجغرافي عبر الزمن","حرّك الشريط للعودة بالزمن · اضغط منطقة للتصفية",geoBox(_dashFiltExcept("region"),DASH_FILTER.region))
+        +fBox("g-fin","الوضع المالي","",finF)+fBox("g-cl","إحصائيات الجودة والاعتمادات",ar(D.length)+" مشروع",clBody)+'</div>'
       +'<div class="dxf-bottom"><span>المصدر: '+((typeof SHEET_CSV_URL!=="undefined"&&SHEET_CSV_URL)?"جدول متابعة المشاريع (مباشر)":"نسخة البيانات المدمجة")+'</span><span>برنامج ريف · '+esc(MONTHLBL)+'</span></div>'
     +'</div></div>');
 }
