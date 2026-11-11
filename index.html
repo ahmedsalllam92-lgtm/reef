@@ -10807,7 +10807,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
           return '<div class="pd-vbar" title="'+(chg>0?'الجزء الأخضر = الزيادة':(chg<0?'الجزء الأحمر = التخفيض':''))+'"><i class="b" style="width:'+base.toFixed(1)+'%"></i>'+(chg?'<i class="'+(chg>0?'up':'dn')+'" style="width:'+ex.toFixed(1)+'%"></i>':'')+'</div>'; })(),
         s:(chg?'<span class="'+(chg>0?"up":"dn")+'">'+(chg>0?"▲ +":"▼ −")+_dxM(Math.abs(chg))+'</span> عن الأصلية '+_dxM(orig)+' '+RYL:'لا توجد زيادة أو تخفيض')})
     +'<div class="dx-kpi pd-pk"><div class="dx-kh"><span class="dx-ki">'+DX_ICO.prog+'</span><span class="dx-kl">الإنجاز والحيود</span><em class="pd-pst '+_ptn+'">'+_pst+'</em></div>'
-      +'<div class="pd-p3"><div><span>الإنجاز الفعلي</span><b>'+_dxPct(a)+'</b></div><div><span>الإنجاز المخطط</span><b>'+(pl==null?"—":_dxPct(pl))+'</b></div><div class="'+_ptn+'"><span>الحيود عن الخطة</span><b>'+(sv==null?"—":((sv<0?"−":"+")+ar(Math.abs(Math.round(sv*100)))+"%"))+'</b></div></div>'
+      +'<div class="pd-p3"><div><span>الإنجاز الفعلي</span><b>'+_dxPct(a)+'</b></div><div class="'+_ptn+'"><span>الحيود عن الخطة</span><b><bdi dir="ltr">'+(sv==null?"—":((sv<0?"−":"+")+ar(Math.abs(Math.round(sv*100)))+"%"))+'</bdi></b></div><div><span>الإنجاز المخطط</span><b>'+(pl==null?"—":_dxPct(pl))+'</b></div></div>'
       +'<div class="pd-pbar"><u style="width:'+(_dxClamp(pl||0,0,1)*100).toFixed(1)+'%"></u><i style="width:'+(_dxClamp(a||0,0,1)*100).toFixed(1)+'%"></i></div>'
       +'<div class="dx-ks"><span class="pd-lg a"></span>الفعلي <span class="pd-lg p"></span>المخطط</div></div>'
     +(function(){ var _dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):(_dxTxt(p.duration)||"—"), _sd=_dxTxt(p.stop_duration);
