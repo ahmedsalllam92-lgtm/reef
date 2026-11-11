@@ -4891,6 +4891,10 @@ body[data-theme="dark"] .py-cum{color:#E6EEF0}body[data-theme="dark"] .py-t td.p
 body[data-theme="dark"] .py-cnt{background:rgba(60,196,137,.12);color:#8FD3A8}
 @media (max-width:1100px){.hb-hero.py-hero{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:760px){.hb-hero.py-hero{grid-template-columns:1fr 1fr}}
+
+/* زر الطباعة: أيقونة فقط، ويُخفى إذا وُجدت أيقونة طباعة أخرى في الصفحة */
+.rtool.rt-print{width:38px;height:38px;padding:0!important;justify-content:center;display:inline-flex;align-items:center}
+.acard:has([title="طباعة"]:not(.rt-print)) .rt-print{display:none!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -5702,7 +5706,7 @@ function pickReportLogo(){ var el=document.getElementById("reefLogoInput"); if(e
 function onReportLogo(input){ try{ var f=input&&input.files&&input.files[0]; if(!f) return; if(f.size>3*1024*1024){ alert("حجم اللوجو كبير — يفضّل أقل من 3 ميجا."); return; } var rd=new FileReader(); rd.onload=function(e){ REPORT_LOGO=e.target.result; _REPORT_EDITED=true; if(typeof RERENDER==="function") RERENDER(); }; rd.readAsDataURL(f); }catch(err){} }
 function clearReportLogo(){ REPORT_LOGO=null; _REPORT_EDITED=true; if(typeof RERENDER==="function") RERENDER(); }
 function exportToolbar(){ const ppt=`<button class="rtool ppt" id="pptxBtn" onclick="exportPPTX()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 17V8h4a2.5 2.5 0 0 1 0 5H8"/></svg> تصدير PowerPoint</button>`;
-  return `<div class="rtools noprint"><button class="rtool" onclick="printAnswer()" title="تنزيل PDF"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> تنزيل PDF</button>${ppt}<span class="rtool-hint">باسم «${PRINT_NAME}»</span></div>`; }
+  return `<div class="rtools noprint"><button class="rtool rt-print" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>${ppt}<span class="rtool-hint">باسم «${PRINT_NAME}»</span></div>`; }
 function printCoverHTML(title){ return `<section class="rpage cover pcover">${RCORNERS}<div class="cv-mid"><div class="cv-kick">تقرير</div><div class="cv-title">${title}</div><div class="cv-date">${MONTHLBL}</div></div><div class="cv-brand"><img class="cv-logo" src="${LOGO_W}" alt="ريف"></div></section>`; }
 function paginateReportPages(){
   try{
