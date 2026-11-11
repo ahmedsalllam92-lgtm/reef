@@ -4945,6 +4945,30 @@ body[data-theme="dark"] .mt-spk-in,body[data-theme="dark"] .mt-mgrid input,body[
 .hmg-c{width:330px!important;align-items:center;padding-top:14px!important}
 .hmg-c b{white-space:normal!important;overflow:hidden;text-overflow:clip;max-width:none!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;line-height:1.45;font-size:12px}
 .hmg-c img{width:64px!important;height:64px!important}
+
+/* بطاقة المشروع: كرت «المخطط مقابل الفعلي» */
+.pc4-k.pc4-pv b .pv-l{font-size:12px;font-weight:600;color:#7D8A82;margin-inline-start:4px}
+.pc4-pv .pv-bar{position:relative;height:9px;border-radius:9px;background:#E7ECE8;margin:8px 0 6px}
+.pc4-pv .pv-bar u{position:absolute;top:0;bottom:0;inset-inline-start:0;border-radius:9px}
+.pc4-pv .pv-bar s{position:absolute;top:-4px;bottom:-4px;width:3px;margin-inline-start:-1.5px;border-radius:2px;background:#B89968;text-decoration:none}
+.pc4-pv .pv-leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:#5E6B63}
+.pc4-pv .pv-leg span{display:inline-flex;align-items:center;gap:4px}.pc4-pv .pv-leg i{width:8px;height:8px;border-radius:2px}.pc4-pv .pv-leg i.pl{background:#B89968}
+.pc4-pv .pv-leg b{font-weight:800!important;color:#1F2A24;font-size:12px!important;display:inline!important;line-height:1.4!important}.pc4-pv .pv-leg .dn b{color:#B23B2E}.pc4-pv .pv-leg .up b{color:#1E7A4C}
+body[data-theme="dark"] .pc4-pv .pv-bar{background:rgba(255,255,255,.1)}body[data-theme="dark"] .pc4-pv .pv-leg b{color:#E6EEF0}
+/* طباعة بطاقة المشروع: صفحة طولية، بلا صفحات نصف فارغة، وتصميم أقوى */
+@media print{
+  @page pc4p{size:A4 portrait;margin:8mm}
+  .acard:has(.pc4){page:pc4p}
+  .pc4{zoom:.62;width:auto!important;max-width:none!important}
+  .pc4 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pc4-pane.pb{break-before:auto!important;page-break-before:auto!important}
+  .pc4 .pc3-panes>section.pc4-pane{break-inside:auto!important;margin-top:14px!important;border:1px solid #DCE6DF!important;border-radius:14px!important;padding:14px 16px!important;background:#fff!important}
+  .pc4 .pc3-panes>section.pc4-pane:nth-of-type(4),.pc4 .pc3-panes>section.pc4-pane:nth-of-type(5){display:none!important}
+  .pc4 .pc3-panes>section.pc4-pane:nth-of-type(3),.pc4 .pc3-panes>section.pc4-pane:nth-of-type(6){break-inside:avoid!important}
+  .pc4 .pc4-card{break-inside:avoid;border:1px solid #CFDCD3!important}
+  .pc4 .pc4-k{border:1px solid #DCE6DF!important;break-inside:avoid}
+  .pc4 .pc3-r,.pc4 .pc4-ntl,.pc4 .pc4-nts,.pc4 .pc3-tl,.pc4 .pc3-rk{break-inside:avoid}
+}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9295,10 +9319,13 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var kpis='<div class="pc4-kpis">'
     +kp("dark","القيمة بعد التعديل",_pcMoney(v)+'<small>'+RYL+'</small>',(orig&&Math.abs(chg)>1?(chg>0?'▲ +':'▼ −')+_dxM(Math.abs(chg))+' عن الأصلية':'بدون تعديل على القيمة'))
     +kp("","المنصرف",_pcMoney(dis)+'<small>'+RYL+'</small>',_dxPct(sp)+' من القيمة'+(und?' · تحت الإجراء '+_dxM(und):''),sp)
-    +kp("","الإنجاز الفعلي",_dxPct(a),'المخطط '+(pl==null?'—':_dxPct(pl)),a,pl)
+    +kp("","المستخلصات",ar(cl),ap?ar(ap)+' معتمد':'لا توجد مستخلصات')
     +kp("c-"+cat,"الحيود عن الخطة",dev==null?'—':_dxPct(dev),DX_CAT[cat].l)
-    +kp("","الزمن المنقضي",t.ok?_dxPct(t.frac):'—',t.ok?(t.left>=0?'متبقٍ '+ar(t.left)+' يوم':'متجاوز '+ar(-t.left)+' يوم'):'—',t.ok?t.frac:null)
-    +kp("","المستخلصات",ar(cl),ap?ar(ap)+' معتمد':'لا توجد مستخلصات')+'</div>';
+    +(function(){ var A=a||0, Pl=pl, g=(Pl==null)?null:A-Pl, col=(DX_CAT[cat]||{}).c||"#1E5B3A";
+        return '<div class="pc4-k pc4-pv"><span>الإنجاز المخطط مقابل الفعلي</span><b>'+(Pl==null?'—':_dxPct(Pl))+'<small class="pv-l">مخطط</small></b>'
+          +'<div class="pv-bar"><u style="width:'+(Math.max(0,Math.min(1,A))*100).toFixed(1)+'%;background:'+col+'"></u>'+(Pl!=null?'<s style="inset-inline-start:'+(Math.max(0,Math.min(1,Pl))*100).toFixed(1)+'%"></s>':'')+'</div>'
+          +'<div class="pv-leg"><span><i style="background:'+col+'"></i>الفعلي <b>'+_dxPct(A)+'</b></span><span><i class="pl"></i>المخطط <b>'+(Pl==null?'—':_dxPct(Pl))+'</b></span><span class="'+(g==null?'':(g<0?'dn':'up'))+'">الحيود <b><bdi dir="ltr">'+(g==null?'—':((g<0?'−':'+')+ar(Math.abs(Math.round(g*100)))))+'</bdi></b> نقطة</span></div></div>'; })()
+    +kp("","الإنجاز الفعلي",_dxPct(a),'المخطط '+(pl==null?'—':_dxPct(pl)),a,pl)+'</div>';
   var photos='<div class="pc4-ph"><div class="pc4-sh"><h3>صور التقارير</h3><button class="pc3-b sm noprint" onclick="pcTab(\'ph\')">إدارة الصور ←</button></div><div class="pc4-rep" id="pc4Rep">'+_pc4RepHTML(imgs)+'</div></div>';
   var TABS=[["ov","نظرة عامة"],["data","البيانات والتعاقد"],["fin","المالية والمستخلصات"],["tl","الجدول الزمني"],["nt","المستجدات"],["rk","المخاطر"],["ph","إدارة الصور"]];
   var tabs='<div class="pc3-tabs noprint">'+TABS.map(function(x){ return '<button class="'+(PCARD.tab===x[0]?"on":"")+'" onclick="pcTab(\''+x[0]+'\')">'+x[1]+'</button>'; }).join("")+'</div>';
