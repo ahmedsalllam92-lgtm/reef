@@ -4910,6 +4910,18 @@ body[data-theme="dark"] .lc-chip{background:rgba(60,196,137,.12);color:#8FD3A8}
 body[data-theme="dark"] .lc-bad{background:rgba(201,162,78,.1);border-color:rgba(201,162,78,.3);color:#E3C88E}
 body[data-theme="dark"] .lc-dv .lc-ocr{color:#9FB0B5}
 @media print{.lc-th{width:30px;height:30px}}
+
+/* فحص صور المشاريع: سياق المشروع + حقول الملاحظة الجديدة */
+.ia-ctx{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px;margin:10px 0}
+.ia-ctx label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#5E6B63;font-weight:700}
+.ia-ctx select,.ia-ctx input{height:38px;border:1px solid #DDE3DE;border-radius:10px;padding:0 10px;font:inherit;font-size:13px;background:#fff;color:inherit}
+.ia-imp{font-size:12.5px;color:#A5631A;margin-top:3px}
+.ia-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:#5E6B63;margin-top:5px}
+.ia-rate{display:inline-block;padding:1px 10px;border-radius:99px;font-size:11px;font-weight:800;margin-inline-end:8px}
+.ia-rate.ok{background:#E6F3EC;color:#0E6B45}.ia-rate.mid{background:#FDF1E1;color:#A5631A}.ia-rate.hi{background:#FBE9E7;color:#B0433A}
+.ia-pos{font-size:12px;color:#0E6B45;margin:4px 0}.ia-lim{font-size:11.5px;color:#7A867F;margin:2px 0 8px}
+body[data-theme="dark"] .ia-ctx select,body[data-theme="dark"] .ia-ctx input{background:#1B2428;border-color:#2B363B}
+@media (max-width:760px){.ia-ctx{grid-template-columns:1fr}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -12962,11 +12974,19 @@ function imgAuditOpen(){ try{setNavActive("imgaudit");}catch(e){} RERENDER=""; P
       +'<label><input type="radio" name="iaf" value="safety" onchange="_iaSetFocus(this.value)"> سلامة</label>'
       +'<label><input type="radio" name="iaf" value="structural" onchange="_iaSetFocus(this.value)"> إنشائي</label>'
       +'<label><input type="radio" name="iaf" value="quality" onchange="_iaSetFocus(this.value)"> جودة</label></div>'
+    +'<div class="ia-ctx"><label><span>المشروع (اختياري — يجعل الملاحظات أدق)</span><select id="iaProj" onchange="_iaSetProj(this.value)"><option value="">— بدون تحديد —</option>'+((typeof DATA!=="undefined"&&DATA)?DATA.map(function(p,idx){ return '<option value="'+idx+'">'+esc((p.code?p.code+" · ":"")+(p.name||""))+'</option>'; }).join(""):"")+'</select></label>'
+      +'<label><span>ملاحظة للفاحص الآلي (اختياري)</span><input id="iaNote" placeholder="مثال: مرحلة صب الأسقف، أو ركّز على السقالات" oninput="IMGA.note=this.value"></label></div>'
     +'<label class="ia-upl" id="iaUpl">📷 اختر صور الموقع (واحدة أو أكثر)<input type="file" accept="image/*" multiple onchange="_iaPick(this)"></label>'
     +'<div id="iaList"></div>'
     +'<div id="iaReportBar"></div>'
     +'</div>');
 }
+function _iaCtx(P){ if(!P){ var s=document.getElementById("iaProj"); var i=s?s.value:(IMGA.projIdx||""); P=(i!==""&&typeof DATA!=="undefined")?DATA[+i]:null; }
+  var note=(document.getElementById("iaNote")||{}).value||IMGA.note||"";
+  if(!P) return note?{note:note}:null;
+  var a=null; try{ a=pct(P.actual); }catch(e){}
+  return {name:P.name||"",sector:P.sector||"",ptype:P.ptype||P.type||"",region:P.region||"",status:P.status||"",progress:a!=null?Math.round(a*100)+"%":"",note:note}; }
+function _iaSetProj(v){ IMGA.projIdx=v; }
 function _iaSetFocus(v){ IMGA.focus=v; IMGA.items.forEach(function(it){ if(it.status==="done"||it.status==="error"){ it.status="queued"; it.notes=[]; it.summary=""; it.err=""; } }); _iaRenderAll(); _iaPump(); }
 function _fmtKB(b){ return b>=1048576?((b/1048576).toFixed(2)+" م.ب"):(Math.round(b/1024)+" ك.ب"); }
 
@@ -13007,11 +13027,11 @@ function _iaItem(id){ return IMGA.items.filter(function(x){return x.id===id;})[0
 function _iaCropBox(imgDataUrl,bbox){ return new Promise(function(res){ try{ var im=new Image(); im.onload=function(){ var W=im.naturalWidth,H=im.naturalHeight; var mx=0.06; var x=Math.max(0,(bbox.x-mx))*W, y=Math.max(0,(bbox.y-mx))*H; var w=Math.min(1-(bbox.x),bbox.w+mx*2)*W, h=Math.min(1-(bbox.y),bbox.h+mx*2)*H; w=Math.max(24,w); h=Math.max(24,h); var cv=document.createElement("canvas"); var scale=Math.min(2, 512/Math.max(w,h)); cv.width=Math.round(w*scale); cv.height=Math.round(h*scale); var ctx=cv.getContext("2d"); ctx.drawImage(im,x,y,w,h,0,0,cv.width,cv.height); res(cv.toDataURL("image/jpeg",0.85)); }; im.onerror=function(){res(null);}; im.src=imgDataUrl; }catch(e){ res(null); } }); }
 function _iaAnalyzeOne(it){ if(!it||!it.img)return; it.status="analyzing"; it.t0=Date.now(); it.err=""; it.phase="اكتشاف"; IMGA.running++;
   var ctrl=("AbortController" in window)?new AbortController():null; it.ctrl=ctrl; _iaRenderAll();
-  fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({image:it.img,focus:IMGA.focus,mode:"detect"}),signal:ctrl?ctrl.signal:undefined})
+  fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({image:it.img,focus:IMGA.focus,mode:"detect",ctx:_iaCtx()}),signal:ctrl?ctrl.signal:undefined})
   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
   .then(function(res){
     if(!res.ok||res.j.error){ throw new Error((res.j&&res.j.error)||"خطأ الاكتشاف"); }
-    var cands=res.j.notes||[]; it.scene=res.j.scene||"";
+    var cands=res.j.notes||[]; it.scene=res.j.scene||""; it.overall=res.j.overall||null; it.positives=res.j.positives||[]; it.limits=res.j.limits||[]; it.summary=(it.overall&&it.overall.summary)||it.scene||"";
     if(!cands.length || IMGA.verify===false){ it.notes=cands; it.status="done"; it.ms=Date.now()-it.t0; it.ctrl=null; IMGA.running=Math.max(0,IMGA.running-1); _iaRenderAll(); _iaPump(); return; }
     // المرحلة 2: تحقق بالقصاصات (بالتسلسل لتفادي الحدود)
     it.phase="تحقق"; _iaRenderAll();
@@ -13021,10 +13041,10 @@ function _iaAnalyzeOne(it){ if(!it||!it.img)return; it.status="analyzing"; it.t0
       var n=cands[i++];
       if(!n.bbox){ verified.push(n); return nextV(); }
       _iaCropBox(it.img,n.bbox).then(function(crop){ if(!crop){ verified.push(n); return nextV(); }
-        fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"verify",image:it.img,crop:crop,title:n.problem,type:n.type,focus:IMGA.focus}),signal:ctrl?ctrl.signal:undefined})
+        fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"verify",image:it.img,crop:crop,title:n.problem,type:n.type,where:n.where||"",evidence:n.evidence||"",focus:IMGA.focus,ctx:_iaCtx()}),signal:ctrl?ctrl.signal:undefined})
         .then(function(r){return r.json();}).then(function(v){
           if(v && v.match===false){ /* مرفوض */ }
-          else { if(v){ if(v.type)n.type=VALID_OK(v.type,n.type); if(v.severity)n.severity=v.severity; if(v.confidence!=null)n.confidence=Math.max(0,Math.min(100,parseInt(v.confidence,10)||n.confidence)); if(v.verificationStatus)n.verificationStatus=v.verificationStatus; if(v.problem)n.problem=v.problem; if(v.evidence)n.evidence=v.evidence; if(v.immediate)n.immediate=v.immediate; if(v.fix)n.fix=v.fix; if(v.specialty)n.specialty=v.specialty; n.needsReview=(n.confidence<55); }
+          else { if(v){ if(v.type)n.type=VALID_OK(v.type,n.type); if(v.severity)n.severity=v.severity; if(v.confidence!=null)n.confidence=Math.max(0,Math.min(100,parseInt(v.confidence,10)||n.confidence)); if(v.verificationStatus)n.verificationStatus=v.verificationStatus; if(v.problem)n.problem=v.problem; if(v.evidence)n.evidence=v.evidence; if(v.immediate)n.immediate=v.immediate; if(v.fix)n.fix=v.fix; if(v.specialty)n.specialty=v.specialty; ["where","impact","owner","deadline","ref"].forEach(function(k){ if(v[k]) n[k]=v[k]; }); n.needsReview=(n.confidence<55); }
             if(IMGA.focus==="all" || n.type===({safety:"سلامة",structural:"إنشائي",quality:"جودة"}[IMGA.focus])) verified.push(n); }
           nextV();
         }).catch(function(){ verified.push(n); nextV(); });
@@ -13072,12 +13092,17 @@ function _iaCard(it,idx){
     var rows=(it.notes||[]).map(function(n,i){ var col=_iaColor(n.type);
       return '<div class="ia-note" id="ntc_'+it.id+'_'+i+'" style="--c:'+col+'" onclick="_iaFocusMk(\''+it.id+'\','+i+')"><div class="ia-nh"><span class="ia-badge" style="background:'+col+'">'+(i+1)+'</span><b>'+esc(n.type||"")+'</b><span class="ia-sev sev-'+_sevCls(n.severity)+'">'+esc(n.severity||"")+'</span><span class="ia-conf">ثقة '+ar(n.confidence||0)+'%</span></div>'
         +'<div class="ia-prob"><b>المشكلة:</b> '+esc(n.problem||"")+'</div>'
+        +(n.where?('<div class="ia-ev"><b>الموضع:</b> '+esc(n.where)+'</div>'):"")
         +(n.evidence?('<div class="ia-ev"><b>الدليل:</b> '+esc(n.evidence)+'</div>'):"")
+        +(n.impact?('<div class="ia-imp"><b>الأثر:</b> '+esc(n.impact)+'</div>'):"")
         +(n.immediate?('<div class="ia-imm"><b>إجراء فوري:</b> '+esc(n.immediate)+'</div>'):"")
         +'<div class="ia-fix"><b>المعالجة:</b> '+esc(n.fix||"")+'</div>'
+        +((n.owner||n.deadline||n.ref)?('<div class="ia-meta">'+(n.owner?'<span>المسؤول: <b>'+esc(n.owner)+'</b></span>':'')+(n.deadline?'<span>المهلة: <b>'+esc(n.deadline)+'</b></span>':'')+(n.ref?'<span>المرجع: '+esc(n.ref)+'</span>':'')+'</div>'):"")
         +(n.specialty?('<div class="ia-spec">التخصص: '+esc(n.specialty)+'</div>'):"")+(n.exclReason?('<div class="ia-exr">سبب الاستبعاد: '+esc(n.exclReason)+'</div>'):"")+'<div class="ia-st st-'+(n.status||"new")+'">'+({approved:"✓ معتمدة",excluded:"✕ مستبعدة"}[n.status]||"جديدة — بانتظار المراجعة")+'</div>'+'<div class="ia-nact">'+(n.status!=="approved"?'<button onclick="_iaApprove(\''+it.id+'\','+i+')">اعتماد</button>':'')+(n.status!=="excluded"?'<button onclick="_iaExclude(\''+it.id+'\','+i+')">استبعاد</button>':'<button onclick="_iaUnexcl(\''+it.id+'\','+i+')">تراجع</button>')+'<button onclick="_iaEditNote(\''+it.id+'\','+i+')">تعديل</button><button onclick="_iaDelNote(\''+it.id+'\','+i+')">حذف</button></div>'+'</div>';
     }).join("");
-    var summ=it.summary?('<div class="ia-summary"><b>الملخّص:</b> '+esc(it.summary)+'</div>'):"";
+    var O=it.overall||{}, rc={"جيد":"ok","مقبول":"mid","يحتاج تدخل":"hi","خطر":"hi"}[O.rating]||"";
+    var summ=(it.summary||O.rating)?('<div class="ia-summary">'+(O.rating?'<span class="ia-rate '+rc+'">'+esc(O.rating)+'</span>':'')+(O.stage?'<b>المرحلة:</b> '+esc(O.stage)+' · ':'')+'<b>التقييم:</b> '+esc(it.summary||"")+'</div>'):"";
+    summ+=((it.positives||[]).length?'<div class="ia-pos">✓ '+it.positives.map(esc).join(" · ")+'</div>':'')+((it.limits||[]).length?'<div class="ia-lim">ⓘ لا يمكن الحكم من الصورة على: '+it.limits.map(esc).join(" · ")+'</div>':'');
     var empt=(it.status==="done"&&!(it.notes||[]).length)?'<div class="mt-empty">لا مشاكل واضحة في هذه الصورة (لا يعني ذلك سلامة الموقع بالكامل).</div>':"";
     body='<div class="ia-grid"><div><div class="ia-imgbox'+(IMGA.addFor===it.id?" adding":"")+'" id="iabox_'+it.id+'" onclick="_iaImgClick(event,\''+it.id+'\')"><img src="'+it.img+'" class="ia-img">'+markers+'</div><div class="ia-imgtools"><button class="ia-a'+(IMGA.addFor===it.id?" on":"")+'" onclick="event.stopPropagation();_iaAddMode(\''+it.id+'\')">'+(IMGA.addFor===it.id?"↩ اضغط على الصورة لتحديد الموضع (أو إلغاء)":"➕ إضافة ملاحظة يدوية")+'</button><span class="ia-hint">اسحب أي علامة لتصحيح موضعها</span></div></div><div class="ia-notes">'+summ+rows+empt+'</div></div>';
   } else { body='<div class="ia-prepbox">جارٍ تجهيز الصورة…</div>'; }
@@ -13109,30 +13134,65 @@ function _iaReport(){
 }
 function _iaToday(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2); }
 function _iaProjFill(){ var idx=document.getElementById("rpProj").value; if(idx===""||typeof DATA==="undefined")return; var p=DATA[+idx]; if(!p)return; var set=function(id,v){var e=document.getElementById(id); if(e)e.value=v||"";}; set("rpSector",p.sector); set("rpRegion",p.region); set("rpType",p.ptype||p.type); set("rpCont",p.contractor); set("rpCons",p.consultant); }
+function _iaFontCSS(){ var out=[]; try{ [].slice.call(document.querySelectorAll("style")).forEach(function(s){ var t=s.textContent||"", re=/@font-face\s*\{[^}]*\}/g, m;
+  while((m=re.exec(t))){ if(/Expo Arabic|SaudiRiyal|Tajawal/i.test(m[0]) && /data:/.test(m[0])) out.push(m[0]); } }); }catch(e){} return out.join("\n"); }
 function _iaGenReport(){ var g=function(id){var e=document.getElementById(id);return e?e.value:"";};
-  var proj=g("rpProj")!==""&&typeof DATA!=="undefined"?(DATA[+g("rpProj")].name||"مشروع"):"مشروع فحص صور";
-  var meta={proj:proj,sector:g("rpSector"),region:g("rpRegion"),ptype:g("rpType"),date:g("rpDate"),cont:g("rpCont"),cons:g("rpCons"),insp:g("rpInsp"),inclRev:document.getElementById("rpInclRev").checked};
+  var P=(g("rpProj")!==""&&typeof DATA!=="undefined")?DATA[+g("rpProj")]:null;
+  var meta={proj:(P&&P.name)||"مشروع فحص صور",code:(P&&P.code)||"",sector:g("rpSector"),region:g("rpRegion"),ptype:g("rpType"),date:g("rpDate"),cont:g("rpCont"),cons:g("rpCons"),insp:g("rpInsp"),inclRev:document.getElementById("rpInclRev").checked};
   document.getElementById("iaRepModal").style.display="none";
   var done=IMGA.items.filter(function(x){return x.status==="done";});
-  // فلترة الملاحظات: معتمدة (+ اختياريًا تحتاج مراجعة)، واستبعاد المستبعدة
   var anyApproved=done.some(function(it){return (it.notes||[]).some(function(n){return n.status==="approved";});});
   var pick=function(n){ if(n.status==="excluded")return false; if(n.status==="approved")return true; if(meta.inclRev)return true; if(!anyApproved)return true; return false; };
-  Promise.all(done.map(_iaAnnotate)).then(function(imgs){
+  var all=[]; done.forEach(function(it,ii){ (it.notes||[]).forEach(function(n,ni){ if(pick(n)) all.push({ref:"ص"+(ii+1)+"-م"+(ni+1),type:n.type,severity:n.severity,problem:n.problem,where:n.where||"",fix:n.fix||""}); }); });
+  var ctx=_iaCtx(P);
+  var wait=document.getElementById("iaReportBar"); if(wait) wait.insertAdjacentHTML("afterbegin",'<div class="mst ok" id="iaRepWait">● جارٍ إعداد التقرير والملخّص التنفيذي…</div>');
+  var sumP=all.length?fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"summary",notes:all,ctx:ctx})})
+    .then(function(r){ return r.json(); }).then(function(j){ return (j&&!j.error&&j.verdict)?j:null; }).catch(function(){ return null; }):Promise.resolve(null);
+  Promise.all([Promise.all(done.map(_iaAnnotate)),sumP]).then(function(R){ var imgs=R[0], S=R[1]; var w8=document.getElementById("iaRepWait"); if(w8) w8.remove();
     var counts={"سلامة":0,"إنشائي":0,"جودة":0,"عالية":0,"متوسطة":0,"منخفضة":0}; var total=0;
     done.forEach(function(it){ (it.notes||[]).filter(pick).forEach(function(n){ total++; if(counts[n.type]!=null)counts[n.type]++; if(counts[n.severity]!=null)counts[n.severity]++; }); });
-    var secs=done.map(function(it,idx){ var ns=(it.notes||[]).filter(pick);
-      var rows=ns.map(function(n,i){ return '<tr><td style="text-align:center;font-weight:bold;background:'+_iaColor(n.type)+';color:#fff">'+(i+1)+'</td><td>'+esc(n.type)+'</td><td>'+esc(n.severity)+'</td><td>'+ar(n.confidence||0)+'%</td><td>'+esc(n.verificationStatus||"")+'</td><td>'+esc(n.problem||"")+'</td><td>'+esc(n.fix||"")+'</td><td>'+({approved:"معتمدة",excluded:"مستبعدة"}[n.status]||"للمراجعة")+'</td></tr>'; }).join("")||'<tr><td colspan="8" style="text-align:center;color:#888;padding:10px">لا ملاحظات مدرجة لهذه الصورة</td></tr>';
-      return '<div class="rp-sec"><h3>صورة '+(idx+1)+'</h3><img src="'+imgs[idx]+'" class="rp-img"><table class="rp-tbl"><thead><tr><th>#</th><th>النوع</th><th>الخطورة</th><th>الثقة</th><th>الحالة الفنية</th><th>المشكلة</th><th>المعالجة</th><th>الاعتماد</th></tr></thead><tbody>'+rows+'</tbody></table></div>'; }).join("");
-    var meta1='<table class="rp-meta"><tr><td><b>المشروع:</b> '+esc(meta.proj)+'</td><td><b>القطاع:</b> '+esc(meta.sector||"—")+'</td><td><b>المنطقة:</b> '+esc(meta.region||"—")+'</td></tr>'
+    var sevC={"عالية":"hi","متوسطة":"mid","منخفضة":"lo"}, rateC={"جيد":"ok","مقبول":"mid","يحتاج تدخل":"hi","خطر":"hi"};
+    var secs=done.map(function(it,idx){ var ns=(it.notes||[]).map(function(n,i){ return {n:n,i:i}; }).filter(function(x){ return pick(x.n); }), O=it.overall||{};
+      var rows=ns.map(function(x){ var n=x.n;
+        return '<tr><td class="c"><span class="nb" style="background:'+_iaColor(n.type)+'">'+(x.i+1)+'</span></td>'
+          +'<td><b>'+esc(n.problem||"")+'</b>'+(n.where?'<div class="sub">الموضع: '+esc(n.where)+'</div>':'')+(n.evidence?'<div class="sub">الدليل: '+esc(n.evidence)+'</div>':'')+(n.impact?'<div class="sub imp">الأثر: '+esc(n.impact)+'</div>':'')+'</td>'
+          +'<td class="c"><span class="tg">'+esc(n.type||"")+'</span><span class="sv '+(sevC[n.severity]||"mid")+'">'+esc(n.severity||"")+'</span><div class="sub">ثقة '+ar(n.confidence||0)+'%'+(n.verificationStatus?' · '+esc(n.verificationStatus):'')+'</div></td>'
+          +'<td>'+(n.immediate?'<div><b>فوري:</b> '+esc(n.immediate)+'</div>':'')+esc(n.fix||"")+(n.ref?'<div class="sub">المرجع: '+esc(n.ref)+'</div>':'')+'</td>'
+          +'<td class="c">'+esc(n.owner||"—")+(n.deadline?'<div class="sub">'+esc(n.deadline)+'</div>':'')+'</td>'
+          +'<td class="c">'+({approved:"معتمدة",excluded:"مستبعدة"}[n.status]||"للمراجعة")+'</td></tr>'; }).join("")||'<tr><td colspan="6" class="c muted">لا ملاحظات مدرجة لهذه الصورة</td></tr>';
+      var head='<div class="ih"><h3>صورة '+(idx+1)+(it.name?' <small>'+esc(it.name)+'</small>':'')+'</h3>'+(O.rating?'<span class="rt '+(rateC[O.rating]||"mid")+'">'+esc(O.rating)+'</span>':'')+'</div>';
+      var ov=(O.summary||O.stage||it.scene)?'<div class="ov">'+(O.stage?'<b>المرحلة الظاهرة:</b> '+esc(O.stage)+' · ':'')+esc(O.summary||it.scene||"")+'</div>':'';
+      var extra=((it.positives||[]).length?'<div class="pos"><b>ممارسات جيدة:</b> '+it.positives.map(esc).join(" · ")+'</div>':'')+((it.limits||[]).length?'<div class="lim"><b>حدود الحكم من الصورة:</b> '+it.limits.map(esc).join(" · ")+'</div>':'');
+      return '<div class="sec">'+head+'<img src="'+imgs[idx]+'" class="img">'+ov+extra+'<table class="tbl"><thead><tr><th>#</th><th>الملاحظة</th><th>التصنيف</th><th>المعالجة المطلوبة</th><th>المسؤول / المهلة</th><th>الاعتماد</th></tr></thead><tbody>'+rows+'</tbody></table></div>'; }).join("");
+    var meta1='<table class="meta"><tr><td><b>المشروع:</b> '+esc(meta.proj)+(meta.code?' ('+esc(meta.code)+')':'')+'</td><td><b>القطاع:</b> '+esc(meta.sector||"—")+'</td><td><b>المنطقة:</b> '+esc(meta.region||"—")+'</td></tr>'
       +'<tr><td><b>نوع المشروع:</b> '+esc(meta.ptype||"—")+'</td><td><b>الجهة المنفذة:</b> '+esc(meta.cont||"—")+'</td><td><b>الاستشاري:</b> '+esc(meta.cons||"—")+'</td></tr>'
       +'<tr><td><b>تاريخ الزيارة:</b> '+esc(meta.date||"—")+'</td><td><b>الفاحص:</b> '+esc(meta.insp||"—")+'</td><td><b>عدد الصور:</b> '+ar(done.length)+'</td></tr></table>';
-    var summ='<div class="rp-exec"><b>ملخّص تنفيذي:</b> إجمالي الملاحظات المدرجة: '+ar(total)+' — سلامة: '+ar(counts["سلامة"])+' · إنشائي: '+ar(counts["إنشائي"])+' · جودة: '+ar(counts["جودة"])+' | عالية: '+ar(counts["عالية"])+' · متوسطة: '+ar(counts["متوسطة"])+' · منخفضة: '+ar(counts["منخفضة"])+'.</div>';
-    var fname=(meta.proj+"-"+meta.date).replace(/[^\w\u0600-\u06FF\- ]/g,"").slice(0,60);
-    var html='<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>'+esc(fname)+'</title><style>@page{size:A4;margin:1.2cm}body{font-family:Arial;color:#1c2b22;direction:rtl}h1{color:#0B3D2E;text-align:center;font-size:22px;margin-bottom:2px}h3{color:#0E6B45;border-bottom:2px solid #CDE7D8;padding-bottom:4px;margin-top:22px}.rp-img{width:100%;max-height:430px;object-fit:contain;border:1px solid #ddd;border-radius:8px;margin:8px 0}.rp-tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}.rp-tbl th{background:#0B3D2E;color:#fff;padding:6px}.rp-tbl td{border:1px solid #dde;padding:6px;vertical-align:top}.rp-sec{page-break-inside:avoid}.rp-meta{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}.rp-meta td{border:1px solid #E6F0EA;padding:7px;background:#F6FAF7}.rp-exec{background:#EEF5FF;border:1px solid #CFE0F5;padding:10px 12px;border-radius:8px;font-size:12.5px;margin:10px 0}.rp-date{text-align:center;color:#888;font-size:11px}.rp-brand{display:flex;align-items:center;gap:14px;justify-content:center;border-bottom:3px solid #0E6B45;padding-bottom:10px;margin-bottom:8px}.rp-logo{height:58px}.rp-org{font-size:12px;color:#5a6b60;margin-bottom:2px;text-align:center}h1{margin:0}.rp-disc{background:#FBF3E7;border:1px solid #EAD9B0;padding:8px 12px;border-radius:8px;font-size:11px;margin:10px 0}</style></head><body><div class="rp-brand"><img src="'+(typeof LOGO!=="undefined"?LOGO:"")+'" class="rp-logo"><div><div class="rp-org">برنامج التنمية الريفية الزراعية المستدامة — ريف</div><h1>تقرير فحص صور الموقع</h1></div></div><div class="rp-date">'+esc(meta.proj)+' — صدر في '+new Date().toLocaleString("ar-EG")+'</div>'+meta1+summ+'<div class="rp-disc">⚠ '+IA_DISC+'</div>'+secs+'<script>setTimeout(function(){window.print();},700);<\/script></body></html>';
+    var kpi='<div class="kpis"><div><b>'+ar(total)+'</b>ملاحظة</div><div class="hi"><b>'+ar(counts["عالية"])+'</b>عالية الخطورة</div><div class="mid"><b>'+ar(counts["متوسطة"])+'</b>متوسطة</div><div class="lo"><b>'+ar(counts["منخفضة"])+'</b>منخفضة</div><div><b>'+ar(counts["سلامة"])+'</b>سلامة</div><div><b>'+ar(counts["إنشائي"])+'</b>إنشائي</div><div><b>'+ar(counts["جودة"])+'</b>جودة</div></div>';
+    var exec=S?('<div class="exec"><div class="eh"><b>الملخّص التنفيذي</b><span class="rk '+({"مرتفع":"hi","متوسط":"mid","منخفض":"ok"}[S.risk]||"mid")+'">مستوى المخاطر: '+esc(S.risk||"")+'</span></div><p>'+esc(S.verdict||"")+'</p>'
+        +((S.actions||[]).length?'<table class="tbl act"><thead><tr><th>#</th><th>الإجراء المطلوب</th><th>المسؤول</th><th>المهلة</th><th>الملاحظات المرتبطة</th></tr></thead><tbody>'+S.actions.map(function(a,i){ return '<tr><td class="c">'+(i+1)+'</td><td>'+esc(a.action)+'</td><td class="c">'+esc(a.owner||"—")+'</td><td class="c">'+esc(a.deadline||"—")+'</td><td class="c">'+(a.refs||[]).map(esc).join("، ")+'</td></tr>'; }).join("")+'</tbody></table>':'')
+        +((S.themes||[]).length?'<div class="th"><b>أنماط متكررة:</b> '+S.themes.map(esc).join(" · ")+'</div>':'')+'</div>')
+      :'<div class="exec"><div class="eh"><b>الملخّص التنفيذي</b></div><p>إجمالي الملاحظات المدرجة '+ar(total)+': سلامة '+ar(counts["سلامة"])+' · إنشائي '+ar(counts["إنشائي"])+' · جودة '+ar(counts["جودة"])+' — منها '+ar(counts["عالية"])+' عالية الخطورة تتطلب معالجة فورية.</p></div>';
+    var fname=(meta.proj+"-"+meta.date).replace(/[^\w؀-ۿ\- ]/g,"").slice(0,60);
+    var css='@page{size:A4;margin:1.2cm}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{width:100%;overflow-x:hidden}body{font-family:"Expo Arabic","Tajawal",Tahoma,Arial,sans-serif;color:#1c2b22;direction:rtl;margin:0;font-size:12px;line-height:1.7}'
+      +'.brand{display:flex;align-items:center;gap:16px;border-bottom:3px solid #0B3D27;padding-bottom:12px;margin-bottom:10px}.brand img{height:56px}.brand .org{font-size:12px;color:#5a6b60}.brand h1{margin:2px 0 0;font-size:24px;color:#0B3D27}'
+      +'.date{color:#7a867f;font-size:11px;margin-bottom:8px}.meta{width:100%;border-collapse:collapse;margin:8px 0;table-layout:fixed}.meta td{word-wrap:break-word}.meta td{border:1px solid #E3ECE6;padding:7px 9px;background:#F7FAF8}'
+      +'.kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:10px 0}.kpis div{border:1px solid #E3ECE6;border-radius:10px;padding:8px 4px;text-align:center;font-size:11px;color:#5a6b60}.kpis b{display:block;font-size:20px;color:#0B3D27}.kpis .hi b{color:#B0433A}.kpis .mid b{color:#C9761E}.kpis .lo b{color:#0E6B45}'
+      +'.exec{border:1px solid #CFE0D5;background:#F3F8F5;border-radius:12px;padding:12px 14px;margin:10px 0}.exec p{margin:6px 0}.eh{display:flex;justify-content:space-between;align-items:center}.eh b{font-size:15px;color:#0B3D27}.th{margin-top:6px;color:#3E5247}'
+      +'.rk,.rt{padding:2px 12px;border-radius:99px;font-size:11px;font-weight:700}.hi{background:#FBE9E7;color:#B0433A}.mid{background:#FDF1E1;color:#A5631A}.ok,.lo{background:#E6F3EC;color:#0E6B45}'
+      +'.disc{background:#FBF3E7;border:1px solid #EAD9B0;padding:8px 12px;border-radius:8px;font-size:10.5px;margin:10px 0;color:#6B4E12}'
+      +'.sec{page-break-inside:avoid;margin-top:18px}.ih{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #CDE7D8;padding-bottom:4px}.ih h3{margin:0;color:#0E6B45;font-size:16px}.ih small{color:#8a968f;font-size:10px;font-weight:400}'
+      +'.img{width:100%;max-height:420px;object-fit:contain;border:1px solid #ddd;border-radius:8px;margin:8px 0}.ov{background:#F7FAF8;border-inline-start:3px solid #0E6B45;padding:6px 10px;margin:6px 0}.pos{color:#0E6B45;font-size:11px;margin:3px 0}.lim{color:#7a867f;font-size:11px;margin:3px 0}'
+      +'.tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;table-layout:fixed}.tbl td,.tbl th{word-wrap:break-word}.tbl th:first-child{width:34px}.sec .tbl th:nth-child(2){width:34%}.sec .tbl th:nth-child(3){width:13%}.sec .tbl th:nth-child(4){width:27%}.sec .tbl th:nth-child(5){width:12%}.tbl th{background:#0B3D27;color:#fff;padding:6px;font-weight:700}.tbl td{border:1px solid #E1E8E3;padding:6px 7px;vertical-align:top}.c{text-align:center}.muted{color:#888}'
+      +'.nb{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;color:#fff;font-weight:700}.sub{color:#5f6e66;font-size:10.5px;margin-top:2px}.imp{color:#A5631A}.tg{display:block;font-weight:700}.sv{display:inline-block;margin-top:3px;padding:0 8px;border-radius:99px;font-size:10.5px}'
+      +'.act td{font-size:11.5px}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}.sign div{border-top:1px solid #9aa79f;padding-top:6px;text-align:center;color:#5a6b60}';
+    var html='<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>'+esc(fname)+'</title><style>'+_iaFontCSS()+'\n'+css+'</style></head><body>'
+      +'<div class="brand"><img src="'+(typeof LOGO!=="undefined"&&LOGO?LOGO:"")+'"><div><div class="org">برنامج التنمية الريفية الزراعية المستدامة — ريف</div><h1>تقرير فحص صور الموقع</h1></div></div>'
+      +'<div class="date">'+esc(meta.proj)+' — صدر في '+esc(new Date().toLocaleString("ar-SA-u-nu-latn",{dateStyle:"long",timeStyle:"short"}))+'</div>'+meta1+kpi+exec+'<div class="disc">⚠ '+IA_DISC+'</div>'+secs
+      +'<div class="sign"><div>الفاحص</div><div>مراجعة الاستشاري</div><div>الاعتماد</div></div>'
+      +'<script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){window.print();},500); });<\/script></body></html>';
     var w=window.open("","_blank"); if(w){ w.document.write(html); w.document.close(); } else { alert("اسمح بالنوافذ المنبثقة لعرض التقرير."); }
   });
 }
-
 function _iaN(id,i){ var it=_iaItem(id); return it?(it.notes||[])[i]:null; }
 function _iaApprove(id,i){ var n=_iaN(id,i); if(!n)return; n.status="approved"; _iaRenderAll(); }
 function _iaExclude(id,i){ var n=_iaN(id,i); if(!n)return; var r=prompt("سبب الاستبعاد:",n.exclReason||""); if(r===null)return; n.status="excluded"; n.exclReason=r.trim(); _iaRenderAll(); }
