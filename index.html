@@ -4841,6 +4841,18 @@ body[data-theme="dark"] .hb-pq2b{background:rgba(255,255,255,.1)}
 body[data-theme="dark"] .hb-sec2{color:#1A1A1A}
 body[data-theme="dark"] .hb-cf2 b{color:#E6EEF0}body[data-theme="dark"] .hb-cc2{color:#C9D6CF}
 .hb-card.stp .hb-cf2 b{color:#5E6862!important}
+
+/* كارت السجل بنفس هوية لوحة الأداء */
+.hb-hero.kfx{isolation:isolate;background:linear-gradient(120deg,#03170C 0%,#082A16 38%,#0D3A20 66%,#14502E 100%)!important;background-size:220% 220%!important;animation:pdGrad 16s ease-in-out infinite;border-radius:14px;box-shadow:inset 0 -2px 0 rgba(201,169,110,.55),0 18px 40px -24px rgba(3,23,12,.8)}
+.hb-hero.kfx::after{content:"";position:absolute;inset:auto;inset-inline-end:-60px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(217,177,102,.22),transparent 70%);pointer-events:none;animation:pdGlow 9s ease-in-out infinite alternate;z-index:0}
+.hb-hero.kfx>div{z-index:1}
+.hb-hero.kfx>div+div{border-inline-start:1px solid rgba(255,255,255,.10)}
+.hb-hero.kfx span{color:#D8BC85}
+.hb-hero.kfx b small,.hb-hero.kfx em{color:#A9C2B3}
+.hb-hero.kfx .hb-hb u{background:#D9BC84}
+body[data-theme="dark"] .hb-hero.kfx{background:linear-gradient(120deg,#121B1F 0%,#18252A 38%,#1E2F35 66%,#26393F 100%)!important;background-size:220% 220%!important;box-shadow:inset 0 -2px 0 rgba(201,169,110,.45)}
+@media (prefers-reduced-motion:reduce){.hb-hero.kfx,.hb-hero.kfx::after{animation:none!important}}
+@media print{.hb-hero.kfx{animation:none!important}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -8850,7 +8862,7 @@ function projRegOpen(keep){ try{setNavActive("projreg");}catch(e){} try{ _initDa
   var avg=_dxAvg(all.map(function(p){ return pct(p.actual); }))||0, ctr={}; all.forEach(function(p){ var c=_dxTxt(p.contractor); if(c) ctr[c]=1; });
   var sel=function(k,lbl,vals){ return '<select class="hb-sel" onchange="prSet(\''+k+'\',this.value)"><option value="">'+lbl+'</option>'+vals.map(function(v){ return '<option value="'+esc(v)+'"'+(PR[k]===v?" selected":"")+'>'+esc(v)+'</option>'; }).join("")+'</select>'; };
   var _tvm=_dxMs(tv), _sp=tv?td/tv:0;
-  var stats='<div class="hb-hero">'
+  var stats='<div class="hb-hero kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +'<div><span>عدد المشاريع</span><b>'+ar(all.length)+'<small>مشروع</small></b></div>'
     +'<div><span>القيمة بعد التعديل</span><b>'+_tvm[0]+'<small>'+_rU(_tvm[1])+'</small></b><em>المنصرف '+_dxM(td)+'</em></div>'
     +'<div><span>نسبة الصرف</span><b>'+_dxPct(_sp)+'</b><div class="hb-hb"><u style="width:'+(Math.min(1,_sp)*100).toFixed(1)+'%"></u></div></div>'
