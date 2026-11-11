@@ -4853,6 +4853,16 @@ body[data-theme="dark"] .hb-cf2 b{color:#E6EEF0}body[data-theme="dark"] .hb-cc2{
 body[data-theme="dark"] .hb-hero.kfx{background:linear-gradient(120deg,#121B1F 0%,#18252A 38%,#1E2F35 66%,#26393F 100%)!important;background-size:220% 220%!important;box-shadow:inset 0 -2px 0 rgba(201,169,110,.45)}
 @media (prefers-reduced-motion:reduce){.hb-hero.kfx,.hb-hero.kfx::after{animation:none!important}}
 @media print{.hb-hero.kfx{animation:none!important}}
+
+/* معرض الرئيسية: تمييز المشروع المعروض حالياً */
+.hmg-strip{scroll-snap-type:none!important;padding:12px 4px 4px!important}
+.hmg-c{position:relative;transition:background .3s,border-color .3s,box-shadow .3s,transform .3s}
+.hmg-c.on{background:linear-gradient(120deg,#0B3D27,#155C3B)!important;border-color:#D9BC84!important;box-shadow:0 10px 24px -12px rgba(11,61,39,.7),0 0 0 2px rgba(217,188,132,.35)!important;transform:translateY(-2px)}
+.hmg-c.on b{color:#fff!important}.hmg-c.on span{color:#D8BC85!important}
+.hmg-c.on img{box-shadow:0 0 0 2px #D9BC84}
+.hmg-c.on .hb-st{background:rgba(255,255,255,.12)!important;color:#EAF2EC!important;border-color:rgba(255,255,255,.2)!important}
+.hmg-c.on::before{content:"يُعرض الآن";position:absolute;top:-9px;inset-inline-end:12px;padding:1px 9px 1px 8px;border-radius:99px;background:#D9BC84;color:#05271A;font-size:9.5px;font-weight:800;line-height:1.7;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+body[data-theme="dark"] .hmg-c.on{background:linear-gradient(120deg,#1C3A2D,#245038)!important}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9520,7 +9530,7 @@ function hmgShow(k){ var S=HMG.slides; if(!S.length) return; k=(k+S.length)%S.le
   var ddl=document.getElementById('hmgDDl'); if(ddl) ddl.textContent=p.code; document.querySelectorAll('#hmgDDm .hmg-ddl button').forEach(function(b){ b.classList.toggle('on',+b.getAttribute('data-j')===S[k].pi); });
   if(n) n.textContent=p.alias||p.name; if(sb) sb.textContent=p.code+' · '+(p.sector||""); if(c) c.textContent=ar(k+1)+' / '+ar(S.length);
   var strip=document.getElementById('hmgStrip'); if(strip){ strip.querySelectorAll('.hmg-c').forEach(function(b){ b.classList.toggle('on',+b.getAttribute('data-j')===S[k].pi); });
-    var a=strip.querySelector('.hmg-c.on'); if(a){ var l=a.offsetLeft-(strip.clientWidth-a.offsetWidth)/2; try{ strip.scrollTo({left:l,behavior:'smooth'}); }catch(e){ strip.scrollLeft=l; } } }
+    var a=strip.querySelector('.hmg-c.on'); if(a){ var ar_=a.getBoundingClientRect(), sr=strip.getBoundingClientRect(), dx=(ar_.left+ar_.width/2)-(sr.left+sr.width/2), zf=(sr.width/(strip.offsetWidth||sr.width))||1; dx=dx/zf; if(Math.abs(dx)>2){ var tg=strip.scrollLeft+dx; try{ strip.scrollTo({left:tg,behavior:'smooth'}); }catch(e){ strip.scrollLeft=tg; } } } }
   var pb=document.getElementById('hmgPb'); if(pb){ pb.classList.remove('run'); void pb.offsetWidth; pb.classList.add('run'); } }
 function hmgStep(d){ hmgShow(HMG.i+d); hmgStart(); }
 function hmgGoProj(j){ var k=HMG.slides.findIndex(function(s){ return s.pi===j; }); if(k>-1){ hmgShow(k); hmgStart(); } }
