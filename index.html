@@ -4895,6 +4895,21 @@ body[data-theme="dark"] .py-cnt{background:rgba(60,196,137,.12);color:#8FD3A8}
 /* زر الطباعة: أيقونة فقط، ويُخفى إذا وُجدت أيقونة طباعة أخرى في الصفحة */
 .rtool.rt-print{width:38px;height:38px;padding:0!important;justify-content:center;display:inline-flex;align-items:center}
 .acard:has([title="طباعة"]:not(.rt-print)) .rt-print{display:none!important}
+
+/* مراجعة المحتوى المحلي: المستندات والصور */
+.lc-th{width:46px;height:46px;object-fit:cover;border-radius:8px;border:1px solid #DDE3DE;float:inline-start;margin-inline-end:8px;cursor:zoom-in;background:#F4F6F4}
+.lc-dv td{vertical-align:top}
+.lc-dv .lc-ocr{font-size:11px;color:#5E6B63;max-width:280px;line-height:1.6}
+.lc-chip{display:inline-block;margin:2px 0;padding:3px 9px;border-radius:99px;background:#EAF2EC;color:#1E5B3A;font-size:11.5px;font-weight:700}
+.lc-chip em{font-style:normal;color:#5E6B63;font-weight:600}
+.lc-man{color:#9A6B12;font-weight:800}
+.lc-bad{margin:10px 0;padding:10px 14px;border-radius:12px;background:#FDF3E7;border:1px solid #EFD3A6;color:#7A4E12;font-size:13px}
+.lc-bad ul{margin:6px 0 0;padding-inline-start:20px}
+.lc-hint{margin:8px 2px;font-size:12px;color:#6B776F}
+body[data-theme="dark"] .lc-chip{background:rgba(60,196,137,.12);color:#8FD3A8}
+body[data-theme="dark"] .lc-bad{background:rgba(201,162,78,.1);border-color:rgba(201,162,78,.3);color:#E3C88E}
+body[data-theme="dark"] .lc-dv .lc-ocr{color:#9FB0B5}
+@media print{.lc-th{width:30px;height:30px}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -13144,7 +13159,7 @@ try{ window.imgAuditOpen=imgAuditOpen; window._iaPick=_iaPick; window._iaSetFocu
 /* ===================== صور المشاريع السحابية (Cloudinary — مشتركة للكل) ===================== */
 /* ================= مراجعة المحتوى المحلي ================= */
 var LC={ report:null, files:[], docs:[], items:[], res:[], comps:[], reviewDate:"", log:[], busy:false, override:{},
-         ocrCache:{}, t0:0,
+         ocrCache:{}, t0:0, link:{},
          opts:{ocr:true, onlyRequired:true, requireBoth:false, simMin:0.60, simReview:0.38, cover:0.34, ocrScale:1.6},
          view:"comps", flt:{q:"",company:"",status:"",gap:""}, meta:{} };
 /* بيانات المشروع والمقاول من رأس تقرير الالتزام */
@@ -13178,7 +13193,11 @@ var _LCW=null;
 function _lcWorker(){ if(_LCW) return _LCW;
   _LCW=_lcTess().then(function(){
     _lcProg(0.05,"تحميل محرك القراءة الضوئية (مرة واحدة)…");
-    return window.Tesseract.createWorker("ara+eng",1,{});
+    var failed=null;
+    var mk=window.Tesseract.createWorker("ara+eng",1,{errorHandler:function(e){ failed=e||"init"; }});
+    return new Promise(function(res,rej){ var to=setTimeout(function(){ rej(new Error("انتهت مهلة تحميل محرك القراءة الضوئية")); },120000);
+      var chk=setInterval(function(){ if(failed){ clearInterval(chk); clearTimeout(to); rej(new Error("تعذّر تهيئة محرك القراءة الضوئية")); } },500);
+      mk.then(function(w){ clearInterval(chk); clearTimeout(to); res(w); },function(e){ clearInterval(chk); clearTimeout(to); rej(e); }); });
   }).catch(function(e){ _LCW=null; throw e; });
   return _LCW; }
 function lcFreeOcr(){ try{ if(_LCW) _LCW.then(function(w){ try{ w.terminate(); }catch(e){} }); }catch(e){} _LCW=null; }
@@ -13211,6 +13230,21 @@ function _lcOwn(company,d){ var best=0;
   (d.entities&&d.entities.length?d.entities:[d.entity||""]).forEach(function(e){ best=Math.max(best,_lcSim(company,e)); });
   var fn=String(d.fileName||"").replace(/\.[a-z0-9]+$/i,"").replace(/[_\-.]+/g," ");
   return Math.max(best, _lcSim(company,fn), _lcCov(company,fn), _lcCov(company,d.text||"")); }
+/* ---------- مطابقة البند بالمستند: جذور الكلمات + توزيع الصور على البنود ---------- */
+/* جذر تقريبي للكلمة العربية: يحذف «ال» والسوابق الشائعة واللواحق (ات/ون/ين/يه/ه/ي) — حتى تتطابق «دهانات داخلية» مع «دهان داخلي» */
+function _lcStem(w){ w=String(w||""); if(/^[0-9]+$/.test(w)||/^[a-z0-9]+$/.test(w)) return w;
+  w=w.replace(/^(وال|بال|كال|فال|لل|ال)(?=..{2,})/,"");
+  w=w.replace(/(ات|ون|ين|يه|يات)$/,function(m){ return w.length-m.length>=3?"":m; });
+  w=w.replace(/(ه|ي)$/,function(m){ return w.length>=4?"":m; });
+  return w; }
+function _lcStems(x){ return _lcTok(x).map(_lcStem).filter(function(t){ return t.length>1; }); }
+/* نسبة كلمات البند الموجودة في النص (بالجذور، مع مطابقة البداية للكلمات الطويلة) — والأرقام/المقاسات لها وزن مضاعف */
+function _lcCov2(words,text){ var T=_lcStems(words); if(!T.length) return 0; var H=_lcStems(text); if(!H.length) return 0;
+  var hs={}; H.forEach(function(h){ hs[h]=1; }); var hk=Object.keys(hs);
+  var uniq={}; T.forEach(function(t){ uniq[t]=1; }); var ks=Object.keys(uniq), tot=0, hit=0;
+  ks.forEach(function(t){ var w=/^[0-9]+$/.test(t)?2:1; tot+=w;
+    if(hs[t]||(t.length>=4&&hk.some(function(h){ return h.length>=4&&(h.indexOf(t)===0||t.indexOf(h)===0); }))) hit+=w; });
+  return tot?hit/tot:0; }
 function _lcHas(txt,words){ var n=_lcNorm(txt); for(var i=0;i<words.length;i++){ if(n.indexOf(_lcNorm(words[i]))>-1) return true; } return false; }
 
 /* ---------- قراءة الملفات: إعادة بناء الكلمات من محارف PDF ---------- */
@@ -13414,10 +13448,24 @@ function _lcCanvasOf(pg){ var sc=LC.opts.ocrScale||1.6; var vp=pg.getViewport({s
   var maxW=1500, k=Math.min(1,maxW/vp.width); var vp2=pg.getViewport({scale:sc*k});
   var c=document.createElement("canvas"); c.width=Math.round(vp2.width); c.height=Math.round(vp2.height);
   return pg.render({canvasContext:c.getContext("2d",{willReadFrequently:true}),viewport:vp2}).promise.then(function(){ return c; }); }
-function _lcOcr(src){ if(!LC.opts.ocr) return Promise.resolve("");
-  return _lcWorker().then(function(w){ return w.recognize(src); })
+function _lcOcr(src){ if(!LC.opts.ocr||LC.ocrDown) return Promise.resolve("");
+  return _lcWorker().then(function(w){ return Promise.race([w.recognize(src),new Promise(function(_,rej){ setTimeout(function(){ rej(new Error("ocr-timeout")); },90000); })]); })
     .then(function(r){ return (r&&r.data&&r.data.text)?r.data.text:""; })
-    .catch(function(){ return ""; }); }
+    .catch(function(e){ var m=String((e&&e.message)||e||""); if(/محرك|engine|init/i.test(m)){ LC.ocrDown=m; } else LC.ocrErr=(LC.ocrErr||0)+1; return ""; }); }
+/* صورة الجوال: تصغير للحجم المناسب + تدوير تلقائي إن لم يُقرأ نص */
+function _lcImgCanvas(file,rot){ return new Promise(function(res){ var u=URL.createObjectURL(file), im=new Image();
+  im.onload=function(){ var W=im.naturalWidth, H=im.naturalHeight, k=Math.min(1,2000/Math.max(W,H)), w=Math.round(W*k), h=Math.round(H*k), r=rot||0;
+    var c=document.createElement("canvas"); c.width=(r%180)?h:w; c.height=(r%180)?w:h; var x=c.getContext("2d");
+    x.fillStyle="#fff"; x.fillRect(0,0,c.width,c.height); x.translate(c.width/2,c.height/2); x.rotate(r*Math.PI/180); x.drawImage(im,-w/2,-h/2,w,h);
+    URL.revokeObjectURL(u); res(c); };
+  im.onerror=function(){ URL.revokeObjectURL(u); res(null); }; im.src=u; }); }
+function _lcTxtScore(t){ var n=_lcNorm(t); return (n.match(/[\u0621-\u064Aa-z]{3,}/g)||[]).length; }
+function _lcOcrImage(file){ return _lcImgCanvas(file,0).then(function(c){ if(!c) return {bad:true,text:""};
+  return _lcOcr(c).then(function(t){ if(_lcTxtScore(t)>=4||LC.ocrDown) return {text:t,rot:0};
+    var best={text:t,rot:0,s:_lcTxtScore(t)}, rs=[90,270,180], i=0;
+    function nx(){ if(i>=rs.length) return Promise.resolve(best); var r=rs[i++];
+      return _lcImgCanvas(file,r).then(function(c2){ return c2?_lcOcr(c2):""; }).then(function(t2){ var s=_lcTxtScore(t2); if(s>best.s) best={text:t2,rot:r,s:s}; return s>=6?best:nx(); }); }
+    return nx(); }); }); }
 function _lcImgSrc(file){ return new Promise(function(res){ var r=new FileReader(); r.onload=function(){res(r.result);}; r.onerror=function(){res(null);}; r.readAsDataURL(file); }); }
 
 /* ---------- تصنيف المستندات ---------- */
@@ -13672,7 +13720,7 @@ function _lcBuildIndex(){
   /* إقرار/صورة بلا مالك: يُنسب لشركة البند الذي يذكره بوضوح */
   LC.docs.forEach(function(d){ if((d._own&&d._ownSim>=LC.opts.simReview)||!(d.kind==="decl"||d.kind==="photo")) return;
     var bi=null,bc=0, hay=(d.text||"")+" "+String(d.fileName||"").replace(/[_\-.]+/g," ");
-    LC.items.forEach(function(it){ if(it._skip||!it.company) return; var c=_lcCov(it.product,hay); if(c>bc){ bc=c; bi=it; } });
+    LC.items.forEach(function(it){ if(it._skip||!it.company) return; var c=Math.max(_lcCov(it.product,hay),_lcCov2(_lcItemTxt(it),hay)); if(c>bc){ bc=c; bi=it; } });
     if(bi && bc>=Math.max(0.6,LC.opts.cover)){ var C=LC.comps.filter(function(X){ return X.items.indexOf(bi)>-1; })[0]; if(C){ d._own=C; d._ownSim=LC.opts.simReview; d._byItem=true; } } });
   LC.docs.forEach(function(d){ if(d._own && d._ownSim>=LC.opts.simReview) d._own.docs.push(d); });
   /* أفضل شهادة لكل شركة */
@@ -13686,25 +13734,45 @@ function _lcCertState(C,rd){
   var d=C.cert.doc, st="valid";
   if(!d.expiry) st="nodate"; else if(d.expiry<rd) st="expired";
   return {state:st, expiry:d.expiry, certNo:d.certNo, entity:d.entity, sim:C.cert.sim, doc:d}; }
+function _lcIKey(it){ return it.src+"|"+it.sheet+"|"+it.row; }
+function _lcDKey(d){ return d.fileName+"#"+d.page; }
+function _lcItemTxt(it){ return [it.product,it.brand].filter(Boolean).join(" "); }
+function _lcDocHay(d){ return (d.text||"")+" "+String(d.fileName||"").replace(/\.[a-z0-9]+$/i,"").replace(/[_\-.]+/g," "); }
+/* توزيع الإقرارات والصور على بنود الشركة: الصورة تُنسب للبند الأقرب لها فقط (لا تُحتسب لكل البنود)، والإقرار لكل بند يذكره */
+function _lcAssign(){ var TH=LC.opts.cover;
+  LC.docs.forEach(function(d){ d._items=[]; d._covs=[]; d._manual=false; });
+  LC.comps.forEach(function(C){ (C.docs||[]).forEach(function(d){ if(d.kind==="cert") return; var proofKind=(d.kind==="decl"||d.kind==="photo"||d.kind==="image");
+    var hay=_lcDocHay(d), cv=C.items.filter(function(it){ return !it._skip; }).map(function(it){ return {it:it,c:Math.max(_lcCov2(_lcItemTxt(it),hay),_lcCov(it.product,hay))}; }).sort(function(a,b){ return b.c-a.c; });
+    d._covs=cv; if(!cv.length) return; var top=cv[0].c;
+    if(!proofKind){ d._items=cv.filter(function(x){ return x.c>=0.15 && x.c>=top-0.08; }).map(function(x){ return x.it; }); return; }
+    if(d.kind==="decl") d._items=cv.filter(function(x){ return x.c>=TH; }).map(function(x){ return x.it; });
+    else d._items=cv.filter(function(x){ return x.c>=TH && x.c>=top-0.08; }).map(function(x){ return x.it; }); }); });
+  /* الربط اليدوي يتقدّم على التلقائي */
+  LC.docs.forEach(function(d){ var L=LC.link[_lcDKey(d)]; if(L==null) return; d._manual=true;
+    d._items=LC.items.filter(function(it){ return L.indexOf(_lcIKey(it))>-1; }); }); }
 function _lcItemProof(C,it){
   /* أفضل إقرار أو صورة يغطّي هذا البند من مستندات الشركة */
-  var best=null, other=null;
-  (C.docs||[]).forEach(function(d){
-    var cov=_lcCov(it.product,(d.text||"")+" "+String(d.fileName||"").replace(/[_\-.]+/g," "));
-    if(d.kind==="decl"||d.kind==="photo"){
-      var sc=cov;
-      if(!best || sc>best.cov) best={doc:d,cov:sc,kind:d.kind};
+  var best=null, weak=null, other=null, hay;
+  var covOf=function(d){ var x=(d._covs||[]).filter(function(z){ return z.it===it; })[0]; return x?x.c:Math.max(_lcCov2(_lcItemTxt(it),_lcDocHay(d)),_lcCov(it.product,_lcDocHay(d))); };
+  var pool=(C.docs||[]).slice(); LC.docs.forEach(function(d){ if(d._manual && d._items.indexOf(it)>-1 && pool.indexOf(d)<0) pool.push(d); });
+  pool.forEach(function(d){ var cov=covOf(d), mine=(d._items||[]).indexOf(it)>-1;
+    if(d.kind==="decl"||d.kind==="photo"||(d.kind==="image"&&d._manual&&mine)){
+      if(mine){ if(!best || cov>best.cov) best={doc:d,cov:cov,kind:(d.kind==="image"?"photo":d.kind),manual:d._manual}; }
+      else if(!d._manual && (!weak || cov>weak.cov)) weak={doc:d,cov:cov,kind:d.kind,to:(d._items||[])[0]||null};
     } else if(d.kind!=="cert"){           /* الشهادة تُحتسب على مستوى الشركة لا البند */
-      if(cov>=0.15 && (!other || cov>other.cov)) other={doc:d,cov:cov,kind:d.kind};
+      if((mine||cov>=0.15) && (!other || cov>other.cov)) other={doc:d,cov:cov,kind:d.kind};
+      if(mine||cov>=0.15){ if(!other.all) other.all=[]; if(other.all.indexOf(d.kind)<0) other.all.push(d.kind); }
     } });
-  return {best:best, other:other}; }
+  if(other&&!other.all) other.all=[other.kind];
+  if(best) best.cov=Math.max(best.cov,best.manual?1:0);
+  return {best:best||weak, other:other, ok:!!best}; }
 function _lcAnalyze(){ var rd=LC.reviewDate||_lcToday();
   LC.items.forEach(function(it){ it._skip=!_lcNeeds(it); });
   /* لا نسمح بنتيجة فارغة صامتة: لو استُبعدت كل البنود نفحصها كلها ونوضّح السبب */
   var sk={need:0,origin:0}; LC.items.forEach(function(it){ if(!it._skip) return; if(_lcNorm(it.origin)==="غير وطني") sk.origin++; else sk.need++; });
   LC.skipInfo={total:LC.items.length,skipped:sk.need+sk.origin,need:sk.need,origin:sk.origin,fallback:false};
   if(LC.items.length && LC.skipInfo.skipped===LC.items.length){ LC.items.forEach(function(it){ it._skip=false; }); LC.skipInfo.fallback=true; }
-  _lcBuildIndex();
+  _lcBuildIndex(); _lcAssign();
   var rows=[];
   LC.comps.forEach(function(C){
     var cert=_lcCertState(C,rd);
@@ -13726,20 +13794,23 @@ function _lcAnalyze(){ var rd=LC.reviewDate||_lcToday();
         R.actions.push("إرفاق ما يثبت العلاقة بين المورد والمصنع (سجل تجاري / خطاب توكيل)"); }
       /* ② الإثبات (على مستوى البند) */
       var pr=_lcItemProof(C,it), TH=LC.opts.cover;
-      if(pr.best && pr.best.cov>=TH){ R.proof={state:"ok",kind:pr.best.kind,doc:pr.best.doc,cov:pr.best.cov}; R.evid.push(pr.best.doc); }
+      if(pr.best && pr.ok){ R.proof={state:"ok",kind:pr.best.kind,doc:pr.best.doc,cov:pr.best.cov}; R.evid.push(pr.best.doc); }
+      else if(pr.best && pr.best.to && pr.best.to!==it){ R.proof={state:"missing"};
+        R.gaps.push("لا يوجد إقرار مصنع ولا صورة منتج لهذا البند — "+(pr.best.kind==="decl"?"الإقرار":"الصورة")+" المرفقة («"+pr.best.doc.fileName+"») تخص البند «"+String(pr.best.to.product).slice(0,40)+"» ("+pr.best.to.n+")");
+        R.actions.push("إرفاق إقرار المصنع بأن البند وطني، أو صورة للمنتج تُظهر «صنع في السعودية»"); }
       else if(pr.best){ R.proof={state:"weak",kind:pr.best.kind,doc:pr.best.doc,cov:pr.best.cov}; R.evid.push(pr.best.doc);
-        R.gaps.push((pr.best.kind==="decl"?"الإقرار المرفق":"الصورة المرفقة")+" لا تذكر هذا البند بوضوح");
+        R.gaps.push((pr.best.kind==="decl"?"الإقرار المرفق":"الصورة المرفقة")+" لا تذكر هذا البند بوضوح"+(pr.best.to?(" — وهي أقرب للبند «"+String(pr.best.to.product).slice(0,40)+"» ("+pr.best.to.n+")"):""));
         R.actions.push(pr.best.kind==="decl"?("إرفاق إقرار يذكر البند «"+String(it.product).slice(0,50)+"» صراحةً")
                                             :("إرفاق صورة يظهر فيها البند وعبارة «صنع في السعودية» معاً")); }
       else if(pr.other){ R.proof={state:"other",kind:pr.other.kind,doc:pr.other.doc,cov:pr.other.cov}; R.evid.push(pr.other.doc);
-        R.gaps.push("المرفق لهذا البند هو: "+_lcKindTxt(pr.other.kind)+" — ولا يُغني عن الإقرار أو الصورة");
+        R.gaps.push("المرفق لهذا البند: "+(pr.other.all||[pr.other.kind]).map(_lcKindTxt).join("، ")+" — ولا يُغني عن الإقرار أو الصورة");
         R.actions.push("إرفاق إقرار المصنع بأن البند وطني، أو صورة للمنتج تُظهر «صنع في السعودية»"); }
       else { R.proof={state:"missing"};
         R.gaps.push("لا يوجد إقرار مصنع ولا صورة منتج لهذا البند");
         R.actions.push("إرفاق إقرار المصنع بأن البند وطني، أو صورة للمنتج تُظهر «صنع في السعودية»"); }
       if(LC.opts.requireBoth && R.proof.state==="ok"){
-        var hasD=(C.docs||[]).some(function(d){ return d.kind==="decl" && _lcCov(it.product,d.text||"")>=TH; });
-        var hasP=(C.docs||[]).some(function(d){ return d.kind==="photo" && _lcCov(it.product,d.text||"")>=TH; });
+        var hasD=LC.docs.some(function(d){ return d.kind==="decl" && (d._items||[]).indexOf(it)>-1; });
+        var hasP=LC.docs.some(function(d){ return d.kind==="photo" && (d._items||[]).indexOf(it)>-1; });
         if(!(hasD&&hasP)){ R.gaps.push("الخيار المشدّد: مطلوب الإقرار والصورة معاً"); R.proof.state="weak"; } }
       var certOK=(cert.state==="valid" && cert.sim>=LC.opts.simMin);
       var certBad=(cert.state==="missing"||cert.state==="expired");
@@ -13791,6 +13862,7 @@ function lcRun(){ if(LC.busy)return; if(!LC.report){ _lcStat("ارفع تقري�
     var SI=LC.skipInfo||{};
     if(!LC.items.length) _lcStat("⚠ لم تُقرأ أي بنود من تقرير الالتزام — راجع «تفاصيل قراءة التقرير» بالأسفل.","warn");
     else if(SI.fallback) _lcStat("⚠ قُرئ "+LC.items.length+" بند، وكل البنود مُعلَّمة في التقرير بأنها لا تتطلب شهادة"+(SI.origin?" أو غير وطنية":"")+" — تم فحصها كلها. ("+secs+" ثانية · "+LC.comps.length+" شركة · "+LC.docs.length+" مستند)","warn");
+    else if(LC.ocrDown||(LC.bad&&LC.bad.length)) _lcStat("⚠ اكتملت المراجعة في "+secs+" ثانية مع ملاحظات"+(LC.ocrDown?" — القراءة الضوئية لم تعمل فالصور لم تُقرأ":"")+((LC.bad&&LC.bad.length)?(" — "+LC.bad.length+" ملف لم يُقرأ"):"")+" (التفاصيل بالأسفل).","warn");
     else _lcStat("✓ اكتملت المراجعة في "+secs+" ثانية — "+LC.comps.length+" شركة · "+need+" بند يتطلب إثباتاً"+(SI.skipped?(" (استُبعد "+SI.skipped+" بند لا يتطلب شهادة)"):"")+" · "+LC.docs.length+" مستند.","ok");
     lcRenderResults();
   }).catch(function(err){ LC.busy=false; _lcProg(null); _lcStat("⚠ "+((err&&err.message)||"تعذّر إكمال الفحص"),"warn"); }); }
@@ -13824,7 +13896,7 @@ function lcParseReport(){ var f=LC.report.file, nm=(f.name||"").toLowerCase();
     if(!LC.items.length) throw new Error("لم أتمكن من قراءة جدول البنود من PDF — يُفضّل رفع نسخة Excel.");
     _lcProg(0.12,"قُرئ "+LC.items.length+" بند"); }); }
 
-function lcParseDocs(){ LC.docs=[]; var files=LC.files||[]; if(!files.length) return Promise.resolve();
+function lcParseDocs(){ LC.docs=[]; LC.bad=[]; LC.ocrDown=null; LC.ocrErr=0; var files=LC.files||[]; if(!files.length) return Promise.resolve();
   /* المرحلة ١: استخراج النص الرقمي من كل الصفحات (سريع) */
   var pages=[];
   var i=0;
@@ -13834,10 +13906,11 @@ function lcParseDocs(){ LC.docs=[]; var files=LC.files||[]; if(!files.length) re
     if(/\.pdf$/.test(nm)){
       return _lcReadPdf(f).then(function(o){
         o.pages.forEach(function(P){ pages.push({file:f,fileName:f.name,page:P.page,text:P.text||"",pg:P.pg,img:false}); });
-      }).catch(function(){}).then(readAll); }
+      }).catch(function(e){ var m=String((e&&(e.name||e.message))||""); LC.bad.push({name:f.name,why:/Password/i.test(m)?"ملف PDF محمي بكلمة مرور":"تعذّر فتح ملف PDF (قد يكون تالفاً)"}); }).then(readAll); }
+    if(/\.(heic|heif)$/.test(nm)||/heic|heif/.test(f.type||"")){ LC.bad.push({name:f.name,why:"صيغة HEIC (صور آيفون) لا يقرأها المتصفح — حوّلها إلى JPG"}); return readAll(); }
     if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|gif|bmp)$/.test(nm)){
-      pages.push({file:f,fileName:f.name,page:1,text:"",pg:null,img:true}); return readAll(); }
-    return readAll(); }
+      pages.push({file:f,fileName:f.name,page:1,text:"",pg:null,img:true,url:URL.createObjectURL(f)}); return readAll(); }
+    LC.bad.push({name:f.name,why:"نوع ملف غير مدعوم (المدعوم: PDF والصور)"}); return readAll(); }
   return readAll().then(function(){
     /* المرحلة ٢: OCR للصفحات الفارغة فقط، بعامل واحد دائم ومع ذاكرة مؤقتة */
     var need=pages.filter(function(P){ return LC.opts.ocr && _lcNorm(P.text).length<40; });
@@ -13848,7 +13921,7 @@ function lcParseDocs(){ LC.docs=[]; var files=LC.files||[]; if(!files.length) re
         var d=_lcClassify(P.text,P.fileName,P.img);
         if(prev && prev.fileName===P.fileName && (d.kind==="other"||(d.kind==="image"&&!P.img)) && /^(decl|cert|letter|invoice|saso|datasheet)$/.test(prev.kind)){
           prev.text=(prev.text||"")+"\n"+P.text; prev.pages=(prev.pages||[prev.page]).concat([P.page]); return; }
-        d.text=P.text; d.fileName=P.fileName; d.page=P.page; d.pages=[P.page]; LC.docs.push(d); prev=d; });
+        d.text=P.text; d.fileName=P.fileName; d.page=P.page; d.pages=[P.page]; d.isImg=!!P.img; d.url=P.url||null; d.rot=P.rot||0; LC.docs.push(d); prev=d; });
       _lcProg(0.95,"تحليل المستندات"); }
     if(!need.length){ finish(); return; }
     var j=0;
@@ -13857,8 +13930,8 @@ function lcParseDocs(){ LC.docs=[]; var files=LC.files||[]; if(!files.length) re
       var key=P.fileName+"#"+(P.file?P.file.size:0)+"#"+P.page;
       if(LC.ocrCache[key]!=null){ P.text=LC.ocrCache[key]; done++;
         _lcProg(0.30+(done/need.length)*0.62,"OCR "+done+"/"+need.length+" — "+P.fileName); return ocrNext(); }
-      var src=P.img? _lcImgSrc(P.file) : _lcCanvasOf(P.pg);
-      return Promise.resolve(src).then(function(x){ return _lcOcr(x); }).then(function(t){
+      var job=P.img? _lcOcrImage(P.file) : _lcCanvasOf(P.pg).then(function(x){ return _lcOcr(x).then(function(t){ return {text:t}; }); });
+      return Promise.resolve(job).catch(function(){ return {text:""}; }).then(function(o){ var t=o&&o.text; if(o&&o.bad){ LC.bad.push({name:P.fileName,why:"تعذّر فتح الصورة"}); } if(o&&o.rot) P.rot=o.rot;
         P.text=(P.text+" "+(t||"")).replace(/\s+/g," ").trim();
         LC.ocrCache[key]=P.text; done++;
         _lcProg(0.30+(done/need.length)*0.62,"OCR "+done+"/"+need.length+" — "+P.fileName);
@@ -13882,10 +13955,25 @@ function _lcCertTxt(c){
   return '<span class="lc-o">سارية</span><small>حتى '+_lcDateTxt(c.expiry)+(c.certNo?(' · رقم '+_lcB(c.certNo)):"")+'</small>'; }
 function _lcProofTxt(R){ var p=R.proof||{};
   if(p.state==="na") return '<span class="lc-w">—</span>';
-  if(p.state==="ok") return '<span class="lc-o">'+(p.kind==="decl"?"إقرار مصنع":"صورة «صنع في السعودية»")+'</span><small>'+_lcDocRef(p.doc)+'</small>';
-  if(p.state==="weak") return '<span class="lc-w">'+(p.kind==="decl"?"إقرار":"صورة")+' لا يذكر البند</span><small>'+_lcDocRef(p.doc)+'</small>';
+  if(p.state==="ok") return _lcThumb(p.doc)+'<span class="lc-o">'+(p.kind==="decl"?"إقرار مصنع":"صورة «صنع في السعودية»")+'</span><small>'+_lcDocRef(p.doc)+(p.doc&&p.doc._manual?' · <b class="lc-man">ربط يدوي</b>':' · تطابق '+Math.round((p.cov||0)*100)+'%')+'</small>';
+  if(p.state==="weak") return _lcThumb(p.doc)+'<span class="lc-w">'+(p.kind==="decl"?"إقرار":"صورة")+' لا يذكر البند</span><small>'+_lcDocRef(p.doc)+'</small>';
   if(p.state==="other") return '<span class="lc-x">'+_lcEsc(_lcKindTxt(p.kind))+'</span><small>'+_lcDocRef(p.doc)+'</small>';
   return '<span class="lc-x">غير مرفق</span>'; }
+function _lcThumb(d){ return (d&&d.url)?'<img class="lc-th" src="'+d.url+'" alt="" onclick="window.open(this.src)" title="عرض الصورة">':''; }
+function lcLink(dk,v){ if(v==="") delete LC.link[dk]; else if(v==="none") LC.link[dk]=[]; else LC.link[dk]=[v]; _lcAnalyze(); lcRenderResults(); }
+function _lcDocsView(){ var items=LC.items.filter(function(it){ return !it._skip; });
+  var opt=function(d){ var L=LC.link[_lcDKey(d)], cur=L==null?"":(L.length?L[0]:"none");
+    return '<select class="lc-ov" onchange="lcLink(\''+_lcEsc(_lcDKey(d)).replace(/'/g,"\\'")+'\',this.value)"><option value="">تلقائي</option><option value="none"'+(cur==="none"?" selected":"")+'>لا يخص أي بند</option>'
+      +items.map(function(it){ var k=_lcIKey(it); return '<option value="'+_lcEsc(k)+'"'+(cur===k?" selected":"")+'>'+_lcEsc(it.n+" — "+String(it.product).slice(0,48)+" ("+String(it.company||"").slice(0,24)+")")+'</option>'; }).join("")+'</select>'; };
+  var ds=LC.docs.slice().sort(function(a,b){ var o={photo:0,image:1,decl:2,cert:3}; return (o[a.kind]==null?9:o[a.kind])-(o[b.kind]==null?9:o[b.kind]); });
+  return '<div class="lc-tw"><table class="lc-t lc-dv"><thead><tr><th>المستند</th><th>النوع</th><th>الشركة</th><th>البند المرتبط</th><th>ما قرأته الأداة</th><th class="noprint">تعديل الربط</th></tr></thead><tbody>'
+    +ds.map(function(d){ var its=d._items||[], top=(d._covs||[])[0];
+      var linked=d.kind==="cert"?'<span class="lc-w">على مستوى الشركة</span>':(its.length?its.map(function(it){ var c=(d._covs||[]).filter(function(z){ return z.it===it; })[0]; return '<span class="lc-chip">'+_lcB(it.n)+' · '+_lcEsc(String(it.product).slice(0,40))+(d._manual?' <b class="lc-man">يدوي</b>':(c?' <em>'+Math.round(c.c*100)+'%</em>':''))+'</span>'; }).join(" ")
+        :('<span class="lc-x">غير مرتبط</span>'+(top&&top.c>0?'<small>الأقرب: '+_lcB(top.it.n)+' ('+Math.round(top.c*100)+'%)</small>':'')));
+      var tx=String(d.text||"").replace(/\s+/g," ").trim();
+      return '<tr><td class="nm">'+_lcThumb(d)+_lcDocRef(d)+(d.rot?'<small>تم تدوير الصورة '+d.rot+'°</small>':'')+'</td><td>'+_lcEsc(_lcKindTxt(d.kind))+'</td><td>'+_lcEsc(d._own&&d._ownSim>=LC.opts.simReview?d._own.name:"—")+'</td><td>'+linked+'</td>'
+        +'<td class="lc-ocr" title="'+_lcEsc(tx.slice(0,600))+'">'+(tx?_lcEsc(tx.slice(0,110))+(tx.length>110?"…":""):'<span class="lc-x">لم يُقرأ أي نص</span>')+'</td><td class="noprint">'+(d.kind==="cert"?"":opt(d))+'</td></tr>'; }).join("")
+    +'</tbody></table></div><div class="lc-hint">الصورة تُربط تلقائياً بالبند الأقرب لما فيها من كلام (اسم المنتج، المقاس، العلامة). لو الربط غلط أو الصورة بلا كتابة واضحة، اختر البند الصحيح من «تعديل الربط».</div>'; }
 function _lcRef(R){ return '<span class="lc-src">'+_lcB(R.item.sheet)+' · صف '+R.item.row+'</span>'; }
 function _lcFiltered(){ var q=_lcNorm(LC.flt.q);
   return LC.res.filter(function(R){
@@ -13958,6 +14046,7 @@ function lcRenderResults(){ var o=document.getElementById("lcOut"); if(!o)return
     +'<span class="lc-sp"></span>'
     +'<button class="lc-vb'+(LC.view==="comps"?" on":"")+'" onclick="lcSetView(\'comps\')">حسب الشركات</button>'
     +'<button class="lc-vb'+(LC.view==="items"?" on":"")+'" onclick="lcSetView(\'items\')">كل البنود</button>'
+    +'<button class="lc-vb'+(LC.view==="docs"?" on":"")+'" onclick="lcSetView(\'docs\')">المستندات والصور ('+LC.docs.length+')</button>'
     +'<button class="lc-vb" onclick="lcExportXlsx()">تصدير Excel</button>'
     +'<button class="lc-vb pri" onclick="lcExportPdf()">تقرير المطابقة PDF</button></div>';
   var rows=_lcFiltered(), body;
@@ -13970,14 +14059,18 @@ function lcRenderResults(){ var o=document.getElementById("lcOut"); if(!o)return
           +(S.cert.doc?'<small class="lc-chd">'+_lcDocRef(S.cert.doc)+'</small>':'')+'</div>'
         +'<div class="lc-chs"><span><b>'+S.n+'</b> بند</span><span class="ok"><b>'+S.ok+'</b> مستوفٍ</span><span class="bad"><b>'+S.fail+'</b> غير مستوفٍ</span>'+(S.rev?'<span class="warn"><b>'+S.rev+'</b> مراجعة</span>':'')+'</div></div>'
         +_lcTable(g,true)+'</div>'; }).join("")||'<div class="lc-empty">لا نتائج مطابقة للتصفية.</div>';
-  } else body=_lcTable(rows,false);
+  } else if(LC.view==="docs") body=_lcDocsView();
+  else body=_lcTable(rows,false);
   var P=_lcPunch(), nGap=LC.res.filter(function(R){ return R.status!=="ok"; }).length;
   var punch='<div class="lc-punch"><div class="lc-ph">النواقص المطلوب استكمالها من المقاول</div>'
     +(P.length?P.map(function(x){ return '<div class="lc-pc"><b>'+_lcEsc(x.S.C.name)+'</b><ul>'
         +x.comp.map(function(a){ return '<li class="lcc">'+_lcEsc(a)+' <em>(تخص كل بنود الشركة — '+x.S.n+' بند)</em></li>'; }).join("")
         +x.items.map(function(i){ return '<li>'+_lcEsc(i.a)+' <em>للبنود: '+i.ns.map(_lcB).join("، ")+'</em></li>'; }).join("")+'</ul></div>'; }).join("")
       :'<div class="lc-ok">لا توجد نواقص — جميع البنود مستوفية.</div>')+'</div>';
-  o.innerHTML='<div class="lc-screen">'+_lcDiagHTML()+sum+tools+'<div class="lc-res">'+body+'</div>'+punch+'</div>'+_lcPrintReport(); }
+  var warn=((LC.bad&&LC.bad.length)?'<div class="lc-bad"><b>⚠ ملفات لم تُقرأ ('+LC.bad.length+'):</b><ul>'+LC.bad.map(function(x){ return '<li><bdi dir="ltr">'+_lcEsc(x.name)+'</bdi> — '+_lcEsc(x.why)+'</li>'; }).join("")+'</ul></div>':'')
+    +(LC.ocrDown?'<div class="lc-bad"><b>⚠ القراءة الضوئية لم تعمل:</b> '+_lcEsc(LC.ocrDown)+' — الصور والمستندات الممسوحة لم تُقرأ. تحقق من الاتصال ثم أعد الفحص، أو اربط الصور يدوياً من «المستندات والصور».</div>':'')
+    +(LC.ocrErr?'<div class="lc-bad">تعذّرت قراءة '+LC.ocrErr+' صفحة/صورة ضوئياً (مهلة القراءة) — راجعها في «المستندات والصور».</div>':'');
+  o.innerHTML='<div class="lc-screen">'+_lcDiagHTML()+warn+sum+tools+'<div class="lc-res">'+body+'</div>'+punch+'</div>'+_lcPrintReport(); }
 function _lcTable(rows,inComp){ if(!rows.length) return '<div class="lc-empty">لا نتائج مطابقة للتصفية.</div>';
   return '<div class="lc-tw"><table class="lc-t'+(inComp?' lc-tc':'')+'"><thead><tr>'
     +'<th class="c">#</th><th>البند</th>'+(inComp?'':'<th>الشركة / المصنع</th><th>الشهادة</th>')+'<th>إثبات البند</th><th class="c">النتيجة</th><th>الملاحظة / المطلوب</th><th class="noprint c">تعديل</th>'
@@ -14080,7 +14173,7 @@ function lcExportPdf(){ if(!LC.res.length)return; PRINT_NAME="تقرير مرا�
   try{ printAnswer(); }catch(e){ try{ window.print(); }catch(e2){} } }
 try{ window.lcAuditOpen=lcAuditOpen; window.lcPickReport=lcPickReport; window.lcPickDocs=lcPickDocs; window.lcRun=lcRun;
   window.lcSetFlt=lcSetFlt; window.lcSetView=lcSetView; window.lcOverride=lcOverride; window.lcRenderResults=lcRenderResults;
-  window.lcExportXlsx=lcExportXlsx; window.lcExportPdf=lcExportPdf; window.lcFreeOcr=lcFreeOcr; window.LC=LC; }catch(e){}
+  window.lcExportXlsx=lcExportXlsx; window.lcLink=lcLink; window.lcExportPdf=lcExportPdf; window.lcFreeOcr=lcFreeOcr; window.LC=LC; }catch(e){}
 
 var CLOUD={name:"exm0p8kg",preset:"reef_unsigned"};
 var CPH={proj:"",items:[],loading:false};
