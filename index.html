@@ -4922,6 +4922,24 @@ body[data-theme="dark"] .lc-dv .lc-ocr{color:#9FB0B5}
 .ia-pos{font-size:12px;color:#0E6B45;margin:4px 0}.ia-lim{font-size:11.5px;color:#7A867F;margin:2px 0 8px}
 body[data-theme="dark"] .ia-ctx select,body[data-theme="dark"] .ia-ctx input{background:#1B2428;border-color:#2B363B}
 @media (max-width:760px){.ia-ctx{grid-template-columns:1fr}}
+
+/* أدوات الفحص والاجتماعات: بعرض الصفحة كامل */
+.ia-wrap,.mt-wrap{max-width:none!important;width:100%}
+
+/* الاجتماعات: المتحدّثون والمحضر */
+.mt-spkn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#5E6B63}.mt-spkn select{height:34px;border:1px solid #DDE3DE;border-radius:9px;padding:0 8px;font:inherit}
+.mt-upaud{display:block;margin:8px 0;padding:10px 14px;border:1.5px dashed #C9D6CD;border-radius:12px;color:#1E5B3A;font-size:13px;font-weight:700;cursor:pointer;text-align:center}.mt-upaud input{display:none}
+.mt-spk{margin:12px 0;padding:12px 14px;border:1px solid #DCE6DF;border-radius:14px;background:#F7FAF8}.mt-spk-h{font-weight:800;color:#0B3D27;margin-bottom:8px}
+.mt-spk-r{display:grid;grid-template-columns:110px minmax(0,1fr) 110px;gap:4px 10px;align-items:center;margin:6px 0}.mt-spk-r small{grid-column:2/4;color:#7A867F;font-size:11.5px}
+.mt-spk-l{font-weight:800;color:#1E5B3A}.mt-spk-in{height:36px;border:1px solid #DDE3DE;border-radius:9px;padding:0 10px;font:inherit}.mt-spk-p{font-size:12px;color:#5E6B63}
+.mt-minbox{margin:14px 0;padding:14px;border:1px solid #DCE6DF;border-radius:14px}.mt-mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px;margin:8px 0}
+.mt-mgrid label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#5E6B63;font-weight:700}.mt-mgrid label.w{grid-column:1/-1}.mt-mgrid input{height:36px;border:1px solid #DDE3DE;border-radius:9px;padding:0 10px;font:inherit}
+.mt-minprev{margin-top:12px;padding:26px 30px;border:1px solid #DCE6DF;border-radius:12px;background:#fff;color:#1c2b22;line-height:1.85;font-size:13.5px;outline:none}
+.mt-minprev:focus{box-shadow:0 0 0 3px rgba(30,91,58,.15)}
+.mt-minprev .mn-x{}
+body[data-theme="dark"] .mt-spk{background:rgba(255,255,255,.04);border-color:#2B363B}body[data-theme="dark"] .mt-minbox{border-color:#2B363B}
+body[data-theme="dark"] .mt-spk-in,body[data-theme="dark"] .mt-mgrid input,body[data-theme="dark"] .mt-spkn select{background:#1B2428;border-color:#2B363B;color:inherit}
+@media (max-width:760px){.mt-mgrid{grid-template-columns:1fr}.mt-spk-r{grid-template-columns:1fr}.mt-spk-r small{grid-column:auto}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -12702,6 +12720,7 @@ function meetRender(){ MREC.on=false; MREC.blob=null; MREC.transcript=""; MREC.i
   show(label("تسجيل الاجتماعات")+'<div class="mt-wrap">'+tabs
     +'<div class="mt-field"><label>عنوان الاجتماع</label><input id="mtTitle" type="text" value="'+esc(MEET_PREFILL||"")+'" placeholder="مثال: اجتماع متابعة مشاريع نجران - '+new Date().toLocaleDateString("ar-EG")+'"></div>'
     +'<div class="mt-rec" id="mtRec"><button class="mt-btn big" id="mtStart" onclick="meetStart()"><span class="mt-dot"></span> ابدأ التسجيل</button><div class="mt-time" id="mtTime">00:00</div></div>'
+    +'<label class="mt-upaud">أو ارفع تسجيلاً صوتياً موجوداً (من الجوال أو الحاسب)<input type="file" accept="audio/*,video/mp4,.m4a,.mp3,.wav,.ogg,.webm,.aac" onchange="meetPickAudio(this)"></label>'
     +'<div class="mt-stat" id="mtStat"></div>'
     +'<div id="mtRecovery"></div>'
     +'<div class="mt-privacy">🔒 تنبيه: تأكد من موافقة الحضور على التسجيل وفق السياسات المعتمدة. سيظهر مؤشر أثناء عمل الميكروفون.</div>'
@@ -12728,7 +12747,7 @@ function meetStart(){ if(MREC.on){ return; }
     // choose mime (opus)
     var mime=""; ["audio/webm;codecs=opus","audio/webm","audio/ogg;codecs=opus"].forEach(function(m){ if(!mime && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) mime=m; });
     MREC.mime=mime||"audio/webm";
-    var opts={audioBitsPerSecond:128000}; if(mime) opts.mimeType=mime;
+    var opts={audioBitsPerSecond:32000}; if(mime) opts.mimeType=mime; /* 32kbps opus كافٍ للكلام ويسمح باجتماعات أطول */
     var mr; try{ mr=new MediaRecorder(stream,opts); }catch(e){ try{mr=new MediaRecorder(stream);}catch(e2){ _mstat("⚠ تعذّر بدء التسجيل.","warn"); if(b){b.disabled=false;b.style.opacity=1;} return; } }
     MREC.rec=mr; mr.ondataavailable=function(e){ if(e.data&&e.data.size){ MREC.chunks.push(e.data); _meetSaveChunks(); } };
     mr.onstop=function(){ MREC.blob=new Blob(MREC.chunks,{type:MREC.mime}); MREC.url=URL.createObjectURL(MREC.blob); _meetStopTracks(); meetShowOut(); _meetClearRecovery(); };
@@ -12785,8 +12804,13 @@ function meetShowOut(){ var host=document.getElementById("mtOut"); if(!host)retu
   host.innerHTML='<div class="mt-outbox"><audio controls src="'+MREC.url+'" style="width:100%;margin-bottom:12px"></audio>'
     +'<div class="mt-transbox"><div class="mt-tb-h">🎯 تفريغ تلقائي دقيق مع تمييز المتحدّثين</div>'
     +'<div class="mt-tb-d">اضغط الزر ليُرفع الصوت ويُفرّغ تلقائيًا (عربي + توزيع على المتحدّثين). قد يستغرق دقائق حسب طول الاجتماع.</div>'
-    +'<div class="mt-actions"><button class="mt-btn" id="mtAuto" onclick="meetAutoTranscribe()">🎯 تفريغ دقيق + تمييز المتحدّثين</button></div>'
+    +'<div class="mt-actions"><label class="mt-spkn">عدد المتحدّثين المتوقع <select id="mtSpk"><option value="">تلقائي</option>'+[2,3,4,5,6,7,8].map(function(n){ return '<option>'+n+'</option>'; }).join("")+'</select></label><button class="mt-btn" id="mtAuto" onclick="meetAutoTranscribe()">🎯 تفريغ دقيق + تمييز المتحدّثين</button></div>'
     +'<div class="mt-prog" id="mtProg"></div></div>'
+    +'<div id="mtSpkBox"></div>'
+    +'<div class="mt-minbox"><div class="mt-tb-h">📄 محضر الاجتماع</div><div class="mt-mgrid">'
+      +'<label>التاريخ<input id="mtDate" type="date" value="'+new Date().toISOString().slice(0,10)+'"></label><label>المكان<input id="mtPlace" placeholder="مقر الوزارة / عن بُعد"></label><label>رئيس الاجتماع<input id="mtChair"></label>'
+      +'<label class="w">الحضور<input id="mtAtt" placeholder="يُملأ تلقائياً من أسماء المتحدّثين"></label></div>'
+      +'<div class="mt-actions"><button class="mt-btn" onclick="meetMinutes()">📄 إنشاء محضر الاجتماع</button></div><div id="mtMinBox"></div></div>'
     +'<div class="mt-actions" style="margin-top:12px"><button class="mt-btn" onclick="meetSave()">💾 حفظ على الجهاز</button>'
     +'<button class="mt-btn ghost" onclick="meetDownloadAudio()">⭳ تنزيل الصوت</button>'
     +'<button class="mt-btn ghost" onclick="meetDownloadText()">⭳ تنزيل النص</button>'
@@ -12820,28 +12844,93 @@ try{window._meetShowRaw=_meetShowRaw;}catch(e){}
 function meetAutoTranscribe(){ if(!MREC.blob){ alert("لا يوجد تسجيل."); return; }
   var prog=document.getElementById("mtProg"); var btn=document.getElementById("mtAuto"); if(btn){btn.disabled=true;btn.style.opacity=.6;}
   function P(m,cls){ if(prog) prog.innerHTML='<span class="mst '+(cls||"")+'">'+m+'</span>'; }
-  P("● جارٍ رفع الصوت للتفريغ…","ok");
-  var rd=new FileReader();
-  rd.onload=function(){ var b64=(rd.result+"").split(",")[1];
-    fetch("/.netlify/functions/transcribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({audio:b64})})
-    .then(function(r){return r.json();}).then(function(j){
-      if(j.error){ P("⚠ "+j.error,"warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} return; }
-      if(!j.id){ P("⚠ لم يبدأ التفريغ","warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} return; }
-      P("● جارٍ التفريغ وتمييز المتحدّثين… (قد يستغرق دقائق حسب طول الاجتماع)","ok");
-      _meetPoll(j.id,0,P,btn);
-    }).catch(function(e){ P("⚠ تعذّر الاتصال بخدمة التفريغ. تأكد أنك تفتح الرابط المنشور على Netlify.","warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} });
-  };
-  rd.readAsDataURL(MREC.blob);
+  function fail(m){ P("⚠ "+m,"warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} }
+  var spk=+((document.getElementById("mtSpk")||{}).value||0)||0;
+  var start=function(payload){ payload.speakers=spk;
+    return fetch("/.netlify/functions/transcribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)})
+      .then(function(r){ return r.json().catch(function(){ return {error:r.status===413?"حجم التسجيل أكبر من حد الخادم":"استجابة غير صالحة من الخادم ("+r.status+")"}; }); })
+      .then(function(j){ if(j.error) return fail(j.error); if(!j.id) return fail("لم يبدأ التفريغ");
+        P("● جارٍ التفريغ وتمييز المتحدّثين… (قد يستغرق دقائق حسب طول الاجتماع)","ok"); _meetPoll(j.id,0,P,btn); }); };
+  var size=MREC.blob.size;
+  if(size*1.37 < 5.2*1024*1024){
+    P("● جارٍ رفع الصوت للتفريغ…","ok");
+    var rd=new FileReader();
+    rd.onload=function(){ start({audio:(rd.result+"").split(",")[1]}).catch(function(){ fail("تعذّر الاتصال بخدمة التفريغ. تأكد أنك تفتح الرابط المنشور على Netlify."); }); };
+    rd.onerror=function(){ fail("تعذّر قراءة ملف الصوت"); };
+    rd.readAsDataURL(MREC.blob); return; }
+  /* تسجيل طويل: يُرفع أولاً إلى مساحة الملفات ثم يُرسل رابطه لخدمة التفريغ */
+  P("● التسجيل طويل ("+(size/1048576).toFixed(1)+" م.ب) — جارٍ رفعه أولاً…","ok");
+  var fd=new FormData(); fd.append("file",MREC.blob,"meeting."+(/ogg/.test(MREC.mime||"")?"ogg":(/mp4|m4a/.test(MREC.mime||"")?"m4a":"webm"))); fd.append("upload_preset",CLOUD.preset); fd.append("folder","reef_meetings");
+  var xhr=new XMLHttpRequest(); xhr.open("POST","https://api.cloudinary.com/v1_1/"+CLOUD.name+"/video/upload");
+  xhr.upload.onprogress=function(e){ if(e.lengthComputable) P("● جارٍ رفع التسجيل… "+Math.round(e.loaded/e.total*100)+"%","ok"); };
+  xhr.onload=function(){ var j={}; try{ j=JSON.parse(xhr.responseText); }catch(e){}
+    if(!j.secure_url) return fail("تعذّر رفع التسجيل الطويل"+(j.error&&j.error.message?(" — "+j.error.message):"")+". جرّب تقسيم الاجتماع لأجزاء أقصر.");
+    P("● تم الرفع — جارٍ بدء التفريغ…","ok"); start({url:j.secure_url}).catch(function(){ fail("تعذّر الاتصال بخدمة التفريغ."); }); };
+  xhr.onerror=function(){ fail("تعذّر رفع التسجيل — تحقق من الاتصال"); };
+  xhr.send(fd);
 }
-function _meetPoll(id,tries,P,btn){ if(tries>180){ P("⚠ استغرق وقتًا طويلًا — حاول لاحقًا.","warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} return; }
+function _meetPoll(id,tries,P,btn){ if(tries>360){ P("⚠ استغرق وقتًا طويلًا — حاول لاحقًا.","warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} return; }
   fetch("/.netlify/functions/transcribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({id:id})})
   .then(function(r){return r.json();}).then(function(j){
-    if(j.status==="completed"){ var ta=document.getElementById("mtTrans"); if(ta) ta.value=j.text||""; window._MEET_RAW=j.raw||""; var pr=document.getElementById("mtProg"); if(pr&&j.raw&&j.enhanced){ pr.innerHTML='<span class="mst ok">✓ تم التفريغ — النص أعلاه مُنقّح. <a href="#" onclick="_meetShowRaw();return false;" style="color:#0B5638;font-weight:800">عرض النص الخام للمقارنة</a></span>'; } else { P("✓ تم التفريغ — راجع النص وعدّله ثم احفظ.","ok"); } if(btn){btn.disabled=false;btn.style.opacity=1;} }
+    if(j.status==="completed"){ var ta=document.getElementById("mtTrans"); if(ta) ta.value=j.text||""; window._MEET_RAW=j.raw||""; MREC.speakers=j.speakers||[]; MREC.dur=j.duration||null;
+      var pr=document.getElementById("mtProg"); if(pr&&j.raw&&j.enhanced){ pr.innerHTML='<span class="mst ok">✓ تم التفريغ — النص أعلاه مُنقّح. <a href="#" onclick="_meetShowRaw();return false;" style="color:#0B5638;font-weight:800">عرض النص الخام للمقارنة</a></span>'; } else { P("✓ تم التفريغ — راجع النص وعدّله ثم احفظ.","ok"); }
+      if(btn){btn.disabled=false;btn.style.opacity=1;} _meetSpkRender(); }
     else if(j.status==="error"){ P("⚠ "+(j.error||"خطأ في التفريغ"),"warn"); if(btn){btn.disabled=false;btn.style.opacity=1;} }
-    else { P("● جارٍ التفريغ… ("+(j.status||"processing")+")","ok"); setTimeout(function(){ _meetPoll(id,tries+1,P,btn); },5000); }
+    else { P("● جارٍ التفريغ… ("+({queued:"في الانتظار",processing:"قيد المعالجة"}[j.status]||j.status||"قيد المعالجة")+")","ok"); setTimeout(function(){ _meetPoll(id,tries+1,P,btn); },5000); }
   }).catch(function(){ setTimeout(function(){ _meetPoll(id,tries+1,P,btn); },5000); });
 }
-try{ window.meetAutoTranscribe=meetAutoTranscribe; }catch(e){}
+/* ===== المتحدّثون: تسمية كل متحدّث باسمه ===== */
+function _meetSpkFromText(t){ var m={}, order=[]; String(t||"").split(/\n+/).forEach(function(line){ var x=line.match(/^\s*([^:\n]{2,40}?)\s*:\s*(.+)$/); if(!x) return; var k=x[1].trim(); if(!/^المتحد/.test(k) && !(MREC.spkNames&&Object.values(MREC.spkNames).indexOf(k)>-1)) return;
+    if(!m[k]){ m[k]={label:k,words:0,first:""}; order.push(k); } m[k].words+=x[2].split(/\s+/).length; if(!m[k].first) m[k].first=x[2].slice(0,90); }); return order.map(function(k){ return m[k]; }); }
+function _meetSpkRender(){ var host=document.getElementById("mtSpkBox"); if(!host) return; var ta=document.getElementById("mtTrans"); var S=_meetSpkFromText(ta?ta.value:"");
+  if(!S.length){ host.innerHTML=""; return; } var tot=S.reduce(function(a,s){ return a+s.words; },0)||1;
+  host.innerHTML='<div class="mt-spk"><div class="mt-spk-h">👥 المتحدّثون — اكتب اسم كل متحدّث ليظهر في التفريغ والمحضر</div>'
+    +S.map(function(s,i){ return '<div class="mt-spk-r"><span class="mt-spk-l">'+esc(s.label)+'</span><input class="mt-spk-in" data-k="'+esc(s.label)+'" placeholder="الاسم / الصفة (مثال: م. أحمد — إدارة المشاريع)" value="'+esc((MREC.spkNames||{})[s.label]&&(MREC.spkNames||{})[s.label]!==s.label?(MREC.spkNames||{})[s.label]:"")+'">'
+      +'<span class="mt-spk-p">'+Math.round(s.words/tot*100)+'% من الكلام</span><small>«'+esc(s.first)+'…»</small></div>'; }).join("")
+    +'<div class="mt-actions"><button class="mt-btn" onclick="meetSpkApply()">✓ تطبيق الأسماء على التفريغ</button></div></div>'; }
+function meetSpkApply(){ var ta=document.getElementById("mtTrans"); if(!ta) return; var t=ta.value; MREC.spkNames=MREC.spkNames||{};
+  document.querySelectorAll(".mt-spk-in").forEach(function(inp){ var k=inp.getAttribute("data-k"), v=inp.value.trim(); if(!v||v===k) return;
+    var re=new RegExp("(^|\\n)\\s*"+k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\s*:","g"); t=t.replace(re,"$1"+v+":"); MREC.spkNames[v]=v; });
+  ta.value=t; var at=document.getElementById("mtAtt"); if(at && !at.value.trim()){ at.value=_meetSpkFromText(t).map(function(s){ return s.label; }).filter(function(x){ return !/^المتحد/.test(x); }).join("، "); }
+  _meetSpkRender(); }
+/* ===== محضر الاجتماع ===== */
+function meetMinutes(){ var ta=document.getElementById("mtTrans"), txt=ta?ta.value.trim():""; var box=document.getElementById("mtMinBox");
+  if(txt.length<20){ alert("لا يوجد تفريغ كافٍ لإعداد المحضر — فرّغ الاجتماع أولاً أو الصق النص."); return; }
+  var g=function(id){ return ((document.getElementById(id)||{}).value||"").trim(); };
+  var meta={title:g("mtTitle")||"اجتماع",date:g("mtDate"),place:g("mtPlace"),chair:g("mtChair"),attendees:g("mtAtt"),notes:g("mtNotes")};
+  if(box) box.innerHTML='<span class="mst ok">● جارٍ إعداد المحضر من التفريغ…</span>';
+  fetch("/.netlify/functions/transcribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"minutes",text:txt,title:meta.title,attendees:meta.attendees,notes:meta.notes})})
+    .then(function(r){ return r.json(); }).then(function(M){ if(M.error){ if(box) box.innerHTML='<span class="mst warn">⚠ '+esc(M.error)+'</span>'; return; }
+      MREC.minutes={meta:meta,M:M}; if(box) box.innerHTML='<div class="mt-minprev" contenteditable="true" id="mtMinDoc">'+_meetMinutesHTML(meta,M,false)+'</div><div class="mt-actions"><button class="mt-btn" onclick="meetMinutesPrint()">🖨 طباعة / حفظ PDF</button><span class="mt-hint" style="margin:0">يمكنك تعديل أي نص في المحضر مباشرة قبل الطباعة.</span></div>'; })
+    .catch(function(){ if(box) box.innerHTML='<span class="mst warn">⚠ تعذّر الاتصال بالخادم — تأكد أنك على الرابط المنشور.</span>'; }); }
+function _meetMinutesHTML(meta,M,full){ var e=esc, row=function(k,v){ return v?'<tr><th>'+k+'</th><td>'+e(v)+'</td></tr>':''; };
+  var dt=meta.date?new Date(meta.date):new Date(); var dtx=isNaN(dt)?e(meta.date):dt.toLocaleDateString("ar-SA-u-nu-latn",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  var h='<div class="mn-head"><img src="'+(typeof LOGO!=="undefined"&&LOGO?LOGO:"")+'" alt=""><div><div class="mn-org">برنامج التنمية الريفية الزراعية المستدامة — ريف</div><h1>محضر اجتماع</h1><div class="mn-ttl">'+e(meta.title)+'</div></div></div>'
+    +'<table class="mn-meta">'+row("التاريخ",dtx)+row("المكان",meta.place)+row("رئيس الاجتماع",meta.chair)+row("الحضور",meta.attendees)+(MREC.dur?row("مدة التسجيل",Math.round(MREC.dur/60)+" دقيقة"):"")+'</table>'
+    +'<h2>أولاً: ملخّص الاجتماع</h2><p>'+e(M.summary||"—")+'</p>'
+    +((M.topics||[]).length?'<h2>ثانياً: محاور النقاش</h2>'+M.topics.map(function(t,i){ return '<h3>'+(i+1)+'. '+e(t.title||"")+'</h3><ul>'+(t.points||[]).map(function(p){ return '<li>'+e(p.text)+(p.speaker?' <span class="mn-sp">('+e(p.speaker)+')</span>':'')+'</li>'; }).join("")+'</ul>'; }).join(""):'')
+    +'<h2>ثالثاً: القرارات</h2>'+((M.decisions||[]).length?'<ol>'+M.decisions.map(function(d){ return '<li>'+e(d)+'</li>'; }).join("")+'</ol>':'<p class="mn-mut">لم تُتخذ قرارات صريحة في الاجتماع.</p>')
+    +'<h2>رابعاً: المهام والتكليفات</h2>'+((M.actions||[]).length?'<table class="mn-t"><thead><tr><th>#</th><th>المهمة</th><th>المسؤول</th><th>الموعد</th></tr></thead><tbody>'+M.actions.map(function(a,i){ return '<tr><td class="c">'+(i+1)+'</td><td>'+e(a.task)+'</td><td class="c">'+e(a.owner)+'</td><td class="c">'+e(a.due)+'</td></tr>'; }).join("")+'</tbody></table>':'<p class="mn-mut">لا توجد مهام محددة.</p>')
+    +((M.open||[]).length?'<h2>خامساً: نقاط معلّقة للمتابعة</h2><ul>'+M.open.map(function(x){ return '<li>'+e(x)+'</li>'; }).join("")+'</ul>':'')
+    +(M.next?'<p><b>الاجتماع القادم:</b> '+e(M.next)+'</p>':'')
+    +'<div class="mn-sign"><div><span>أمين الاجتماع</span><i></i></div><div><span>رئيس الاجتماع</span><i></i></div><div><span>الاعتماد</span><i></i></div></div>'
+    +'<div class="mn-note">أُعدّ هذا المحضر آلياً من تسجيل الاجتماع وتمت مراجعته — يُرجى التحقق من دقة القرارات والمهام قبل الاعتماد.</div>';
+  return h; }
+var MN_CSS='.mn-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid #0B3D27;padding-bottom:12px;margin-bottom:12px}.mn-head img{height:58px}.mn-org{font-size:12px;color:#5a6b60}.mn-head h1{margin:2px 0;font-size:24px;color:#0B3D27}.mn-ttl{font-size:15px;font-weight:700;color:#1E5B3A}'
+  +'.mn-meta{width:100%;border-collapse:collapse;margin:8px 0 14px}.mn-meta th{width:130px;text-align:start;background:#F3F8F5;color:#1E5B3A;padding:7px 10px;border:1px solid #E1E8E3}.mn-meta td{padding:7px 10px;border:1px solid #E1E8E3}'
+  +'h2{font-size:15px;color:#0B3D27;border-bottom:2px solid #CDE7D8;padding-bottom:4px;margin:18px 0 8px}h3{font-size:13.5px;color:#1E5B3A;margin:10px 0 4px}ul,ol{margin:4px 0;padding-inline-start:22px}li{margin:3px 0}.mn-sp{color:#7A867F;font-size:11px}.mn-mut{color:#7A867F}'
+  +'.mn-t{width:100%;border-collapse:collapse;font-size:12px}.mn-t th{background:#0B3D27;color:#fff;padding:7px}.mn-t td{border:1px solid #E1E8E3;padding:7px;vertical-align:top}.mn-t .c{text-align:center}'
+  +'h2,h3{break-after:avoid;page-break-after:avoid}li,tr{break-inside:avoid}.mn-sign{break-inside:avoid;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px}.mn-sign div{text-align:center;color:#5a6b60}.mn-sign i{display:block;border-top:1px solid #9aa79f;margin-top:34px}.mn-note{margin-top:18px;font-size:10.5px;color:#8a968f;text-align:center}';
+function meetMinutesPrint(){ var d=document.getElementById("mtMinDoc"); if(!d) return; var t=((MREC.minutes&&MREC.minutes.meta.title)||"محضر اجتماع").replace(/[^\w؀-ۿ\- ]/g,"").slice(0,60);
+  var html='<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>محضر - '+esc(t)+'</title><style>'+(typeof _iaFontCSS==="function"?_iaFontCSS():"")
+    +'\n@page{size:A4;margin:1.4cm}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{font-family:"Expo Arabic","Tajawal",Tahoma,Arial,sans-serif;color:#1c2b22;direction:rtl;margin:0;font-size:13px;line-height:1.85}'+MN_CSS+'</style></head><body>'+d.innerHTML
+    +'<script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){window.print();},400); });<\/script></body></html>';
+  var w=window.open("","_blank"); if(w){ w.document.write(html); w.document.close(); } else alert("اسمح بالنوافذ المنبثقة لعرض المحضر."); }
+/* رفع ملف صوتي موجود بدل التسجيل */
+function meetPickAudio(inp){ var f=inp&&inp.files&&inp.files[0]; if(!f) return; MREC.blob=f; MREC.mime=f.type||"audio/webm"; MREC.url=URL.createObjectURL(f); try{inp.value="";}catch(e){} _mstat("✓ تم اختيار الملف «"+esc(f.name)+"» ("+(f.size/1048576).toFixed(1)+" م.ب) — اضغط «تفريغ دقيق».","ok"); meetShowOut(); }
+try{ window.meetAutoTranscribe=meetAutoTranscribe; window.meetMinutes=meetMinutes; window.meetSpkApply=meetSpkApply; window.meetPickAudio=meetPickAudio; window.meetMinutesPrint=meetMinutesPrint; }catch(e){}
+/* المحضر داخل الصفحة */
+try{ (function(){ var s=document.createElement("style"); s.textContent=MN_CSS.replace(/(^|\})([^{}@]+)\{/g,function(m,a,sel){ return a+sel.split(",").map(function(x){ return ".mt-minprev "+x.trim(); }).join(",")+"{"; }); document.head.appendChild(s); })(); }catch(e){}
 /* (استُبدلت) */
 /* (استُبدلت) */
 try{ window.dashSetFilter=dashSetFilter; window.dashResetFilter=dashResetFilter; window._setHero=_setHero; window.toggleTools=toggleTools; window._initTools=_initTools; }catch(e){}
