@@ -5043,7 +5043,10 @@ body[data-theme="dark"] .pd-durbox{background:rgba(255,255,255,.03);border-color
 /* روابط المشاركة */
 html.ro-wait body>*:not(#roGate){visibility:hidden!important}
 #roGate{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:linear-gradient(140deg,#03170C,#0B3D27);color:#fff;text-align:center;padding:24px}
-#roGate .rog-box{max-width:520px}#roGate img{height:64px;filter:brightness(0) invert(1);opacity:.9;margin-bottom:18px}#roGate h2{font-size:22px;margin:0 0 8px}#roGate p{color:#CFE3D6;margin:0}
+#roGate{overflow:hidden;isolation:isolate}#roGate .hx-fx{z-index:0}
+#roGate .rog-glow{position:absolute;width:560px;height:560px;border-radius:50%;top:-180px;inset-inline-end:-160px;background:radial-gradient(circle,rgba(217,177,102,.22),transparent 70%);animation:pdGlow 9s ease-in-out infinite alternate;pointer-events:none}
+#roGate::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;bottom:-200px;inset-inline-start:-140px;background:radial-gradient(circle,rgba(60,196,137,.16),transparent 70%);pointer-events:none}
+#roGate .rog-box{position:relative;z-index:1;max-width:520px}#roGate img{height:64px;filter:brightness(0) invert(1);opacity:.9;margin-bottom:18px}#roGate h2{font-size:22px;margin:0 0 8px}#roGate p{color:#CFE3D6;margin:0}
 #roGate.blocked h2{color:#F0D9A8}
 #roBanner{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99990;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:99px;background:rgba(5,30,18,.88);backdrop-filter:blur(8px);color:#EAF2EC;font-size:12.5px;box-shadow:0 10px 26px -12px rgba(0,0,0,.5);white-space:nowrap}
 #roBanner b{color:#F0D9A8}#roBanner .rob-e{color:#A9C2B3}
@@ -10551,12 +10554,12 @@ function _shareUrl(t){ return location.origin+location.pathname+"?s="+t; }
 function _shDate(ms){ try{ return new Date(ms).toLocaleString("ar-SA-u-nu-latn",{dateStyle:"long",timeStyle:"short"}); }catch(e){ return new Date(ms).toISOString().slice(0,16).replace("T"," "); } }
 /* ---------- وضع الزائر ---------- */
 function _roGate(html,blocked){ var g=document.getElementById("roGate"); if(!g){ g=document.createElement("div"); g.id="roGate"; document.body.appendChild(g); }
-  g.innerHTML='<div class="rog-box">'+(typeof LOGO==="string"&&LOGO?'<img src="'+LOGO+'" alt="">':'')+html+'</div>'; g.className=blocked?"blocked":""; }
+  g.innerHTML='<i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i><i class="rog-glow" aria-hidden="true"></i><div class="rog-box">'+(typeof LOGO==="string"&&LOGO?'<img src="'+LOGO+'" alt="">':'')+html+'</div>'; g.className=blocked?"blocked":""; }
 function _roDeny(){ try{ var t=document.createElement("div"); t.className="ro-toast"; t.textContent="هذا رابط عرض فقط — لا يمكن التعديل أو الرفع"; document.body.appendChild(t); setTimeout(function(){ t.remove(); },2600); }catch(e){} }
 function _roLock(){ ["pmOpen","pfOpen","pfApply","uploadReport","cloudPhotosOpen","meetOpen","meetStart","imgAuditOpen","lcAuditOpen","openFormsMenu","schedOpen","pmKbList","pcgDelete","pcgSaveCap","_cphDelete","_cphUploadPick","_cphSavePicks","pcAddPhotos","shareOpen","tenderWizardOpen","tenderTplOpen","openFormsModal","analysisAnswer"].forEach(function(n){ try{ if(typeof window[n]==="function") window[n]=function(){ _roDeny(); }; }catch(e){} }); }
-function _roFail(j){ var why=(j&&j.why)||"error", m={expired:"انتهت صلاحية هذا الرابط"+(j&&j.exp?(" في "+_shDate(j.exp)):""),revoked:"تم إيقاف هذا الرابط من صاحبه",notfound:"هذا الرابط غير صحيح أو حُذف"}[why]||"تعذّر التحقق من الرابط — حاول مرة أخرى لاحقاً";
+function _roFail(j){ var why=(j&&j.why)||"error", m={expired:"انتهت صلاحية هذا الرابط"+(j&&j.exp?(" في "+_shDate(j.exp)):""),revoked:"تم إيقاف صلاحية هذا الرابط",notfound:"هذا الرابط غير صحيح أو حُذف"}[why]||"تعذّر التحقق من الرابط — حاول مرة أخرى لاحقاً";
   if(SHARE.timer){ clearInterval(SHARE.timer); SHARE.timer=null; }
-  document.documentElement.classList.add("ro-wait"); _roGate('<h2>'+esc(m)+'</h2><p>للحصول على رابط جديد تواصل مع من أرسل لك الرابط.</p>',true); }
+  document.documentElement.classList.add("ro-wait"); _roGate('<h2>'+esc(m)+'</h2>',true); }
 function _roBanner(){ var b=document.getElementById("roBanner"); if(!b){ b=document.createElement("div"); b.id="roBanner"; document.body.appendChild(b); }
   b.innerHTML='<span class="rob-i">👁</span><b>رابط عرض فقط</b>'+(SHARE.label?'<span>· '+esc(SHARE.label)+'</span>':'')+'<span class="rob-e">صالح حتى '+esc(_shDate(SHARE.exp))+'</span>'; }
 function _roCheck(first){ return _shareApi({action:"check",token:SHARE.token,count:first?1:0}).then(function(j){
