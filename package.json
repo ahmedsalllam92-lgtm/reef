@@ -1,0 +1,8 @@
+{
+  "name": "reef-portfolio",
+  "private": true,
+  "description": "برنامج ريف — تبعيات دوال Netlify",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
