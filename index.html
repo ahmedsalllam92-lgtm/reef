@@ -2071,7 +2071,12 @@ body[data-theme="dark"] .ia-note,body[data-theme="dark"] .ia-imgbox{background:#
 .mt-recov button{background:#0E6B45;color:#fff;border:none;border-radius:7px;padding:6px 13px;font-family:inherit;font-weight:700;cursor:pointer;margin-inline-start:6px}
 .mt-recov button.ghost{background:#EAF0EC;color:#0B3D2E}
 
-.cph-wrap{max-width:1000px}
+.cph-wrap{max-width:none}
+.cph-del{position:absolute;top:6px;inset-inline-end:6px;width:30px;height:30px;border-radius:50%;border:0;background:rgba(176,67,58,.92);color:#fff;display:grid;place-items:center;cursor:pointer;opacity:0;transform:scale(.85);transition:opacity .2s,transform .2s;box-shadow:0 4px 10px -4px rgba(0,0,0,.4)}
+.cph-cell:hover .cph-del,.cph-del:focus{opacity:1;transform:none}
+@media (hover:none){.cph-del{opacity:1;transform:none}}
+.cph-del:hover{background:#8F2F27}
+.cph-cell.busy{opacity:.4;pointer-events:none}
 .cph-intro{font-size:13px;color:#6b7568;line-height:1.8;margin-bottom:14px;background:#F3F7F4;padding:12px 15px;border-radius:10px}
 .cph-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 .cph-sel{flex:1;min-width:220px;padding:10px 12px;border:1.5px solid #DCEAE1;border-radius:9px;font-family:inherit;font-size:13px}
@@ -4989,6 +4994,51 @@ body[data-theme="dark"] .pc4-pv .pv-bar{background:rgba(255,255,255,.1)}body[dat
 body[data-theme="dark"] .hb-card:hover .hb-cb2 h4{color:#F0D9A8}
 @media (prefers-reduced-motion:reduce){.hb-cards>.hb-card,.hb-pq2b u,.hb-pq2b i{animation:none!important}.hb-card:hover,.hb-card:hover .hb-cimg img{transform:none!important}}
 @media print{.hb-cards>.hb-card,.hb-pq2b u,.hb-pq2b i{animation:none!important;opacity:1!important;transform:none!important}}
+
+/* لوحة المشروع: المدد داخل «بيانات المشروع» */
+.pd-durbox{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:var(--dx-soft,#F4F7F4);border:1px solid var(--dx-line,#E6ECE7)}
+.pd-durbox{flex:none!important}.pd-durbox .pd-dur{margin-top:0}.pd-durbox .pd-dur>div{min-width:0}.pd-durbox .pd-dur span,.pd-durbox .pd-dur b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.dx-land.pdl .fit .pd-durbox{padding:6px 8px;margin-bottom:6px}.dx-land.pdl .fit .pd-durh{display:none}.dx-land.pdl .fit .pd-durbox .pd-dur{gap:5px}.dx-land.pdl .fit .pd-durbox .pd-dur>div{padding:4px 6px}.dx-land.pdl .fit .pd-durbox .pd-dur span{font-size:9.5px}.dx-land.pdl .fit .pd-durbox .pd-dur b{font-size:11.5px}
+.pd-durh{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:#1E5B3A;margin-bottom:6px}.pd-durh svg{width:15px;height:15px}
+.pd-durbox .pd-dur{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.pd-durbox .pd-dur>div{background:#fff;border-radius:9px;padding:6px 8px;border:1px solid var(--dx-line,#E6ECE7)}
+.pd-durbox .pd-dur span{display:block;font-size:10.5px;color:var(--dx-mut,#7D8A82)}.pd-durbox .pd-dur b{font-size:13px;font-weight:800!important}
+body[data-theme="dark"] .pd-durbox{background:rgba(255,255,255,.03);border-color:#2B363B}body[data-theme="dark"] .pd-durbox .pd-dur>div{background:rgba(255,255,255,.04);border-color:#2B363B}
+.dx .dx-kpis.pd-kpis3>.pd-pk{grid-column:span 1!important}
+.dx .dx-kpis.pd-kpis3,#answer .dx .dx-kpis.pd-kpis3,.dx-land .fit .dx-kpis.pd-kpis3,.acard:fullscreen .dx .dx-kpis.pd-kpis3,.dx-land.pdl .fit .dx-kpis.pd-kpis3,#answer .dx-land.pdl .fit .dx-kpis.pd-kpis3{grid-template-columns:minmax(0,1.12fr) minmax(0,3.1fr)!important}
+@media screen and (max-width:900px){.dx .dx-kpis.pd-kpis3,#answer .dx .dx-kpis.pd-kpis3{grid-template-columns:1fr!important}}
+/* معرض الصور المتحرك */
+.pds-host{height:100%;min-height:0;display:flex;flex-direction:column}
+.pds{display:flex;flex-direction:column;gap:8px;height:100%;min-height:300px}
+.pds-stage{position:relative;flex:1;min-height:260px;border-radius:14px;overflow:hidden;background:#0B1A13;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.pds-s{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease;pointer-events:none}
+.pds-s.on{opacity:1;pointer-events:auto;z-index:1}
+.pds-bg{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(22px) brightness(.55) saturate(1.2)}
+.pds-fg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;cursor:zoom-in;transform-origin:center}
+.pds-s.on .pds-fg{animation:pdsKen 9s ease-out both}.pds-s.on.alt .pds-fg{animation-name:pdsKen2}
+@keyframes pdsKen{from{transform:scale(1.0) translate(0,0)}to{transform:scale(1.07) translate(-1.2%,-1%)}}
+@keyframes pdsKen2{from{transform:scale(1.07) translate(1%,1%)}to{transform:scale(1.0) translate(0,0)}}
+.pds.hold .pds-s.on .pds-fg{animation-play-state:paused}
+.pds-s.err .pds-fg{display:none}
+.pds-top{position:absolute;top:10px;inset-inline:12px;z-index:3;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.pds-live{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:rgba(5,30,18,.6);backdrop-filter:blur(6px);color:#EAD7AE;font-size:11px;font-weight:800}
+.pds-live i{width:7px;height:7px;border-radius:50%;background:#3CC489;box-shadow:0 0 0 0 rgba(60,196,137,.6);animation:brfLive 1.8s infinite}
+.pds.hold .pds-live i{background:#D9BC84;animation:none}
+.pds-cnt{padding:4px 11px;border-radius:99px;background:rgba(5,30,18,.6);backdrop-filter:blur(6px);color:#fff;font-size:12px;font-weight:800}
+.pds-nav{position:absolute;top:50%;z-index:3;width:38px;height:38px;margin-top:-19px;border-radius:50%;border:0;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);color:#fff;font-size:22px;line-height:1;cursor:pointer;opacity:0;transition:opacity .3s,background .2s}
+.pds-nav.nx{left:12px}.pds-nav.pv{right:12px}.pds:hover .pds-nav{opacity:1}.pds-nav:hover{background:#D9BC84;color:#05271A}
+.pds-pb{position:absolute;bottom:0;inset-inline:0;height:3px;z-index:3;background:linear-gradient(90deg,#D9BC84,#3CC489);transform-origin:right;transform:scaleX(0)}
+.pds-pb.run{animation:pdsPb linear forwards}.pds.hold .pds-pb{animation-play-state:paused}
+@keyframes pdsPb{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.pds-th{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.pds-th::-webkit-scrollbar{display:none}
+.pds-th button{flex:none;width:64px;height:46px;padding:0;border-radius:9px;overflow:hidden;border:2px solid transparent;opacity:.55;cursor:pointer;background:#E9EEEA;transition:opacity .25s,border-color .25s,transform .25s}
+.pds-th button.on{opacity:1;border-color:#D9BC84;transform:translateY(-2px)}.pds-th button:hover{opacity:.9}
+.pds-th img{width:100%;height:100%;object-fit:cover;display:block}
+.dx-land.pdl .fit .g-ph .pds{min-height:0}.dx-land.pdl .fit .g-ph .pds-stage{min-height:0}
+.pdl .dx-canvas:not(.fit) .g-ph .pds-stage{min-height:380px}
+@media print{.pds-s{transition:none}.pds-s.on .pds-fg,.pds-pb{animation:none!important}.pds-top .pds-live{display:none}.pds-stage{min-height:300px}}
+@media (prefers-reduced-motion:reduce){.pds-s.on .pds-fg{animation:none}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -10453,6 +10503,26 @@ function pyExport(){ var L=_pySorted(_pyList()); loadXLSX().then(function(){
   var wb=XLSX.utils.book_new(), ws=XLSX.utils.aoa_to_sheet(rows); ws["!cols"]=[9,50,14,14,14,8,12,14,10,14,10,14,14,14,12,14,14,10,16,12,24].map(function(w){ return {wch:w}; });
   XLSX.utils.book_append_sheet(wb,ws,"سجل المستخلصات"); wb.Workbook={Views:[{RTL:true}]}; XLSX.writeFile(wb,"Reef_Payments_Register.xlsx"); }); }
 try{ window.payRegOpen=payRegOpen; window.pyMSet=pyMSet; }catch(e){}
+/* ---------- معرض لوحة المشروع: عرض متحرك تلقائي ---------- */
+var PDS={i:0,n:0,t:null,pause:false,ms:4500};
+function _pdsHTML(L){ PDS.i=0; PDS.n=L.length; if(!L.length) return '<div class="dx-empty">لا توجد صور مرفوعة لهذا المشروع</div>';
+  return '<div class="pds" id="pds" onmouseenter="PDS.pause=true;this.classList.add(\'hold\')" onmouseleave="PDS.pause=false;this.classList.remove(\'hold\')">'
+    +'<div class="pds-stage">'+L.map(function(u,k){ return '<div class="pds-s'+(k===0?' on':'')+(k%2?' alt':'')+'" data-k="'+k+'"><img class="pds-bg" alt="" referrerpolicy="no-referrer" '+(k<2?'src':'data-src')+'="'+esc(u)+'"><img class="pds-fg" alt="" referrerpolicy="no-referrer" '+(k<2?'src':'data-src')+'="'+esc(u)+'" onclick="lightbox(this.src)" onerror="this.closest(\'.pds-s\').classList.add(\'err\')"></div>'; }).join("")
+    +'<div class="pds-top"><span class="pds-live"><i></i>عرض تلقائي</span><span class="pds-cnt" id="pdsCnt">'+ar(1)+' من '+ar(L.length)+'</span></div>'
+    +(L.length>1?'<button class="pds-nav nx noprint" onclick="pdsGo(PDS.i+1,true)" aria-label="التالي">‹</button><button class="pds-nav pv noprint" onclick="pdsGo(PDS.i-1,true)" aria-label="السابق">›</button><i class="pds-pb run" id="pdsPb" style="animation-duration:'+PDS.ms+'ms"></i>':'')
+    +'</div>'
+    +(L.length>1?'<div class="pds-th noprint">'+L.map(function(u,k){ return '<button class="'+(k===0?'on':'')+'" onclick="pdsGo('+k+',true)"><img alt="" loading="lazy" referrerpolicy="no-referrer" src="'+esc(u)+'" onerror="this.style.visibility=\'hidden\'"></button>'; }).join("")+'</div>':'')
+    +'</div>'; }
+function pdsGo(k,user){ var r=document.getElementById("pds"); if(!r){ pdsStop(); return; } var n=PDS.n||1; k=((k%n)+n)%n; PDS.i=k;
+  r.querySelectorAll(".pds-s").forEach(function(s){ var kk=+s.getAttribute("data-k"), on=kk===k; s.classList.toggle("on",on);
+    if(kk===k||kk===(k+1)%n) s.querySelectorAll("img[data-src]").forEach(function(im){ im.src=im.getAttribute("data-src"); im.removeAttribute("data-src"); }); });
+  r.querySelectorAll(".pds-th button").forEach(function(b,i){ b.classList.toggle("on",i===k); if(i===k){ try{ var th=b.parentNode, br=b.getBoundingClientRect(), tr=th.getBoundingClientRect(), z=(tr.width/(th.offsetWidth||tr.width))||1; th.scrollTo({left:th.scrollLeft+((br.left+br.width/2)-(tr.left+tr.width/2))/z,behavior:"smooth"}); }catch(e){} } });
+  var c=document.getElementById("pdsCnt"); if(c) c.textContent=ar(k+1)+" من "+ar(n);
+  var pb=document.getElementById("pdsPb"); if(pb){ pb.classList.remove("run"); void pb.offsetWidth; pb.classList.add("run"); }
+  if(user) pdsStart(); }
+function pdsStop(){ if(PDS.t){ clearInterval(PDS.t); PDS.t=null; } }
+function pdsStart(){ pdsStop(); if(PDS.n<2) return; PDS.t=setInterval(function(){ if(!document.getElementById("pds")){ pdsStop(); return; } if(PDS.pause||document.hidden) return; pdsGo(PDS.i+1); },PDS.ms); }
+try{ window.pdsGo=pdsGo; window._cphDelete=_cphDelete; }catch(e){}
 /* ---------------- مساعد ريف ---------------- */
 var _ASKING=false;
 function _askOff(){ document.body.classList.remove("ask-on"); }
@@ -10857,11 +10927,11 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
       +'<div class="pd-p3"><div><span>الإنجاز الفعلي</span><b>'+_dxPct(a)+'</b></div><div class="'+_ptn+'"><span>الحيود عن الخطة</span><b><bdi dir="ltr">'+(sv==null?"—":((sv<0?"−":"+")+ar(Math.abs(Math.round(sv*100)))+"%"))+'</bdi></b></div><div><span>الإنجاز المخطط</span><b>'+(pl==null?"—":_dxPct(pl))+'</b></div></div>'
       +'<div class="pd-pbar"><u style="width:'+(_dxClamp(pl||0,0,1)*100).toFixed(1)+'%"></u><i style="width:'+(_dxClamp(a||0,0,1)*100).toFixed(1)+'%"></i></div>'
       +'<div class="dx-ks"><span class="pd-lg a"></span>الفعلي <span class="pd-lg p"></span>المخطط</div></div>'
-    +(function(){ var _dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):(_dxTxt(p.duration)||"—"), _sd=_dxTxt(p.stop_duration);
-        return '<div class="dx-kpi pd-durk"><div class="dx-kh"><span class="dx-ki">'+DX_ICO.clock+'</span><span class="dx-kl">المدد</span></div><div class="pd-dur">'
-          +'<div><span>مدة العقد</span><b>'+esc(_dur)+'</b></div><div><span>مدة التمديد</span><b>'+esc(_dxExtTxt(p))+'</b></div>'
-          +'<div><span>مدة الإيقاف</span><b>'+(_sd?esc(_sd)+' يوم':'لا يوجد')+'</b></div><div><span>المدة الكلية</span><b>'+(t.ok?ar(t.total)+' يوم':'—')+'</b></div></div></div>'; })()
     +'</div>';
+  var durBox=(function(){ var _dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):(_dxTxt(p.duration)||"—"), _sd=_dxTxt(p.stop_duration);
+        return '<div class="pd-durbox"><div class="pd-durh">'+DX_ICO.clock+'<span>المدد</span></div><div class="pd-dur">'
+          +'<div><span>مدة العقد</span><b>'+esc(_dur)+'</b></div><div><span>مدة التمديد</span><b>'+esc(_dxExtTxt(p))+'</b></div>'
+          +'<div><span>مدة الإيقاف</span><b>'+(_sd?esc(_sd)+' يوم':'لا يوجد')+'</b></div><div><span>المدة الكلية</span><b>'+(t.ok?ar(t.total)+' يوم':'—')+'</b></div></div></div>'; })();
   /* --- الجدول الزمني --- */
   var tl='';
   if(t.ok){ var nowF=_dxClamp(t.raw,0,1);
@@ -10908,7 +10978,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +(r.reasons.length?'<ul class="pd-why rk-pts">'+r.reasons.map(function(x,i){return '<li><b>+'+ar((r.pts||[])[i]||0)+'</b>'+esc(x)+'</li>';}).join("")+'</ul>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>');
   /* --- الأطراف والمراجع --- */
   var pm=_dxTxt(p.pm);
-  var ptBody='<div class="pd-rows">'+_pdRow("المقاول",_dxTxt(p.contractor)||"—")+_pdRow("الاستشاري",_dxTxt(p.consultant)||"—")
+  var ptBody=durBox+'<div class="pd-rows">'+_pdRow("المقاول",_dxTxt(p.contractor)||"—")+_pdRow("الاستشاري",_dxTxt(p.consultant)||"—")
     +_pdRow("مدير المشروع",pm?esc(pm).replace(/\n+/g,' · '):"—",true)+_pdRow("الإشراف",_dxTxt(p.supervision)||"—")
     +_pdRow("رقم العقد",_dxTxt(p.contract_ref)||"—")+_pdRow("رقم التعميد",_dxTxt(p.mandate_no)||"—")
     +_pdRow("رقم المنافسة",_dxTxt(p.competition_no)||"—")+_pdRow("البند",_dxTxt(p.budget_item)||"—")+'</div>'
@@ -10921,7 +10991,8 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +(_nS.length?'<div class="pd-note pd-short">'+_nS.map(function(x){ return '<div><span>'+esc(x[0])+'</span><b>'+_pdNoteV(x[0],x[1])+'</b></div>'; }).join("")+'</div>':'')+'</div>'):'<div class="dx-empty">لا توجد ملاحظات مسجّلة</div>';
   /* --- الصور --- */
   var imgs=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean);
-  var galBody='<div class="pd-gal" data-proj="'+esc(p.name||"")+'">'+(imgs.length?imgs.map(function(u){ return '<div class="gph"><img loading="lazy" referrerpolicy="no-referrer" src="'+u+'" onclick="lightbox(this.src)" onerror="this.parentNode.style.display=\'none\'"></div>'; }).join(""):'<div class="dx-empty">لا توجد صور مرفوعة لهذا المشروع</div>')+'</div>';
+  var galBody='<div class="pds-host" id="pdsHost" data-proj="'+esc(p.name||"")+'">'+_pdsHTML(imgs)+'</div>';
+  setTimeout(function(){ pdsStart(); try{ if(typeof cldProjectImages==="function"&&p.name) cldProjectImages(p.name).then(function(u){ var h=document.getElementById("pdsHost"); if(!u||!u.length||!h||h.getAttribute("data-proj")!==String(p.name||"")) return; var L=u.slice(0,12).map(function(x){ return typeof _cldThumb==="function"?_cldThumb(x,1600):x; }); h.innerHTML=_pdsHTML(L); var c=document.querySelector(".g-ph .dx-ch em, .g-ph .dx-cs"); if(c) c.textContent=ar(L.length)+" صور"; pdsStart(); }).catch(function(){}); }catch(e){} },60);
   _dxShow('<div class="dash dash3 dx dx-land pd pdl">'+tools+'<div class="dx-canvas">'+head+kpis
     +'<div class="dx-gr pdl-g">'+_dxCard("الجدول الزمني",esc(dur||""),tlBody,"g-tl")+_dxCard("الوضع المالي","",finBody,"g-fin")+_dxCard("المطالبات والجودة","",qBody,"g-cl")
       +_dxCard("آخر المستجدات","",ntBody,"g-nt")+_dxCard("صور الموقع",imgs.length?ar(imgs.length)+" صور":"",galBody,"pd-gcard g-ph")
@@ -14427,7 +14498,14 @@ function _cphRender(){ var g=document.getElementById("cphGallery"); if(!g)return
   var cnt=Object.keys(CPH._picked).length;
   var localSet={}; (CPH.local||[]).forEach(function(x){ localSet[x.pid]=1; });
   g.innerHTML='<div class="cph-tools"><b>حدّد حتى 4 صور لتظهر في التقارير</b> <span class="cph-cnt">('+ar(cnt)+'/4)</span> <button class="mt-btn" onclick="_cphSavePicks()">💾 حفظ المختارة</button> <button class="mt-btn" onclick="_cphLoad()">↻ تحديث القائمة</button></div>'
-    +'<div class="cph-grid">'+CPH.items.map(function(it){ var on=CPH._picked[it.pid]?" on":""; return '<div class="cph-cell'+on+'" data-pid="'+it.pid+'"><img src="'+_cldThumb(it.url,400)+'" onclick="window.open(\''+it.url+'\',\'_blank\')">'+(localSet[it.pid]?'<span class="cph-new">جديدة</span>':'')+'<label class="cph-pick"><input type="checkbox" '+(CPH._picked[it.pid]?"checked":"")+' onchange="_cphToggle(\''+it.pid+'\',this.checked)"> للتقارير</label></div>'; }).join("")+'</div>'; }
+    +'<div class="cph-grid">'+CPH.items.map(function(it){ var on=CPH._picked[it.pid]?" on":""; return '<div class="cph-cell'+on+'" data-pid="'+it.pid+'"><img src="'+_cldThumb(it.url,400)+'" onclick="window.open(\''+it.url+'\',\'_blank\')">'+(localSet[it.pid]?'<span class="cph-new">جديدة</span>':'')+'<button class="cph-del" title="حذف الصورة نهائياً" onclick="event.stopPropagation();_cphDelete(\''+it.pid+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></button>'+'<label class="cph-pick"><input type="checkbox" '+(CPH._picked[it.pid]?"checked":"")+' onchange="_cphToggle(\''+it.pid+'\',this.checked)"> للتقارير</label></div>'; }).join("")+'</div>'; }
+function _cphDelete(pid){ var it=(CPH.items||[]).filter(function(x){ return x.pid===pid; })[0]; if(!it||CPH._del) return;
+  if(!confirm("حذف هذه الصورة نهائياً من السحابة؟\nستختفي من التقارير ولوحة المشروع لكل المستخدمين، ولا يمكن التراجع.")) return;
+  CPH._del=true; var cell=document.querySelector('.cph-cell[data-pid="'+pid.replace(/"/g,'\\"')+'"]'); if(cell) cell.classList.add("busy"); _cphStat("● جارٍ حذف الصورة…","ok");
+  _pcgApi({action:"delete",publicId:pid}).then(function(){ CPH._del=false; CPH.items=CPH.items.filter(function(x){ return x.pid!==pid; }); CPH.local=(CPH.local||[]).filter(function(x){ return x.pid!==pid; });
+      var wasPicked=CPH._picked&&CPH._picked[pid]; if(CPH._picked) delete CPH._picked[pid]; try{ cldInvalidate(CPH.proj); }catch(e){}
+      _cphStat("✓ تم حذف الصورة — "+ar(CPH.items.length)+" صورة متبقية"+(wasPicked?" · كانت ضمن صور التقارير، احفظ المختارة لتحديثها":""),"ok"); _cphRender(); })
+    .catch(function(e){ CPH._del=false; if(cell) cell.classList.remove("busy"); _cphStat("⚠ "+((e&&e.message)||"تعذّر الحذف"),"warn"); }); }
 function _cphToggle(pid,on){ CPH._picked=CPH._picked||{}; if(on){ if(Object.keys(CPH._picked).length>=4 && !CPH._picked[pid]){ alert("الحد الأقصى 4 صور — أزل واحدة أولًا."); _cphRender(); return; } CPH._picked[pid]=1; } else { delete CPH._picked[pid]; } _cphRender(); }
 function _cphSavePicks(){ if(CPH._saving)return; if(!CPH.proj){ _cphStat("اختر المشروع أولًا.","warn"); return; }
   var picked=Object.keys(CPH._picked||{}); var all=(CPH.items||[]).map(function(x){return x.pid;});
