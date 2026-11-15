@@ -5122,7 +5122,7 @@ body .dx-land.pdl .fit .pd-head h1{white-space:normal!important;overflow:visible
 @media print{.hm-brf{display:none!important}}
 /* خلفية حيّة */
 #brf .brf-bg{overflow:hidden}
-#brf .brf-bg>i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+#brf .brf-bg>i{position:absolute;border-radius:50%;opacity:.5;will-change:transform;transform:translateZ(0)}
 #brf .brf-bg .o1{width:46vw;height:46vw;background:radial-gradient(circle,rgba(217,188,132,.55),transparent 65%);top:-18vw;inset-inline-start:-8vw;animation:brfO1 22s ease-in-out infinite alternate}
 #brf .brf-bg .o2{width:52vw;height:52vw;background:radial-gradient(circle,rgba(31,157,99,.5),transparent 65%);bottom:-24vw;inset-inline-end:-10vw;animation:brfO2 26s ease-in-out infinite alternate}
 #brf .brf-bg .o3{width:30vw;height:30vw;background:radial-gradient(circle,rgba(95,214,160,.35),transparent 65%);top:30%;left:35%;animation:brfO3 18s ease-in-out infinite alternate;transition:background 1.2s}
@@ -5152,9 +5152,9 @@ body .dx-land.pdl .fit .pd-head h1{white-space:normal!important;overflow:visible
 #brf .brf-sb i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(100%);animation:brfShine 1.4s calc(var(--d,0s) + 1.1s) ease-out both}
 @keyframes brfShine{to{transform:translateX(-100%)}}
 #brf .brf-reg .brf-sb i{background:linear-gradient(270deg,#3CC489,#D9BC84)}
-#brf .brf-sn .rk,#brf .brf-tr .rk{font-style:normal;display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:8px;background:rgba(217,188,132,.14);color:#F0D9A8;font-size:13px;font-weight:800}
+#brf .brf-sn .rk,#brf .brf-tr .rk,#brf .brf-cr .rk{font-style:normal;display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:8px;background:rgba(217,188,132,.14);color:#F0D9A8;font-size:13px;font-weight:800}
 #brf .brf-reg .brf-sr{grid-template-columns:220px 1fr 70px 190px}
-#brf .brf-sn .rk,#brf .brf-tr .rk{display:inline-flex!important;align-items:center;justify-content:center;flex:none!important;width:26px!important;max-width:26px;padding:0!important;line-height:1!important;text-align:center}
+#brf .brf-sn .rk,#brf .brf-tr .rk,#brf .brf-cr .rk{display:inline-flex!important;align-items:center;justify-content:center;flex:none!important;width:26px!important;max-width:26px;padding:0!important;line-height:1!important;text-align:center}
 /* حلقات */
 #brf .brf-rg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 #brf .brf-rg circle{fill:none;stroke-linecap:round}
@@ -5215,6 +5215,58 @@ body .dx-land.pdl .fit .pd-head h1{white-space:normal!important;overflow:visible
 #brf .brf-off .more{text-align:center;color:#9FB2A7;font-size:14px}
 @media (max-width:900px){#brf{padding:12px 14px 12px}#brf .brf-stage{overflow-y:auto;overflow-x:hidden;align-items:flex-start;min-height:0}#brf .brf-body{height:auto;min-height:100%}#brf .brf-fring,#brf .brf-qr{width:min(28vh,220px)!important}#brf .brf-fk b{font-size:20px}#brf .brf-fk>div{padding:10px}#brf .brf-cap{font-size:15px;min-height:0}}
 @media (max-width:900px){#brf .brf-fin{grid-template-columns:1fr;gap:20px;justify-items:center}#brf .brf-fk{grid-template-columns:repeat(2,minmax(0,1fr))}#brf .brf-tr{grid-template-columns:28px minmax(0,1fr)}#brf .brf-tv{grid-column:2;justify-content:flex-start}#brf .brf-or{grid-template-columns:1fr}#brf .brf-reg .brf-sr{grid-template-columns:120px 1fr 56px}#brf .brf-reg .brf-sr>em{display:none}}
+
+/* ===== رحلة المحفظة 3: خريطة سلسة + بيانات أكثر ===== */
+#brf .gd{transform-box:fill-box;transform-origin:center;transition:opacity .55s ease,transform .6s cubic-bezier(.2,1.4,.4,1)}
+#brf .gd.off{opacity:0;transform:scale(.15);pointer-events:none}
+#brf .gd-c{transition:fill .6s ease}
+#brf .gd:not(.gd-run) .gd-pl{display:none}
+#brf .gd:not(.gd-late) .gd-x{display:none}
+#brf .gm-r{transition:fill .7s ease}
+#brf .gm-a tspan{transition:opacity .3s}#brf .gm-a.z{opacity:.55}
+#brf .gm-fl,#brf .gm-ln{opacity:calc(var(--fl,1)*.7);transition:opacity .6s}
+#brf[data-k="map"] .brf-bg>i{animation-play-state:paused}
+#brf .geo-cur{transition:none!important}
+#brf .brf-mk b{font-variant-numeric:tabular-nums}
+/* الافتتاح */
+#brf .brf-mini{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+#brf .brf-mini span{display:inline-flex;align-items:baseline;gap:6px;padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:14px;color:#9FB2A7;animation:brfIn .5s both;animation-delay:var(--d)}
+#brf .brf-mini b{font-size:19px;color:#F0D9A8;font-weight:900}
+/* القطاعات */
+#brf .brf-sec:not(.brf-reg) .brf-sr{grid-template-columns:190px 1fr 70px 260px}
+#brf .brf-sr em u{text-decoration:none}#brf .brf-sr em u.bad{color:#F08A7E}
+/* وضع المشاريع */
+#brf .brf-stl>div:not(.brf-split){grid-template-columns:14px 1fr 60px 110px!important}
+#brf .brf-stl em small{display:block;font-size:12px;color:#D9BC84}
+/* الأداء الزمني */
+#brf .brf-tm{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:50px;align-items:end;width:min(1180px,100%)}
+#brf .brf-hist{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;height:min(46vh,400px);align-items:end}
+#brf .brf-hist .hc{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;animation:brfIn .5s both;animation-delay:var(--d)}
+#brf .brf-hist i{width:100%;height:var(--h);min-height:4px;border-radius:12px 12px 4px 4px;transform-origin:bottom;animation:brfGrow 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d) + .15s);box-shadow:0 0 30px -8px currentColor}
+@keyframes brfGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+#brf .brf-hist b{font-size:30px;font-weight:900}#brf .brf-hist span{font-size:13.5px;color:#9FB2A7;text-align:center}
+#brf .brf-tk{display:flex;flex-direction:column;gap:10px}
+#brf .brf-tk>div{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);animation:brfIn .5s both;animation-delay:var(--d)}
+#brf .brf-tk b{font-size:26px;font-weight:900}#brf .brf-tk span{font-size:14px;color:#C9D6CF}
+#brf .brf-tk .a b{color:#E3C88E}#brf .brf-tk .r b{color:#F08A7E}#brf .brf-tk .w b{color:#F2B880}
+/* المقاولون */
+#brf .brf-ctr{width:min(1180px,100%);display:flex;flex-direction:column;gap:9px}
+#brf .brf-cr{display:grid;grid-template-columns:30px minmax(0,1fr) repeat(4,96px);gap:14px;align-items:center;padding:11px 16px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);animation:brfIn .5s both;animation-delay:var(--d)}
+#brf .brf-cr .cn{min-width:0}#brf .brf-cr .cn span{display:block;font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#brf .brf-cr .cn u{display:block;height:5px;border-radius:9px;background:rgba(255,255,255,.07);margin-top:7px}
+#brf .brf-cr .cn s{display:block;height:100%;width:var(--w);border-radius:9px;background:linear-gradient(270deg,#D9BC84,#B8955A);transform-origin:right;animation:brfBar 1s calc(var(--d) + .2s) both}
+#brf .brf-cr .cm{text-align:center}#brf .brf-cr .cm b{display:block;font-size:20px;font-weight:900}#brf .brf-cr .cm span{font-size:11.5px;color:#9FB2A7}
+#brf .brf-cr .cm.g b{color:#5FD6A0}#brf .brf-cr .cm.r b{color:#F08A7E}
+/* الجودة */
+#brf .brf-ncr{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;padding:12px 16px;border-radius:16px;background:rgba(240,138,126,.06);border:1px solid rgba(240,138,126,.2);animation:brfIn .5s .8s both}
+#brf .brf-ncr em{font-style:normal;font-size:12.5px;color:#F4A79D}
+#brf .brf-ncr span{display:flex;justify-content:space-between;gap:12px;font-size:13.5px}#brf .brf-ncr i{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#DCE6DF}#brf .brf-ncr b{color:#F08A7E}
+/* قيد التسليم: شهري */
+#brf .brf-mh{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;height:120px;align-items:end;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+#brf .brf-mh>div{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;animation:brfIn .5s both;animation-delay:var(--d)}
+#brf .brf-mh i{width:70%;height:var(--h);min-height:3px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#F0D9A8,#B8955A);transform-origin:bottom;animation:brfGrow .9s calc(var(--d) + .1s) both}
+#brf .brf-mh b{font-size:14px;color:#F0D9A8}#brf .brf-mh span{font-size:11px;color:#9FB2A7}
+@media (max-width:900px){#brf .brf-tm{grid-template-columns:1fr;gap:16px}#brf .brf-hist{height:30vh}#brf .brf-cr{grid-template-columns:24px minmax(0,1fr) 64px 64px}#brf .brf-cr .cm:nth-of-type(3),#brf .brf-cr .cm:nth-of-type(5){display:none}#brf .brf-sec:not(.brf-reg) .brf-sr{grid-template-columns:110px 1fr 50px}#brf .brf-sec .brf-sr>em{display:none}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9560,12 +9612,12 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
     +'<div class="pc4-hr"><div class="pc4-rg">'+ring+'</div><img class="pc4-logo" src="'+LOGO_W+'" alt="ريف"></div></div>';
   var acts='<div class="pc4-bar noprint"><button class="pc3-back" onclick="projRegOpen(true)">'+_pcIco("back")+' سجل المشاريع</button><div class="pc3-acts"><button class="pc3-b pri" onclick="pmOpen(\''+q+'\',true)">'+_pcIco("edit")+' تعديل البيانات</button><button class="pc3-b go2" onclick="projDash(\''+q+'\')">'+_pcIco("dash")+' لوحة المشروع</button><button class="pc3-b ic" title="طباعة البطاقة" onclick="printAnswer()">'+_pcIco("print")+'</button></div></div>';
   var info='<div class="pc4-info">'+[["sec","القطاع",p.sector],["reg","المنطقة",p.region],["typ","النوع",p.ptype],["ctr","المقاول",p.contractor],["cns","الاستشاري",p.consultant],["pm","مدير المشروع",pmName]].map(function(x){ return '<div><i>'+ico(x[0])+'</i><span>'+x[1]+'</span><b title="'+esc(_dxTxt(x[2])||"")+'">'+_pcV(x[2])+'</b></div>'; }).join("")+'</div>';
-  var chg=v-orig, cl=_dxN(p.total_claims)||_dxN(p.claims_count), ap=_dxN(p.approved_claims);
+  var chg=v-orig, cl=_dxN(p.claims_count), ap=_dxN(p.approved);
   var kp=function(cls,l,val,sub,bar,mk){ return '<div class="pc4-k '+(cls||"")+'"><span>'+l+'</span><b>'+val+'</b><em>'+sub+'</em>'+(bar!=null?'<div class="pc4-bar2"><u style="width:'+(Math.max(0,Math.min(1,bar))*100).toFixed(1)+'%"></u>'+(mk!=null?'<s style="inset-inline-start:'+(Math.max(0,Math.min(1,mk))*100).toFixed(1)+'%"></s>':'')+'</div>':'')+'</div>'; };
   var kpis='<div class="pc4-kpis">'
     +kp("dark","القيمة بعد التعديل",_pcMoney(v)+'<small>'+RYL+'</small>',(orig&&Math.abs(chg)>1?(chg>0?'▲ +':'▼ −')+_dxM(Math.abs(chg))+' عن الأصلية':'بدون تعديل على القيمة'))
     +kp("","المنصرف",_pcMoney(dis)+'<small>'+RYL+'</small>',_dxPct(sp)+' من القيمة'+(und?' · تحت الإجراء '+_dxM(und):''),sp)
-    +kp("","المستخلصات",ar(cl),ap?ar(ap)+' معتمد':'لا توجد مستخلصات')
+    +kp("","المستخلصات",ar(cl),cl?('المعتمد '+_dxM(ap||_dxN(p.disbursed))):'لا توجد مستخلصات')
     +kp("c-"+cat,"الحيود عن الخطة",dev==null?'—':_dxPct(dev),DX_CAT[cat].l)
     +(function(){ var A=a||0, Pl=pl, g=(Pl==null)?null:A-Pl, col=(DX_CAT[cat]||{}).c||"#1E5B3A";
         return '<div class="pc4-k pc4-pv"><span>الإنجاز المخطط مقابل الفعلي</span><b>'+(Pl==null?'—':_dxPct(Pl))+'<small class="pv-l">مخطط</small></b>'
@@ -9586,13 +9638,15 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var notes=[["الموقف الحالي",p.build_status||p.last_note],["الملخص التنفيذي",p.exec_summary],["المغايرات",p.variations],["البنود المستحدثة",p.new_items],["الالتزام البيئي",p.env]].filter(function(x){ return _dxTxt(x[1]); });
   var nL=notes.filter(function(x){ return String(_dxTxt(x[1])).length>45; }), nS=notes.filter(function(x){ return String(_dxTxt(x[1])).length<=45; });
   var ntBox=notes.length?'<div class="pc4-nt">'+nL.map(function(x){ return '<div class="pc4-ntl"><span>'+x[0]+'</span><p>'+_pcV(x[1])+'</p></div>'; }).join("")+(nS.length?'<div class="pc4-nts">'+nS.map(function(x){ return '<div><span>'+x[0]+'</span><b>'+_pcV(x[1])+'</b></div>'; }).join("")+'</div>':'')+'</div>':'<div class="hb-empty">لا توجد مستجدات مسجّلة.</div>';
-  var claims='<div class="pc3-mini">'+[["إجمالي المستخلصات",p.total_claims||p.claims_count],["المعتمدة",p.approved_claims],["تحت الدراسة",p.under_study],["المُعادة",p.returned_claims],["الإنجاز حسب المستخلصات",p.claims_pct!=null&&String(p.claims_pct).trim()!==""?_dxPct(pct(p.claims_pct)):""],["الإنذارات",p.warn_count]].map(function(x){ return '<div><span>'+x[0]+'</span><b>'+(x[1]===""||x[1]==null?"—":(typeof x[1]==="string"&&/%/.test(x[1])?esc(x[1]):ar(_dxN(x[1]))))+'</b></div>'; }).join("")+'</div>';
+  var _miniF=function(L){ return '<div class="pc3-mini">'+L.map(function(x){ return '<div><span>'+x[0]+'</span><b>'+(x[1]===""||x[1]==null?"—":(x[2]==="m"?esc(_dxM(_dxN(x[1]))):(typeof x[1]==="string"&&/%/.test(x[1])?esc(x[1]):ar(_dxN(x[1])))))+'</b></div>'; }).join("")+'</div>'; };
+  var extr=_miniF([["عدد المستخلصات",p.claims_count],["إجمالي المستخلصات المعتمدة",p.approved,"m"],["المنصرف",p.disbursed,"m"],["تحت الإجراء",p.under_proc,"m"],["الإنجاز حسب المستخلصات",p.claims_pct!=null&&String(p.claims_pct).trim()!==""?_dxPct(pct(p.claims_pct)):""],["المتبقي من العقد",p.remaining,"m"]]);
+  var claims='<div class="pc3-mini">'+[["إجمالي الاعتمادات",p.total_claims],["معتمد",p.approved_claims],["تحت الدراسة",p.under_study],["يُعاد التسليم",p.returned_claims],["الإنذارات",p.warn_count]].map(function(x){ return '<div><span>'+x[0]+'</span><b>'+(x[1]===""||x[1]==null?"—":(typeof x[1]==="string"&&/%/.test(x[1])?esc(x[1]):ar(_dxN(x[1]))))+'</b></div>'; }).join("")+'</div>';
   var rkBox='<div class="pc3-rk"><div class="pc3-rkh">'+_dxLevel(r.level)+'<em>درجة المخاطر '+ar(r.score)+' نقطة · عالي ≥ 4 · متوسط 2–3 · منخفض 1</em></div>'+(r.reasons.length?'<ul class="rk-pts">'+r.reasons.map(function(x,i){ return '<li><b>+'+ar((r.pts||[])[i]||0)+'</b>'+esc(x)+'</li>'; }).join("")+'</ul>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>')+'<div class="note">النقاط: متوقف +3 · تجاوز تاريخ النهاية +3 · حيود 15% فأكثر +2 · الصرف أعلى من الإنجاز بأكثر من 10 نقاط +2 · إنذارات +1 · تقارير عدم مطابقة +1</div></div>';
   var gal='<div class="pc3-ph pc4-mg"><div class="pc3-phh"><h3>كل صور المشروع<small id="pc3GalN"></small></h3><label class="pc3-b sm noprint" title="رفع صور جديدة لهذا المشروع على السحابة">'+_pcIco("plus")+' إضافة صور<input type="file" accept="image/*" multiple hidden onchange="pcgUpload(this)"></label></div><div class="pc3-gal" id="pc3Gal"></div><div class="note">الصور المختارة للتقارير تُحدَّد من صفحة «صور المشاريع (سحابية)» — حتى 4 صور.</div></div>';
   var pane=function(id,title,body,pb){ return '<section class="pc3-pane pc4-pane'+(PCARD.tab===id?" on":"")+(pb?" pb":"")+'" data-tab="'+id+'"><h3>'+title+'</h3>'+body+'</section>'; };
   var panes=pane("ov","نظرة عامة",tlBox+(notes.length?'<div class="pc3-sub">آخر المستجدات</div>'+ntBox:''))
     +pane("data","البيانات والتعاقد",'<div class="pc3-two">'+_pcRows(_pcSecF("البيانات الأساسية"),"البيانات الأساسية")+_pcRows(_pcSecF("الأطراف والمراجع"),"الأطراف والمراجع")+'</div>',true)
-    +pane("fin","المالية والمستخلصات",'<div class="pc3-two">'+_pcRows(_pcSecF("الوضع المالي").concat(_pcSecF("الإنجاز")),"الوضع المالي والإنجاز")+'<div class="pc3-rows"><div class="pc3-rt">المستخلصات</div>'+claims+'</div></div>')
+    +pane("fin","المالية والمستخلصات",'<div class="pc3-two">'+_pcRows(_pcSecF("الوضع المالي").concat(_pcSecF("الإنجاز")),"الوضع المالي والإنجاز")+'<div class="pc3-rows"><div class="pc3-rt">المستخلصات</div>'+extr+'<div class="pc3-rt" style="margin-top:14px">الاعتمادات (المواد والمخططات)</div>'+claims+'</div></div>')
     +pane("tl","الجدول الزمني",tlBox+_pcRows(_pcSecF("التواريخ").filter(function(f){ return f[0]!=="last_update"; }),"التواريخ"),true)
     +pane("nt","المستجدات",ntBox)
     +pane("rk","المخاطر",rkBox)
@@ -10346,10 +10400,10 @@ function _geoMapSVG(S,at){ var SA=Array.isArray(GEO.sel)?GEO.sel:(GEO.sel?[GEO.s
   var cls=function(v){ if(!v) return 0; var f=v/mx; return f>0.66?4:(f>0.4?3:(f>0.18?2:1)); };
   var dot=function(x,cx,cy,sc){ var p=x.p, s=x.s, r=rad(p)*(sc||1), k=s.late?"late":s.st, q=String(p.code).replace(/'/g,"\\'");
     var t=esc(p.name||p.code)+" · "+(s.late?"متأخر عن موعد نهايته":GEO_LBL[s.st])+" · "+_dxM(_dxBase(p))+(s.st==="run"||s.st==="done"?" · إنجاز "+_dxPct(s.a):"");
-    return '<g class="gd gd-'+k+'" onclick="event.stopPropagation();projDash(\''+q+'\')"><title>'+t+'</title>'
-      +(s.st==="run"?'<circle class="gd-pl" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+r.toFixed(1)+'"/>':'')
+    return '<g class="gd gd-'+k+'" data-c="'+esc(String(p.code))+'" onclick="event.stopPropagation();projDash(\''+q+'\')"><title>'+t+'</title>'
+      +(s.st==="run"||GEO.full?'<circle class="gd-pl" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+r.toFixed(1)+'"/>':'')
       +'<circle class="gd-c" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+r.toFixed(1)+'"/>'
-      +(s.late&&r>=4.6?'<text class="gd-x" x="'+cx.toFixed(1)+'" y="'+(cy+3.4).toFixed(1)+'">!</text>':'')+'</g>'; };
+      +((s.late||GEO.full)&&r>=4.6?'<text class="gd-x" x="'+cx.toFixed(1)+'" y="'+(cy+3.4).toFixed(1)+'">!</text>':'')+'</g>'; };
   var paths="", names="", dots="", lns="", nm={}, nmQ=[];
   KSA_REG.r.forEach(function(r){ var v=cnt[r.ar], on=SA.indexOf(r.ar)>-1, dim=SA.length&&!on, q=esc(r.ar).replace(/'/g,"\\'"), ck="mapToggleRegion('"+q+"')", sm=/الباحة|جازان/.test(r.ar);
     paths+='<path class="gm-r gm-c'+cls(v)+(on?' on':'')+(dim?' dim':'')+'" d="'+r.d+'" onclick="'+ck+'"><title>'+esc(r.ar)+': '+ar(v)+' مشروع</title></path>';
@@ -10357,7 +10411,7 @@ function _geoMapSVG(S,at){ var SA=Array.isArray(GEO.sel)?GEO.sel:(GEO.sel?[GEO.s
     var g=grp[r.ar].slice().sort(function(a,b){ return (_dxBase(b.p)||0)-(_dxBase(a.p)||0); }), sc=sm?(g.length>8?0.5:0.7):(g.length>12?0.8:1), step=(sm?4.4:9.6)*(sm?1:sc);
     g.forEach(function(x,i){ var ang=i*2.39996, d=i?step*Math.sqrt(i)+3:0; dots+=dot(x,r.x+d*Math.cos(ang),r.y+4+d*Math.sin(ang)*0.82,sc); });
     var cr=g.length?(g.length>1?step*Math.sqrt(g.length-1)+3:0)*0.82+14*sc+4:0; nm[r.ar]=Math.max(sm?9:15,cr); });
-  nmQ.forEach(function(z){ var r=z[0], sm=z[1]; names+='<text class="gm-a'+(sm?' sm':'')+(z[2]?' dim':'')+'" x="'+r.x+'" y="'+(r.y+4-nm[r.ar]).toFixed(1)+'" onclick="'+z[3]+'">'+esc(r.ar)+(z[4]?' <tspan>'+ar(z[4])+'</tspan>':'')+'</text>'; });
+  nmQ.forEach(function(z){ var r=z[0], sm=z[1]; names+='<text class="gm-a'+(sm?' sm':'')+(z[2]?' dim':'')+'" x="'+r.x+'" y="'+(r.y+4-nm[r.ar]).toFixed(1)+'" onclick="'+z[3]+'">'+esc(r.ar)+(z[4]||GEO.full?' <tspan>'+ar(z[4])+'</tspan>':'')+'</text>'; });
   var secR={}; S.forEach(function(x){ var rs=KSA_REG.r.filter(function(r){ return _regionHas(x.p.region,r.ar); }); if(rs.length!==1) return; var k=x.p.sector||""; if(!k) return; secR[k]=secR[k]||{}; secR[k][rs[0].ar]=(secR[k][rs[0].ar]||0)+1; });
   var RB={}; KSA_REG.r.forEach(function(r){ RB[r.ar]=r; });
   var FL=[]; Object.keys(secR).forEach(function(k,si){ var m=secR[k], ks=Object.keys(m).sort(function(a,b){ return m[b]-m[a]; }); if(ks.length<2) return;
@@ -10463,19 +10517,21 @@ function _brfMO(d){ var MO=["يناير","فبراير","مارس","أبريل",
 function _brfRegOf(p){ var r=KSA_REG.r.filter(function(x){ return _regionHas(p.region,x.ar); })[0]; return r?r.ar:(p.region||"مناطق المملكة"); }
 function _brfScenes(X){ var S=[], pc=function(x){ return _dxPct(x); }, M=function(x){ return _dxM(x); };
   var top=X.secL[0], sec2=X.secL[1], offN=X.cnt.late+X.cnt.stumb;
-  S.push({k:"intro",d:4500,lbl:"الافتتاح",cap:'تضم المحفظة <b>'+ar(X.n)+'</b> مشروعاً بقيمة تعاقدية <b>'+M(X.val)+'</b>، بمتوسط إنجاز فعلي مرجّح بالقيمة <b>'+pc(X.wA)+'</b> مقابل <b>'+pc(X.avgP)+'</b> مخطط (و<b>'+pc(X.wS)+'</b> للمشاريع القائمة)، وصُرف <b>'+pc(X.spend)+'</b> من القيمة.'});
-  S.push({k:"map",d:8500,lbl:"رحلة عبر الزمن",cap:X.first?('بدأت المحفظة في <b>'+_brfMO(X.first.t)+'</b> بأول مشروع في <b>'+esc(_brfRegOf(X.first.p))+'</b>…'):'التوزيع الجغرافي للمحفظة',
+  S.push({k:"intro",d:3800,lbl:"الافتتاح",cap:'تضم المحفظة <b>'+ar(X.n)+'</b> مشروعاً بقيمة تعاقدية <b>'+M(X.val)+'</b>، بمتوسط إنجاز فعلي مرجّح بالقيمة <b>'+pc(X.wA)+'</b> مقابل <b>'+pc(X.avgP)+'</b> مخطط (و<b>'+pc(X.wS)+'</b> للمشاريع القائمة)، وصُرف <b>'+pc(X.spend)+'</b> من القيمة.'});
+  S.push({k:"map",d:7000,lbl:"رحلة عبر الزمن",cap:X.first?('بدأت المحفظة في <b>'+_brfMO(X.first.t)+'</b> بأول مشروع في <b>'+esc(_brfRegOf(X.first.p))+'</b>…'):'التوزيع الجغرافي للمحفظة',
     cap2:'واليوم تمتد إلى <b>'+ar(X.nReg)+'</b> منطقة، منها <b>'+ar(X.run)+'</b> مشروعاً قيد التنفيذ و<b>'+ar(X.done)+'</b> منتهية.'});
   var F=X.fin, fb=Math.max(1,F.aft);
-  S.push({k:"fin",d:6000,lbl:"المسار المالي",cap:'صُرف <b>'+M(F.dis)+'</b> من أصل <b>'+M(F.aft)+'</b> (<b>'+pc(F.dis/fb)+'</b>) عبر <b>'+ar(F.cc)+'</b> مستخلصاً، مقابل إنجاز فعلي مرجّح <b>'+pc(X.wA)+'</b>'+(F.dis/fb+0.05<X.wA?' — الصرف يسير خلف الإنجاز.':'.')});
-  if(top) S.push({k:"sec",d:5500,lbl:"القطاعات",cap:'يتصدّر قطاع <b>'+esc(top.k)+'</b> المحفظة بـ<b>'+ar(top.n)+'</b> مشروعاً و<b>'+pc(X.val?top.v/X.val:0)+'</b> من القيمة'+(sec2?'، يليه <b>'+esc(sec2.k)+'</b> بـ<b>'+pc(X.val?sec2.v/X.val:0)+'</b>':'')+'.'});
-  if(X.regL.length){ var r0=X.regL[0]; S.push({k:"reg",d:5500,lbl:"المناطق",cap:'تتصدّر <b>'+esc(r0.k)+'</b> بـ<b>'+ar(r0.n)+'</b> مشروعاً و<b>'+pc(X.val?r0.v/X.val:0)+'</b> من القيمة، وتنتشر المحفظة في <b>'+ar(X.regL.length)+'</b> مناطق.'}); }
-  S.push({k:"st",d:5500,lbl:"وضع المشاريع",cap:'<b>'+ar(X.cnt.ok)+'</b> مشروعاً منتظماً ضمن المسار، و<b>'+ar(offN)+'</b> خارج المسار ('+ar(X.cnt.stumb)+' متعثّر و'+ar(X.cnt.late)+' متأخر)، و<b>'+ar(X.cnt.watch)+'</b> يحتاج متابعة، و<b>'+ar(X.cnt.ns)+'</b> لم يبدأ بعد.'});
-  if(X.top.length){ var tv=X.top.reduce(function(a,r){ return a+_dxBase(r.p); },0); S.push({k:"top",d:6000,lbl:"أكبر المشاريع قيمة",cap:'أكبر <b>'+ar(X.top.length)+'</b> مشاريع تمثّل <b>'+pc(X.val?tv/X.val:0)+'</b> من قيمة المحفظة بإجمالي <b>'+M(tv)+'</b>.'}); }
-  S.push(X.off.length?{k:"off",d:6500,lbl:"تحتاج انتباهاً",cap:'<b>'+ar(X.off.length)+'</b> مشروعاً خارج المسار بقيمة <b>'+M(X.off.reduce(function(a,r){ return a+_dxBase(r.p); },0))+'</b>، أبرزها <b>'+esc(X.off[0].p.name||X.off[0].p.code)+'</b>.'}:{k:"att0",d:4000,lbl:"تحتاج انتباهاً",cap:'لا توجد مشاريع خارج المسار.'});
-  S.push({k:"q",d:5500,lbl:"الجودة والاعتمادات",cap:X.q.tot?('بلغت نسبة الاعتماد <b>'+(X.q.rate==null?'—':pc(X.q.rate))+'</b> من <b>'+ar(X.q.tot)+'</b> اعتماداً، مع <b>'+ar(X.q.site)+'</b> زيارة ميدانية و<b>'+ar(X.q.ncr)+'</b> حالة عدم مطابقة.'):'لا تتوفر بيانات اعتمادات بعد.'});
-  S.push({k:"done",d:5500,lbl:"المنجز فعلياً",cap:X.doneL.length?('أُنجز فعلياً <b>'+ar(X.doneL.length)+'</b> مشروعاً بقيمة <b>'+M(X.doneV)+'</b>'+(X.doneL[0]&&X.doneL[0].e?'، آخرها <b>'+esc(X.doneL[0].p.name||X.doneL[0].p.code)+'</b> في <b>'+_brfMO(X.doneL[0].e)+'</b>':'')+'.'):'لم يكتمل أي مشروع بعد.'});
-  S.push({k:"soon",d:5500,lbl:"قيد التسليم · الأشهر الستة القادمة",cap:X.soon.length?('خلال الأشهر الستة القادمة يُنتظر تسليم <b>'+ar(X.soon.length)+'</b> مشروعاً بقيمة <b>'+M(X.soonV)+'</b>.'):'لا توجد تسليمات مجدولة خلال الأشهر الستة القادمة.'});
+  S.push({k:"fin",d:4500,lbl:"المسار المالي",cap:'صُرف <b>'+M(F.dis)+'</b> من أصل <b>'+M(F.aft)+'</b> (<b>'+pc(F.dis/fb)+'</b>) عبر <b>'+ar(F.cc)+'</b> مستخلصاً، مقابل إنجاز فعلي مرجّح <b>'+pc(X.wA)+'</b>'+(F.dis/fb+0.05<X.wA?' — الصرف يسير خلف الإنجاز.':'.')});
+  if(top) S.push({k:"sec",d:4200,lbl:"القطاعات",cap:'يتصدّر قطاع <b>'+esc(top.k)+'</b> المحفظة بـ<b>'+ar(top.n)+'</b> مشروعاً و<b>'+pc(X.val?top.v/X.val:0)+'</b> من القيمة'+(sec2?'، يليه <b>'+esc(sec2.k)+'</b> بـ<b>'+pc(X.val?sec2.v/X.val:0)+'</b>':'')+'.'});
+  if(X.regL.length){ var r0=X.regL[0]; S.push({k:"reg",d:4200,lbl:"المناطق",cap:'تتصدّر <b>'+esc(r0.k)+'</b> بـ<b>'+ar(r0.n)+'</b> مشروعاً و<b>'+pc(X.val?r0.v/X.val:0)+'</b> من القيمة، وتنتشر المحفظة في <b>'+ar(X.regL.length)+'</b> مناطق.'}); }
+  S.push({k:"st",d:4200,lbl:"وضع المشاريع",cap:'<b>'+ar(X.cnt.ok)+'</b> مشروعاً منتظماً ضمن المسار، و<b>'+ar(offN)+'</b> خارج المسار ('+ar(X.cnt.stumb)+' متعثّر و'+ar(X.cnt.late)+' متأخر)، و<b>'+ar(X.cnt.watch)+'</b> يحتاج متابعة، و<b>'+ar(X.cnt.ns)+'</b> لم يبدأ بعد.'});
+  var T=X.tm; S.push({k:"tm",d:4200,lbl:"الأداء الزمني",cap:'من <b>'+ar(T.run)+'</b> مشروعاً قيد التنفيذ، <b>'+ar(T.hb[0].n+T.hb[1].n)+'</b> في المسار أو متقدّمة، و<b>'+ar(T.hb[3].n+T.hb[4].n)+'</b> متأخرة بأكثر من 15%؛ و<b>'+ar(T.ext)+'</b> مشروعاً حصلت على تمديد بإجمالي <b>'+ar(Math.round(T.extM))+'</b> شهراً.'});
+  if(X.top.length){ var tv=X.top.reduce(function(a,r){ return a+_dxBase(r.p); },0); S.push({k:"top",d:4500,lbl:"أكبر المشاريع قيمة",cap:'أكبر <b>'+ar(X.top.length)+'</b> مشاريع تمثّل <b>'+pc(X.val?tv/X.val:0)+'</b> من قيمة المحفظة بإجمالي <b>'+M(tv)+'</b>.'}); }
+  if(X.ctL.length){ var c0=X.ctL[0]; S.push({k:"ctr",d:4200,lbl:"المقاولون",cap:'<b>'+ar(X.ctL.length)+'</b> مقاولاً ينفّذون المحفظة؛ أكبرهم <b>'+esc(c0.k)+'</b> بـ<b>'+ar(c0.n)+'</b> مشاريع وقيمة <b>'+M(c0.v)+'</b>.'}); }
+  S.push(X.off.length?{k:"off",d:4800,lbl:"تحتاج انتباهاً",cap:'<b>'+ar(X.off.length)+'</b> مشروعاً خارج المسار بقيمة <b>'+M(X.off.reduce(function(a,r){ return a+_dxBase(r.p); },0))+'</b>، أبرزها <b>'+esc(X.off[0].p.name||X.off[0].p.code)+'</b>.'}:{k:"att0",d:3000,lbl:"تحتاج انتباهاً",cap:'لا توجد مشاريع خارج المسار.'});
+  S.push({k:"q",d:4200,lbl:"الجودة والاعتمادات",cap:X.q.tot?('بلغت نسبة الاعتماد <b>'+(X.q.rate==null?'—':pc(X.q.rate))+'</b> من <b>'+ar(X.q.tot)+'</b> اعتماداً، مع <b>'+ar(X.q.site)+'</b> زيارة ميدانية و<b>'+ar(X.q.ncr)+'</b> حالة عدم مطابقة.'):'لا تتوفر بيانات اعتمادات بعد.'});
+  S.push({k:"done",d:4200,lbl:"المنجز فعلياً",cap:X.doneL.length?('أُنجز فعلياً <b>'+ar(X.doneL.length)+'</b> مشروعاً بقيمة <b>'+M(X.doneV)+'</b>'+(X.doneL[0]&&X.doneL[0].e?'، آخرها <b>'+esc(X.doneL[0].p.name||X.doneL[0].p.code)+'</b> في <b>'+_brfMO(X.doneL[0].e)+'</b>':'')+'.'):'لم يكتمل أي مشروع بعد.'});
+  S.push({k:"soon",d:4500,lbl:"قيد التسليم · الأشهر الستة القادمة",cap:X.soon.length?('خلال الأشهر الستة القادمة يُنتظر تسليم <b>'+ar(X.soon.length)+'</b> مشروعاً بقيمة <b>'+M(X.soonV)+'</b>.'):'لا توجد تسليمات مجدولة خلال الأشهر الستة القادمة.'});
   S.push({k:"end",d:0,lbl:"الختام",cap:'انتهى العرض · البيانات كما في <b>'+esc(new Date().toLocaleString("ar-SA-u-nu-latn",{dateStyle:"long",timeStyle:"short"}))+'</b>'});
   return S; }
 function _brfExtra(X){ var D=X.D, N=_dxN, F={est:0,con:0,aft:0,chg:0,dis:0,proc:0,rem:0,cc:0};
@@ -10483,7 +10539,19 @@ function _brfExtra(X){ var D=X.D, N=_dxN, F={est:0,con:0,aft:0,chg:0,dis:0,proc:
   X.fin=F; var rg={};
   X.rows.forEach(function(r){ var k=_brfRegOf(r.p), v=_dxBase(r.p); rg[k]=rg[k]||{n:0,v:0,a:0,w:0}; rg[k].n++; rg[k].v+=v; if(r.a!=null&&!r.done){ rg[k].a+=r.a*(v||1); rg[k].w+=(v||1); } });
   X.regL=Object.keys(rg).map(function(k){ var o=rg[k]; return {k:k,n:o.n,v:o.v,a:o.w?o.a/o.w:null}; }).sort(function(a,b){ return b.v-a.v; });
-  X.top=X.rows.slice().sort(function(a,b){ return _dxBase(b.p)-_dxBase(a.p); }).slice(0,5); return X; }
+  X.top=X.rows.slice().sort(function(a,b){ return _dxBase(b.p)-_dxBase(a.p); }).slice(0,5);
+  var sx={}; X.rows.forEach(function(r){ var k=r.p.sector||"أخرى", v=_dxBase(r.p)||1; sx[k]=sx[k]||{a:0,w:0,off:0,done:0}; if(r.a!=null&&!r.done){ sx[k].a+=r.a*v; sx[k].w+=v; } if(r.cat==="late"||r.cat==="stumb") sx[k].off++; if(r.done) sx[k].done++; });
+  X.secL.forEach(function(z){ var o=sx[z.k]||{}; z.a=o.w?o.a/o.w:null; z.off=o.off||0; z.done=o.done||0; });
+  var cv={}; X.rows.forEach(function(r){ cv[r.cat]=(cv[r.cat]||0)+_dxBase(r.p); }); X.catV=cv;
+  var ct={}; X.rows.forEach(function(r){ var k=String(r.p.contractor||"").replace(/\s+/g," ").trim(); if(!k||/^(—|-|لا يوجد)$/.test(k)) return; var v=_dxBase(r.p); ct[k]=ct[k]||{k:k,n:0,v:0,a:0,w:0,off:0}; var o=ct[k]; o.n++; o.v+=v; if(r.a!=null&&!r.done){ o.a+=r.a*(v||1); o.w+=(v||1); } if(r.cat==="late"||r.cat==="stumb") o.off++; });
+  X.ctL=Object.keys(ct).map(function(k){ var o=ct[k]; o.a=o.w?o.a/o.w:null; return o; }).sort(function(a,b){ return b.v-a.v; });
+  var hb=[{l:"متقدّم عن الخطة",c:"#3CC489",n:0},{l:"متأخر حتى 5%",c:"#8FD3A8",n:0},{l:"5% – 15%",c:"#E3C88E",n:0},{l:"15% – 25%",c:"#F2B880",n:0},{l:"أكثر من 25%",c:"#F08A7E",n:0}], run=0, ext=0, extM=0;
+  X.rows.forEach(function(r){ if(r.done||r.a==null||r.pl==null||!(r.pl>0)) return; run++; var g=r.pl-r.a; hb[g<=0?0:(g<=.05?1:(g<=.15?2:(g<=.25?3:4)))].n++; });
+  X.D.forEach(function(p){ var m=/(\d+(?:\.\d+)?)/.exec(String(p.extension||"")); if(m&&+m[1]>0){ ext++; extM+=(/يوم/.test(p.extension)?+m[1]/30:+m[1]); } });
+  X.tm={hb:hb,run:run,ext:ext,extM:extM,stop:X.rows.filter(function(r){ return r.stopped; }).length,over:X.rows.filter(function(r){ return r.overdue&&!r.done; }).length};
+  var now=new Date(); X.soonM=[0,1,2,3,4,5].map(function(i){ var d=new Date(now.getFullYear(),now.getMonth()+i,1); return {d:d,n:X.soon.filter(function(r){ return r.e.getFullYear()===d.getFullYear()&&r.e.getMonth()===d.getMonth(); }).length}; });
+  X.ncrL=X.D.filter(function(p){ return _dxN(p.ncr)>0; }).sort(function(a,b){ return _dxN(b.ncr)-_dxN(a.ncr); }).slice(0,3);
+  return X; }
 function _brfRing(v,c){ v=Math.max(0,Math.min(1,v||0)); return '<svg class="brf-rg rg-'+c+'" viewBox="0 0 200 200"><circle class="tr" cx="100" cy="100" r="'+(c==="a"?72:88)+'"/><circle class="pg" cx="100" cy="100" r="'+(c==="a"?72:88)+'" pathLength="100" style="--v:'+(v*100).toFixed(2)+'"/></svg>'; }
 function _brfCount(root){ var ease=function(t){ return 1-Math.pow(1-t,3); };
   root.querySelectorAll(".brf-body b").forEach(function(el){ if(el.children.length) return; var t=el.textContent.trim(), m=/^([−+\-]?)([\d,]+(?:\.\d+)?)(%?)$/.exec(t); if(!m) return;
@@ -10498,17 +10566,18 @@ function _brfBody(s,X){ var pc=function(x){ return _dxPct(x); };
   if(s.k==="intro"){ var v=_brfNum(X.val);
     return '<div class="brf-intro">'+(typeof LOGO==="string"&&LOGO?'<img class="brf-logo" src="'+LOGO+'" alt="">':'')+'<div class="brf-kick">برنامج ريف · '+esc(typeof MONTHLBL!=="undefined"?MONTHLBL:_brfMO(new Date()))+'</div><h1>رحلة المحفظة</h1>'
       +(X.flt.length?'<div class="brf-flt">نطاق العرض: '+esc(X.flt.join(" · "))+'</div>':'')
-      +'<div class="brf-kps">'+_brfKpi(ar(X.n),"مشروع","إجمالي المشاريع")+_brfKpi(v.n,v.u+" "+RYL,"القيمة التعاقدية")+_brfKpi(pc(X.wA),"","متوسط الإنجاز الفعلي (مرجّح)<small>القائمة "+pc(X.wS)+"</small>")+_brfKpi(pc(X.spend),"","نسبة الصرف")+'</div></div>'; }
+      +'<div class="brf-kps">'+_brfKpi(ar(X.n),"مشروع","إجمالي المشاريع")+_brfKpi(v.n,v.u+" "+RYL,"القيمة التعاقدية")+_brfKpi(pc(X.wA),"","متوسط الإنجاز الفعلي (مرجّح)<small>القائمة "+pc(X.wS)+"</small>")+_brfKpi(pc(X.spend),"","نسبة الصرف")+'</div>'
+      +'<div class="brf-mini">'+[[X.secL.length,"قطاعات"],[X.regL.length,"مناطق"],[X.ctL.length,"مقاولاً"],[X.run,"قيد التنفيذ"],[X.done,"منتهية"],[X.fin.cc,"مستخلصاً"]].map(function(z,i){ return '<span style="--d:'+(0.5+i*0.07)+'s"><b>'+ar(z[0])+'</b>'+z[1]+'</span>'; }).join("")+'</div></div>'; }
   if(s.k==="map") return '<div class="brf-map"><div class="brf-mapw" id="brfMap"></div><div class="brf-mside"><div class="brf-when noanim" id="brfWhen"></div><div class="brf-mk noanim" id="brfMk"></div>'
       +'<div class="gm-lg"><span><i class="lg-run"></i>قيد التنفيذ</span><span><i class="lg-done"></i>منتهٍ</span><span><i class="lg-award"></i>ترسية وتعاقد</span><span><i class="lg-tender"></i>في الطرح</span><span><i class="lg-late">!</i>تجاوز موعد نهايته</span><span><i class="lg-ln"></i>رابط قطاع بين منطقتين</span></div></div>'
       +'<div class="brf-tlw noanim" id="brfTl"></div></div>';
       +'<div class="gm-lg"><span><i class="lg-run"></i>قيد التنفيذ</span><span><i class="lg-done"></i>منتهٍ</span><span><i class="lg-award"></i>ترسية وتعاقد</span><span><i class="lg-tender"></i>في الطرح</span><span><i class="lg-late">!</i>تجاوز موعد نهايته</span></div></div></div>';
   if(s.k==="sec"){ var mx=Math.max.apply(null,X.secL.map(function(z){ return z.v; }).concat([1]));
     return '<div class="brf-sec">'+X.secL.slice(0,9).map(function(z,i){ var c=(typeof SEC_PASTEL!=="undefined"&&SEC_PASTEL[z.k])||"#C9A96E";
-      return '<div class="brf-sr" style="--d:'+(i*0.12)+'s"><span class="brf-sn"><i style="background:'+c+'"></i>'+esc(z.k)+'</span><span class="brf-sb"><i style="--w:'+(z.v/mx*100).toFixed(1)+'%;background:'+c+'"></i></span><b>'+_dxPct(X.val?z.v/X.val:0)+'</b><em>'+ar(z.n)+' مشروع</em></div>'; }).join("")+'</div>'; }
+      return '<div class="brf-sr" style="--d:'+(i*0.12)+'s"><span class="brf-sn"><i style="background:'+c+'"></i>'+esc(z.k)+'</span><span class="brf-sb"><i style="--w:'+(z.v/mx*100).toFixed(1)+'%;background:'+c+'"></i></span><b>'+_dxPct(X.val?z.v/X.val:0)+'</b><em>'+ar(z.n)+' مشروع'+(z.a!=null?' · إنجاز '+_dxPct(z.a):'')+(z.off?' · <u class="bad">'+ar(z.off)+' خارج المسار</u>':'')+'</em></div>'; }).join("")+'</div>'; }
   if(s.k==="st"){ var order=["ok","watch","late","stumb","ns"], tot=Math.max(1,X.n), acc=0, stops=order.map(function(k){ var a=acc; acc+=X.cnt[k]/tot*360; return DX_CAT[k].c+" "+a.toFixed(1)+"deg "+acc.toFixed(1)+"deg"; }).join(",");
     return '<div class="brf-st"><div class="brf-dn" style="background:conic-gradient('+stops+')"><div><b>'+ar(X.n)+'</b><span>مشروع</span></div></div><div class="brf-stl">'
-      +order.map(function(k,i){ return '<div style="--d:'+(0.3+i*0.12)+'s"><i style="background:'+DX_CAT[k].c+'"></i><span>'+DX_CAT[k].l+'</span><b>'+ar(X.cnt[k])+'</b><em>'+_dxPct(X.cnt[k]/tot)+'</em></div>'; }).join("")
+      +order.map(function(k,i){ return '<div style="--d:'+(0.3+i*0.12)+'s"><i style="background:'+DX_CAT[k].c+'"></i><span>'+DX_CAT[k].l+'</span><b>'+ar(X.cnt[k])+'</b><em>'+_dxPct(X.cnt[k]/tot)+'<small>'+_dxM(X.catV[k]||0)+'</small></em></div>'; }).join("")
       +'<div class="brf-split"><span>ضمن المسار <b>'+ar(X.cnt.ok)+'</b></span><span class="bad">خارج المسار <b>'+ar(X.cnt.late+X.cnt.stumb)+'</b></span></div></div></div>'; }
   if(s.k==="att"){ var r=s.r, p=r.p, imgs=[p.img1,p.img2,p.img3,p.img4].map(function(u){ try{ return driveImg(u); }catch(e){ return u; } }).filter(Boolean), dv=_dxDev(p);
     return '<div class="brf-att"><div class="brf-ph">'+(imgs[0]?'<img referrerpolicy="no-referrer" src="'+imgs[0]+'" onerror="this.remove()">':'')+'<span>'+esc(p.code||"")+'</span></div><div class="brf-ai">'
@@ -10520,13 +10589,13 @@ function _brfBody(s,X){ var pc=function(x){ return _dxPct(x); };
   if(s.k==="att0") return '<div class="brf-ok"><div>✓</div><h2>كل المشاريع ضمن المسار</h2></div>';
   if(s.k==="q"){ var Q=X.q;
     return '<div class="brf-q"><div class="brf-qr">'+_brfRing(Q.rate||0,"q")+'<b>'+(Q.rate==null?'—':_dxPct(Q.rate))+'</b><span>نسبة الاعتماد</span></div><div class="brf-qg">'
-      +[["معتمد",Q.app,"g"],["يُعاد التسليم",Q.ret,"a"],["تحت الدراسة",Q.stu,""],["زيارات ميدانية",Q.site,""],["عدم مطابقة",Q.ncr,"w"],["إنذارات",Q.warn,"r"]].map(function(z,i){ return '<div class="'+z[2]+'" style="--d:'+(0.2+i*0.1)+'s"><b>'+ar(z[1])+'</b><span>'+z[0]+'</span></div>'; }).join("")+'</div></div>'; }
+      +[["معتمد",Q.app,"g"],["يُعاد التسليم",Q.ret,"a"],["تحت الدراسة",Q.stu,""],["زيارات ميدانية",Q.site,""],["عدم مطابقة",Q.ncr,"w"],["إنذارات",Q.warn,"r"]].map(function(z,i){ return '<div class="'+z[2]+'" style="--d:'+(0.2+i*0.1)+'s"><b>'+ar(z[1])+'</b><span>'+z[0]+'</span></div>'; }).join("")+(X.ncrL.length?'<div class="brf-ncr"><em>الأعلى في عدم المطابقة</em>'+X.ncrL.map(function(p){ return '<span><i>'+esc(p.name||p.code)+'</i><b>'+ar(_dxN(p.ncr))+'</b></span>'; }).join("")+'</div>':'')+'</div></div>'; }
   if(s.k==="done"){ var v3=_brfNum(X.doneV), bs={}; X.doneL.forEach(function(r){ var k=r.p.sector||"أخرى"; bs[k]=(bs[k]||0)+1; });
     return '<div class="brf-soon brf-done"><div class="brf-sk">'+_brfKpi(ar(X.doneL.length),"مشروع","منتهية فعلياً")+_brfKpi(v3.n,v3.u+" "+RYL,"قيمتها")
       +'<div class="brf-dsec">'+Object.keys(bs).sort(function(a,b){ return bs[b]-bs[a]; }).map(function(k){ var c=(typeof SEC_PASTEL!=="undefined"&&SEC_PASTEL[k])||"#C9A96E"; return '<span><i style="background:'+c+'"></i>'+esc(k)+' <b>'+ar(bs[k])+'</b></span>'; }).join("")+'</div></div><div class="brf-sl">'
       +(X.doneL.length?X.doneL.slice(0,6).map(function(r,i){ return '<div style="--d:'+(0.2+i*0.1)+'s"><em>'+esc(r.e?_brfMO(r.e):"—")+'</em><span>'+esc(r.p.name||r.p.code)+'</span><i>'+esc(_brfRegOf(r.p))+'</i><b class="ok">✓</b></div>'; }).join("")+(X.doneL.length>6?'<div class="more">و'+ar(X.doneL.length-6)+' مشاريع أخرى منتهية</div>':''):'<div class="more">—</div>')+'</div></div>'; }
   if(s.k==="soon"){ var v2=_brfNum(X.soonV);
-    return '<div class="brf-soon"><div class="brf-sk">'+_brfKpi(ar(X.soon.length),"مشروع","قيد التسليم")+_brfKpi(v2.n,v2.u+" "+RYL,"قيمتها")+'</div><div class="brf-sl">'
+    return '<div class="brf-soon"><div class="brf-sk">'+_brfKpi(ar(X.soon.length),"مشروع","قيد التسليم")+_brfKpi(v2.n,v2.u+" "+RYL,"قيمتها")+(function(){ var mm=Math.max.apply(null,X.soonM.map(function(z){ return z.n; }).concat([1])); return '<div class="brf-mh">'+X.soonM.map(function(z,i){ return '<div style="--d:'+(0.3+i*0.07)+'s"><b>'+(z.n?ar(z.n):'')+'</b><i style="--h:'+(z.n/mm*100).toFixed(1)+'%"></i><span>'+_brfMO(z.d).split(" ")[0]+'</span></div>'; }).join("")+'</div>'; })()+'</div><div class="brf-sl">'
       +(X.soon.length?X.soon.slice(0,6).map(function(r,i){ return '<div style="--d:'+(0.2+i*0.1)+'s"><em>'+esc(_brfMO(r.e))+'</em><span>'+esc(r.p.name||r.p.code)+'</span><i>'+esc(_brfRegOf(r.p))+'</i><b>'+_dxPct(r.a||0)+'</b></div>'; }).join("")+(X.soon.length>6?'<div class="more">و'+ar(X.soon.length-6)+' مشاريع أخرى</div>':''):'<div class="more">—</div>')+'</div></div>'; }
   if(s.k==="fin"){ var F=X.fin, b=Math.max(1,F.aft), pd=F.dis/b, pp=F.proc/b, pr=Math.max(0,1-pd-pp), T=function(n,l,c){ var v=_brfNum(n); return '<div class="'+(c||'')+'"><b>'+v.n+'</b><i>'+v.u+' '+RYL+'</i><span>'+l+'</span></div>'; };
     return '<div class="brf-fin"><div class="brf-fring">'+_brfRing(pd,"f")+_brfRing(X.wA||0,"a")+'<div class="brf-fc"><b>'+pc(pd)+'</b><span>نسبة الصرف</span><em><i></i>الإنجاز '+pc(X.wA)+'</em></div></div>'
@@ -10544,6 +10613,12 @@ function _brfBody(s,X){ var pc=function(x){ return _dxPct(x); };
       return '<div class="brf-or c-'+r.cat+'" style="--d:'+(i*0.1)+'s"><span class="tg">'+DX_CAT[r.cat].l+'</span><div class="brf-on"><span>'+esc(p.name||p.code)+'</span><small>'+esc(p.code||"")+' · '+esc(_brfRegOf(p))+((r.reasons||[])[0]?' · '+esc(r.reasons[0]):'')+'</small></div>'
         +'<div class="brf-om"><span>فعلي <b>'+_dxPct(r.a||0)+'</b></span><span>مخطط <b>'+_dxPct(r.pl||0)+'</b></span>'+(dv!=null?'<span class="dv">حيود <b>'+(dv<0?'−':'')+_dxPct(Math.abs(dv))+'</b></span>':'')+'</div></div>'; }).join("")
       +(X.off.length>5?'<div class="more">و'+ar(X.off.length-5)+' مشاريع أخرى خارج المسار</div>':'')+'</div>';
+  if(s.k==="tm"){ var T=X.tm, hm=Math.max.apply(null,T.hb.map(function(z){ return z.n; }).concat([1]));
+    return '<div class="brf-tm"><div class="brf-hist">'+T.hb.map(function(z,i){ return '<div class="hc" style="--d:'+(i*0.08)+'s"><b>'+ar(z.n)+'</b><i style="--h:'+(z.n/hm*100).toFixed(1)+'%;background:'+z.c+'"></i><span>'+z.l+'</span></div>'; }).join("")+'</div>'
+      +'<div class="brf-tk">'+[["قيد التنفيذ",T.run,""],["حصلت على تمديد",T.ext,"a"],["إجمالي أشهر التمديد",Math.round(T.extM),"a"],["تجاوزت موعد نهايتها",T.over,"r"],["متوقفة",T.stop,"w"]].map(function(z,i){ return '<div class="'+z[2]+'" style="--d:'+(0.2+i*0.08)+'s"><b>'+ar(z[1])+'</b><span>'+z[0]+'</span></div>'; }).join("")+'</div></div>'; }
+  if(s.k==="ctr"){ var L=X.ctL.slice(0,7), mv=Math.max(1,L[0].v);
+    return '<div class="brf-ctr">'+L.map(function(z,i){ var v=_brfNum(z.v); return '<div class="brf-cr" style="--d:'+(i*0.07)+'s"><em class="rk">'+ar(i+1)+'</em><div class="cn"><span>'+esc(z.k)+'</span><u><s style="--w:'+(z.v/mv*100).toFixed(1)+'%"></s></u></div>'
+      +'<div class="cm"><b>'+ar(z.n)+'</b><span>مشروع</span></div><div class="cm"><b>'+v.n+'</b><span>'+v.u+' '+RYL+'</span></div><div class="cm g"><b>'+(z.a==null?'—':_dxPct(z.a))+'</b><span>إنجاز</span></div><div class="cm'+(z.off?' r':'')+'"><b>'+ar(z.off)+'</b><span>خارج المسار</span></div></div>'; }).join("")+'</div>'; }
   if(s.k==="end") return '<div class="brf-end">'+(typeof LOGO==="string"&&LOGO?'<img class="brf-logo" src="'+LOGO+'" alt="">':'')+'<h1>شكراً لكم</h1><div class="brf-eb"><button onclick="briefGo(0)">↺ إعادة العرض</button><button onclick="briefClose()">إغلاق</button></div></div>';
   return ''; }
 function _brfTlHTML(R){ var ser=_geoSeries(BRF.X.D,R), smx=Math.max(1,Math.max.apply(null,ser)), W=1000, H=44, X=function(i){ return (W-i/R.months*W).toFixed(1); }, Y=function(v){ return (H-2-v/smx*(H-8)).toFixed(1); };
@@ -10554,25 +10629,42 @@ function _brfTlHTML(R){ var ser=_geoSeries(BRF.X.D,R), smx=Math.max(1,Math.max.a
     +'<span class="geo-today" style="inset-inline-start:'+pn+'%"><b>اليوم</b></span><span class="geo-fut" style="inset-inline-start:'+pn+'%">الجدول المستقبلي (إسقاط)</span><span class="geo-cur" id="brfCur"></span>'
     +'<input type="range" min="0" max="'+R.months+'" value="0" oninput="brfMapSet(+this.value)" aria-label="الزمن"></div><div class="geo-tk">'+ticks+'</div></div>'
     +'<div class="geo-sd"><span class="geo-lb" id="brfLb"></span><button class="geo-now" onclick="brfMapSet(BRF.R.nowI)">العودة لليوم ↺</button></div></div>'; }
-function _brfMapDraw(idx){ var R=BRF.R, X=BRF.X, box=document.getElementById("brfMap"); if(!box||!R) return; idx=Math.max(0,Math.min(R.months,Math.round(idx))); BRF.mi=idx;
-  var at=idx===R.nowI?null:_geoAt(R,idx), fut=idx>R.nowI, sel=GEO.sel;
-  var SS=X.D.map(function(p){ return {p:p,s:_geoSt(p,at)}; }).filter(function(x){ return x.s.on; }), c={run:0,done:0,award:0,tender:0}; SS.forEach(function(x){ c[x.s.st]++; });
-  GEO.sel=null; box.innerHTML=_geoMapSVG(SS,at); GEO.sel=sel;
+function _brfMapBuild(){ var X=BRF.X, box=document.getElementById("brfMap"); if(!box) return;
+  var all=X.D.map(function(p){ var s=_geoSt(p,null), o={}; for(var k in s) o[k]=s[k]; o.on=true; return {p:p,s:o}; });
+  var sel=GEO.sel; GEO.sel=null; GEO.full=1; try{ box.innerHTML=_geoMapSVG(all,null); }finally{ GEO.full=0; GEO.sel=sel; }
+  var G={}; box.querySelectorAll(".gd").forEach(function(g){ G[g.getAttribute("data-c")]=g; g.classList.add("off"); });
+  BRF.it=X.D.map(function(p){ var rs=[]; KSA_REG.r.forEach(function(r,i){ if(_regionHas(p.region,r.ar)) rs.push(i); }); return {p:p,g:G[String(p.code)]||null,rs:rs,nat:!rs.length&&_isNational(p.region),k:"off",v:_dxBase(p)}; });
+  BRF.rp=box.querySelectorAll(".gm-r"); BRF.rn=box.querySelectorAll(".gm-a"); BRF.nt=box.querySelector(".gm-nt"); BRF.svg=box.querySelector("svg"); BRF.lastM=-1; }
+function _brfMapDraw(fi,force){ var R=BRF.R, X=BRF.X; if(!R||!BRF.it||!document.getElementById("brfWhen")) return; fi=Math.max(0,Math.min(R.months,+fi||0)); BRF.mi=fi; var idx=Math.round(fi);
+  var cur=document.getElementById("brfCur"); if(cur) cur.style.insetInlineStart=(fi/R.months*100).toFixed(3)+"%";
+  var inp=document.querySelector("#brfTl input"); if(inp&&Math.round(+inp.value)!==idx) inp.value=idx;
+  if(idx===BRF.lastM&&!force) return; BRF.lastM=idx;
+  var at=idx===R.nowI?null:_geoAt(R,idx), fut=idx>R.nowI, c={run:0,done:0,award:0,tender:0}, n=0, val=0, rc=KSA_REG.r.map(function(){ return 0; }), nat=0;
+  BRF.it.forEach(function(d){ var s=_geoSt(d.p,at), k=s.on?(s.late?"late":s.st):"off";
+    if(s.on){ n++; c[s.st]=(c[s.st]||0)+1; if(s.st!=="tender") val+=d.v; d.rs.forEach(function(i){ rc[i]++; }); if(d.nat) nat++; }
+    if(d.g&&k!==d.k){ d.g.setAttribute("class","gd gd-"+(k==="off"?(d.k&&d.k!=="off"?d.k:"run"):k)+(k==="off"?" off":"")); d.k=k; } });
+  var mx=Math.max(1,Math.max.apply(null,rc)), cls=function(v){ if(!v) return 0; var f=v/mx; return f>0.66?4:(f>0.4?3:(f>0.18?2:1)); };
+  BRF.rp.forEach(function(p,i){ var w="gm-r gm-c"+cls(rc[i]); if(p.getAttribute("class")!==w) p.setAttribute("class",w); });
+  BRF.rn.forEach(function(t,i){ var ts=t.querySelector("tspan"); if(ts){ ts.textContent=rc[i]?ar(rc[i]):""; } t.classList.toggle("z",!rc[i]); });
+  if(BRF.nt) BRF.nt.textContent="على مستوى المملكة · "+ar(nat);
+  if(BRF.svg) BRF.svg.style.setProperty("--fl",Math.min(1,n/Math.max(1,X.n)*1.3).toFixed(2));
   document.getElementById("brfWhen").innerHTML=at?(_brfMO(at)+(fut?'<small>إسقاط حسب الجدول المخطط</small>':'')):'اليوم<small>'+esc(_brfMO(new Date()))+'</small>';
-  document.getElementById("brfMk").innerHTML='<div><b>'+ar(SS.length)+'</b><span>مشروع</span></div><div class="r"><b>'+ar(c.run)+'</b><span>قيد التنفيذ</span></div><div class="d"><b>'+ar(c.done)+'</b><span>منتهية</span></div><div><b>'+_dxM(SS.filter(function(x){ return x.s.st!=="tender"; }).reduce(function(a,x){ return a+_dxBase(x.p); },0))+'</b><span>المتعاقد عليه</span></div>';
-  var cur=document.getElementById("brfCur"); if(cur) cur.style.insetInlineStart=(idx/R.months*100).toFixed(2)+"%";
+  document.getElementById("brfMk").innerHTML='<div><b>'+ar(n)+'</b><span>مشروع</span></div><div class="r"><b>'+ar(c.run)+'</b><span>قيد التنفيذ</span></div><div class="d"><b>'+ar(c.done)+'</b><span>منتهية</span></div><div><b>'+_dxM(val)+'</b><span>المتعاقد عليه</span></div>';
   var lb=document.getElementById("brfLb"); if(lb) lb.textContent=at?_brfMO(at):"اليوم";
-  var inp=document.querySelector("#brfTl input"); if(inp&&+inp.value!==idx) inp.value=idx;
-  if(BRF.um){ var cp=document.querySelector("#brf .brf-cap"); if(cp) cp.classList.add("noanim"); if(cp) cp.innerHTML=(at?'في <b>'+_brfMO(at)+'</b>'+(fut?' (إسقاط)':''):'<b>اليوم</b>')+': <b>'+ar(SS.length)+'</b> مشروعاً، منها <b>'+ar(c.run)+'</b> قيد التنفيذ و<b>'+ar(c.done)+'</b> منتهية و<b>'+ar(c.award+c.tender)+'</b> في الطرح والترسية.'; } }
-function _brfMapStop(){ if(BRF.map){ clearInterval(BRF.map); BRF.map=null; } var b=document.getElementById("brfPl"); if(b) b.textContent="▶"; }
-function brfMapPlay(to,step,done){ if(BRF.map&&to==null){ _brfMapStop(); return; } _brfMapStop(); var R=BRF.R; if(!R) return; var end=to!=null?to:R.months; if(to==null&&BRF.mi>=end) BRF.mi=0;
-  if(to==null){ BRF.um=1; if(!BRF.paused) briefToggle(); } var i=BRF.mi||0, inc=step||Math.max(1,R.months/70); var b=document.getElementById("brfPl"); if(b) b.textContent="❚❚";
-  BRF.map=setInterval(function(){ if(to!=null&&BRF.paused) return; i+=inc; if(i>=end){ _brfMapStop(); _brfMapDraw(end); if(done) done(); return; } _brfMapDraw(i); },110); }
-function brfMapSet(i){ BRF.um=1; _brfMapStop(); if(!BRF.paused) briefToggle(); _brfMapDraw(i); }
-function _brfMapRun(X,s){ var R=_geoRange(X.D); BRF.R=R; BRF.um=0; var tl=document.getElementById("brfTl"); if(tl) tl.innerHTML=_brfTlHTML(R); _brfMapDraw(0);
-  var cap=document.querySelector("#brf .brf-cap"), steps=Math.max(1,Math.round((s.d-3500)/110));
-  brfMapPlay(R.nowI,Math.max(1,R.nowI/steps),function(){ if(cap&&s.cap2){ cap.innerHTML=s.cap2; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); } }); }
-function _brfClear(){ if(BRF.t){ clearTimeout(BRF.t); BRF.t=null; } if(BRF.map){ clearInterval(BRF.map); BRF.map=null; } }
+  if(BRF.um){ var cp=document.querySelector("#brf .brf-cap"); if(cp){ cp.classList.add("noanim"); cp.innerHTML=(at?'في <b>'+_brfMO(at)+'</b>'+(fut?' (إسقاط)':''):'<b>اليوم</b>')+': <b>'+ar(n)+'</b> مشروعاً، منها <b>'+ar(c.run)+'</b> قيد التنفيذ و<b>'+ar(c.done)+'</b> منتهية و<b>'+ar(c.award+c.tender)+'</b> في الطرح والترسية.'; } } }
+function _brfMapStop(){ BRF.map=null; var b=document.getElementById("brfPl"); if(b) b.textContent="▶"; }
+function brfMapPlay(to,ms,done){ if(BRF.map&&to==null){ _brfMapStop(); return; } _brfMapStop(); var R=BRF.R; if(!R) return; var end=to!=null?to:R.months; if(to==null&&BRF.mi>=end-0.01) BRF.mi=0;
+  if(to==null){ BRF.um=1; if(!BRF.paused) briefToggle(); } var start=BRF.mi||0, dur=to!=null?Math.max(800,ms||3000):Math.max(2500,(end-start)/R.months*6500);
+  var b=document.getElementById("brfPl"); if(b) b.textContent="❚❚"; var tok={}, el=0, last=null; BRF.map=tok;
+  var ease=function(k){ return -(Math.cos(Math.PI*k)-1)/2; };
+  var tick=function(ts){ if(BRF.map!==tok) return; var hold=to!=null&&BRF.paused; if(last!=null&&!hold) el+=Math.min(64,ts-last); last=ts;
+    var k=Math.min(1,el/dur); _brfMapDraw(start+(end-start)*ease(k)); if(k>=1){ _brfMapStop(); _brfMapDraw(end,true); if(done) done(); return; } requestAnimationFrame(tick); };
+  requestAnimationFrame(tick); }
+function brfMapSet(i){ BRF.um=1; _brfMapStop(); if(!BRF.paused) briefToggle(); _brfMapDraw(i,true); }
+function _brfMapRun(X,s){ var R=_geoRange(X.D); BRF.R=R; BRF.um=0; var tl=document.getElementById("brfTl"); if(tl) tl.innerHTML=_brfTlHTML(R); _brfMapBuild(); _brfMapDraw(0,true);
+  var cap=document.querySelector("#brf .brf-cap");
+  setTimeout(function(){ if(BRF.sc[BRF.i]!==s) return; brfMapPlay(R.nowI,s.d-2300,function(){ if(cap&&s.cap2&&BRF.sc[BRF.i]===s){ cap.innerHTML=s.cap2; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); } }); },350); }
+function _brfClear(){ if(BRF.t){ clearTimeout(BRF.t); BRF.t=null; } BRF.map=null; }
 function _brfArm(){ var s=BRF.sc[BRF.i]; if(BRF.t){ clearTimeout(BRF.t); BRF.t=null; } if(!s||!s.d||BRF.paused) return; var left=s.d-(BRF.el||0); BRF.t0=Date.now(); BRF.t=setTimeout(function(){ briefGo(BRF.i+1); },Math.max(200,left)); }
 function briefGo(i){ var root=document.getElementById("brf"); if(!root) return; i=Math.max(0,Math.min(BRF.sc.length-1,i)); _brfClear(); BRF.i=i; BRF.el=0; var s=BRF.sc[i];
   var st=root.querySelector(".brf-stage"); st.className="brf-stage k-"+s.k; st.innerHTML='<div class="brf-body">'+_brfBody(s,BRF.X)+'</div>'; try{ _brfCount(st); }catch(e){} root.setAttribute("data-k",s.k);
