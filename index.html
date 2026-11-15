@@ -5073,6 +5073,29 @@ body[data-theme="dark"] .rp-port{background:linear-gradient(120deg,#121B1F 0%,#1
 body[data-theme="dark"] .rp-port .rp-pi{background:rgba(255,255,255,.06)!important;color:#E3C88E!important}
 body[data-theme="dark"] .rbbuild{background:linear-gradient(135deg,#D9BC84,#B8945A)!important;color:#1A1A1A!important;box-shadow:0 8px 20px -10px rgba(0,0,0,.6)!important}
 body[data-theme="dark"] .rbbuild:hover{box-shadow:0 13px 28px -12px rgba(217,188,132,.45)!important}
+
+/* تتبع المراحل في الداكن: بلا عناصر بيضاء */
+body[data-theme="dark"] .sg-tabs{background:rgba(255,255,255,.05)!important;border:1px solid #2B363B}
+body[data-theme="dark"] .sg-tabs button{color:#B9C6BF}
+body[data-theme="dark"] .sg-tabs button.on{background:rgba(217,188,132,.18)!important;color:#F0D9A8!important}
+body[data-theme="dark"] .sg-lnk{background:rgba(255,255,255,.07)!important;color:#C9D6CF!important}
+body[data-theme="dark"] .sg-lnk i{color:#F4A79D}
+body[data-theme="dark"] .sg-pill.bad{background:rgba(240,138,126,.14)!important;color:#F4A79D!important}
+body[data-theme="dark"] .sg-pill.ok{background:rgba(60,196,137,.14)!important;color:#8FD3A8!important}
+body[data-theme="dark"] .sg-bul .std,body[data-theme="dark"] .sg-lg i.std{background:rgba(255,255,255,.1)!important}
+body[data-theme="dark"] .sg-bul .mk{background:#E3C88E!important}
+body[data-theme="dark"] .sg-lg i.std{border-inline-start-color:#E3C88E!important}
+body[data-theme="dark"] .sg-lg i.live{background:transparent!important;border-color:#8FD3A8!important}
+
+/* لوحة المشروع: كارت الصور أعرض */
+.dx-land.pdl .fit .pdl-g{grid-template-columns:1.05fr .95fr .95fr 1.45fr!important}
+.pdl .dx-canvas:not(.fit) .g-ph .pds-stage{min-height:440px}
+
+body[data-theme="dark"] .sg-mt td.t-ok{background:rgba(60,196,137,.09)!important}
+body[data-theme="dark"] .sg-mt td.t-ok b{color:#8FD3A8!important}
+body[data-theme="dark"] .sg-mt td.sx u{background:rgba(255,255,255,.1)}
+body[data-theme="dark"] .sg-mt td.na{color:#5E6B66}
+body[data-theme="dark"] .sg-prog{background:rgba(255,255,255,.08)}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -11094,8 +11117,8 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +(_nS.length?'<div class="pd-note pd-short">'+_nS.map(function(x){ return '<div><span>'+esc(x[0])+'</span><b>'+_pdNoteV(x[0],x[1])+'</b></div>'; }).join("")+'</div>':'')+'</div>'):'<div class="dx-empty">لا توجد ملاحظات مسجّلة</div>';
   /* --- الصور --- */
   var imgs=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean);
-  var galBody='<div class="pds-host" id="pdsHost" data-proj="'+esc(p.name||"")+'">'+_pdsHTML(imgs)+'</div>';
-  setTimeout(function(){ pdsStart(); try{ if(typeof cldProjectImages==="function"&&p.name) cldProjectImages(p.name).then(function(u){ var h=document.getElementById("pdsHost"); if(!u||!u.length||!h||h.getAttribute("data-proj")!==String(p.name||"")) return; var L=u.slice(0,12).map(function(x){ return typeof _cldThumb==="function"?_cldThumb(x,1600):x; }); h.innerHTML=_pdsHTML(L); var c=document.querySelector(".g-ph .dx-ch em, .g-ph .dx-cs"); if(c) c.textContent=ar(L.length)+" صور"; pdsStart(); }).catch(function(){}); }catch(e){} },60);
+  var galBody='<div class="pds-host" id="pdsHost" data-pds="'+esc(p.name||"")+'">'+_pdsHTML(imgs)+'</div>';
+  setTimeout(function(){ pdsStart(); try{ if(typeof cldProjectImages==="function"&&p.name) cldProjectImages(p.name).then(function(u){ var h=document.getElementById("pdsHost"); if(!u||!u.length||!h||h.getAttribute("data-pds")!==String(p.name||"")) return; var L=u.slice(0,12).map(function(x){ return typeof _cldThumb==="function"?_cldThumb(x,1600):x; }); h.innerHTML=_pdsHTML(L); var c=document.querySelector(".g-ph .dx-ch em, .g-ph .dx-cs"); if(c) c.textContent=ar(L.length)+" صور"; pdsStart(); }).catch(function(){}); }catch(e){} },60);
   _dxShow('<div class="dash dash3 dx dx-land pd pdl">'+tools+'<div class="dx-canvas">'+head+kpis
     +'<div class="dx-gr pdl-g">'+_dxCard("الجدول الزمني",esc(dur||""),tlBody,"g-tl")+_dxCard("الوضع المالي","",finBody,"g-fin")+_dxCard("المطالبات والجودة","",qBody,"g-cl")
       +_dxCard("آخر المستجدات","",ntBody,"g-nt")+_dxCard("صور الموقع",imgs.length?ar(imgs.length)+" صور":"",galBody,"pd-gcard g-ph")
