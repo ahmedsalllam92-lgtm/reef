@@ -7353,7 +7353,7 @@ function wkFilter(){ const q=norm(document.getElementById("wkSearch").value); do
 function wkBuild(){ const codes=[...document.querySelectorAll(".wkchk:checked")].map(c=>c.value); if(!codes.length){alert("اختر مشروعاً واحداً على الأقل.");return;} const cover=(document.getElementById("wkCover").value||"").trim(); weeklyReport(codes,cover); }
 /* نسبة اعتماد الطلبات = المعتمد ÷ (إجمالي الطلبات − تحت الدراسة) — مصدر موحّد لكل التقارير */
 function apprRate(p){ var a=_dxN(p.approved_claims), r=_dxN(p.returned_claims), s=_dxN(p.under_study), t=_dxN(p.total_claims)||(a+r+s), d=t-s; return d>0?Math.min(1,a/d):null; }
-function _schedLbl(p){ var c=_dxCatOf({p:p}); return {k:c,l:{ok:"منتظم",watch:"يحتاج متابعة",late:"متأخر",stumb:"متعثّر",ns:"لم يبدأ"}[c]||"—",c:{ok:"ok",watch:"warn",late:"bad",stumb:"bad",ns:"ok"}[c]||"ok"}; }
+function _schedLbl(p){ try{ if(_isDone(p)) return {k:"done",l:"منتهٍ",c:"ok"}; }catch(e){} var c=_dxCatOf({p:p}); return {k:c,l:{ok:"منتظم",watch:"يحتاج متابعة",late:"متأخر",stumb:"متعثّر",ns:"لم يبدأ"}[c]||"—",c:{ok:"ok",watch:"warn",late:"bad",stumb:"bad",ns:"ok"}[c]||"ok"}; }
 function devEval(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0; const dv=_dxDev(p); const d=dv!=null?dv:(pl-a); return {d:Math.abs(d),behind:d>0,lbl:_schedLbl(p).l}; }
 function wkEvals(p){ const a=pct(p.actual)||0, pl=pct(p.planned)||0;
   let cp=pct(p.claims_pct); if(cp==null||cp===0){ const v=toNum(p.value)||0, d=toNum(p.disbursed)||0; cp=v?d/v:0; }
