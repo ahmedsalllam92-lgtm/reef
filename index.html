@@ -5530,6 +5530,31 @@ html.kiosk *{cursor:default}
 html.kiosk .side,html.kiosk .sidebar,html.kiosk .topbar,html.kiosk header.top{display:none!important}
 #kioskHint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:100060;background:rgba(11,61,39,.92);color:#F3E3BF;font-size:13px;font-weight:700;padding:8px 16px;border-radius:99px;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);pointer-events:none;animation:kioskH 4s 3s ease forwards}
 @keyframes kioskH{to{opacity:0}}
+
+/* نظرة عامة: شريط المدة (من البداية للنهاية) + شريط الإنجاز */
+.pc5-tl{margin-top:18px;display:flex;flex-direction:column;gap:14px}
+.pc5-row{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center}
+.pc5-k{font-size:13.5px;font-weight:800;color:#1F2D24}.pc5-k small{display:block;font-size:11.5px;color:#7D8A82;font-weight:600;margin-top:2px}
+.pc5-w{position:relative;padding-top:26px}
+.pc5-bar{position:relative;height:14px;border-radius:99px;background:repeating-linear-gradient(135deg,#EEF1EC 0 7px,#E3E8E1 7px 14px)}
+.pc5-bar.pr{background:#EDF1EE}
+.pc5-bar>i{position:absolute;top:0;bottom:0;right:0;border-radius:99px}
+.pc5-bar>i.el{background:linear-gradient(270deg,#E3CFA4,#B8955A)}
+.pc5-bar>i.el.ov{background:repeating-linear-gradient(135deg,#C0392B 0 8px,#E07A6F 8px 16px)}
+.pc5-bar>i.ac{background:linear-gradient(270deg,#2E7D52,#1E5B3A)}
+.pc5-bar>s{position:absolute;top:-5px;bottom:-5px;width:3px;margin-right:-1.5px;border-radius:2px;text-decoration:none}
+.pc5-bar>s.pl{background:#B89968}.pc5-bar>s.ce{background:#4F7FA8}
+.pc5-bar>.now{position:absolute;top:-7px;bottom:-7px;width:2px;margin-right:-1px;background:#1F2D24;border-radius:2px}
+.pc5-bar>.now em{position:absolute;bottom:calc(100% + 3px);right:0;white-space:nowrap;font-style:normal;font-size:11.5px;font-weight:800;color:#1F2D24;background:#fff;border:1px solid #D9E0DA;border-radius:99px;padding:1px 9px;box-shadow:0 4px 10px -6px rgba(0,0,0,.3)}
+.pc5-ends{position:relative;display:flex;justify-content:space-between;align-items:baseline;margin-top:7px;font-size:12px;color:#7D8A82}
+.pc5-ends b{color:#1F2D24;font-weight:800}
+.pc5-ends .mid{position:absolute;left:50%;transform:translateX(-50%);color:#8A968F}
+.pc3-tll i.rm{background:repeating-linear-gradient(135deg,#EEF1EC 0 3px,#D5DCD3 3px 6px)!important}.pc3-tll i.ce{background:#4F7FA8!important}
+body[data-theme="dark"] .pc5-k,body[data-theme="dark"] .pc5-ends b{color:#E6EEF0}
+body[data-theme="dark"] .pc5-bar{background:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 7px,rgba(255,255,255,.1) 7px 14px)}body[data-theme="dark"] .pc5-bar.pr{background:rgba(255,255,255,.08)}
+body[data-theme="dark"] .pc5-bar>.now{background:#E6EEF0}body[data-theme="dark"] .pc5-bar>.now em{background:#1B2428;color:#E6EEF0;border-color:#2B363B}
+body[data-theme="dark"] .pc5-bar>i.ac{background:linear-gradient(270deg,#5FD6A0,#2E8B57)}
+@media (max-width:700px){.pc5-row{grid-template-columns:1fr;gap:4px}.pc5-ends .mid{display:none}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9984,7 +10009,16 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
     +'<div><span>المنقضي</span><b>'+(t.ok?ar(Math.max(0,t.elapsed))+' يوم':'—')+'</b>'+(t.ok?'<em>'+_dxPct(t.frac)+' من '+ar(t.total)+' يوم</em>':'')+'</div>'
     +'<div><span>المتبقي</span><b>'+(t.ok?(t.left>=0?ar(t.left)+' يوم':'متجاوز '+ar(-t.left)+' يوم'):'—')+'</b></div>'
     +'<div><span>المتبقي من العقد</span><b>'+_pcMoney(Math.max(0,v-dis-und))+'</b><em>بعد المنصرف وتحت الإجراء</em></div></div>'
-    +(t.ok?'<div class="pc3-tlb"><i class="tm" style="width:'+(t.frac*100).toFixed(1)+'%"></i><i class="ac" style="width:'+(Math.min(1,a)*100).toFixed(1)+'%"></i></div><div class="pc3-tll"><span><i class="tm"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span><span><i class="ac"></i>الإنجاز الفعلي '+_dxPct(a)+'</span>'+(pl!=null?'<span><i class="pl"></i>المخطط '+_dxPct(pl)+'</span>':'')+'</div>':'')+'</div>';
+    +(t.ok?(function(){ var fr=Math.max(0,Math.min(1,t.frac)), over=t.left<0&&!_isDone(p), sd=_dxDt(p.start_date), ed=_dxDt(endDateOf(p)), ceS=(_dxTxt(p.end_after_ext)&&(p.end_contractual||p.end_date))?(p.end_contractual||p.end_date):"", ce=ceS?_dxDt(ceS):null;
+        var cf=(ce&&sd&&ed&&ed>sd&&ce<ed)?Math.max(0,Math.min(1,(ce-sd)/(ed-sd))):null, lt=fr<0.12?"0":(fr>0.88?"100%":"50%"), P=function(x){ return (x*100).toFixed(1)+"%"; };
+        return '<div class="pc5-tl">'
+          +'<div class="pc5-row"><div class="pc5-k">مدة المشروع<small>'+ar(t.total)+' يوم</small></div><div class="pc5-w"><div class="pc5-bar"><i class="el'+(over?' ov':'')+'" style="width:'+P(over?1:fr)+'"></i>'
+            +(cf!=null?'<s class="ce" style="right:'+P(cf)+'" title="النهاية التعاقدية '+esc(fmtDateTxt(ceS))+'"></s>':'')
+            +'<b class="now" style="right:'+P(over?1:fr)+'"><em style="transform:translateX('+(over?"100%":lt)+')">اليوم · '+(over?'متجاوز النهاية بـ '+ar(-t.left)+' يوم':(_isDone(p)?'منتهٍ':_dxPct(fr)+' من المدة'))+'</em></b></div>'
+            +'<div class="pc5-ends"><span>البداية <b>'+esc(fmtDateTxt(p.start_date)||"—")+'</b></span>'+(!over&&t.left>0?'<span class="mid">المتبقي <b>'+ar(t.left)+' يوم</b></span>':'')+'<span>النهاية'+(ceS?' بعد التمديد':'')+' <b>'+esc(fmtDateTxt(endDateOf(p))||"—")+'</b></span></div></div></div>'
+          +'<div class="pc5-row"><div class="pc5-k">الإنجاز<small>الفعلي مقابل المخطط</small></div><div class="pc5-w"><div class="pc5-bar pr"><i class="ac" style="width:'+P(Math.min(1,a))+'"></i>'+(pl!=null?'<s class="pl" style="right:'+P(Math.min(1,pl))+'"></s>':'')+'</div>'
+            +'<div class="pc5-ends"><span>0%</span><span>100%</span></div></div></div>'
+          +'<div class="pc3-tll"><span><i class="tm"></i>الزمن المنقضي '+_dxPct(fr)+'</span><span><i class="rm"></i>الزمن المتبقي</span><span><i class="ac"></i>الإنجاز الفعلي '+_dxPct(a)+'</span>'+(pl!=null?'<span><i class="pl"></i>المخطط '+_dxPct(pl)+'</span>':'')+(cf!=null?'<span><i class="ce"></i>النهاية التعاقدية '+esc(fmtDateTxt(ceS))+'</span>':'')+'</div></div>'; })():'')+'</div>';
   var notes=[["الموقف الحالي",p.build_status||p.last_note],["الملخص التنفيذي",p.exec_summary],["المغايرات",p.variations],["البنود المستحدثة",p.new_items],["الالتزام البيئي",p.env]].filter(function(x){ return _dxTxt(x[1]); });
   var nL=notes.filter(function(x){ return String(_dxTxt(x[1])).length>45; }), nS=notes.filter(function(x){ return String(_dxTxt(x[1])).length<=45; });
   var ntBox=notes.length?'<div class="pc4-nt">'+nL.map(function(x){ return '<div class="pc4-ntl"><span>'+x[0]+'</span><p>'+_pcV(x[1])+'</p></div>'; }).join("")+(nS.length?'<div class="pc4-nts">'+nS.map(function(x){ return '<div><span>'+x[0]+'</span><b>'+_pcV(x[1])+'</b></div>'; }).join("")+'</div>':'')+'</div>':'<div class="hb-empty">لا توجد مستجدات مسجّلة.</div>';
