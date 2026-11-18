@@ -5491,6 +5491,8 @@ body[data-theme="dark"] .mt-x{background:rgba(255,255,255,.06);color:#F4A79D}
 .pf-hoi{font-size:12px;background:#fff;border:1px solid #E3E8E3;border-radius:8px;padding:3px 8px;color:#33443A}.pf-hoi b{color:#3D6B27;margin-inline-end:6px;direction:ltr;display:inline-block}.pf-hoi em{font-style:normal;color:#8A7B5C;font-size:11px}
 body[data-theme="dark"] .pf-ho{background:rgba(255,255,255,.04);border-color:#2B363B}body[data-theme="dark"] .pf-hok>div,body[data-theme="dark"] .pf-hoi{background:rgba(255,255,255,.05);border-color:#2B363B;color:#C9D6CF}
 body[data-theme="dark"] .pf-hoh b,body[data-theme="dark"] .pf-hok b{color:#E6EEF0}body[data-theme="dark"] .pf-hok .g b,body[data-theme="dark"] .pf-hoi b{color:#A9D18E}
+.hm-k em .hm-ks{font-weight:800;color:#8A6A2E;font-size:inherit;display:inline}
+body[data-theme="dark"] .hm-k em .hm-ks{color:#E3C88E}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -9666,7 +9668,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
   var kpis='<div class="hm-kpis">'
     +k("المشاريع النشطة",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
     +k("قيمة المشاريع",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" ("+_dxPct(tv?td/tv:0)+")","","execDashboard()","mo",tv?td/tv:0)
-    +k("متوسط الإنجاز",_dxPct(avgA),"","المخطط "+_dxPct(avgP),avgA<avgP-0.05?"warn":"","execDashboard()","pg",avgA,avgP)
+    +k("متوسط الإنجاز",_dxPct(avgA),"","من إجمالي "+ar(D.length)+" مشروع · القائمة <span class=\"hm-ks\">"+_dxPct(_wProg(rows,true).a)+"</span>","","execDashboard()","pg",avgA)
     +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['watch','late','stumb'])","al",D.length?off.length/D.length:0)
     +k("الملغاة",ar(cancelledAll().length),"مشروع","سجل المشاريع الملغاة","mut","cancelledOpen()","cx")+'</div>';
   var rec='<section class="hm-card"><header><h3>آخر المشاريع تحديثاً</h3><button onclick="PR.sort=\'upd\';PR.dir=-1;projRegOpen(true)">عرض الكل ←</button></header>'
