@@ -5506,6 +5506,30 @@ body[data-theme="dark"] .hm-k em .hm-ks{color:#E3C88E}
   .hb-reg{page:hbregp}
 }
 @page hbregp{size:A4 portrait;margin:8mm}
+
+/* مشاركة لوحة: نافذة الإنشاء */
+#dxShM{position:fixed;inset:0;z-index:100050;background:rgba(6,20,14,.55);display:grid;place-items:center;padding:16px;backdrop-filter:blur(3px)}
+#dxShM .dxs-box{position:relative;width:min(560px,100%);background:#fff;border-radius:18px;padding:20px 22px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);font-family:inherit}
+#dxShM .dxs-x{position:absolute;top:12px;left:12px;border:0;background:#F1F4F1;width:30px;height:30px;border-radius:50%;cursor:pointer}
+#dxShM .dxs-h{display:flex;gap:12px;align-items:center}#dxShM .dxs-h>span{width:40px;height:40px;border-radius:12px;background:#EAF4EE;display:grid;place-items:center;font-size:18px}
+#dxShM .dxs-h b{display:block;font-size:16px;color:#0B3D27}#dxShM .dxs-h small{display:block;font-size:12.5px;color:#6E7B73}
+#dxShM .dxs-d{font-size:13px;line-height:1.8;color:#4F5D55;background:#F6F9F4;border-radius:10px;padding:8px 12px;margin:12px 0}
+#dxShM .dxs-g{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}#dxShM .dxs-g .w{grid-column:1/-1}
+#dxShM label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:#5F6F66}
+#dxShM input,#dxShM select{font:inherit;font-size:13.5px;border:1px solid #DDE4DE;border-radius:10px;padding:9px 11px;background:#F8FAF8;outline:0}
+#dxShM .dxs-a{display:flex;gap:8px;margin-top:14px}#dxShM #dxsOut{margin-top:10px}
+#dxShM .dxs-ok{display:flex;gap:8px;margin-bottom:6px}#dxShM .dxs-ok input{flex:1;font-size:12.5px}
+body[data-theme="dark"] #dxShM .dxs-box{background:#152024;color:#E6EEF0}body[data-theme="dark"] #dxShM .dxs-h b{color:#E6EEF0}body[data-theme="dark"] #dxShM .dxs-d{background:rgba(255,255,255,.05);color:#B9C6BF}
+body[data-theme="dark"] #dxShM input,body[data-theme="dark"] #dxShM select{background:rgba(255,255,255,.05);border-color:#2B363B;color:#E6EEF0}body[data-theme="dark"] #dxShM .dxs-x{background:rgba(255,255,255,.08);color:#E6EEF0}
+.sh-sc{display:inline-block;font-style:normal;font-size:11px;font-weight:700;color:#1E5B3A;background:#EAF4EE;border-radius:99px;padding:1px 8px;margin-inline-start:6px}
+body[data-theme="dark"] .sh-sc{background:rgba(60,196,137,.12);color:#8FD3A8}
+/* الزائر: لوحة واحدة بملء الشاشة بلا أدوات أو تنقّل */
+html.kiosk #roBanner,html.kiosk .wkfs-exit,html.kiosk .dash-bar,html.kiosk .dx-actions,html.kiosk .dxbar,html.kiosk .dash-filter,html.kiosk .dx-filter,html.kiosk .pd-tools,html.kiosk .pd-nav,html.kiosk .pd-fsnav,html.kiosk .pd-hbtn,html.kiosk .rtools,html.kiosk .rtool,html.kiosk .rp-ready,html.kiosk .dxf-hl,html.kiosk .noprint.dx-btn,html.kiosk .pd-map{display:none!important}
+html.kiosk .df-sel,html.kiosk .df-reset,html.kiosk .df-count,html.kiosk .df-codes,html.kiosk .dxf-ac,html.kiosk .dxf-chips,html.kiosk .msel,html.kiosk .pd-sel{display:none!important}
+html.kiosk *{cursor:default}
+html.kiosk .side,html.kiosk .sidebar,html.kiosk .topbar,html.kiosk header.top{display:none!important}
+#kioskHint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:100060;background:rgba(11,61,39,.92);color:#F3E3BF;font-size:13px;font-weight:700;padding:8px 16px;border-radius:99px;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);pointer-events:none;animation:kioskH 4s 3s ease forwards}
+@keyframes kioskH{to{opacity:0}}
 /* الوضع الداكن */
 body[data-theme="dark"] .dx{--dx-bg:#151D21;--dx-card:#1B2428;--dx-line:#2B363B;--dx-soft:#1F292D;--dx-ink:#E4EFE8;--dx-ink2:#C6D6CC;--dx-mut:#8FA597;--dx-g:#7ED3A0;--dx-gd:#A6E6BF;--dx-track:#28343A;--dx-up:#7ED3A0;--dx-dn:#F09A88}
 body[data-theme="dark"] .dx .dx-ki,body[data-theme="dark"] .dx .df-count,body[data-theme="dark"] .dx .dx-split>div,body[data-theme="dark"] .dx .dx-dd,body[data-theme="dark"] .dx .dx-lv{background:#163024}
@@ -11256,7 +11280,7 @@ function _roBanner(){ var b=document.getElementById("roBanner"); if(!b){ b=docum
   b.innerHTML='<span class="rob-i">👁</span><b>رابط عرض فقط</b>'+(SHARE.label?'<span>· '+esc(SHARE.label)+'</span>':'')+'<span class="rob-e">صالح حتى '+esc(_shDate(SHARE.exp))+'</span>'; }
 function _roCheck(first){ return _shareApi({action:"check",token:SHARE.token,count:first?1:0}).then(function(j){
     if(!j||!j.ok){ _roFail(j); return; } SHARE.exp=j.exp; SHARE.label=j.label||"";
-    if(first){ document.documentElement.classList.remove("ro-wait"); var g=document.getElementById("roGate"); if(g) g.remove(); _roLock(); }
+    if(first){ document.documentElement.classList.remove("ro-wait"); var g=document.getElementById("roGate"); if(g) g.remove(); _roLock(); if(j.scope) _roKiosk(j.scope); }
     _roBanner();
     var left=SHARE.exp-Date.now(); if(left>0 && left<36e5*6) setTimeout(function(){ _roCheck(false); },Math.min(left+1500,2147483000)); })
   .catch(function(e){ if(first) _roFail({why:"error"}); }); }
@@ -11287,7 +11311,7 @@ function _shRender(){ var L=SHM.links; if(!L.length){ _shList('<div class="hb-em
   var st={active:["نشط","ok"],expired:["منتهي","exp"],revoked:["موقوف","off"]};
   _shList('<div class="hb-tw"><table class="hb-t sh-t"><thead><tr><th>الرابط</th><th>الحالة</th><th>صالح حتى</th><th>المشاهدات</th><th>آخر فتح</th><th class="noprint">إجراءات</th></tr></thead><tbody>'
     +L.map(function(l){ var s=st[l.status]||["—",""], t=esc(l.token);
-      return '<tr><td class="nm"><b>'+esc(l.label)+'</b><small><bdi dir="ltr" class="sh-url">'+esc(_shareUrl(l.token))+'</bdi> · أُنشئ '+esc(_shDate(l.created))+'</small></td>'
+      return '<tr><td class="nm"><b>'+esc(l.label)+'</b><em class="sh-sc">'+esc(_dxScopeTitle(l.scope))+'</em><small><bdi dir="ltr" class="sh-url">'+esc(_shareUrl(l.token))+'</bdi> · أُنشئ '+esc(_shDate(l.created))+'</small></td>'
         +'<td><span class="sh-st '+s[1]+'">'+s[0]+'</span></td><td class="n">'+esc(_shDate(l.exp))+'</td><td class="n">'+ar(l.views||0)+'</td><td class="n">'+(l.lastView?esc(_shDate(l.lastView)):'—')+'</td>'
         +'<td class="sh-act noprint"><button onclick="shCopy(\''+t+'\')">نسخ</button>'
         +'<select onchange="if(this.value){shExtend(\''+t+'\',this.value);this.value=\'\';}"><option value="">تمديد…</option><option value="1">+ يوم</option><option value="7">+ أسبوع</option><option value="30">+ شهر</option></select>'
@@ -14082,6 +14106,49 @@ function meetLoad(id){ _meetGet(id).then(function(m){ if(!m)return; MIN=m.min?Ob
 function meetPickAudio(inp){ var f=inp&&inp.files&&inp.files[0]; if(!f) return; MREC.blob=f; MREC.mime=f.type||"audio/webm"; MREC.url=URL.createObjectURL(f); try{inp.value="";}catch(e){} _mstat("✓ تم اختيار «"+esc(f.name)+"» ("+(f.size/1048576).toFixed(1)+" م.ب) — اضغط «تفريغ دقيق».","ok"); meetShowOut(); }
 try{ window.meetRender=meetRender; window.meetMode=meetMode; window.meetAttAdd=meetAttAdd; window.meetAttDel=meetAttDel; window.meetAttImport=meetAttImport; window.meetMinSync=meetMinSync; window.meetMinAdd=meetMinAdd; window.meetMinDel=meetMinDel; window.meetPrevImport=meetPrevImport;
   window.meetMinutes=meetMinutes; window.meetMinutesPolish=meetMinutesPolish; window.meetMinutesPrint=meetMinutesPrint; window.meetSave=meetSave; window.meetLoad=meetLoad; window.meetCopyMin=meetCopyMin; window.meetAutoTranscribe=meetAutoTranscribe; window.meetSpkApply=meetSpkApply; window.meetPickAudio=meetPickAudio; }catch(e){}
+
+/* ===== مشاركة لوحة (عرض فقط · ملء الشاشة · بلا تنقّل) ===== */
+function _dxShareScope(){ var pd=document.querySelector("#answer .pdl"); if(pd&&typeof PD!=="undefined"&&PD.code){ var p=DATA.find(function(x){ return String(x.code)===String(PD.code); }); return {v:"pd",code:String(PD.code),name:p?(p.alias||p.name||""):""}; }
+  var f={}; try{ ["region","sector","ptype","cat"].forEach(function(k){ var v=DASH_FILTER[k]; if(Array.isArray(v)?v.length:v) f[k]=v; }); }catch(e){} return {v:"dash",f:f}; }
+function _dxScopeTitle(s){ if(!s) return "المنصة كاملة"; if(s.v==="pd") return "لوحة مشروع "+(s.code||"")+(s.name?" — "+s.name:"");
+  var parts=[]; try{ Object.keys(s.f||{}).forEach(function(k){ var v=s.f[k]; parts.push(Array.isArray(v)?v.join("، "):v); }); }catch(e){} return "لوحة الأداء العامة"+(parts.length?" — "+parts.join(" · "):""); }
+function dxCopyLink(){ var S=_dxShareScope(), k=_shKey(), old=document.getElementById("dxShM"); if(old) old.remove();
+  var m=document.createElement("div"); m.id="dxShM"; m.setAttribute("dir","rtl");
+  m.innerHTML='<div class="dxs-box"><button class="dxs-x" onclick="document.getElementById(\'dxShM\').remove()">✕</button><div class="dxs-h"><span>🔗</span><div><b>مشاركة هذه اللوحة — عرض فقط</b><small>'+esc(_dxScopeTitle(S))+'</small></div></div>'
+    +'<p class="dxs-d">من يفتح الرابط يرى <b>هذه اللوحة فقط بملء الشاشة</b>، دون أي تعديل أو انتقال لصفحات أخرى. ويمكنك إيقافه أو تمديده في أي وقت من «روابط المشاركة».</p>'
+    +'<div class="dxs-g"><label>اسم الرابط (لمن؟)<input id="dxsLbl" maxlength="80" value="'+esc(S.v==="pd"?("لوحة "+(S.name||S.code)):"لوحة الأداء العامة")+'"></label>'
+    +'<label>صالح لمدة<select id="dxsDur"><option value="1">يوم واحد</option><option value="7">أسبوع</option><option value="30" selected>شهر</option><option value="90">3 أشهر</option><option value="180">6 أشهر</option></select></label>'
+    +(k?'':'<label class="w">مفتاح الإدارة <small>(مرة واحدة على هذا الجهاز)</small><input id="dxsKey" type="password" autocomplete="off" placeholder="SHARE_ADMIN_KEY"></label>')+'</div>'
+    +'<div class="dxs-a"><button class="mt-btn" id="dxsGo" onclick="dxShareCreate()">إنشاء الرابط ونسخه</button><button class="mt-btn ghost" onclick="document.getElementById(\'dxShM\').remove()">إلغاء</button></div><div id="dxsOut"></div></div>';
+  m.addEventListener("click",function(e){ if(e.target===m) m.remove(); }); document.body.appendChild(m); window._DXS_SCOPE=S; }
+function dxShareCreate(){ var g=function(id){ return ((document.getElementById(id)||{}).value||"").trim(); }, out=document.getElementById("dxsOut"), btn=document.getElementById("dxsGo");
+  var key=g("dxsKey")||_shKey(); if(!key){ out.innerHTML='<span class="mst warn">أدخل مفتاح الإدارة.</span>'; return; }
+  if(g("dxsKey")){ try{ localStorage.setItem("reef_share_key",g("dxsKey")); }catch(e){} }
+  if(btn) btn.disabled=true; out.innerHTML='<span class="mst ok">● جارٍ إنشاء الرابط…</span>';
+  _shareApi({action:"create",key:key,label:g("dxsLbl")||"لوحة",days:+g("dxsDur")||30,scope:window._DXS_SCOPE}).then(function(j){ if(btn) btn.disabled=false; if(j.error) throw new Error(j.error);
+      var u=_shareUrl(j.link.token);
+      out.innerHTML='<div class="dxs-ok"><input readonly value="'+esc(u)+'" onclick="this.select()" dir="ltr"><button class="mt-btn sm" onclick="shCopy(\''+j.link.token+'\')">نسخ</button></div><span class="mst ok">✓ تم إنشاء الرابط ونسخه — صالح حتى '+esc(_shDate(j.link.exp))+'</span>';
+      try{ navigator.clipboard.writeText(u); }catch(e){} })
+    .catch(function(e){ if(btn) btn.disabled=false; out.innerHTML='<span class="mst warn">⚠ '+esc(e.message)+'</span>'; }); }
+/* ---------- الزائر: وضع العرض المقيّد ---------- */
+var _KO={};
+function _roKiosk(S){ if(!S||SHARE._kiosk) return; SHARE._kiosk=true; SHARE.scope=S; document.documentElement.classList.add("kiosk");
+  _KO.projDash=window.projDash; _KO.execDashboard=window.execDashboard;
+  window.projDash=function(c){ if(S.v==="pd"&&String(c)===String(S.code)) return _KO.projDash.apply(this,arguments); _roDeny(); };
+  window.execDashboard=function(){ if(S.v==="dash"){ try{ DASH_FILTER=Object.assign({region:"",sector:"",ptype:"",cat:""},S.f||{}); }catch(e){} return _KO.execDashboard.apply(this,arguments); } _roDeny(); };
+  ["homeOpen","navHome","projRegOpen","payRegOpen","reportPrepOpen","stageTrackOpen","projectsMapAnswer","cancelledOpen","weeklyBuilder","cardsBuilder","reportBuilder","programReport","uploadReport","pmKbList","schedOpen","cloudPhotosOpen","meetOpen","imgAuditOpen","lcAuditOpen","openFormsMenu","projDashOpen","projectCard","briefOpen","raOpen","askOpen","prOpenCat","dashSetFilter","dashResetFilter","pdPrintMenu","printAnswer","navPick"].forEach(function(n){ try{ if(typeof window[n]==="function") window[n]=function(){ _roDeny(); }; }catch(e){} });
+  try{ window._dxRoute=function(){ return false; }; window.ask=function(){ _roDeny(); }; }catch(e){}
+  var tries=0; (function go(){ if(!(typeof DATA!=="undefined"&&DATA&&DATA.length)&&tries++<120){ setTimeout(go,250); return; }
+    try{ if(S.v==="pd"){ if(!DATA.some(function(x){ return String(x.code)===String(S.code); })){ _roGate('<h2>هذا المشروع غير موجود في المحفظة الحالية</h2>',true); return; } _KO.projDash(S.code); }
+      else { DASH_FILTER=Object.assign({region:"",sector:"",ptype:"",cat:""},S.f||{}); _KO.execDashboard(); } }catch(e){}
+    _kioskFit(); })();
+  try{ var ans=document.getElementById("answer"); if(ans&&window.MutationObserver) new MutationObserver(function(){ clearTimeout(_KO.t); _KO.t=setTimeout(_kioskFit,60); }).observe(ans,{childList:true}); }catch(e){}
+  window.addEventListener("resize",function(){ clearTimeout(_KO.r); _KO.r=setTimeout(_kioskFit,150); });
+  var hint=document.createElement("div"); hint.id="kioskHint"; hint.textContent="اضغط في أي مكان للعرض بملء الشاشة"; document.body.appendChild(hint);
+  document.addEventListener("click",function(){ try{ var h=document.getElementById("kioskHint"); if(h) h.remove(); if(!document.fullscreenElement){ var r=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen; if(r){ var pr=r.call(document.documentElement); if(pr&&pr.catch) pr.catch(function(){}); } } }catch(e){} },{once:true,capture:true}); }
+function _kioskFit(){ try{ var el=document.querySelector("#answer .acard"); if(!el) return; if(!el.classList.contains("wkfs-fallback")){ el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); }
+  try{ wkSyncLand(); }catch(e){} try{ _dashFitBurst(); }catch(e){} }catch(e){} }
+try{ window.dxCopyLink=dxCopyLink; window.dxShareCreate=dxShareCreate; }catch(e){}
 
 try{ window.dashSetFilter=dashSetFilter; window.dashResetFilter=dashResetFilter; window._setHero=_setHero; window.toggleTools=toggleTools; window._initTools=_initTools; }catch(e){}
 

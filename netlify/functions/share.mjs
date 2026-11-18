@@ -14,7 +14,12 @@ function expiryFrom(d, base) {
   return (base || Date.now()) + days * DAY;
 }
 function safeEq(a, b) { a = Buffer.from(String(a || "")); b = Buffer.from(String(b || "")); return a.length === b.length && crypto.timingSafeEqual(a, b); }
-function view(r) { const now = Date.now(); return { token: r.token, label: r.label, created: r.created, exp: r.exp, revoked: !!r.revoked, views: r.views || 0, lastView: r.lastView || null,
+// نطاق الرابط: لوحة الأداء العامة (بفلاترها) أو لوحة مشروع واحد — بدونه يفتح المنصة كاملة للعرض فقط
+function cleanScope(s) { if (!s || typeof s !== "object") return null; const v = clean(s.v, 8); if (v !== "dash" && v !== "pd") return null;
+  const o = { v }; if (v === "pd") { o.code = clean(s.code, 30); if (!o.code) return null; o.name = clean(s.name, 160); }
+  if (v === "dash" && s.f && typeof s.f === "object") { o.f = {}; ["region", "sector", "ptype", "cat"].forEach(k => { const x = s.f[k]; if (Array.isArray(x)) o.f[k] = x.slice(0, 20).map(y => clean(y, 60)).filter(Boolean); else if (x) o.f[k] = clean(x, 60); }); }
+  return o; }
+function view(r) { const now = Date.now(); return { token: r.token, label: r.label, created: r.created, exp: r.exp, revoked: !!r.revoked, views: r.views || 0, lastView: r.lastView || null, scope: r.scope || null,
   status: r.revoked ? "revoked" : (r.exp < now ? "expired" : "active") }; }
 
 export default async (req) => {
@@ -31,7 +36,7 @@ export default async (req) => {
       if (r.revoked) return J(200, { ok: false, why: "revoked" });
       if (r.exp < Date.now()) return J(200, { ok: false, why: "expired", exp: r.exp });
       if (d.count) { r.views = (r.views || 0) + 1; r.lastView = Date.now(); await S.setJSON(tok, r); }
-      return J(200, { ok: true, exp: r.exp, label: r.label });
+      return J(200, { ok: true, exp: r.exp, label: r.label, scope: r.scope || null });
     }
     // ===== عمليات الإدارة (تتطلب المفتاح) =====
     const KEY = process.env.SHARE_ADMIN_KEY;
@@ -40,7 +45,7 @@ export default async (req) => {
 
     if (d.action === "create") {
       const token = crypto.randomBytes(18).toString("base64url");
-      const r = { token, label: clean(d.label) || "رابط مشاركة", created: Date.now(), exp: expiryFrom(d), revoked: false, views: 0 };
+      const r = { token, label: clean(d.label) || "رابط مشاركة", created: Date.now(), exp: expiryFrom(d), revoked: false, views: 0, scope: cleanScope(d.scope) };
       await S.setJSON(token, r); return J(200, { ok: true, link: view(r) });
     }
     if (d.action === "list") {
