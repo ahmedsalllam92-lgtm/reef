@@ -7181,7 +7181,7 @@ body[data-theme="dark"] .gd-doc{border-color:#2B363B}
   body.gd-print .gd-tb tr,body.gd-print .gd-steps li,body.gd-print .gd-note,body.gd-print .gd-list li{break-inside:avoid}body.gd-print .gd-tb thead{display:table-header-group}
   body.gd-print .gd-h2,body.gd-print .gd-h3{break-after:avoid}body.gd-print mark.gdm{background:none;box-shadow:none}body.gd-print .gd-end{display:none}
 }
-@page gdbook{size:A4 portrait;margin:14mm 14mm 16mm}
+
 
 #pmAuto{position:absolute;left:-30000px;top:0;width:1062px}
 @media print{ body.pm-auto > *:not(#pmAuto){display:none!important} body.pm-auto #pmAuto{position:static;width:auto} body.pm-auto #pmAuto .pmp{page:pmland} }
@@ -7213,6 +7213,120 @@ body[data-theme="dark"] .gd-doc{border-color:#2B363B}
 body[data-theme="dark"] .pmi>div{background:#141D21!important;border-color:#2B363B!important}body[data-theme="dark"] .pmi h4{color:#A9E2C0!important}body[data-theme="dark"] .pmi-s p{background:rgba(255,255,255,.03);color:#C9D6CF!important}
 body[data-theme="dark"] .pmi li{background:rgba(201,169,97,.06)!important;border-color:rgba(201,169,97,.2)!important;color:#E3ECE6!important}body[data-theme="dark"] .pmi h4:before{background-color:rgba(255,255,255,.06)}
 body[data-theme="dark"] .pmp-pg .pmi>div{background:#fff!important;border-color:#E3E8E3!important}body[data-theme="dark"] .pmp-pg .pmi h4{color:#0B3D27!important}body[data-theme="dark"] .pmp-pg .pmi-s p{background:#F7FAF8;color:#2E3B34!important}body[data-theme="dark"] .pmp-pg .pmi li{background:#FCFAF4!important;color:#14241B!important;border-color:#EFE6CF!important}
+
+/* ===================== التقويم v2 ===================== */
+.cw2{display:grid!important;grid-template-columns:minmax(0,1fr) 300px!important;gap:16px!important;align-items:start}
+.cw2 .cw-main{min-width:0;background:#fff;border:1px solid #E3E8E3;border-radius:22px;padding:14px;box-shadow:0 18px 36px -32px rgba(11,58,34,.6)}
+.cw2 .cw-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:10px}
+.cw2 .cw-tb{display:flex!important;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:4px 4px 14px;border-bottom:1px solid #EEF1EE;margin-bottom:12px}
+.cw2 .cw-tb-l,.cw2 .cw-tb-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cw2 .cw-today{border:1px solid #0E5A3A!important;background:#fff!important;color:#0E5A3A!important;border-radius:11px!important;padding:7px 16px!important;font:inherit;font-size:13px;font-weight:900;cursor:pointer}
+.cw2 .cw-navs{display:flex;gap:4px}.cw2 .cw-nav{width:34px;height:34px;border-radius:11px!important;border:1px solid #E3E8E3!important;background:#fff!important;display:grid;place-items:center;color:#14241B;cursor:pointer;padding:0!important}
+.cw2 .cw-nav:hover{border-color:#C9A961!important;color:#9A7A3E}
+.cw2 .cw-range{font-size:19px!important;font-weight:900!important;color:#0B3D27!important}
+.cw2 .cw-views{display:flex;gap:2px;background:#F2F5F2;border-radius:12px;padding:3px}.cw2 .cw-vw{border:0!important;background:transparent!important;border-radius:9px!important;padding:7px 14px!important;font:inherit;font-size:12.5px;font-weight:800;color:#5E6C62!important;cursor:pointer}
+.cw2 .cw-vw.on{background:#0B3A22!important;color:#fff!important;box-shadow:0 6px 14px -8px rgba(11,58,34,.7)}
+.cw2 .cw-addb{border:0;background:linear-gradient(135deg,#E9D29A,#B8954F);color:#14201A;border-radius:11px;padding:8px 14px;font:inherit;font-size:12.5px;font-weight:900;cursor:pointer;box-shadow:0 8px 18px -10px rgba(184,149,79,.8)}
+/* الأسبوع / اليوم */
+.cw2 .cw-grid{border:1px solid #E7ECE8;border-radius:16px;overflow:hidden}
+.cw2 .cw-head{display:grid!important;grid-template-columns:62px repeat(7,minmax(0,1fr))!important;background:#F8FAF8;border-bottom:1px solid #E7ECE8}.cw2 .cw-head.day{grid-template-columns:62px 1fr!important}
+.cw2 .cw-hcorner{border-inline-end:1px solid #EEF1EE}
+.cw2 .cw-hd{position:relative;display:flex!important;flex-direction:column;align-items:center;gap:2px;padding:10px 4px!important;cursor:pointer;border-inline-end:1px solid #EEF1EE;background:transparent!important;color:#14241B!important;font-size:inherit!important}
+.cw2 .cw-hd span{font-size:11.5px;font-weight:800;color:#7D8A82}.cw2 .cw-hd b{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:18px;font-weight:900;transition:.2s}
+.cw2 .cw-hd:hover b{background:#EEF6F1}.cw2 .cw-hd em{position:absolute;top:8px;inset-inline-end:8px;font-style:normal;font-size:10px;font-weight:900;background:#0E5A3A;color:#fff;border-radius:99px;padding:0 6px}
+.cw2 .cw-hd.today span{color:#9A7A3E}.cw2 .cw-hd.today b{background:linear-gradient(135deg,#E9D29A,#B8954F);color:#14201A;box-shadow:0 8px 16px -8px rgba(184,149,79,.9)}
+.cw2 .cw-body{display:grid!important;grid-template-columns:62px repeat(7,minmax(0,1fr))!important;max-height:600px;overflow-y:auto;position:relative;scrollbar-width:thin}.cw2 .cw-body.day{grid-template-columns:62px 1fr!important}
+.cw2 .cw-hours{border-inline-end:1px solid #EEF1EE;background:#FCFDFC}.cw2 .cw-hr{height:48px;position:relative}.cw2 .cw-hr span{position:absolute;top:-8px;inset-inline-end:8px;font-size:11px;font-weight:700;color:#93A79C;background:#FCFDFC;padding:0 2px}
+.cw2 .cw-hr:first-child span{top:2px}
+.cw2 .cw-daycol{position:relative;border-inline-end:1px solid #EEF1EE}.cw2 .cw-daycol.today{background:linear-gradient(180deg,rgba(201,169,97,.06),rgba(201,169,97,.02))}
+.cw2 .cw-slot{height:48px;border-bottom:1px solid #F1F4F1;transition:background .15s}.cw2 .cw-slot:hover{background:rgba(14,90,58,.04)}
+.cw2 .cw-ev{position:absolute;inset-inline:4px;border-radius:10px;padding:5px 8px;overflow:hidden;cursor:pointer;background:color-mix(in srgb,var(--c) 13%,#fff)!important;border:1px solid color-mix(in srgb,var(--c) 30%,#fff)!important;border-inline-start:4px solid var(--c)!important;color:#14241B!important;display:flex;flex-direction:column;gap:1px;box-shadow:0 6px 14px -10px color-mix(in srgb,var(--c) 70%,#000);transition:transform .15s,box-shadow .15s;z-index:2}
+.cw2 .cw-ev:hover{transform:translateY(-1px);box-shadow:0 12px 20px -12px color-mix(in srgb,var(--c) 80%,#000);z-index:3}
+.cw2 .cw-ev b{font-size:12px;font-weight:900;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cw2 .cw-ev span{font-size:10.5px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,#000)}
+.cw2 .cw-ev.sm{flex-direction:row;align-items:center;gap:6px}.cw2 .cw-ev.sm span{white-space:nowrap}
+.cw2 .cw-now{position:absolute;inset-inline:0;height:2px;background:#C9A961!important;z-index:4;pointer-events:none}.cw2 .cw-now i{position:absolute;inset-inline-start:-6px;top:-5px;width:12px;height:12px;border-radius:50%;background:#C9A961;box-shadow:0 0 0 4px rgba(201,169,97,.25)}
+/* الشهر */
+.cw2 .cw-month{border:1px solid #E7ECE8;border-radius:16px;overflow:hidden}
+.cw2 .cw-mhead{display:grid!important;grid-template-columns:repeat(7,1fr)!important;background:#0B3A22}.cw2 .cw-mhead div{padding:10px 4px;text-align:center;font-size:12.5px;font-weight:800;color:#E3ECE6}
+.cw2 .cw-mgrid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important}
+.cw2 .cw-mc{min-height:112px;padding:6px 7px;border-inline-end:1px solid #EEF1EE;border-bottom:1px solid #EEF1EE;display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:background .15s;background:#fff}
+.cw2 .cw-mc:hover{background:#FAFCFA}.cw2 .cw-mc.we{background:#FBFAF6}.cw2 .cw-mc.out{background:#F7F8F6;cursor:default}.cw2 .cw-mc.out .cw-md{color:#C3CCC6}
+.cw2 .cw-md{align-self:flex-start;min-width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900;color:#14241B}
+.cw2 .cw-mc.today .cw-md{background:linear-gradient(135deg,#E9D29A,#B8954F);color:#14201A}.cw2 .cw-mc.sel{box-shadow:inset 0 0 0 2px #0E5A3A}
+.cw2 .cw-chip{display:flex;align-items:center;gap:5px;padding:3px 7px;border-radius:7px;font-size:11px;font-weight:800;background:color-mix(in srgb,var(--c) 12%,#fff)!important;color:#14241B!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cw2 .cw-chip i{flex:none;width:6px;height:6px;border-radius:50%;background:var(--c)}.cw2 .cw-chip em{font-style:normal;color:color-mix(in srgb,var(--c) 70%,#000);font-size:10px}
+.cw2 .cw-more{font-size:10.5px;font-weight:800;color:#9A7A3E;padding:0 4px}
+/* جدول الأعمال */
+.cw2 .cw-agenda{display:flex;flex-direction:column;gap:10px;max-height:640px;overflow-y:auto;padding:2px}
+.cw2 .cw-ag{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;align-items:start}
+.cw2 .cw-agd{display:flex;flex-direction:column;align-items:center;padding:10px 6px;border-radius:14px;background:#F6F8F5;border:1px solid #E7ECE8}.cw2 .cw-agd b{font-size:26px;font-weight:900;color:#0B3D27;line-height:1}.cw2 .cw-agd span{font-size:12px;font-weight:800;color:#3E4B44}.cw2 .cw-agd em{font-style:normal;font-size:11px;color:#9A7A3E}
+.cw2 .cw-ag.today .cw-agd{background:linear-gradient(135deg,#14603D,#0B3A22);border-color:#0B3A22}.cw2 .cw-ag.today .cw-agd b,.cw2 .cw-ag.today .cw-agd span{color:#fff}.cw2 .cw-ag.today .cw-agd em{color:#E9D29A}
+.cw2 .cw-agl{display:flex;flex-direction:column;gap:6px}
+.cw2 .cw-agi{display:flex;align-items:center;gap:12px;text-align:start;padding:10px 14px;border-radius:14px;background:#fff;border:1px solid #E7ECE8;border-inline-start:4px solid var(--c);cursor:pointer;font:inherit;transition:.15s}.cw2 .cw-agi:hover{border-color:var(--c);transform:translateX(-2px)}
+.cw2 .cw-agi .t{flex:none;width:70px;font-size:12.5px;font-weight:900;color:#14241B;line-height:1.4}.cw2 .cw-agi .t small{color:#93A79C;font-weight:700}
+.cw2 .cw-agi .b{flex:1;display:flex;flex-direction:column}.cw2 .cw-agi .b b{font-size:13.5px;color:#14241B}.cw2 .cw-agi .b em{font-style:normal;font-size:11.5px;color:#7D8A82}
+.cw2 .cw-agi i{font-style:normal;font-size:11px;font-weight:800;color:#0E5A3A;background:#EEF6F1;border-radius:99px;padding:2px 9px}
+.cw2 .cw-empty{display:flex;flex-direction:column;align-items:center;gap:4px;padding:50px 20px;text-align:center}.cw2 .cw-empty b{font-size:15px;color:#14241B}.cw2 .cw-empty span{font-size:12.5px;color:#7D8A82}
+/* الجانب */
+.cw2 .cw-tdc{border-radius:20px;overflow:hidden;background:#fff;border:1px solid #E3E8E3;box-shadow:0 18px 36px -32px rgba(11,58,34,.6)}
+.cw2 .cw-tdh{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:16px 18px;background:radial-gradient(circle at 15% 0%,#2C5A43,#0F2E20 70%);color:#fff;overflow:hidden}
+.cw2 .cw-tdh:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:14px 14px}
+.cw2 .cw-tdh div{position:relative;display:flex;flex-direction:column}.cw2 .cw-tdh span{font-size:13px;font-weight:800;color:#E9D29A}.cw2 .cw-tdh b{font-size:46px;font-weight:900;line-height:1}.cw2 .cw-tdh em{font-style:normal;font-size:12px;color:#CFE0D5}
+.cw2 .cw-tdh i{position:relative;font-style:normal;font-size:11.5px;font-weight:800;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:3px 10px}
+.cw2 .cw-up{padding:12px 14px;display:flex;flex-direction:column;gap:6px}.cw2 .cw-uph{font-size:12px;font-weight:900;color:#9A7A3E}
+.cw2 .cw-up button{display:flex;align-items:center;gap:10px;text-align:start;border:0;background:#F7FAF8;border-radius:12px;padding:8px 10px;font:inherit;cursor:pointer}.cw2 .cw-up button:hover{background:#EEF6F1}
+.cw2 .cw-up button i{flex:none;width:4px;align-self:stretch;border-radius:4px;background:var(--c)}.cw2 .cw-up button div{display:flex;flex-direction:column;min-width:0}.cw2 .cw-up b{font-size:12.5px;color:#14241B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cw2 .cw-up span{font-size:11px;color:#7D8A82}
+.cw2 .cw-up p{margin:0;font-size:12px;color:#93A79C}
+.cw2 .cw-add{margin:0 14px 14px;width:calc(100% - 28px);border:0!important;background:linear-gradient(135deg,#14603D,#0B3A22)!important;color:#fff!important;border-radius:12px!important;padding:10px!important;font:inherit;font-size:13px;font-weight:900;cursor:pointer}
+.cw2 .cw-mini{background:#fff;border:1px solid #E3E8E3;border-radius:20px;padding:12px 14px}
+.cw2 .cw-mini-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.cw2 .cw-mini-h span{font-size:14px;font-weight:900;color:#14241B}.cw2 .cw-nav.sm{width:28px;height:28px}
+.cw2 .cw-mini-dow,.cw2 .cw-mini-grid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;text-align:center}.cw2 .cw-mini-dow span{font-size:10.5px;font-weight:800;color:#93A79C;padding:4px 0}
+.cw2 .cw-mini-d{position:relative;height:32px;display:grid;place-items:center;border-radius:10px;font-size:12.5px;font-weight:800;color:#14241B;cursor:pointer;margin:1px}.cw2 .cw-mini-d:hover{background:#EEF6F1}
+.cw2 .cw-mini-d.has:after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:#C9A961}
+.cw2 .cw-mini-d.sel{background:#0B3A22;color:#fff}.cw2 .cw-mini-d.today{box-shadow:inset 0 0 0 2px #C9A961;color:#9A7A3E}.cw2 .cw-mini-d.today.sel{color:#fff}
+.cw2 .cw-cats{background:#fff;border:1px solid #E3E8E3;border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}.cw2 .cw-cats-h{font-size:13px;font-weight:900;color:#14241B;margin-bottom:4px}
+.cw2 .cw-cat{display:flex!important;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:800;color:#14241B}.cw2 .cw-cat:hover{background:#F7FAF8}
+.cw2 .cw-cat input{display:none}.cw2 .cw-sw{flex:none;width:18px;height:18px;border-radius:6px;background:var(--c);display:grid;place-items:center;position:relative}
+.cw2 .cw-sw:after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.cw2 .cw-cat.off .cw-sw{background:#fff;box-shadow:inset 0 0 0 2px var(--c)}.cw2 .cw-cat.off .cw-sw:after{display:none}.cw2 .cw-cat.off .cw-cn{color:#93A79C}
+.cw2 .cw-cn{flex:1}.cw2 .cw-cat em{font-style:normal;font-size:11px;font-weight:900;color:#7D8A82;background:#F2F5F2;border-radius:99px;padding:0 8px}
+/* نافذة الحدث */
+.cw-dialog{border-radius:20px!important;border-top:5px solid #0E5A3A}
+/* داكن */
+body[data-theme="dark"] .cw2 .cw-main,body[data-theme="dark"] .cw2 .cw-tdc,body[data-theme="dark"] .cw2 .cw-mini,body[data-theme="dark"] .cw2 .cw-cats,body[data-theme="dark"] .cw2 .cw-mc,body[data-theme="dark"] .cw2 .cw-agi,body[data-theme="dark"] .cw2 .cw-nav,body[data-theme="dark"] .cw2 .cw-today{background:#141D21!important;border-color:#2B363B!important}
+body[data-theme="dark"] .cw2 .cw-head,body[data-theme="dark"] .cw2 .cw-hours,body[data-theme="dark"] .cw2 .cw-hr span,body[data-theme="dark"] .cw2 .cw-mc.we,body[data-theme="dark"] .cw2 .cw-mc.out,body[data-theme="dark"] .cw2 .cw-agd,body[data-theme="dark"] .cw2 .cw-up button,body[data-theme="dark"] .cw2 .cw-views{background:#10181B!important}
+body[data-theme="dark"] .cw2 .cw-range,body[data-theme="dark"] .cw2 .cw-hd,body[data-theme="dark"] .cw2 .cw-md,body[data-theme="dark"] .cw2 .cw-mini-h span,body[data-theme="dark"] .cw2 .cw-mini-d,body[data-theme="dark"] .cw2 .cw-cats-h,body[data-theme="dark"] .cw2 .cw-cat,body[data-theme="dark"] .cw2 .cw-up b,body[data-theme="dark"] .cw2 .cw-agi .b b,body[data-theme="dark"] .cw2 .cw-agi .t,body[data-theme="dark"] .cw2 .cw-agd b,body[data-theme="dark"] .cw2 .cw-agd span{color:#E3ECE6!important}
+body[data-theme="dark"] .cw2 .cw-grid,body[data-theme="dark"] .cw2 .cw-month,body[data-theme="dark"] .cw2 .cw-hd,body[data-theme="dark"] .cw2 .cw-daycol,body[data-theme="dark"] .cw2 .cw-hcorner,body[data-theme="dark"] .cw2 .cw-hours,body[data-theme="dark"] .cw2 .cw-mc,body[data-theme="dark"] .cw2 .cw-tb{border-color:#2B363B!important}
+body[data-theme="dark"] .cw2 .cw-slot{border-color:#1E2A2F}body[data-theme="dark"] .cw2 .cw-ev,body[data-theme="dark"] .cw2 .cw-chip{background:color-mix(in srgb,var(--c) 22%,#141D21)!important;color:#E3ECE6!important;border-color:color-mix(in srgb,var(--c) 40%,#141D21)!important}
+body[data-theme="dark"] .cw2 .cw-ev span{color:color-mix(in srgb,var(--c) 60%,#fff)}body[data-theme="dark"] .cw2 .cw-vw{color:#B5C4BB!important}
+@media (max-width:1000px){.cw2{grid-template-columns:1fr!important}.cw2 .cw-side{position:static;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}}
+
+/* ===== طباعة الدليل v2: غلاف بملء الصفحة + صفحات رسمية أعرض ===== */
+@media print{
+  body.gd-print .gd-cover{page:gdcover;min-height:0!important;height:296mm;width:100%;border-radius:0;margin:0;padding:30mm 22mm;box-sizing:border-box;break-after:page}
+  body.gd-print .gd-cover h1{font-size:30pt}body.gd-print .gd-cover p{font-size:12pt;max-width:150mm}body.gd-print .gd-cvc i{width:22mm;height:22mm}
+  body.gd-print .gd-cvc i:nth-child(1){top:12mm;right:12mm}body.gd-print .gd-cvc i:nth-child(2){top:12mm;left:12mm}body.gd-print .gd-cvc i:nth-child(3){bottom:12mm;right:12mm}body.gd-print .gd-cvc i:nth-child(4){bottom:12mm;left:12mm}
+  body.gd-print .gd-doc{font-size:11.5pt!important;color:#111}
+  body.gd-print .gd-tocp{padding:0!important;border:0}body.gd-print .gd-tocp h2{font-size:18pt;border-bottom:2px solid #0B3A22;padding-bottom:6px}
+  body.gd-print .gd-tocl{grid-template-columns:1fr;gap:0}body.gd-print .gd-tocl div{background:none;border-radius:0;border-bottom:1px dotted #B9C4BE;padding:8px 2px;font-size:12pt}
+  body.gd-print .gd-ch{padding:0!important}
+  body.gd-print .gd-chh{border-bottom:1.5pt solid #0B3A22;padding-bottom:8px;margin-bottom:12px}body.gd-print .gd-chh:after{width:30mm}
+  body.gd-print .gd-chh i{width:auto;height:auto;padding:3px 10px;border-radius:4px;font-size:12pt;box-shadow:none}
+  body.gd-print .gd-chh h2{font-size:17pt}
+  body.gd-print .gd-h2{font-size:13pt;margin:14px 0 6px}body.gd-print .gd-h2 span{background:none;border:0;padding:0;font-size:12pt;color:#0E5A3A}
+  body.gd-print .gd-h3{font-size:12pt;border-inline-start-width:2px}
+  body.gd-print .gd-p{line-height:1.95;margin:5px 0;color:#1d2a23}
+  body.gd-print .gd-list{gap:2px;margin:4px 0 8px}body.gd-print .gd-list li{background:none;border-radius:0;padding:2px 0;padding-inline-start:18px;line-height:1.85}
+  body.gd-print .gd-list li:before{inset-inline-start:2px;top:.8em;width:6px;height:6px}
+  body.gd-print .gd-steps li{padding:3px 0}body.gd-print .gd-steps li:not(:last-child):before{top:32px;right:12px}
+  body.gd-print .gd-steps i{width:24px;height:24px;font-size:10pt;box-shadow:none}body.gd-print .gd-steps span{border:0;background:none;padding:2px 4px;line-height:1.85}
+  body.gd-print .gd-note{border-radius:0;padding:6px 10px}
+  body.gd-print .gd-tw{border-radius:0;border:0;overflow:visible}body.gd-print .gd-tb{font-size:10pt;border:1px solid #9FB3A7}body.gd-print .gd-tb th{padding:6px 8px;border:1px solid #0E5A3A}body.gd-print .gd-tb td{padding:5px 8px;border:1px solid #C9D5CD}
+}
+@page gdcover{size:A4 portrait;margin:0}
+@page gdbook{size:A4 portrait;margin:16mm 11mm 18mm;@bottom-center{content:counter(page);font-size:9pt;color:#7D8A82}}
+
+.cw2 .cw-ev.sm b{flex:1;min-width:0}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -12667,7 +12781,7 @@ try{ window.addEventListener("beforeprint",function(){ if(GEO.t!=null) GEO._pt=G
 /* ---------------- عدّاد الأرقام عند فتح اللوحات ---------------- */
 var CU={on:true,dur:1000,run:[],raf:0};
 var CU_RE=/^(\s*[−\-+]?\s*)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(\s*[%٪+]?\s*)$/;
-var CU_SKIP='.geo,.pd-fsnav,input,textarea,select,[contenteditable],.ask-panel,.rb-panel,.noanim,script,style';
+var CU_SKIP='.geo,.pd-fsnav,input,textarea,select,[contenteditable],.ask-panel,.rb-panel,.noanim,script,style,.cw2,.cw-modal,.gd-doc,.gd-toc,.pmm-steps,.pmm-rib,.pmm-ch,.pmsx,.pmt,.pmn,.pmp,.mt-minprev,.pmm-th';
 function _cuFmt(v,dec,comma){ var s=v.toFixed(dec); if(comma){ var pr=s.split("."); pr[0]=pr[0].replace(/\B(?=(\d{3})+(?!\d))/g,","); s=pr.join("."); } return s; }
 function _cuTick(ts){ CU.raf=0; var keep=[];
   CU.run.forEach(function(a){ if(!a.t0) a.t0=ts; var k=Math.min(1,(ts-a.t0)/CU.dur), e=1-Math.pow(1-k,3);
@@ -16368,7 +16482,7 @@ function meetMinutes(){ var ta=document.getElementById("mtTrans"), txt=ta?ta.val
   if(box) box.innerHTML='<span class="mst ok">● جارٍ إعداد المحضر من التفريغ…</span>';
   fetch("/.netlify/functions/transcribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"minutes",text:txt,title:meta.title,attendees:meta.attendees,notes:meta.notes})})
     .then(function(r){ return r.json(); }).then(function(M){ if(M.error){ if(box) box.innerHTML='<span class="mst warn">⚠ '+esc(M.error)+'</span>'; return; }
-      MREC.minutes={meta:meta,M:M}; if(box) box.innerHTML='<div class="mt-minprev" contenteditable="true" id="mtMinDoc">'+_meetMinutesHTML(meta,M,false)+'</div><div class="mt-actions"><button class="mt-btn" onclick="meetMinutesPrint()">🖨 طباعة / حفظ PDF</button><span class="mt-hint" style="margin:0">يمكنك تعديل أي نص في المحضر مباشرة قبل الطباعة.</span></div>'; })
+      MREC.minutes={meta:meta,M:M}; if(box) box.innerHTML='<div class="mt-minprev" contenteditable="true" id="mtMinDoc">'+_meetMinutesHTML(meta,M,false)+'</div><div class="mt-actions"><button class="mt-btn" onclick="meetMinutesPrint()">🖨 تنزيل PDF</button><button class="mt-btn" onclick="meetMinutesWord()">📄 تنزيل Word</button><span class="mt-hint" style="margin:0">يمكنك تعديل أي نص في المحضر مباشرة قبل الطباعة.</span></div>'; })
     .catch(function(){ if(box) box.innerHTML='<span class="mst warn">⚠ تعذّر الاتصال بالخادم — تأكد أنك على الرابط المنشور.</span>'; }); }
 function _meetMinutesHTML(meta,M,full){ var e=esc, row=function(k,v){ return v?'<tr><th>'+k+'</th><td>'+e(v)+'</td></tr>':''; };
   var dt=meta.date?new Date(meta.date):new Date(); var dtx=isNaN(dt)?e(meta.date):dt.toLocaleDateString("ar-SA-u-nu-latn",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
@@ -16438,7 +16552,7 @@ function meetRender(){ MREC.on=false; MREC.blob=null; MREC.transcript=""; MREC.i
     /* 3. المحضر */
     +'<section class="mt-card"><div class="mt-ch"><em>3</em><div><b>المحضر</b><small>عدّل أي قسم وتتحدّث المعاينة فوراً — الأقسام: بيانات الاجتماع، الحضور، متابعة الاجتماع السابق، ملخص النقاشات، القرارات والتوصيات، الاجتماع القادم</small></div></div>'
       +'<div id="mtEd"></div>'
-      +'<div class="mt-actions mt-minact"><button class="mt-btn" onclick="meetMinutesPolish()" id="mtPolBtn">✨ صياغة رسمية بالذكاء الاصطناعي</button><button class="mt-btn" onclick="meetMinutesPrint()">🖨 طباعة / حفظ PDF</button><button class="mt-btn ghost" onclick="meetSave()">💾 حفظ الاجتماع</button><button class="mt-btn ghost" onclick="meetCopyMin()">⧉ نسخ نص المحضر</button><span class="mt-prog" id="mtPolProg"></span></div>'
+      +'<div class="mt-actions mt-minact"><button class="mt-btn" onclick="meetMinutesPolish()" id="mtPolBtn">✨ صياغة رسمية بالذكاء الاصطناعي</button><button class="mt-btn" onclick="meetMinutesPrint()">🖨 تنزيل PDF</button><button class="mt-btn" onclick="meetMinutesWord()">📄 تنزيل Word</button><button class="mt-btn ghost" onclick="meetSave()">💾 حفظ الاجتماع</button><button class="mt-btn ghost" onclick="meetCopyMin()">⧉ نسخ نص المحضر</button><span class="mt-prog" id="mtPolProg"></span></div>'
       +'<div class="mt-prevh">معاينة المحضر</div><div class="mt-minprev" id="mtMinDoc"></div>'
     +'</section>'
     +'<div class="mt-saved"><div class="mt-saved-h">اجتماعات محفوظة على هذا الجهاز</div><div id="mtList">جارٍ التحميل…</div></div>'
@@ -16811,6 +16925,103 @@ function calPlayEvent(id){ var ev=(EVENTS||[]).filter(function(e){return e.id===
 
 try{ window.meetPause=meetPause; window.meetResume=meetResume; window._meetRestore=_meetRestore; window._meetClearRecovery=_meetClearRecovery; window.meetOpen=meetOpen; window.meetRender=meetRender; window.meetCalRender=meetCalRender; window.calSetView=calSetView; window.calNav=calNav; window.calToday=calToday; window.calGoto=calGoto; window.calToggleCat=calToggleCat; window.calAddEvent=calAddEvent; window._calEv=_calEv; window._calClose=_calClose; window._calSaveForm=_calSaveForm; window._calDel=_calDel; window.calRecordEvent=calRecordEvent; window.calPlayEvent=calPlayEvent; window.meetStart=meetStart; window.meetStop=meetStop; window.meetSave=meetSave; window.meetDownloadAudio=meetDownloadAudio; window.meetDownloadText=meetDownloadText; window.meetWhatsApp=meetWhatsApp; window.meetEmail=meetEmail; window.meetList=meetList; window.meetPlay=meetPlay; window.meetLoad=meetLoad; window.meetDel=meetDel; window.meetPasteTrans=meetPasteTrans; window.meetCopyPrompt=meetCopyPrompt; }catch(e){}
 
+
+/* ===================== التقويم v2: تصميم عربي كامل + جدول أعمال ===================== */
+var AR_DOW=["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"], AR_DOW_S=["أحد","إثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];
+function _calHr(h){ return h===12?"12 م":(h<12?h+" ص":(h-12)+" م"); }
+function _calT12(t){ if(!t) return ""; var p=t.split(":"), h=+p[0]; return (h%12||12)+":"+(p[1]||"00")+" "+(h<12?"ص":"م"); }
+function meetCalRender(){ if(EVENTS===null){ calLoad().then(meetCalRender); return; }
+  var host=document.getElementById("mtCal"); if(!host) return; var V=CAL.view;
+  var main='<div class="cw-main">'+_calToolbar()+(V==="month"?_calMonth():(V==="day"?_calDay():(V==="agenda"?_calAgenda():_calWeek())))+'</div>';
+  var side='<div class="cw-side">'+_calTodayCard()+_calMini()+_calCats()+'</div>';
+  host.innerHTML='<div class="cw-wrap cw2">'+main+side+'</div>';
+  if(V==="week"||V==="day") _calScrollNow(); }
+function _calToolbar(){ var V=CAL.view;
+  return '<div class="cw-tb"><div class="cw-tb-l"><button class="cw-today" onclick="calToday()">اليوم</button><div class="cw-navs"><button class="cw-nav" onclick="calNav(-1)" title="السابق">'+_calChev("r")+'</button><button class="cw-nav" onclick="calNav(1)" title="التالي">'+_calChev("l")+'</button></div><span class="cw-range">'+_calRangeLabel()+'</span></div>'
+    +'<div class="cw-tb-r"><div class="cw-views">'+[["day","يوم"],["week","أسبوع"],["month","شهر"],["agenda","جدول الأعمال"]].map(function(v){ return '<button class="cw-vw'+(V===v[0]?" on":"")+'" onclick="calSetView(\''+v[0]+'\')">'+v[1]+'</button>'; }).join("")+'</div><button class="cw-addb" onclick="calAddEvent()">＋ حدث جديد</button></div></div>'; }
+function _calChev(d){ return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="'+(d==="l"?"M15 6l-6 6 6 6":"M9 6l6 6-6 6")+'"/></svg>'; }
+function _calRangeLabel(){ var d=CAL.cur;
+  if(CAL.view==="day") return AR_DOW[d.getDay()]+" "+d.getDate()+" "+AR_MON[d.getMonth()]+" "+d.getFullYear();
+  if(CAL.view==="month") return AR_MON[d.getMonth()]+" "+d.getFullYear();
+  if(CAL.view==="agenda") return "الأحداث القادمة — من "+d.getDate()+" "+AR_MON[d.getMonth()];
+  var s=_weekStart(d), e=new Date(s); e.setDate(s.getDate()+6);
+  return s.getDate()+(s.getMonth()!==e.getMonth()?" "+AR_MON[s.getMonth()]:"")+" – "+e.getDate()+" "+AR_MON[e.getMonth()]+" "+e.getFullYear(); }
+function _hoursCol(){ var h=""; for(var i=G0;i<=G1;i++) h+='<div class="cw-hr"><span>'+_calHr(i)+'</span></div>'; return h; }
+function _dayCol(ds,today){ var evs=_visEvents(ds).slice().sort(function(a,b){ return _toMin(a.start)-_toMin(b.start); }), rows="";
+  for(var i=G0;i<=G1;i++) rows+='<div class="cw-slot" ondblclick="calAddEvent(\''+ds+'\','+i+')" title="دبل-كليك لإضافة حدث"></div>';
+  var evHtml=evs.map(function(ev){ var st=_toMin(ev.start), en=_toMin(ev.end||ev.start)||(st+60); if(en<=st) en=st+60; var top=((st-G0*60)/60)*48, hgt=Math.max(26,((en-st)/60)*48-3), c=_cat(ev.cat);
+    return '<div class="cw-ev'+(hgt<44?" sm":"")+'" style="top:'+top+'px;height:'+hgt+'px;--c:'+c.color+'" onclick="_calEv(\''+ev.id+'\')"><b>'+esc(ev.title)+'</b><span>'+_calT12(ev.start)+(ev.end?" – "+_calT12(ev.end):"")+(ev.recId?" · مسجّل":"")+'</span></div>'; }).join("");
+  var nowline=today?'<div class="cw-now" id="cwNow" style="top:'+(((_nowMin()-G0*60)/60)*48)+'px"><i></i></div>':'';
+  return '<div class="cw-daycol'+(today?" today":"")+'">'+rows+evHtml+nowline+'</div>'; }
+function _calHd(d,todayS){ var ds=_ymdStr(d), n=_visEvents(ds).length; return '<div class="cw-hd'+(ds===todayS?" today":"")+'" onclick="calGoto(\''+ds+'\')"><span>'+AR_DOW[d.getDay()]+'</span><b>'+d.getDate()+'</b>'+(n?'<em>'+n+'</em>':'')+'</div>'; }
+function _calWeek(){ var s=_weekStart(CAL.cur), todayS=_ymdStr(new Date()), days=[]; for(var i=0;i<7;i++){ var d=new Date(s); d.setDate(s.getDate()+i); days.push(d); }
+  return '<div class="cw-grid week"><div class="cw-head"><div class="cw-hcorner"></div>'+days.map(function(d){ return _calHd(d,todayS); }).join("")+'</div><div class="cw-body"><div class="cw-hours">'+_hoursCol()+'</div>'+days.map(function(d){ var ds=_ymdStr(d); return _dayCol(ds,ds===todayS); }).join("")+'</div></div>'; }
+function _calDay(){ var ds=_ymdStr(CAL.cur), todayS=_ymdStr(new Date());
+  return '<div class="cw-grid day"><div class="cw-head day"><div class="cw-hcorner"></div>'+_calHd(CAL.cur,todayS)+'</div><div class="cw-body day"><div class="cw-hours">'+_hoursCol()+'</div>'+_dayCol(ds,ds===todayS)+'</div></div>'; }
+function _calMonth(){ var y=CAL.cur.getFullYear(), m=CAL.cur.getMonth(), first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), todayS=_ymdStr(new Date()), prevDays=new Date(y,m,0).getDate();
+  var head='<div class="cw-mhead">'+AR_DOW.map(function(x){ return '<div>'+x+'</div>'; }).join("")+'</div>', cells="";
+  for(var i=first-1;i>=0;i--) cells+='<div class="cw-mc out"><span class="cw-md">'+(prevDays-i)+'</span></div>';
+  for(var dd=1;dd<=days;dd++){ var ds=_ymdStr(new Date(y,m,dd)), evs=_visEvents(ds).slice().sort(function(a,b){ return _toMin(a.start)-_toMin(b.start); }), wk=new Date(y,m,dd).getDay();
+    var chips=evs.slice(0,3).map(function(ev){ var c=_cat(ev.cat); return '<div class="cw-chip" style="--c:'+c.color+'" onclick="event.stopPropagation();_calEv(\''+ev.id+'\')"><i></i>'+(ev.start?'<em>'+_calT12(ev.start).replace(/ (ص|م)$/,"")+'</em>':'')+esc(ev.title)+'</div>'; }).join("");
+    if(evs.length>3) chips+='<div class="cw-more" onclick="event.stopPropagation();calGoto(\''+ds+'\')">+'+(evs.length-3)+' أخرى</div>';
+    cells+='<div class="cw-mc'+(ds===todayS?" today":"")+(wk===5||wk===6?" we":"")+(ds===CAL.sel?" sel":"")+'" ondblclick="calAddEvent(\''+ds+'\')" onclick="CAL.sel=\''+ds+'\';document.querySelectorAll(\'.cw-mc.sel\').forEach(function(x){x.classList.remove(\'sel\')});this.classList.add(\'sel\')"><span class="cw-md">'+dd+'</span>'+chips+'</div>'; }
+  var tail=(7-((first+days)%7))%7; for(var t=1;t<=tail;t++) cells+='<div class="cw-mc out"><span class="cw-md">'+t+'</span></div>';
+  return '<div class="cw-month">'+head+'<div class="cw-mgrid">'+cells+'</div></div>'; }
+function _calAgenda(){ var s=new Date(CAL.cur); s.setHours(0,0,0,0); var todayS=_ymdStr(new Date()), out="", any=false;
+  for(var i=0;i<45;i++){ var d=new Date(s); d.setDate(s.getDate()+i); var ds=_ymdStr(d), evs=_visEvents(ds).slice().sort(function(a,b){ return _toMin(a.start)-_toMin(b.start); }); if(!evs.length) continue; any=true;
+    out+='<div class="cw-ag'+(ds===todayS?" today":"")+'"><div class="cw-agd"><b>'+d.getDate()+'</b><span>'+AR_DOW[d.getDay()]+'</span><em>'+AR_MON[d.getMonth()]+'</em></div><div class="cw-agl">'+evs.map(function(ev){ var c=_cat(ev.cat); return '<button class="cw-agi" style="--c:'+c.color+'" onclick="_calEv(\''+ev.id+'\')"><span class="t">'+(ev.start?_calT12(ev.start)+(ev.end?"<br><small>"+_calT12(ev.end)+"</small>":""):"طوال اليوم")+'</span><span class="b"><b>'+esc(ev.title)+'</b><em>'+esc(c.name)+(ev.notes?" · "+esc(String(ev.notes).slice(0,80)):"")+'</em></span>'+(ev.recId?'<i>مسجّل</i>':'')+'</button>'; }).join("")+'</div></div>'; }
+  return '<div class="cw-agenda">'+(any?out:'<div class="cw-empty"><b>لا توجد أحداث خلال الأسابيع القادمة</b><span>أضف اجتماعاً أو مهمة من زر «حدث جديد»</span></div>')+'</div>'; }
+function _calTodayCard(){ var n=new Date(), ts=_ymdStr(n), nowM=_nowMin(), up=(EVENTS||[]).filter(function(e){ return _cat(e.cat).on&&(e.date>ts||e.date===ts&&_toMin(e.end||e.start)>=nowM); }).sort(function(a,b){ return a.date===b.date?_toMin(a.start)-_toMin(b.start):(a.date<b.date?-1:1); }).slice(0,4);
+  var todayN=_visEvents(ts).length;
+  return '<div class="cw-tdc"><div class="cw-tdh"><div><span>'+AR_DOW[n.getDay()]+'</span><b>'+n.getDate()+'</b><em>'+AR_MON[n.getMonth()]+' '+n.getFullYear()+'</em></div><i>'+(todayN?todayN+" أحداث اليوم":"لا أحداث اليوم")+'</i></div>'
+    +'<div class="cw-up"><div class="cw-uph">القادم</div>'+(up.length?up.map(function(e){ var c=_cat(e.cat), d=_parseYmd(e.date); return '<button style="--c:'+c.color+'" onclick="_calEv(\''+e.id+'\')"><i></i><div><b>'+esc(e.title)+'</b><span>'+(e.date===ts?"اليوم":(AR_DOW[d.getDay()]+" "+d.getDate()+" "+AR_MON[d.getMonth()]))+(e.start?" · "+_calT12(e.start):"")+'</span></div></button>'; }).join(""):'<p>لا توجد أحداث قادمة.</p>')+'</div>'
+    +'<button class="cw-add" onclick="calAddEvent()">＋ إضافة حدث</button></div>'; }
+function _calMini(){ var d=CAL.cur, y=d.getFullYear(), m=d.getMonth(), first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), todayS=_ymdStr(new Date()), cells="";
+  for(var i=0;i<first;i++) cells+='<span class="cw-mini-e"></span>';
+  for(var dd=1;dd<=days;dd++){ var ds=_ymdStr(new Date(y,m,dd)), has=_visEvents(ds).length; cells+='<span class="cw-mini-d'+(ds===todayS?" today":"")+(ds===CAL.sel?" sel":"")+(has?" has":"")+'" onclick="calGoto(\''+ds+'\')">'+dd+'</span>'; }
+  return '<div class="cw-mini"><div class="cw-mini-h"><button class="cw-nav sm" onclick="calNav(-1)">'+_calChev("r")+'</button><span>'+AR_MON[m]+' '+y+'</span><button class="cw-nav sm" onclick="calNav(1)">'+_calChev("l")+'</button></div><div class="cw-mini-dow">'+AR_DOW_S.map(function(x){ return '<span>'+x.slice(0,2)+'</span>'; }).join("")+'</div><div class="cw-mini-grid">'+cells+'</div></div>'; }
+function _calCats(){ return '<div class="cw-cats"><div class="cw-cats-h">التقويمات</div>'+CATS.map(function(c){ var n=(EVENTS||[]).filter(function(e){ return e.cat===c.id; }).length; return '<label class="cw-cat'+(c.on?"":" off")+'" style="--c:'+c.color+'"><input type="checkbox" '+(c.on?"checked":"")+' onchange="calToggleCat(\''+c.id+'\')"><span class="cw-sw"></span><span class="cw-cn">'+esc(c.name)+'</span><em>'+n+'</em></label>'; }).join("")+'</div>'; }
+function calNav(dir){ var d=new Date(CAL.cur); if(CAL.view==="month") d.setMonth(d.getMonth()+dir); else if(CAL.view==="day") d.setDate(d.getDate()+dir); else if(CAL.view==="agenda") d.setDate(d.getDate()+30*dir); else d.setDate(d.getDate()+7*dir); CAL.cur=d; meetCalRender(); }
+/* ===================== محضر الاجتماع v3: نموذج رسمي بسيط (معاينة + PDF + Word) ===================== */
+function _m3Ref(M){ var d=(M.date||new Date().toISOString().slice(0,10)).replace(/-/g,""), t=(M.time||"").replace(":",""); return "MOM-"+d+(t?"-"+t:""); }
+function _meetMinutesHTML3(M){ var e=esc, n=0, H=function(t,extra){ n++; return '<h2 class="m3-s"><span>'+ar(n)+'</span>'+t+(extra||"")+'</h2>'; };
+  var A=M.att.filter(Boolean), P=M.prev.filter(function(x){ return x.task&&x.task.trim(); }), D=M.disc.filter(function(x){ return x&&x.trim(); }), C=M.dec.filter(function(x){ return x.task&&x.task.trim(); });
+  var due=C.some(function(x){ return x.due&&x.due.trim(); });
+  var h='<table class="m3-hd"><tr><td class="m3-lg"><img src="'+(typeof LOGO!=="undefined"&&LOGO?LOGO:"")+'" alt=""></td><td class="m3-ttl"><b>محضر اجتماع</b><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span></td>'
+    +'<td class="m3-ref"><table><tr><th>رقم المحضر</th><td>'+e(_m3Ref(M))+'</td></tr><tr><th>التاريخ</th><td>'+e(_meetDateTxt(M.date)||"—")+'</td></tr></table></td></tr></table>'
+    +'<div class="m3-bar"></div><h1 class="m3-title">'+e(M.title||"محضر اجتماع")+'</h1>';
+  h+=H("بيانات الاجتماع")+'<table class="m3-info"><tr><th>موضوع الاجتماع</th><td colspan="3">'+e(M.title||"—")+'</td></tr><tr><th>مكان الانعقاد</th><td>'+e(M.place||"—")+'</td><th>رئيس الاجتماع</th><td>'+e(M.chair||"—")+'</td></tr>'
+    +'<tr><th>التاريخ</th><td>'+e(_meetDateTxt(M.date)||"—")+'</td><th>الوقت</th><td>'+e(_meetTimeTxt(M.time)||"—")+(MREC&&MREC.dur?' · '+Math.max(1,Math.round(MREC.dur/60))+' دقيقة':'')+'</td></tr><tr><th>عدد الحضور</th><td>'+ar(A.length)+'</td><th>عدد القرارات</th><td>'+ar(C.length)+'</td></tr></table>';
+  h+=H("الحضور")+(A.length?'<table class="m3-t"><thead><tr><th class="n">م</th><th>الاسم</th><th class="w">الصفة / الجهة</th><th class="w">التوقيع</th></tr></thead><tbody>'+A.map(function(a,i){ var m=String(a).split(/\s*[-–—|]\s*/); return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(m[0])+'</td><td>'+e(m.slice(1).join(" — "))+'</td><td></td></tr>'; }).join("")+'</tbody></table>':'<p class="m3-mut">لم تُسجَّل أسماء الحضور.</p>');
+  if(P.length) h+=H("متابعة توصيات الاجتماع السابق")+'<table class="m3-t"><thead><tr><th class="n">م</th><th>المهمة / التكليف</th><th class="w">المسؤول</th><th class="s">الحالة</th></tr></thead><tbody>'+P.map(function(x,i){ var st=x.status||"مستمر"; return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(x.task)+'</td><td>'+e(x.owner||"—")+'</td><td class="c"><span class="m3-st '+(st==="تم"?"ok":(st==="متأخر"?"late":"on"))+'">'+e(st==="تم"?"منجز":st)+'</span></td></tr>'; }).join("")+'</tbody></table>';
+  h+=H("محاور النقاش")+(D.length?'<ol class="m3-ol">'+D.map(function(x){ return '<li>'+e(x)+'</li>'; }).join("")+'</ol>':'<p class="m3-mut">لا توجد بنود.</p>');
+  h+=H("القرارات والتوصيات")+(C.length?'<table class="m3-t"><thead><tr><th class="n">م</th><th>القرار / التكليف</th><th class="w">المسؤول عن التنفيذ</th>'+(due?'<th class="s">الموعد</th>':'')+'</tr></thead><tbody>'+C.map(function(x,i){ return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(x.task)+'</td><td>'+e(x.owner||"غير محدد")+'</td>'+(due?'<td class="c">'+e(x.due||"—")+'</td>':'')+'</tr>'; }).join("")+'</tbody></table>'
+    +'<p class="m3-note">يلتزم كل مسؤول بتنفيذ ما أُسند إليه في الموعد المحدد، وإحاطة رئيس الاجتماع بمستجدات التنفيذ وأي معوقات.</p>':'<p class="m3-mut">لم تُتخذ قرارات.</p>');
+  h+=H("الاجتماع القادم")+'<table class="m3-info"><tr><th>الموعد المقترح</th><td>'+e(M.next||"يُحدَّد لاحقاً")+'</td></tr></table>';
+  h+='<table class="m3-sign"><tr><td><b>أمين الاجتماع</b><span>الاسم: ............................</span><span>التوقيع: ..........................</span></td><td><b>رئيس الاجتماع</b><span>الاسم: ............................</span><span>التوقيع: ..........................</span></td><td><b>الاعتماد</b><span>الاسم: ............................</span><span>التوقيع: ..........................</span></td></tr></table>'
+    +'<div class="m3-foot">'+e(_m3Ref(M))+' · محضر اجتماع — برنامج ريف</div>';
+  return '<div class="m3">'+h+'</div>'; }
+var MN3_CSS='.m3{color:#1c2b22;font-size:13px;line-height:1.85}.m3 table{border-collapse:collapse}'
+  +'.m3-hd{width:100%}.m3-hd td{vertical-align:middle;border:0}.m3-lg{width:120px}.m3-lg img{height:58px}.m3-ttl{text-align:center}.m3-ttl b{display:block;font-size:22px;color:#0B3D27;font-weight:800}.m3-ttl span{font-size:11.5px;color:#6B7A72}'
+  +'.m3-ref{width:240px}.m3-ref td{white-space:nowrap}.m3-ref table{width:100%;font-size:11px}.m3-ref th{background:#0E5A3A;color:#fff;font-weight:700;padding:3px 8px;border:1px solid #0E5A3A;width:86px}.m3-ref td{padding:3px 8px;border:1px solid #CFDCD3;text-align:center;direction:ltr}'
+  +'.m3-bar{height:4px;background:#0E5A3A;border-bottom:2px solid #C9A961;margin:10px 0 0}.m3-title{text-align:center;font-size:19px;color:#0B3D27;margin:14px 0 8px;font-weight:800}'
+  +'.m3-s{display:flex;align-items:center;gap:8px;font-size:14px;color:#0B3D27;margin:18px 0 8px;padding-bottom:5px;border-bottom:1.5px solid #DCE6DF;font-weight:800;break-after:avoid;page-break-after:avoid}.m3-s span{display:inline-block;min-width:24px;height:24px;line-height:24px;text-align:center;border-radius:6px;background:#0E5A3A;color:#fff;font-size:12px}'
+  +'.m3-info{width:100%}.m3-info th{width:130px;background:#F1F6F2;color:#0E5A3A;font-weight:700;text-align:right;padding:7px 10px;border:1px solid #D5E1D8}.m3-info td{padding:7px 10px;border:1px solid #D5E1D8}'
+  +'.m3-t{width:100%;font-size:12.5px}.m3-t th{background:#F1F6F2;color:#0E5A3A;font-weight:700;padding:7px 8px;border:1px solid #D5E1D8;text-align:right}.m3-t td{padding:7px 9px;border:1px solid #D5E1D8;vertical-align:top}.m3-t .n{width:34px;text-align:center;color:#0E5A3A;font-weight:700}.m3-t th.w{width:22%}.m3-t th.s{width:14%}.m3-t .c{text-align:center}.m3-t tbody tr:nth-child(even) td{background:#FAFCFA}'
+  +'.m3-st{display:inline-block;padding:0 10px;border-radius:99px;font-size:11px;font-weight:700}.m3-st.ok{background:#E3F2E8;color:#1E7A4D}.m3-st.on{background:#FDF3DF;color:#8C6418}.m3-st.late{background:#FBE6E3;color:#A6382C}'
+  +'.m3-ol{margin:4px 0;padding-inline-start:22px}.m3-ol li{margin:4px 0}.m3-note{margin:6px 0 0;font-size:11.5px;color:#7A5C22;background:#FBF6E8;border-right:3px solid #C9A961;padding:6px 10px}.m3-mut{color:#7A867F;margin:4px 0}'
+  +'.m3-sign{width:100%;margin-top:26px;break-inside:avoid;page-break-inside:avoid}.m3-sign td{width:33.3%;border:1px solid #D5E1D8;padding:10px 12px;vertical-align:top}.m3-sign b{display:block;color:#0B3D27;margin-bottom:10px}.m3-sign span{display:block;color:#5a6b60;font-size:12px;margin-top:8px}'
+  +'.m3-foot{margin-top:18px;padding-top:6px;border-top:1px solid #E1E8E3;font-size:10.5px;color:#93A79C;text-align:center}.m3 tr{break-inside:avoid;page-break-inside:avoid}';
+try{ (function(){ var s=document.createElement("style"); s.textContent=MN3_CSS.replace(/(^|\})([^{}@]+)\{/g,function(m,a,sel){ return a+sel.split(",").map(function(x){ return ".mt-minprev "+x.trim(); }).join(",")+"{"; }); document.head.appendChild(s); })(); }catch(e){}
+function meetMinPreview(){ var d=document.getElementById("mtMinDoc"); if(d&&MIN) d.innerHTML=_meetMinutesHTML3(MIN); }
+function _m3Doc(forWord){ var t=(MIN.title||"محضر اجتماع");
+  return '<!doctype html><html dir="rtl" lang="ar"'+(forWord?' xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"':'')+'><head><meta charset="utf-8"><title>محضر - '+esc(t)+'</title><style>'+(!forWord&&typeof _iaFontCSS==="function"?_iaFontCSS():"")
+    +'\n@page{size:A4;margin:1.4cm 1.5cm}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{font-family:"Expo Arabic","Tajawal","Sakkal Majalla","Traditional Arabic",Tahoma,Arial,sans-serif;direction:rtl;margin:0}'+MN3_CSS+'</style></head><body>'+_meetMinutesHTML3(MIN)
+    +(forWord?'':'<script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){window.print();},400); });<\/script>')+'</body></html>'; }
+function meetMinutesPrint(){ meetMinSync(); var w=window.open("","_blank"); if(w){ w.document.write(_m3Doc(false)); w.document.close(); } else alert("اسمح بالنوافذ المنبثقة لعرض المحضر."); }
+function meetMinutesWord(){ meetMinSync(); var t=(MIN.title||"محضر اجتماع").replace(/[^\w؀-ۿ\- ]/g,"").slice(0,60)||"محضر";
+  var blob=new Blob(["﻿"+_m3Doc(true)],{type:"application/msword"}); var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="محضر اجتماع - "+t+".doc"; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500); }
+try{ window.meetMinutesPrint=meetMinutesPrint; window.meetMinutesWord=meetMinutesWord; window.meetMinPreview=meetMinPreview; }catch(e){}
 
 /* ===================== فحص صور المشاريع ===================== */
 var IMGA={items:[], focus:"all", running:0, MAXC:2, verify:true};
