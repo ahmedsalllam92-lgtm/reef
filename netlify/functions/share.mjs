@@ -15,7 +15,7 @@ function expiryFrom(d, base) {
 }
 function safeEq(a, b) { a = Buffer.from(String(a || "")); b = Buffer.from(String(b || "")); return a.length === b.length && crypto.timingSafeEqual(a, b); }
 // نطاق الرابط: لوحة الأداء العامة (بفلاترها) أو لوحة مشروع واحد — بدونه يفتح المنصة كاملة للعرض فقط
-function cleanScope(s) { if (!s || typeof s !== "object") return null; const v = clean(s.v, 8); if (v !== "dash" && v !== "pd") return null;
+function cleanScope(s) { if (!s || typeof s !== "object") return null; const v = clean(s.v, 8); if (v !== "dash" && v !== "pd" && v !== "live") return null;
   const o = { v }; if (v === "pd") { o.code = clean(s.code, 30); if (!o.code) return null; o.name = clean(s.name, 160); }
   if (v === "dash" && s.f && typeof s.f === "object") { o.f = {}; ["region", "sector", "ptype", "cat"].forEach(k => { const x = s.f[k]; if (Array.isArray(x)) o.f[k] = x.slice(0, 20).map(y => clean(y, 60)).filter(Boolean); else if (x) o.f[k] = clean(x, 60); }); }
   return o; }
