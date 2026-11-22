@@ -7041,6 +7041,25 @@ body[data-theme="dark"] .pmm-rib b{background:#141D21;border-color:#3FB27A;color
 .pmm-step:hover i,.pmm-step.done i{background:#0E5A3A!important;color:#fff!important;border-color:#0E5A3A!important}
 
 .pmm-ch .no{display:none!important}
+
+/* توهّج ذهبي عند اختيار مرحلة */
+.pmm-rib div{cursor:pointer}.pmm-rib div:hover b{transform:scale(1.08);border-color:#C9A961}
+.pmm-rib b{transition:transform .25s,background .35s,border-color .35s,color .35s,box-shadow .35s}
+.pmm-rib div.on b{background:linear-gradient(135deg,#F0D9A0,#B8954F)!important;border-color:#C9A961!important;color:#14201A!important;transform:scale(1.15);box-shadow:0 0 0 6px rgba(201,169,97,.22),0 0 26px rgba(233,210,154,.9)}
+.pmm-rib div.on span{color:#8C6D3A!important}
+.pmm-wave{position:absolute;inset:-2px;border-radius:50%;pointer-events:none}
+.pmm-wave:before,.pmm-wave:after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #E9C979;box-shadow:0 0 18px rgba(233,201,121,.9);animation:pmWave 1.3s cubic-bezier(.2,.7,.3,1) forwards}
+.pmm-wave:after{animation-delay:.25s}
+@keyframes pmWave{from{transform:scale(1);opacity:1}to{transform:scale(3.2);opacity:0}}
+.pmm-col.gold{border-color:#C9A961!important;box-shadow:0 0 0 2px #C9A961,0 0 40px -6px rgba(233,201,121,.85),0 24px 40px -26px rgba(184,149,79,.8)!important}
+.pmm-col.gold .pmm-ch{background:linear-gradient(150deg,#C9A961,#7A5C22)!important}
+.pmm-col.gold .pmm-ch .ic{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.45)}
+.pmm-col.gold .pmm-step i{border-color:#E3D6B5!important;color:#8C6D3A!important}
+.pmm-col.flash{animation:pmGold 1.6s ease both!important}
+.pmm-col.flash .pmm-ch:after{background:linear-gradient(105deg,transparent 30%,rgba(255,248,225,.6) 50%,transparent 70%)!important;background-size:250% 100%!important;animation:pmSweep2 1.2s .1s ease both}
+@keyframes pmGold{0%{transform:scale(1)}18%{transform:scale(1.035)}36%{transform:scale(1)}54%{transform:scale(1.02)}72%,100%{transform:scale(1)}}
+@keyframes pmSweep2{from{background-position:130% 0}to{background-position:-130% 0}}
+body[data-theme="dark"] .pmm-rib div.on span{color:#E9D29A!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15797,7 +15816,7 @@ function _pmMasterHTML(){ var M=pmData().master, ed=PMX.edit, g=0, si=0, html=""
           +(ed?'<div class="pmm-se"><button title="أعلى" onclick="pmMStep('+ti+','+sj+','+k+',-1)">▲</button><button title="أسفل" onclick="pmMStep('+ti+','+sj+','+k+',1)">▼</button><button class="x" title="حذف" onclick="pmMStep('+ti+','+sj+','+k+',0)">×</button></div>':'')+'</li>'; }).join("")
         +'</ol>'+(ed?'<button class="pmm-add" onclick="pmMAdd('+ti+','+sj+')">'+_pmIc("plus",14)+' إضافة خطوة</button>':'')+'</div>'; si++; });
     html+='</div></div>'; });
-  var ribbon='<div class="pmm-rib">'+all.map(function(s,i){ return '<div style="--c:'+_pmStC(i)+'"><b>'+String(i+1).padStart(2,"0")+'</b><span>'+esc(s.sub||s.name)+'</span></div>'; }).join("")+'</div>';
+  var ribbon='<div class="pmm-rib">'+all.map(function(s,i){ return '<div style="--c:'+_pmStC(i)+'" onclick="pmMJump('+i+')" title="انتقل إلى «'+esc(s.sub||s.name)+'»"><b>'+String(i+1).padStart(2,"0")+'</b><span>'+esc(s.sub||s.name)+'</span></div>'; }).join("")+'</div>';
   var hero='<div class="pmm-hero"><div class="pmm-ht"><span class="pmm-k">المسار الكامل للعمليات</span><h2'+_pmEd("m.title")+'>'+esc(M.title)+'</h2><p>من الفكرة حتى إغلاق المشروع — '+M.tracks.length+' مسار، '+all.length+' مراحل، '+tot+' خطوة'+(linked?' · <b>'+linked+'</b> خطوة مرتبطة بمخطط تفصيلي (اضغطها لفتحه)':'')+'</p></div>'
     +'<div class="pmm-stats"><div><b>'+M.tracks.length+'</b><span>مسار</span></div><div><b>'+all.length+'</b><span>مرحلة</span></div><div><b>'+tot+'</b><span>خطوة</span></div></div>'+ribbon+'</div>';
   return '<div class="pmm" id="pmStage">'+hero+html+'<div class="pmm-end"><span>✓</span><b>إغلاق ملف المشروع</b><em>نهاية المسار الكامل</em></div><div class="pms-play" id="pmCap"></div></div>'; }
@@ -15850,6 +15869,13 @@ function _pmLaneResolve(op,val){ if(!val) return -1; if(val.indexOf("i:")===0) r
 function pmLaneChoose(id,sel){ var op=_pmOp(), nd=op.nodes[_pmIdx(op,id)]; if(!nd) return; _pmSnap(); var j=_pmLaneResolve(op,sel.value); if(j<0){ PMX.undo.pop(); pmRender(); return; } nd.lane=j; pmSave(); pmRender(); }
 function pmLaneAddSel(sel){ var op=_pmOp(); _pmSnap(); var n0=op.lanes.length, j=_pmLaneResolve(op,sel.value); if(j<0||op.lanes.length===n0){ PMX.undo.pop(); pmRender(); return; } pmSave(); pmRender(); }
 try{ window.pmLaneChoose=pmLaneChoose; window.pmLaneAddSel=pmLaneAddSel; }catch(e){}
+/* الضغط على مرحلة في الشريط: توهّج ذهبي ثم انتقال للمرحلة نفسها وتمييزها */
+function pmMJump(i){ var rib=document.querySelectorAll(".pmm-rib > div"), cols=document.querySelectorAll(".pmm-col"), r=rib[i], c=cols[i]; if(!r||!c) return;
+  rib.forEach(function(x){ x.classList.remove("on"); }); cols.forEach(function(x){ x.classList.remove("gold","flash"); });
+  r.classList.add("on"); var w=document.createElement("i"); w.className="pmm-wave"; r.querySelector("b").appendChild(w); setTimeout(function(){ w.remove(); },1400);
+  setTimeout(function(){ try{ c.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){} },180);
+  setTimeout(function(){ c.classList.add("gold"); void c.offsetWidth; c.classList.add("flash"); },650); }
+try{ window.pmMJump=pmMJump; }catch(e){}
 /* ===================== منشئ النماذج الإجرائية الجديدة (Visio) ===================== */
 var OPS_CUSTOM=null, OPS_B={idx:-1,connect:false,del:false,from:null};
 function _opsLoadCustom(){ return _opsDBx().then(function(db){ return new Promise(function(res){ var rq=db.transaction("tpl","readonly").objectStore("tpl").get("ops_custom"); rq.onsuccess=function(){ OPS_CUSTOM=(rq.result&&rq.result.data)||[]; res(); }; rq.onerror=function(){ OPS_CUSTOM=[]; res(); }; }); }).catch(function(){ OPS_CUSTOM=[]; }); }
