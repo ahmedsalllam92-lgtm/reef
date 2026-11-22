@@ -5801,84 +5801,37 @@ body[data-theme="dark"] .pc6-b.ac u{background:color-mix(in srgb,var(--c6) 65%,#
 body[data-theme="dark"] .pc6-cat{color:color-mix(in srgb,var(--c6) 45%,#E9F5EE)}
 
 /* ===== موبايل: لوحة الأداء — عمود واحد فعلاً (قاعدة «غير ملء الشاشة» كانت تفرض عمودين) ===== */
-@media screen and (max-width:900px){
-  .dxf .dx-canvas .dxf-g3,.dxf .dx-canvas:not(.fit) .dxf-g3{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto!important;grid-template-areas:"sec" "sch" "fin" "cl" "reg"!important}
+@media screen and (max-width:900px){.dxf .dx-canvas:not(.fit) .dxf-g3{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto!important;grid-template-areas:"sec" "sch" "fin" "cl" "reg"!important}
 }
 
 /* ===== موبايل: مراجعة شاملة ===== */
-@media screen and (max-width:700px){
-  /* لوحة الأداء: جدول القطاعات — الاسم والعدد والقيمة في سطر والشريط تحتها */
-  .dxf .dxf-sr.sv,.dxf .dxf-sh.sv{grid-template-columns:minmax(0,1fr) 40px 96px!important;grid-template-areas:"n a p" "b b b"!important;row-gap:5px!important}
-  .dxf .dxf-sr.sv .dxf-sn{grid-area:n}.dxf .dxf-sr.sv .dxf-sb{grid-area:b}.dxf .dxf-sr.sv .dxf-sa{grid-area:a;text-align:center}.dxf .dxf-sr.sv .dxf-sp{grid-area:p;text-align:end;white-space:nowrap}
-  .dxf .dxf-sh.sv>span:nth-child(1){grid-area:n}.dxf .dxf-sh.sv>span:nth-child(2){display:none}.dxf .dxf-sh.sv>span:nth-child(3){grid-area:a;text-align:center}.dxf .dxf-sh.sv>span:nth-child(4){grid-area:p;text-align:end}
-  /* لوحة المشروع: آخر المستجدات — عمود واحد بنص كامل */
-  .dx .g-nt .pd-notes{display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;overflow:visible!important}
-  .dx .g-nt .pd-note p{-webkit-line-clamp:unset!important;display:block!important}
-  .dx .g-nt .pd-notes .pd-note.pd-short>div>span,.dx .g-nt .pd-notes .pd-note.pd-short>div>b{white-space:normal!important}
-  /* التقارير: صفحات الجداول — تمرير أفقي بدل القص */
-  .report .rpage.tablepage{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
-  .report .rpage.tablepage table{min-width:620px}
-  .report .rpage.flow{overflow-x:auto!important}
-  /* بطاقة المشروع: لوحة الأداء رأسياً */
-  .pc6 .pc6-body{padding:12px;gap:12px}
-  .pc6-top{grid-template-columns:1fr!important;justify-items:center;gap:14px}
-  .pc6-sm{width:100%}
-  .pc6-sm b{font-size:17px}
-  .pc6-r{grid-template-columns:82px minmax(0,1fr) 40px;gap:8px}
-  .pc6-fin{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .pc6-f.dark{grid-column:span 2}
-  .pc6-f b{font-size:17px}
-  .pc6-dl{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .pc6-dl>div.w2{grid-column:span 2}
-  .pc6 .pc6-perf,.pc6 .pc6-info,.pc6 .pc4-ph{padding:14px}
-  /* الرئيسية */
-  .hm .hm-sum{grid-template-columns:repeat(2,1fr)!important}
-  .hm .hm-al{grid-template-columns:8px minmax(0,1fr)!important}
-  .hm .hm-al span{grid-column:2;justify-self:start}
+@media screen and (max-width:700px){/* لوحة الأداء: جدول القطاعات — الاسم والعدد والقيمة في سطر والشريط تحتها */
+  .dxf .dx-canvas:not(.fit) .dxf-sr.sv,.dxf .dx-canvas:not(.fit) .dxf-sh.sv{grid-template-columns:minmax(0,1fr) 40px 96px!important;grid-template-areas:"n a p" "b b b"!important;row-gap:5px!important}.dxf .dx-canvas:not(.fit) .dxf-sr.sv .dxf-sn{grid-area:n}.dxf .dx-canvas:not(.fit) .dxf-sr.sv .dxf-sb{grid-area:b}.dxf .dx-canvas:not(.fit) .dxf-sr.sv .dxf-sa{grid-area:a;text-align:center}.dxf .dx-canvas:not(.fit) .dxf-sr.sv .dxf-sp{grid-area:p;text-align:end;white-space:nowrap}.dxf .dx-canvas:not(.fit) .dxf-sh.sv>span:nth-child(1){grid-area:n}.dxf .dx-canvas:not(.fit) .dxf-sh.sv>span:nth-child(2){display:none}.dxf .dx-canvas:not(.fit) .dxf-sh.sv>span:nth-child(3){grid-area:a;text-align:center}.dxf .dx-canvas:not(.fit) .dxf-sh.sv>span:nth-child(4){grid-area:p;text-align:end}/* لوحة المشروع: آخر المستجدات — عمود واحد بنص كامل */
+  .dx .dx-canvas:not(.fit) .g-nt .pd-notes{display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;overflow:visible!important}.dx .dx-canvas:not(.fit) .g-nt .pd-note p{-webkit-line-clamp:unset!important;display:block!important}.dx .dx-canvas:not(.fit) .g-nt .pd-notes .pd-note.pd-short>div>span,.dx .dx-canvas:not(.fit) .g-nt .pd-notes .pd-note.pd-short>div>b{white-space:normal!important}/* التقارير: صفحات الجداول — تمرير أفقي بدل القص */
+  .report .rpage.tablepage{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}.report .rpage.tablepage table{min-width:620px}.report .rpage.flow{overflow-x:auto!important}/* بطاقة المشروع: لوحة الأداء رأسياً */
+  .pc6 .pc6-body{padding:12px;gap:12px}.pc6-top{grid-template-columns:1fr!important;justify-items:center;gap:14px}.pc6-sm{width:100%}.pc6-sm b{font-size:17px}.pc6-r{grid-template-columns:82px minmax(0,1fr) 40px;gap:8px}.pc6-fin{grid-template-columns:repeat(2,minmax(0,1fr))!important}.pc6-f.dark{grid-column:span 2}.pc6-f b{font-size:17px}.pc6-dl{grid-template-columns:repeat(2,minmax(0,1fr))!important}.pc6-dl>div.w2{grid-column:span 2}.pc6 .pc6-perf,.pc6 .pc6-info,.pc6 .pc4-ph{padding:14px}/* الرئيسية */
+  .hm .hm-sum{grid-template-columns:repeat(2,1fr)!important}.hm .hm-al{grid-template-columns:8px minmax(0,1fr)!important}.hm .hm-al span{grid-column:2;justify-self:start}
 }
 
-@media screen and (max-width:700px){
-  #answer .g-nt .pd-notes,#answer .g-nt .pd-notes.nt2{display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;overflow:visible!important}
-  #answer .g-nt .pd-note{width:auto!important;max-height:none!important;overflow:visible!important}
-  #answer .g-nt .pd-note p{-webkit-line-clamp:unset!important;display:block!important;overflow:visible!important}
-  #answer .pd-dur{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+@media screen and (max-width:700px){#answer .dx-canvas:not(.fit) .g-nt .pd-notes,#answer .dx-canvas:not(.fit) .g-nt .pd-notes.nt2{display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;overflow:visible!important}#answer .dx-canvas:not(.fit) .g-nt .pd-note{width:auto!important;max-height:none!important;overflow:visible!important}#answer .dx-canvas:not(.fit) .g-nt .pd-note p{-webkit-line-clamp:unset!important;display:block!important;overflow:visible!important}#answer .dx-canvas:not(.fit) .pd-dur{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
 }
 
-@media screen and (max-width:700px){
-  #answer .g-ph{height:auto!important;min-height:0!important;overflow:visible!important}
-  #answer .g-ph .pds-host,#answer .g-ph .pds{height:auto!important;flex:none!important}
-  #answer .g-ph .pds-stage{height:auto!important;flex:none!important;aspect-ratio:4/3;min-height:0!important}
+@media screen and (max-width:700px){#answer .dx-canvas:not(.fit) .g-ph{height:auto!important;min-height:0!important;overflow:visible!important}#answer .dx-canvas:not(.fit) .g-ph .pds-host,#answer .dx-canvas:not(.fit) .g-ph .pds{height:auto!important;flex:none!important}#answer .dx-canvas:not(.fit) .g-ph .pds-stage{height:auto!important;flex:none!important;aspect-ratio:4/3;min-height:0!important}
 }
 
-@media screen and (max-width:700px){
-  #answer .pdl-g>.dx-card,#answer .dx-gr>.dx-card{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
-  #answer .pdl-g>.dx-card>*{flex:none!important}
-  #answer .pdl-g .km-svg,#answer .pdl-g svg.km{max-height:300px}
-  #answer .g-ph .pds{gap:8px}
+@media screen and (max-width:700px){#answer .dx-canvas:not(.fit) .pdl-g>.dx-card,#answer .dx-canvas:not(.fit) .dx-gr>.dx-card{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}#answer .dx-canvas:not(.fit) .pdl-g>.dx-card>*{flex:none!important}#answer .dx-canvas:not(.fit) .pdl-g .km-svg,#answer .dx-canvas:not(.fit) .pdl-g svg.km{max-height:300px}#answer .dx-canvas:not(.fit) .g-ph .pds{gap:8px}
 }
 
-@media screen and (max-width:700px){
-  #answer .dx-card.g-map,#answer .dx-card.g-cmp,#answer .dx-card.g-rk,#answer .dx-card.g-pt{height:auto!important;min-height:0!important;overflow:visible!important}
+@media screen and (max-width:700px){#answer .dx-canvas:not(.fit) .dx-card.g-map,#answer .dx-canvas:not(.fit) .dx-card.g-cmp,#answer .dx-canvas:not(.fit) .dx-card.g-rk,#answer .dx-canvas:not(.fit) .dx-card.g-pt{height:auto!important;min-height:0!important;overflow:visible!important}
 }
 
-@media screen and (max-width:700px){
-  #answer .dx-gr.pdl-g,#answer .dx-land .fit .pdl-g{grid-template-rows:none!important;grid-auto-rows:auto!important;height:auto!important}
+@media screen and (max-width:700px){#answer .dx-canvas:not(.fit) .dx-gr.pdl-g,#answer .dx-land .fit .pdl-g{grid-template-rows:none!important;grid-auto-rows:auto!important;height:auto!important}
 }
 
-@media screen and (max-width:700px){
-  #answer .dx-card.g-map{display:block!important;height:auto!important}
-  #answer .dx-card.g-map .kp{height:auto!important;display:flex;flex-direction:column;gap:6px}
-  #answer .dx-card.g-map .kp-svg{height:auto!important;max-height:300px;width:100%}
+@media screen and (max-width:700px){#answer .dx-canvas:not(.fit) .dx-card.g-map{display:block!important;height:auto!important}#answer .dx-canvas:not(.fit) .dx-card.g-map .kp{height:auto!important;display:flex;flex-direction:column;gap:6px}#answer .dx-canvas:not(.fit) .dx-card.g-map .kp-svg{height:auto!important;max-height:300px;width:100%}
 }
 
-@media screen and (max-width:700px){
-  .dxf .dxf-g3>section,.dxf .dxf-g3>.g-reg{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
-  .dxf .dxf-g3{grid-template-rows:none!important;grid-auto-rows:auto!important;height:auto!important}
-  .dxf .dxf-g3 .geo-map,.dxf .dxf-g3 .geo-map>.km{height:auto!important;flex:none!important}
-  .dxf .dxf-g3 .geo-map .km-svg{height:auto!important;max-height:340px;flex:none!important}
-  .dxf .dxf-g3 .geo-map .km-side{position:static!important;flex-direction:row;flex-wrap:wrap}
-  .dxf .dxf-g3 .geo-k{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .dxf .dxf-g3 .geo-k>div:last-child{grid-column:span 2}
+@media screen and (max-width:700px){.dxf .dx-canvas:not(.fit) .dxf-g3>section,.dxf .dx-canvas:not(.fit) .dxf-g3>.g-reg{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}.dxf .dx-canvas:not(.fit) .dxf-g3{grid-template-rows:none!important;grid-auto-rows:auto!important;height:auto!important}.dxf .dx-canvas:not(.fit) .dxf-g3 .geo-map,.dxf .dx-canvas:not(.fit) .dxf-g3 .geo-map>.km{height:auto!important;flex:none!important}.dxf .dx-canvas:not(.fit) .dxf-g3 .geo-map .km-svg{height:auto!important;max-height:340px;flex:none!important}.dxf .dx-canvas:not(.fit) .dxf-g3 .geo-map .km-side{position:static!important;flex-direction:row;flex-wrap:wrap}.dxf .dx-canvas:not(.fit) .dxf-g3 .geo-k{grid-template-columns:repeat(2,minmax(0,1fr))!important}.dxf .dx-canvas:not(.fit) .dxf-g3 .geo-k>div:last-child{grid-column:span 2}
 }
 
 /* ===== موبايل: التنقل والرئيسية ===== */
@@ -5933,6 +5886,16 @@ body[data-theme="dark"] .pc6-cat{color:color-mix(in srgb,var(--c6) 45%,#E9F5EE)}
 @media screen and (max-width:920px){
   .ra-fab{bottom:calc(84px + env(safe-area-inset-bottom))!important;width:50px!important;height:50px!important}
   body.nav-open .ra-fab{display:none!important}
+}
+
+/* ملء الشاشة على الموبايل: تخطيط اللوحة الأفقي كما هو (بلا قواعد الموبايل) ودوران تلقائي للعرض الأفقي */
+@media screen and (max-width:900px){.dxf .dx-canvas.fit .dxf-g3{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.35fr)!important;grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;grid-template-areas:"sec sch reg" "fin cl reg"!important}}
+.acard.wkfs-fallback.wkfs-land{inset:auto!important;left:0!important;top:0!important;width:100vh!important;height:100vw!important;transform-origin:0 0;transform:translateX(100vw) rotate(90deg);padding:8px 12px!important}
+/* شريط «رابط عرض فقط» على الموبايل */
+@media screen and (max-width:700px){
+  #roBanner{bottom:calc(10px + env(safe-area-inset-bottom))!important;max-width:calc(100vw - 24px);padding:6px 12px!important;font-size:11px!important;gap:6px!important;white-space:nowrap;overflow:hidden}
+  #roBanner>span:not(.rob-i):not(.rob-e){overflow:hidden;text-overflow:ellipsis;min-width:0}
+  #roBanner .rob-e{flex:none}
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -8173,7 +8136,7 @@ function rpFit(){ try{ document.querySelectorAll(".report").forEach(function(rep
 function wkIsPortrait(){ try{ return window.matchMedia("(orientation:portrait)").matches; }catch(e){ return window.innerHeight>=window.innerWidth; } }
 /* يضبط تكبير لوحة الأداء لتملأ الشاشة الكاملة بدون قص */
 function dashFitFS(){ try{
-  var host=document.querySelector("#answer .acard"); if(!host)return;
+  var host=document.querySelector("#answer .acard"); if(!host)return; try{ _acLand(); }catch(e){}
   var d=host.querySelector(".dash3"); if(!d)return;
   if(d.classList.contains("dx-land")){ var _on=!!(document.fullscreenElement||document.webkitFullscreenElement)||host.classList.contains("wkfs-fallback");
     var _fb=d.querySelector(".dash-filter"), _tl=document.querySelector("#answer .rtools");
@@ -12730,7 +12693,7 @@ var _MBT={k:"home"};
 var MBT_TABS=[["home","الرئيسية","navHome()",'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>'],
   ["dash","لوحة الأداء","execDashboard()",'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>'],
   ["proj","المشاريع","projRegOpen()",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
-  ["rep","التقارير","reportBuilder()",'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>'],
+  ["rep","التقارير","reportPrepOpen()",'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>'],
   ["menu","القائمة","navToggle()",'<path d="M4 7h16M4 12h16M4 17h16"/>']];
 function _mbtKey(key){ key=String(key||""); if(key==="__menu") return "menu"; if(key==="home") return "home"; if(/dashboard|pdash|analysis/.test(key)) return "dash";
   if(/projreg|payreg|stages|list|map|cancelled|sched|kb/.test(key)) return "proj"; if(/report|cards|weekly/.test(key)) return "rep"; return ""; }
@@ -14579,7 +14542,8 @@ function _roKiosk(S){ if(!S||SHARE._kiosk) return; SHARE._kiosk=true; SHARE.scop
   window.addEventListener("resize",function(){ clearTimeout(_KO.r); _KO.r=setTimeout(_kioskFit,150); });
   var hint=document.createElement("div"); hint.id="kioskHint"; hint.textContent="اضغط في أي مكان للعرض بملء الشاشة"; document.body.appendChild(hint);
   document.addEventListener("click",function(){ try{ var h=document.getElementById("kioskHint"); if(h) h.remove(); if(!document.fullscreenElement){ var r=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen; if(r){ var pr=r.call(document.documentElement); if(pr&&pr.catch) pr.catch(function(){}); } } }catch(e){} },{once:true,capture:true}); }
-function _kioskFit(){ try{ var el=document.querySelector("#answer .acard"); if(!el) return; if(!el.classList.contains("wkfs-fallback")){ el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); }
+function _acLand(){ try{ var el=document.querySelector("#answer .acard.wkfs-fallback"); if(!el) return; var por=window.innerHeight>window.innerWidth; el.classList.toggle("wkfs-land", wkIsMobile()&&por); }catch(e){} }
+function _kioskFit(){ try{ var el=document.querySelector("#answer .acard"); if(!el) return; if(!el.classList.contains("wkfs-fallback")){ el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); } _acLand();
   try{ wkSyncLand(); }catch(e){} try{ _dashFitBurst(); }catch(e){} }catch(e){} }
 try{ window.dxCopyLink=dxCopyLink; window.dxShareCreate=dxShareCreate; }catch(e){}
 
