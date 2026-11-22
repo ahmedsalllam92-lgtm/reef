@@ -6171,6 +6171,18 @@ html.kiosk #lw .lw-ctl button[title^="رابط"],html.kiosk #lw .lw-ctl button[t
   .pds:has(.pds-pr) .pds-stage{flex:1 1 0!important;min-height:0!important}
   .pds .pds-cnt{display:none}
 }
+
+/* شريط «رابط عرض فقط» على الموبايل: شريط رفيع فوق شريط التبويبات مباشرة */
+@media screen and (max-width:920px){
+  html.ro #roBanner{left:0!important;right:0!important;transform:none!important;max-width:none!important;bottom:calc(66px + env(safe-area-inset-bottom))!important;
+    border-radius:0!important;height:24px;padding:0 12px!important;font-size:10.5px!important;gap:6px!important;justify-content:center;box-shadow:none!important;
+    background:rgba(5,30,18,.92)!important;border-top:1px solid rgba(217,188,132,.25)}
+  html.ro #roBanner .rob-i{font-size:11px}
+  html.ro body{padding-bottom:calc(98px + env(safe-area-inset-bottom))!important}
+  html.ro .ra-fab{bottom:calc(104px + env(safe-area-inset-bottom))!important}
+  html.ro .mbtabs{box-shadow:none}
+  body.nav-open #roBanner{display:none!important}
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
