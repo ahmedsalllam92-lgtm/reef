@@ -50,6 +50,12 @@ export default async (req) => {
       if (d.since && String(d.since) === String(meta.at)) return J(200, { ok: true, same: true, at: meta.at });
       const pf = await P.get("pf", { type: "json" }); return J(200, { ok: true, pf });
     }
+    if (d.action === "pm_get") {
+      const P = pfStore(); const m = await P.get("pm_meta", { type: "json" });
+      if (!m) return J(200, { ok: true, none: true });
+      if (d.since && String(d.since) === String(m.at)) return J(200, { ok: true, same: true, at: m.at });
+      const pm = await P.get("pm", { type: "json" }); return J(200, { ok: true, at: m.at, d: (pm && pm.d) || null });
+    }
     if (d.action === "pe_get") {
       const P = pfStore(); const m = await P.get("pe_meta", { type: "json" });
       if (!m) return J(200, { ok: true, none: true });
@@ -72,6 +78,14 @@ export default async (req) => {
       if (meta && !d.force && Date.parse(meta.at) >= Date.parse(pf.at)) return J(200, { ok: true, kept: true, at: meta.at });
       const rec = { name: clean(pf.name, 160), sheet: clean(pf.sheet, 80), at: String(pf.at || new Date().toISOString()), data: pf.data, cancelled: Array.isArray(pf.cancelled) ? pf.cancelled.slice(0, 2000) : [] };
       await P.setJSON("pf", rec); await P.setJSON("meta", { at: rec.at, name: rec.name, n: rec.data.length }); return J(200, { ok: true, at: rec.at });
+    }
+    if (d.action === "pm_put") {
+      const M = d.d; if (!M || typeof M !== "object" || !Array.isArray(M.phases)) return J(400, { error: "بيانات الخريطة غير صالحة" });
+      if (JSON.stringify(M).length > 4000000) return J(413, { error: "حجم الخريطة كبير" });
+      const at = String(d.at || new Date().toISOString()); if (isNaN(Date.parse(at))) return J(400, { error: "تاريخ غير صالح" });
+      const P = pfStore(); const m = await P.get("pm_meta", { type: "json" });
+      if (m && !d.force && Date.parse(m.at) >= Date.parse(at)) return J(200, { ok: true, kept: true, at: m.at });
+      await P.setJSON("pm", { at, d: M }); await P.setJSON("pm_meta", { at }); return J(200, { ok: true, at });
     }
     if (d.action === "pe_put") {
       const E = d.edits; if (!E || typeof E !== "object" || Array.isArray(E)) return J(400, { error: "تعديلات غير صالحة" });
