@@ -7078,6 +7078,120 @@ body[data-theme="dark"] .pmm-col:not(:last-child):after{background-color:#141D21
 .pmp-one .pmm-step{padding:5px 4px!important}
 .pmp-one .pmm-bridge{margin:2px 0}
 .pmp-one .pmm-track{gap:8px!important}
+
+/* ===================== مكتبة الأدلة الإجرائية ===================== */
+.gdl{display:flex;flex-direction:column;gap:18px}
+.gdl-hero{position:relative;overflow:hidden;border-radius:24px;padding:28px 30px;background:radial-gradient(circle at 12% 0%,#2C5A43,#0F2E20 65%);color:#fff;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px;align-items:center}
+.gdl-hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:18px 18px;pointer-events:none}
+.gdl-hero:after{content:"";position:absolute;width:460px;height:460px;border-radius:50%;left:-160px;bottom:-260px;background:radial-gradient(circle,rgba(201,169,97,.25),transparent 65%);pointer-events:none}
+.gdl-ht{position:relative;z-index:1}.gdl-ht>span{font-size:12px;font-weight:800;color:#E9D29A}.gdl-ht h1{margin:4px 0 6px;font-size:30px;font-weight:900}.gdl-ht p{margin:0 0 16px;font-size:13.5px;color:#CFE0D5;line-height:1.9}
+.gdl-sr{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:0 14px;color:#6B7A72;box-shadow:0 14px 30px -18px rgba(0,0,0,.6)}.gdl-sr input{flex:1;border:0;outline:0;padding:13px 0;font:inherit;font-size:14px;background:transparent;color:#14241B}
+.gdl-st{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:10px}.gdl-st div{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14)}
+.gdl-st b{display:block;font-size:30px;font-weight:900;color:#E9D29A;line-height:1.1}.gdl-st span{font-size:12px;font-weight:700;color:#CFE0D5}
+.gdl-load{position:relative;z-index:1;display:flex;align-items:center;gap:10px;font-weight:800;color:#E9D29A}.gdl-load i{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(233,210,154,.3);border-top-color:#E9D29A;animation:gdSpin .8s linear infinite}
+@keyframes gdSpin{to{transform:rotate(360deg)}}
+.gdl-cats{display:flex;flex-wrap:wrap;gap:8px}.gdl-cats button{border:1px solid #E3E8E3;background:#fff;border-radius:99px;padding:7px 14px;font:inherit;font-size:12.5px;font-weight:800;color:#14241B;cursor:pointer;transition:.15s}
+.gdl-cats button em{font-style:normal;font-size:11px;color:#7D8A82;background:#F2F5F2;border-radius:99px;padding:0 7px;margin-inline-start:4px}.gdl-cats button:hover{border-color:#C9A961}
+.gdl-cats button.on{background:#0B3A22;border-color:#0B3A22;color:#fff}.gdl-cats button.on em{background:#C9A961;color:#14201A}
+.gdl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.gdc{position:relative;display:flex;flex-direction:column;gap:10px;text-align:start;padding:18px 18px 16px;border-radius:20px;background:#fff;border:1px solid #E3E8E3;cursor:pointer;font:inherit;color:#14241B;overflow:hidden;box-shadow:0 14px 30px -28px rgba(11,58,34,.6);transition:transform .25s,box-shadow .25s,border-color .25s;animation:pmIn .6s var(--d,0s) cubic-bezier(.2,.8,.2,1) both}
+.gdc:before{content:"";position:absolute;inset-inline:0;top:0;height:4px;background:linear-gradient(90deg,#0E5A3A,#C9A961)}
+.gdc:hover{transform:translateY(-4px);border-color:#C9A961;box-shadow:0 22px 40px -26px rgba(11,58,34,.6)}
+.gdc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.gdc-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#E8F1EC,#D3E6DA);color:#0E5A3A;transition:.25s}
+.gdc:hover .gdc-ic{background:linear-gradient(135deg,#14603D,#0B3A22);color:#E9D29A}
+.gdc-cat{font-size:11px;font-weight:800;color:#9A7A3E;background:#FBF5E8;border:1px solid #EADFC2;border-radius:99px;padding:3px 10px}
+.gdc-t{font-size:16px;font-weight:900;line-height:1.55}.gdc p{margin:0;font-size:12.5px;line-height:1.85;color:#5E6C62;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.gdc-m{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px dashed #E3E8E3;font-size:11.5px;font-weight:700;color:#7D8A82}.gdc-m span{display:inline-flex;align-items:center;gap:4px}
+.gdc-m i{margin-inline-start:auto;font-style:normal;font-weight:900;color:#0E5A3A;opacity:0;transform:translateX(8px);transition:.25s}.gdc:hover .gdc-m i{opacity:1;transform:none}
+.gdl-empty{grid-column:1/-1;padding:30px;text-align:center;color:#7D8A82}
+.gdl-map{display:flex;align-items:center;gap:16px;text-align:start;padding:16px 20px;border-radius:18px;border:1px solid #EADFC2;background:linear-gradient(135deg,#FCF8EE,#F4EEDD);cursor:pointer;font:inherit}
+.gdl-map>span{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#0B3A22;color:#E9D29A}.gdl-map div{flex:1;display:flex;flex-direction:column}.gdl-map b{font-size:16px;color:#14241B}.gdl-map em{font-style:normal;font-size:12.5px;color:#6B5A36}.gdl-map>i{font-style:normal;font-size:20px;color:#9A7A3E}
+.gdl-sec{display:flex;flex-direction:column;gap:10px}.gdl-sh b{font-size:16px;font-weight:900;color:#14241B}.gdl-sh span{font-size:12.5px;color:#7D8A82;margin-inline-start:10px}
+.gdl-tp{display:flex;flex-wrap:wrap;gap:8px}.gdl-tp button{border:1px solid #E3E8E3;background:#fff;border-radius:12px;padding:8px 14px;font:inherit;font-size:12.5px;font-weight:700;color:#14241B;cursor:pointer}.gdl-tp button:hover{border-color:#0E5A3A;color:#0E5A3A}
+/* موضوع معرفي */
+.gdt{display:flex;flex-direction:column;gap:14px}.gd-back{align-self:flex-start;border:1px solid #E3E8E3;background:#fff;border-radius:10px;padding:6px 12px;font:inherit;font-size:12.5px;font-weight:800;color:#14241B;cursor:pointer}
+.gdt-h{border-radius:20px;padding:22px 24px;background:linear-gradient(135deg,#FBFAF5,#EEF3EE);border:1px solid #E3E8E3}.gdt-h span{font-size:12px;font-weight:800;color:#9A7A3E}.gdt-h h1{margin:4px 0 8px;font-size:24px;font-weight:900;color:#0B3D27}.gdt-h p{margin:0;font-size:14px;line-height:2;color:#3E4B44}
+.gdt-b{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:start}.gdt-secs{display:flex;flex-direction:column;gap:10px}
+.gdt-s{display:flex;gap:12px;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid #E3E8E3}.gdt-s>i{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-style:normal;font-weight:900;background:#0B3A22;color:#E9D29A}
+.gdt-s b{font-size:14.5px;color:#14241B}.gdt-s p{margin:4px 0 0;font-size:13px;line-height:1.95;color:#3E4B44}
+.gdt-rel{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:#FCF8EE;border:1px solid #EADFC2;position:sticky;top:12px}.gdt-rel>b{font-size:13.5px;color:#7A5C22}
+.gdt-rel button{display:flex;align-items:center;gap:10px;text-align:start;border:1px solid #EADFC2;background:#fff;border-radius:12px;padding:10px;font:inherit;cursor:pointer}.gdt-rel button span{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#0B3A22;color:#E9D29A}.gdt-rel button div{flex:1;display:flex;flex-direction:column}
+.gdt-rel strong{font-size:13px;color:#14241B}.gdt-rel em{font-style:normal;font-size:11px;color:#7D8A82}.gdt-rel i{font-style:normal;color:#9A7A3E}.gdt-rel p{margin:0;font-size:12.5px;color:#5E6C62}
+/* عارض الدليل */
+.gd{--fs:16px}
+.gd-bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(11,58,34,.97);color:#fff;box-shadow:0 14px 30px -20px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden}
+.gd-bar .gd-back{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;align-self:center}
+.gd-bt{flex:1;min-width:0;display:flex;flex-direction:column}.gd-bt b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gd-bt span{font-size:11.5px;color:#BFE3CD}
+.gd-sr{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:2px 4px 2px 10px}.gd-sr input{width:180px;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:12.5px;padding:6px 0}.gd-sr input::placeholder{color:#A9C4B4}
+.gd-sr em{font-style:normal;font-size:11px;color:#E9D29A;white-space:nowrap}.gd-sr button,.gd-fz{border:0;background:rgba(255,255,255,.1);color:#fff;border-radius:8px;min-width:28px;height:28px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.gd-pr{display:inline-flex;align-items:center;gap:6px;border:0;background:linear-gradient(135deg,#E9D29A,#B8954F);color:#14201A;border-radius:10px;padding:7px 14px;font:inherit;font-size:12.5px;font-weight:900;cursor:pointer;white-space:nowrap}
+.gd-bar u{position:absolute;bottom:0;right:0;height:3px;width:0;background:#E9D29A;transition:width .15s}
+.gd-wrap{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start;margin-top:16px}
+.gd-toc{position:sticky;top:74px;max-height:calc(100vh - 100px);display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:#fff;border:1px solid #E3E8E3}.gd-toc>b{font-size:13px;color:#9A7A3E}
+.gd-toc nav{overflow:auto;display:flex;flex-direction:column;gap:2px;scrollbar-width:thin}
+.gd-toc a{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:9px;text-decoration:none;color:#3E4B44;font-size:12.5px;font-weight:700;line-height:1.55;border-inline-start:3px solid transparent;transition:.15s}
+.gd-toc a.l1{font-weight:900;color:#14241B;margin-top:4px}.gd-toc a.l1 i{font-style:normal;font-size:11px;color:#C9A961;font-weight:900;padding-top:2px}.gd-toc a.l2{padding-inline-start:30px;font-size:12px;color:#6B7A72}
+.gd-toc a:hover{background:#F3F7F4}.gd-toc a.on{background:#EEF6F1;border-inline-start-color:#0E5A3A;color:#0B3D27}
+.gd-doc{min-width:0;background:#fff;border:1px solid #E3E8E3;border-radius:22px;padding:0 0 30px;overflow:hidden;font-size:var(--fs);box-shadow:0 20px 40px -34px rgba(11,58,34,.6)}
+.gd-cover{position:relative;min-height:420px;padding:56px 48px;background:radial-gradient(circle at 30% 15%,#3D5A4A,#13261B 72%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;overflow:hidden}
+.gd-cover:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1.2px,transparent 1.2px);background-size:20px 20px}
+.gd-cvc i{position:absolute;width:58px;height:58px;border:2px solid #C9A961}.gd-cvc i:nth-child(1){top:24px;right:24px;border-left:0;border-bottom:0}.gd-cvc i:nth-child(2){top:24px;left:24px;border-right:0;border-bottom:0}.gd-cvc i:nth-child(3){bottom:24px;right:24px;border-left:0;border-top:0}.gd-cvc i:nth-child(4){bottom:24px;left:24px;border-right:0;border-top:0}
+.gd-cover img{position:relative;height:66px}.gd-cvk{position:relative;font-size:13px;font-weight:800;color:#14201A;background:linear-gradient(135deg,#E9D29A,#B8954F);border-radius:99px;padding:4px 16px}
+.gd-cover h1{position:relative;margin:4px 0;font-size:34px;font-weight:900;line-height:1.45;max-width:760px}.gd-cover p{position:relative;margin:0;max-width:680px;font-size:14px;line-height:2;color:#CFE0D5}
+.gd-cvm{position:relative;display:flex;gap:12px;margin-top:8px}.gd-cvm div{min-width:96px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}.gd-cvm b{display:block;font-size:24px;color:#E9D29A}.gd-cvm span{font-size:11.5px;color:#CFE0D5}
+.gd-cover em{position:relative;font-style:normal;font-size:12px;color:#A9C4B4;margin-top:6px}
+.gd-tocp{padding:30px 48px;border-bottom:1px solid #EEF1EE}.gd-tocp h2{margin:0 0 14px;font-size:20px;font-weight:900;color:#0B3D27}
+.gd-tocl{display:grid;grid-template-columns:1fr 1fr;gap:8px 26px}.gd-tocl div{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:11px;background:#F6F8F5;font-weight:800;font-size:13.5px;color:#14241B}.gd-tocl i{font-style:normal;font-size:16px;font-weight:900;color:#C9A961}
+.gd-ch{padding:30px 48px 6px}
+.gd-chh{display:flex;align-items:center;gap:14px;padding-bottom:12px;margin-bottom:16px;border-bottom:2px solid #0B3A22;position:relative}.gd-chh:after{content:"";position:absolute;bottom:-2px;inset-inline-start:0;width:110px;height:2px;background:#C9A961}
+.gd-chh i{flex:none;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-style:normal;font-size:19px;font-weight:900;background:linear-gradient(135deg,#14603D,#0B3A22);color:#E9D29A;box-shadow:0 10px 20px -12px rgba(11,58,34,.8)}
+.gd-chh h2{margin:0;font-size:calc(var(--fs) + 9px);font-weight:900;color:#0B3D27;line-height:1.45}
+.gd-h2{display:flex;align-items:center;gap:10px;margin:22px 0 10px;font-size:calc(var(--fs) + 3px);font-weight:900;color:#14241B}.gd-h2 span{font-size:12.5px;font-weight:900;color:#9A7A3E;background:#FBF5E8;border:1px solid #EADFC2;border-radius:8px;padding:2px 8px}
+.gd-h3{margin:16px 0 8px;font-size:calc(var(--fs) + 1px);font-weight:900;color:#0E5A3A;padding-inline-start:12px;border-inline-start:3px solid #C9A961}
+.gd-p{margin:8px 0;line-height:2.05;color:#2E3B34;text-align:justify}.gd-term{color:#0B3D27}
+.gd-list{margin:8px 0 14px;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.gd-list li{position:relative;padding:8px 14px;padding-inline-start:34px;border-radius:11px;background:#F7FAF8;line-height:1.95;color:#2E3B34}
+.gd-list li:before{content:"";position:absolute;inset-inline-start:14px;top:1.15em;width:8px;height:8px;border-radius:2px;background:#C9A961;transform:rotate(45deg)}
+.gd-steps{margin:10px 0 16px;padding:0;list-style:none;display:flex;flex-direction:column;gap:0}
+.gd-steps li{position:relative;display:flex;gap:14px;padding:8px 0}.gd-steps li:not(:last-child):before{content:"";position:absolute;right:16px;top:44px;bottom:-6px;width:2px;background:#DCE8E0}
+.gd-steps i{flex:none;position:relative;z-index:1;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;background:#0B3A22;color:#E9D29A;font-size:13px;box-shadow:0 0 0 4px #EEF6F1}
+.gd-steps span{flex:1;padding:8px 14px;border-radius:12px;background:#fff;border:1px solid #E3E8E3;line-height:1.95;color:#2E3B34}
+.gd-note{margin:12px 0;padding:12px 16px;border-radius:12px;background:#FCF8EE;border:1px solid #EADFC2;border-inline-start:4px solid #C9A961;line-height:1.95;color:#4A3B1C}
+.gd-tw{margin:12px 0 18px;overflow-x:auto;border-radius:14px;border:1px solid #DDE5DF}
+.gd-tb{width:100%;border-collapse:collapse;font-size:calc(var(--fs) - 2.5px)}.gd-tb th{background:#0E5A3A;color:#fff;font-weight:800;padding:10px 12px;text-align:start;vertical-align:top}
+.gd-tb td{padding:9px 12px;border-top:1px solid #EAEFEB;vertical-align:top;line-height:1.85;color:#2E3B34}.gd-tb tbody tr:nth-child(even) td{background:#F7FAF8}.gd-tb td.grp{background:#FBF5E8!important;font-weight:900;color:#7A5C22}
+.gd-end{display:flex;align-items:center;justify-content:center;gap:10px;margin:24px 48px 0;padding:14px;border-radius:14px;background:#F6F8F5;font-weight:800;color:#3E4B44}.gd-end span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#C9A961;color:#14201A}
+mark.gdm{background:#FBE7A8;color:inherit;border-radius:3px;padding:0 1px}mark.gdm.cur{background:#E9C35B;box-shadow:0 0 0 2px #C9A961}
+/* داكن */
+body[data-theme="dark"] .gdc,body[data-theme="dark"] .gdl-cats button,body[data-theme="dark"] .gdl-tp button,body[data-theme="dark"] .gd-toc,body[data-theme="dark"] .gdt-s,body[data-theme="dark"] .gd-back{background:#141D21;border-color:#2B363B;color:#E3ECE6}
+body[data-theme="dark"] .gdc p,body[data-theme="dark"] .gdc-m{color:#93A79C}body[data-theme="dark"] .gdc-ic{background:rgba(127,216,166,.1);color:#A9E2C0}body[data-theme="dark"] .gdc-cat{background:rgba(201,169,97,.1);border-color:rgba(201,169,97,.3);color:#E9D29A}
+body[data-theme="dark"] .gdl-map{background:rgba(201,169,97,.07);border-color:rgba(201,169,97,.25)}body[data-theme="dark"] .gdl-map b,body[data-theme="dark"] .gdl-sh b,body[data-theme="dark"] .gdt-s b{color:#E3ECE6}body[data-theme="dark"] .gdl-map em{color:#C9B98F}
+body[data-theme="dark"] .gdt-h{background:#141D21;border-color:#2B363B}body[data-theme="dark"] .gdt-h h1{color:#A9E2C0}body[data-theme="dark"] .gdt-h p,body[data-theme="dark"] .gdt-s p{color:#C9D6CF}
+body[data-theme="dark"] .gdt-rel{background:rgba(201,169,97,.06);border-color:rgba(201,169,97,.25)}body[data-theme="dark"] .gdt-rel button{background:#141D21;border-color:#2B363B}body[data-theme="dark"] .gdt-rel strong{color:#E3ECE6}
+body[data-theme="dark"] .gd-toc a{color:#B5C4BB}body[data-theme="dark"] .gd-toc a.l1{color:#E3ECE6}body[data-theme="dark"] .gd-toc a:hover,body[data-theme="dark"] .gd-toc a.on{background:rgba(127,216,166,.08);color:#A9E2C0}
+/* الدليل نفسه يبقى بورق أبيض في الوضع الداكن ليُقرأ كوثيقة */
+body[data-theme="dark"] .gd-doc{border-color:#2B363B}
+@media (max-width:980px){.gd-wrap{grid-template-columns:1fr}.gd-toc{display:none}.gdl-hero{grid-template-columns:1fr}.gdt-b{grid-template-columns:1fr}.gd-ch,.gd-tocp{padding-inline:20px}.gd-cover{padding:40px 20px}.gd-tocl{grid-template-columns:1fr}.gd-sr input{width:110px}}
+/* طباعة الدليل: كتيّب A4 عمودي */
+@media print{
+  body.gd-print .gd{page:gdbook}body.gd-print .gd-wrap{display:block;margin:0}body.gd-print .gd-doc{border:0;border-radius:0;box-shadow:none;padding:0;font-size:12.5px}
+  body.gd-print .gd-cover{min-height:255mm;break-after:page;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-tocp{break-after:page;padding:10mm 4mm}body.gd-print .gd-ch{break-before:page;padding:4mm 2mm}
+  body.gd-print .gd-chh i,body.gd-print .gd-tb th,body.gd-print .gd-steps i,body.gd-print .gd-list li:before,body.gd-print .gd-cvk{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-tb tr,body.gd-print .gd-steps li,body.gd-print .gd-note,body.gd-print .gd-list li{break-inside:avoid}body.gd-print .gd-tb thead{display:table-header-group}
+  body.gd-print .gd-h2,body.gd-print .gd-h3{break-after:avoid}body.gd-print mark.gdm{background:none;box-shadow:none}body.gd-print .gd-end{display:none}
+}
+@page gdbook{size:A4 portrait;margin:14mm 14mm 16mm}
+
+#pmAuto{position:absolute;left:-30000px;top:0;width:1062px}
+@media print{ body.pm-auto > *:not(#pmAuto){display:none!important} body.pm-auto #pmAuto{position:static;width:auto} body.pm-auto #pmAuto .pmp{page:pmland} }
+
+/* الأدلة: عناصر لاصقة تعمل + عناوين بيضاء على الخلفيات الداكنة */
+#answer .acard:has(.gd),#answer .acard:has(.gdt),#answer .acard:has(.pmx){overflow:visible!important}
+.gdl-ht h1,.gd-cover h1{color:#fff!important}
+.gd-bar{top:8px}
+
+.gd-tb th.lv1{background:#1E8E4E}.gd-tb th.lv2{background:#D9A31A;color:#14201A}.gd-tb th.lv3{background:#B0433A}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -7914,7 +8028,7 @@ function paginateReportPages(){
 function show(html){
   const topic=(ANSWER_TITLE||"").replace(/\s*[—-].*$/,"").trim();
   if(!PRINT_NAME && topic) PRINT_NAME="تقرير "+topic+" - "+MONTHLBL;
-  const noTools=/class="hb-page (?:sh-page|rp)"|class="(?:mt-wrap|ops-wrap|ia-wrap)|<div class="alabel"><i><\/i>(?:صور المشاريع|رفع تقرير|مراجعة المحتوى المحلي|فحص صور المشاريع|تسجيل الاجتماعات|نماذجي الإجرائية|منشئ النموذج|دليل معرفة)/.test(html);
+  const noTools=/class="hb-page (?:sh-page|rp)"|class="(?:mt-wrap|ops-wrap|ia-wrap|pmx|pmp|gd)|<div class="alabel"><i><\/i>(?:صور المشاريع|رفع تقرير|مراجعة المحتوى المحلي|فحص صور المشاريع|تسجيل الاجتماعات|نماذجي الإجرائية|منشئ النموذج|دليل معرفة)/.test(html);
   const cover=(IS_REPORT||noTools||/class="dash dash3|class="pc3|hb-reg"|class="hb-page (?:sh-page|rp)"/.test(html))?"":printCoverHTML(topic||"محفظة المشاريع");
   const tools=(PRINT_NAME&&!noTools)?exportToolbar():"";
   A.innerHTML='<div class="acard">'+tools+cover+html+'</div>';
@@ -15852,7 +15966,7 @@ function _pmPrintOp(op,ph,pi){ var G=_pmLayout(op);
     +'<div class="pmp-fit" data-w="'+G.W+'" data-h="'+G.H+'">'+_pmCanvasOnly(op)+'</div>'
     +'<div class="pmp-info">'+(op.scope?'<div><b>نطاق العمل</b><p>'+esc(op.scope)+'</p></div>':'')+((op.docs||[]).length?'<div><b>المستندات الداعمة</b><p>'+op.docs.map(esc).join(" · ")+'</p></div>':'')+'</div>'
     +'<div class="pmp-f"><span>دليل الإجراءات التشغيلية — خريطة العمليات</span><span>'+esc(MONTHLBL)+'</span></div></section>'; }
-function pmPrintGo(kind){ var m=document.getElementById("pmPM"); if(m) m.remove(); pmStopPlay(); var D=pmData(), pages="", title="";
+function _pmBuildPrint(kind){ var D=pmData(), pages="", title="";
   var keepV=PMX.view, keepPh=PMX.ph, keepOp=PMX.op;
   var cover=function(t,s){ return '<section class="pmp-pg pmp-cv"><div class="pmp-cvc"><i></i><i></i><i></i><i></i></div><img src="'+LOGO_W+'" alt=""><span>دليل الإجراءات التشغيلية لإدارة المشاريع</span><h1>'+esc(t)+'</h1><p>'+esc(s)+'</p><em>'+esc(MONTHLBL)+'</em></section>'; };
   var masterPg=function(){ var kv=PMX.edit; PMX.edit=false; var s=_pmMasterHTML().replace(/ id="[^"]*"/g,"").replace(/<div class="pms-play"[^>]*><\/div>/,""); PMX.edit=kv; var bi=s.indexOf('<div class="pmm-bridge">');
@@ -15864,6 +15978,9 @@ function pmPrintGo(kind){ var m=document.getElementById("pmPM"); if(m) m.remove(
   else if(kind==="master"){ title="الخريطة الشاملة للعمليات"; pages=masterPg(); }
   else { title="كل العمليات الإجرائية"; pages=cover("خريطة العمليات","الخريطة الشاملة وكل المراحل وعملياتها التفصيلية")+masterPg(); D.phases.forEach(function(_,pi){ pages+=phPages(pi); }); }
   PMX.view=keepV; PMX.ph=keepPh; PMX.op=keepOp;
+  return {pages:pages,title:title}; }
+function pmPrintGo(kind){ var m=document.getElementById("pmPM"); if(m) m.remove(); pmStopPlay(); var D=pmData(), pages="", title="";
+  var BP=_pmBuildPrint(kind); pages=BP.pages; title=BP.title;
   var n=(pages.match(/class="pmp-pg/g)||[]).length;
   IS_REPORT=true; PRINT_NAME=""; show('<div class="pmp" id="pmp"><div class="pmp-bar noprint"><div><b>معاينة الطباعة</b><span>'+esc(title)+' · '+n+' صفحة أفقية</span></div><button class="pmb" onclick="pmRender()">‹ رجوع</button><button class="pmb pri" onclick="pmPrintNow(\''+esc(title).replace(/'/g,"")+'\')">'+_pmIc("print")+' طباعة / حفظ PDF</button></div><div class="pmp-pages">'+pages+'</div></div>'); IS_REPORT=false;
   _pmPrintFit(); setTimeout(_pmPrintFit,200); }
@@ -15895,6 +16012,83 @@ function pmMJump(i){ var rib=document.querySelectorAll(".pmm-rib > div"), cols=d
   setTimeout(function(){ try{ c.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){} },180);
   setTimeout(function(){ c.classList.add("gold"); void c.offsetWidth; c.classList.add("flash"); },650); }
 try{ window.pmMJump=pmMJump; }catch(e){}
+/* طباعة المتصفح مباشرة (Ctrl+P) من صفحة الخريطة: تُبنى نفس صفحات المعاينة تلقائياً */
+try{ window.addEventListener("beforeprint",function(){ try{ if(!document.querySelector(".pmx")||document.querySelector(".pmp")||document.body.classList.contains("pm-print")) return;
+    var kind=PMX.view==="master"?"master":"op"; var BP=_pmBuildPrint(kind); var box=document.createElement("div"); box.id="pmAuto"; box.innerHTML='<div class="pmp"><div class="pmp-pages">'+BP.pages+'</div></div>'; document.body.appendChild(box);
+    document.body.classList.add("pm-auto","pm-printall"); _pmPrintFit(); }catch(e){} });
+  window.addEventListener("afterprint",function(){ var b=document.getElementById("pmAuto"); if(b){ b.remove(); document.body.classList.remove("pm-auto","pm-printall"); } }); }catch(e){}
+/* ===================== مكتبة الأدلة الإجرائية: الأدلة المعتمدة كاملة بعرض كتيّب + موضوعات معرفية ===================== */
+var GD={data:null,loading:null,cat:"",q:"",cur:null,fs:16,hits:[],hi:-1};
+var GD_TOPIC={lifecycle:["g02"],governance:["g05","g04"],pmo:["g01"],risk:["g12","g06"],stakeholder:["g17","g18"],change:["g13"],closure:["g02"],scope:["g08","g10"],schedule:["g11","g08","g07"],evm:["g09","g10"],feasibility:["g01"],registration:["g02"],procurement:["g02"],payment:["g16"],quality:["g15","g14"],commissioning:["g02","g15"],docs:["g15"],kpi:["g04","g16","g19"],resources:["g11"],registers:["g12"],environment:["g02"],pmplan:["g01","g02"]};
+var GD_IC={intro:'<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/>',gate:'<path d="M4 21V5l8-3 8 3v16M9 21v-6h6v6M4 10h16"/>',org:'<rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/>',
+  plan:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M7 13h4M7 17h7"/>',risk:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/>',change:'<path d="M4 7h13l-3-3M20 17H7l3 3"/>',quality:'<path d="M12 2l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 15.4 6.8 18.1l1-5.8L3.5 8.2l5.9-.9z"/>',
+  progress:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/>',people:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3 3 0 0 1 0 6M21 20c0-2.6-1.6-4.8-4-5.6"/>',report:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h5"/>',doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'};
+function _gdIc(k,s){ return '<svg viewBox="0 0 24 24" width="'+(s||22)+'" height="'+(s||22)+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(GD_IC[k]||GD_IC.doc)+'</svg>'; }
+function _gdLoad(){ if(GD.data) return Promise.resolve(GD.data); if(GD.loading) return GD.loading;
+  GD.loading=fetch("guides.json",{cache:"force-cache"}).then(function(r){ if(!r.ok) throw new Error("http "+r.status); return r.json(); }).then(function(j){ GD.data=j.guides||[]; return GD.data; }).catch(function(e){ GD.loading=null; throw e; }); return GD.loading; }
+function _gdById(id){ return (GD.data||[]).filter(function(g){ return g.id===id; })[0]; }
+/* ---------- المكتبة ---------- */
+function pmKbList(){ try{ setNavActive("kb"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=true;
+  show('<div class="gdl"><div class="gdl-hero"><div class="gdl-ht"><span>الحوكمة والإجراءات</span><h1>مكتبة الأدلة الإجرائية</h1><p>الأدلة والنماذج المعتمدة لبرنامج ريف — كاملة ومنسّقة للقراءة والبحث والطباعة.</p></div><div class="gdl-load"><i></i>جارٍ تحميل الأدلة…</div></div></div>'); IS_REPORT=false;
+  _gdLoad().then(function(){ _gdLibRender(); }).catch(function(){ var l=document.querySelector(".gdl-load"); if(l) l.innerHTML="تعذّر تحميل الأدلة — تأكد من الاتصال (تعمل على الموقع المنشور)."; _gdLibRender(true); }); }
+function _gdLibRender(offline){ var G=GD.data||[], cats=[]; G.forEach(function(g){ if(cats.indexOf(g.cat)<0) cats.push(g.cat); });
+  var q=_gdNorm(GD.q), L=G.filter(function(g){ return (!GD.cat||g.cat===GD.cat)&&(!q||_gdNorm(g.title+" "+g.cat+" "+g.sum).indexOf(q)>=0); });
+  var mins=G.reduce(function(a,g){ return a+g.mins; },0), nt=G.reduce(function(a,g){ return a+g.nt; },0);
+  var hero='<div class="gdl-hero"><div class="gdl-ht"><span>الحوكمة والإجراءات</span><h1>مكتبة الأدلة الإجرائية</h1><p>الأدلة والنماذج المعتمدة لبرنامج ريف — كاملة ومنسّقة للقراءة والبحث والطباعة.</p>'
+    +'<div class="gdl-sr"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="gdQ" placeholder="ابحث في الأدلة… (مثال: المخاطر، المستخلص، البوابة)" value="'+esc(GD.q)+'" oninput="GD.q=this.value;_gdLibRender();var e=document.getElementById(\'gdQ\');e.focus();e.setSelectionRange(e.value.length,e.value.length)"></div></div>'
+    +'<div class="gdl-st"><div><b>'+G.length+'</b><span>دليل ونموذج</span></div><div><b>'+cats.length+'</b><span>مجال</span></div><div><b>'+nt+'</b><span>جدول ومصفوفة</span></div><div><b>'+Math.round(mins/60)+'+</b><span>ساعة قراءة</span></div></div></div>';
+  var chips='<div class="gdl-cats"><button class="'+(!GD.cat?"on":"")+'" onclick="GD.cat=\'\';_gdLibRender()">الكل <em>'+G.length+'</em></button>'+cats.map(function(c){ var n=G.filter(function(g){ return g.cat===c; }).length; return '<button class="'+(GD.cat===c?"on":"")+'" onclick="GD.cat=\''+esc(c)+'\';_gdLibRender()">'+esc(c)+' <em>'+n+'</em></button>'; }).join("")+'</div>';
+  var cards=L.map(function(g,i){ return '<button class="gdc" style="--d:'+(i*0.03).toFixed(2)+'s" onclick="guideOpen(\''+g.id+'\')"><div class="gdc-top"><span class="gdc-ic">'+_gdIc(g.ic)+'</span><span class="gdc-cat">'+esc(g.cat)+'</span></div><b class="gdc-t">'+esc(g.title)+'</b><p>'+esc(g.sum)+'</p>'
+      +'<div class="gdc-m"><span>'+_gdIc("doc",13)+g.nh+' فصل</span>'+(g.nt?'<span>'+_gdIc("plan",13)+g.nt+' جدول</span>':'')+'<span>'+g.mins+' د قراءة</span><i>فتح الدليل ←</i></div></button>'; }).join("")
+    ||(offline?'':'<div class="gdl-empty">لا توجد أدلة مطابقة للبحث.</div>');
+  var topics='<div class="gdl-sec"><div class="gdl-sh"><b>موضوعات معرفية سريعة</b><span>خلاصة كل موضوع مع الأدلة المرتبطة به</span></div><div class="gdl-tp">'+PM_KB.map(function(e){ return '<button onclick="kbTopicOpen(\''+e.id+'\')">'+esc(e.title)+'</button>'; }).join("")+'</div></div>';
+  var entry='<button class="gdl-map" onclick="procMapOpen()"><span>'+_gdIc("gate",26)+'</span><div><b>خريطة العمليات</b><em>المسار الكامل للعمليات من الفكرة حتى الإغلاق، ومخطط سير كل عملية بالجهات والقرارات</em></div><i>←</i></button>';
+  IS_REPORT=true; PRINT_NAME=""; show('<div class="gdl">'+hero+chips+'<div class="gdl-grid">'+cards+'</div>'+entry+topics+'</div>'); IS_REPORT=false; }
+function _gdNorm(s){ return String(s||"").replace(/[ً-ْ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").toLowerCase(); }
+/* ---------- موضوع معرفي ---------- */
+function kbTopicOpen(id){ var e=PM_KB.filter(function(x){ return x.id===id; })[0]; if(!e) return; try{ setNavActive("kb"); }catch(x){} RERENDER=null;
+  var rel=(GD_TOPIC[id]||[]).map(_gdById).filter(Boolean);
+  var secs=(e.secs||[]).map(function(s,i){ return '<div class="gdt-s"><i>'+(i+1)+'</i><div><b>'+esc(s[0])+'</b><p>'+esc(s[1])+'</p></div></div>'; }).join("");
+  var relH=rel.length?'<div class="gdt-rel"><b>اقرأ الدليل الكامل</b>'+rel.map(function(g){ return '<button onclick="guideOpen(\''+g.id+'\')"><span>'+_gdIc(g.ic,18)+'</span><div><strong>'+esc(g.title)+'</strong><em>'+esc(g.cat)+' · '+g.mins+' د قراءة</em></div><i>←</i></button>'; }).join("")+'</div>':((e.refs||[]).length?'<div class="gdt-rel"><b>المراجع</b><p>'+e.refs.map(esc).join(" · ")+'</p></div>':'');
+  IS_REPORT=true; PRINT_NAME=""; show('<div class="gdt"><button class="gd-back" onclick="pmKbList()">‹ مكتبة الأدلة</button><div class="gdt-h"><span>موضوع معرفي</span><h1>'+esc(e.title)+'</h1><p>'+esc(e.intro||"")+'</p></div><div class="gdt-b"><div class="gdt-secs">'+secs+'</div>'+relH+'</div></div>'); IS_REPORT=false;
+  if(!GD.data) _gdLoad().then(function(){ kbTopicOpen(id); }).catch(function(){}); }
+/* ---------- عارض الدليل ---------- */
+function guideOpen(id){ try{ setNavActive("kb"); }catch(e){} RERENDER=null; if(!GD.data){ _gdLoad().then(function(){ guideOpen(id); }).catch(function(){ alert("تعذّر تحميل الأدلة."); }); return; }
+  var g=_gdById(id); if(!g) return; GD.cur=g; GD.hits=[]; GD.hi=-1;
+  var html=_gdDocHTML(g);
+  IS_REPORT=true; PRINT_NAME=""; show(html); IS_REPORT=false; try{ window.scrollTo(0,0); }catch(e){} _gdBind(); }
+function _gdDocHTML(g){ var B=g.b, toc=[], ch=0, sub=0, out="", i=0, inChap=false;
+  var esc2=function(t){ return esc(t).replace(/^([^:]{2,45}):\s/,'<b class="gd-term">$1:</b> '); };
+  while(i<B.length){ var b=B[i];
+    if(b.k==="h"&&b.l===1){ if(inChap) out+='</section>'; ch++; sub=0; var aid="gdc"+ch; toc.push({id:aid,t:b.t,l:1,n:ch}); out+='<section class="gd-ch" id="'+aid+'"><div class="gd-chh"><i>'+String(ch).padStart(2,"0")+'</i><h2>'+esc(b.t)+'</h2></div>'; inChap=true; i++; continue; }
+    if(!inChap){ ch++; toc.push({id:"gdc"+ch,t:"تمهيد",l:1,n:ch}); out+='<section class="gd-ch" id="gdc'+ch+'"><div class="gd-chh"><i>'+String(ch).padStart(2,"0")+'</i><h2>تمهيد</h2></div>'; inChap=true; }
+    if(b.k==="h"){ sub++; var sid="gds"+ch+"_"+sub; if(b.l===2) toc.push({id:sid,t:b.t,l:2}); out+=(b.l===2?'<h3 class="gd-h2" id="'+sid+'"><span>'+ch+'.'+sub+'</span>'+esc(b.t)+'</h3>':'<h4 class="gd-h3" id="'+sid+'">'+esc(b.t)+'</h4>'); i++; continue; }
+    if(b.k==="li"){ var items=[]; while(i<B.length&&B[i].k==="li"){ items.push(B[i].t); i++; } var prev=B[i-items.length-1]||{}, steps=items.length>=3&&items.length<=12&&/(خطوات|الإجراءات|آلية|مراحل|تسلسل|يتم|كالتالي|التالي)/.test(prev.t||"");
+      out+=steps?'<ol class="gd-steps">'+items.map(function(t,k){ return '<li><i>'+(k+1)+'</i><span>'+esc2(t)+'</span></li>'; }).join("")+'</ol>':'<ul class="gd-list">'+items.map(function(t){ return '<li>'+esc2(t)+'</li>'; }).join("")+'</ul>'; continue; }
+    if(b.k==="tbl"){ var R=b.rows, nc=Math.max.apply(null,R.map(function(r){ return r.length; }));
+      out+='<div class="gd-tw"><table class="gd-tb"><thead><tr>'+R[0].map(function(c){ var lv=/مدير إدارة المشاريع|مدير ادارة المشاريع/.test(c)?" lv3":(/مدير المشروع/.test(c)?" lv2":(/فريق العمل/.test(c)?" lv1":"")); return '<th class="'+lv+'">'+esc(c)+'</th>'; }).join("")+(R[0].length<nc?'<th colspan="'+(nc-R[0].length)+'"></th>':'')+'</tr></thead><tbody>'+R.slice(1).map(function(r){ return '<tr>'+r.map(function(c,ci){ return '<td'+(r.length===1&&nc>1?' colspan="'+nc+'" class="grp"':'')+'>'+esc(c)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div>'; i++; continue; }
+    var t=b.t; if(/^(ملاحظة|ملاحظه|تنبيه|هام|مهم|ملحوظة)\s*[:：-]/.test(t)) out+='<div class="gd-note">'+esc2(t)+'</div>'; else out+='<p class="gd-p">'+esc2(t)+'</p>'; i++; }
+  if(inChap) out+='</section>';
+  var tocH=toc.map(function(x){ return '<a href="#'+x.id+'" class="l'+x.l+'" onclick="event.preventDefault();_gdGo(\''+x.id+'\')">'+(x.l===1?'<i>'+String(x.n).padStart(2,"0")+'</i>':'')+'<span>'+esc(x.t)+'</span></a>'; }).join("");
+  var nch=toc.filter(function(x){ return x.l===1; }).length;
+  var cover='<div class="gd-cover"><div class="gd-cvc"><i></i><i></i><i></i><i></i></div><img src="'+LOGO_W+'" alt="ريف"><span class="gd-cvk">'+esc(g.cat)+'</span><h1>'+esc(g.title)+'</h1><p>'+esc(g.sum)+'</p><div class="gd-cvm"><div><b>'+nch+'</b><span>فصل</span></div><div><b>'+g.nt+'</b><span>جدول</span></div><div><b>'+g.mins+'</b><span>دقيقة قراءة</span></div></div><em>برنامج التنمية الريفية الزراعية المستدامة — ريف · دليل معتمد</em></div>';
+  var tocPage='<div class="gd-tocp"><h2>المحتويات</h2><div class="gd-tocl">'+toc.filter(function(x){ return x.l===1; }).map(function(x){ return '<div><i>'+String(x.n).padStart(2,"0")+'</i><span>'+esc(x.t)+'</span></div>'; }).join("")+'</div></div>';
+  var bar='<div class="gd-bar noprint"><button class="gd-back" onclick="pmKbList()">‹ المكتبة</button><div class="gd-bt"><b>'+esc(g.title)+'</b><span>'+esc(g.cat)+'</span></div><div class="gd-sr"><input id="gdIn" placeholder="ابحث داخل الدليل…" oninput="_gdFind(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();_gdNext(event.shiftKey?-1:1);}"><em id="gdHits"></em><button onclick="_gdNext(-1)" title="السابق">‹</button><button onclick="_gdNext(1)" title="التالي">›</button></div><button class="gd-fz" onclick="_gdFs(-1)" title="تصغير الخط">ع-</button><button class="gd-fz" onclick="_gdFs(1)" title="تكبير الخط">ع+</button><button class="gd-pr" onclick="guidePrint()">'+_gdIc("report",16)+' طباعة / PDF</button><u id="gdProg"></u></div>';
+  return '<div class="gd" id="gdRoot" style="--fs:'+GD.fs+'px">'+bar+'<div class="gd-wrap"><aside class="gd-toc noprint"><b>فهرس الدليل</b><nav id="gdToc">'+tocH+'</nav></aside><article class="gd-doc" id="gdDoc">'+cover+tocPage+out+'<div class="gd-end"><span>✓</span>نهاية الدليل — '+esc(g.title)+'</div></article></div></div>'; }
+function _gdGo(id){ var e=document.getElementById(id); if(!e) return; var y=e.getBoundingClientRect().top+window.scrollY-90; window.scrollTo({top:y,behavior:"smooth"}); }
+function _gdBind(){ if(window._gdSB) window.removeEventListener("scroll",window._gdSB); var toc=document.querySelectorAll("#gdToc a"), heads=[].map.call(toc,function(a){ return document.getElementById(a.getAttribute("href").slice(1)); });
+  window._gdSB=function(){ var d=document.getElementById("gdDoc"); if(!d){ window.removeEventListener("scroll",window._gdSB); return; } var r=d.getBoundingClientRect(), p=Math.max(0,Math.min(1,-r.top/(r.height-window.innerHeight))); var u=document.getElementById("gdProg"); if(u) u.style.width=(p*100).toFixed(1)+"%";
+    var act=-1; heads.forEach(function(h,k){ if(h&&h.getBoundingClientRect().top<140) act=k; }); toc.forEach(function(a,k){ a.classList.toggle("on",k===act); }); if(act>=0){ var a=toc[act], nav=document.getElementById("gdToc"); if(a&&nav&&(a.offsetTop<nav.scrollTop||a.offsetTop>nav.scrollTop+nav.clientHeight-40)) nav.scrollTop=a.offsetTop-80; } };
+  window.addEventListener("scroll",window._gdSB,{passive:true}); window._gdSB(); }
+function _gdFs(d){ GD.fs=Math.max(13,Math.min(22,GD.fs+d)); var r=document.getElementById("gdRoot"); if(r) r.style.setProperty("--fs",GD.fs+"px"); }
+function _gdFind(q){ var doc=document.getElementById("gdDoc"); if(!doc) return; doc.querySelectorAll("mark.gdm").forEach(function(m){ var p=m.parentNode; p.replaceChild(document.createTextNode(m.textContent),m); p.normalize(); });
+  GD.hits=[]; GD.hi=-1; var hc=document.getElementById("gdHits"); q=String(q||"").trim(); if(q.length<2){ if(hc) hc.textContent=""; return; }
+  var re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g"), w=document.createTreeWalker(doc,NodeFilter.SHOW_TEXT,null), nodes=[], n; while((n=w.nextNode())) if(re.test(n.nodeValue)) nodes.push(n); re.lastIndex=0;
+  nodes.slice(0,600).forEach(function(tn){ var s=tn.nodeValue, frag=document.createDocumentFragment(), last=0, m; re.lastIndex=0; while((m=re.exec(s))){ frag.appendChild(document.createTextNode(s.slice(last,m.index))); var mk=document.createElement("mark"); mk.className="gdm"; mk.textContent=m[0]; frag.appendChild(mk); GD.hits.push(mk); last=m.index+m[0].length; } frag.appendChild(document.createTextNode(s.slice(last))); tn.parentNode.replaceChild(frag,tn); });
+  if(hc) hc.textContent=GD.hits.length?("1/"+GD.hits.length):"لا نتائج"; if(GD.hits.length) _gdNext(1); }
+function _gdNext(d){ if(!GD.hits.length) return; if(GD.hi>=0) GD.hits[GD.hi].classList.remove("cur"); GD.hi=(GD.hi+d+GD.hits.length)%GD.hits.length; var m=GD.hits[GD.hi]; m.classList.add("cur"); var y=m.getBoundingClientRect().top+window.scrollY-window.innerHeight/3; window.scrollTo({top:y,behavior:"smooth"}); var hc=document.getElementById("gdHits"); if(hc) hc.textContent=(GD.hi+1)+"/"+GD.hits.length; }
+function guidePrint(){ var g=GD.cur; if(!g) return; PRINT_NAME=g.title+" - برنامج ريف"; document.body.classList.add("gd-print"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("gd-print"); PRINT_NAME=""; },1500); }
+try{ ["pmKbList","kbTopicOpen","guideOpen","guidePrint","_gdGo","_gdFs","_gdFind","_gdNext","_gdLibRender"].forEach(function(k){ window[k]=eval(k); }); window.GD=GD; }catch(e){}
 /* ===================== منشئ النماذج الإجرائية الجديدة (Visio) ===================== */
 var OPS_CUSTOM=null, OPS_B={idx:-1,connect:false,del:false,from:null};
 function _opsLoadCustom(){ return _opsDBx().then(function(db){ return new Promise(function(res){ var rq=db.transaction("tpl","readonly").objectStore("tpl").get("ops_custom"); rq.onsuccess=function(){ OPS_CUSTOM=(rq.result&&rq.result.data)||[]; res(); }; rq.onerror=function(){ OPS_CUSTOM=[]; res(); }; }); }).catch(function(){ OPS_CUSTOM=[]; }); }
