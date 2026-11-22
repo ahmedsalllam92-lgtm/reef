@@ -6503,6 +6503,44 @@ body:not([data-theme="dark"]) #lw .lw-clk .tm b{color:#fff}
 #lw .lw-scn{animation:lwScn 1s cubic-bezier(.2,.8,.2,1) both}
 @keyframes lwScn{from{opacity:0;transform:translateY(12px) scale(.99);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
 #lw .lw-q span em{flex:1;min-width:0;font-style:normal;overflow:hidden;text-overflow:ellipsis}#lw .lw-q span b{flex:none}
+
+/* ===== المساعد: إجابات داخل المحادثة ===== */
+.rb-ag,.rb-cap{display:flex;flex-direction:column;gap:8px;min-width:250px}
+.rb-ag .rb-big small{font-size:13px;font-weight:700;color:#7D8A82}
+.rb-kp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.rb-kp div{background:#F3F6F3;border:1px solid #E3E8E3;border-radius:10px;padding:6px 8px;display:flex;flex-direction:column;min-width:0}
+.rb-kp b{font-size:14px;font-weight:900;color:#0B3D27;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rb-kp span{font-size:10.5px;color:#7D8A82;font-weight:700}
+.rb-ls{display:flex;flex-direction:column;gap:4px}
+.rb-lr{all:unset;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 9px;border-radius:10px;background:#fff;border:1px solid #E6EBE6;transition:.15s}
+.rb-lr:hover{border-color:#C9A961;background:#FCFAF4}
+.rb-lr .nm{min-width:0;display:flex;flex-direction:column}.rb-lr .nm b{font-size:12px;font-weight:800;color:#14241B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb-lr .nm em{font-style:normal;font-size:10.5px;color:#7D8A82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb-lr .mt{display:flex;align-items:center;gap:6px;font-size:12px}.rb-lr .mt b{font-weight:900;color:#14241B;white-space:nowrap}
+.rb-lr .mt i{width:46px;height:6px;border-radius:4px;background:#E7ECE8;position:relative;overflow:hidden}.rb-lr .mt i:after{content:"";position:absolute;inset:0;width:var(--w);background:var(--c);border-radius:4px}
+.rb-bars,.rb-gt{display:flex;flex-direction:column;gap:5px}
+.rb-bars div{display:grid;grid-template-columns:88px minmax(0,1fr) 30px;gap:8px;align-items:center;font-size:11.5px;color:#3E4B44}
+.rb-bars i,.rb-gt i{height:8px;border-radius:5px;background:#E7ECE8;overflow:hidden}.rb-bars u,.rb-gt u{display:block;height:100%;border-radius:5px}
+.rb-bars b{text-align:end;font-weight:900;color:#14241B}
+.rb-gt div{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 26px;grid-template-rows:auto auto;column-gap:8px;align-items:center;font-size:11.5px}
+.rb-gt .k{font-weight:800;color:#14241B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rb-gt u{background:linear-gradient(90deg,#B8954F,#E2C27E)}
+.rb-gt b{text-align:end;font-weight:900;color:#14241B}.rb-gt em{grid-column:1/-1;font-style:normal;font-size:10.5px;color:#7D8A82}
+.rb-capb{font-size:12px;line-height:1.75;max-height:340px;overflow:auto}
+.rb-capb table{width:100%;border-collapse:collapse;font-size:11px}.rb-capb td,.rb-capb th{padding:4px 5px;border-bottom:1px solid #EEF1EE;text-align:start}
+.rb-capb img{max-width:100%}.rb-capb h1,.rb-capb h2,.rb-capb h3{font-size:13px;margin:6px 0}
+body[data-theme="dark"] .rb-kp div{background:rgba(255,255,255,.04);border-color:#2B363B}body[data-theme="dark"] .rb-kp b,body[data-theme="dark"] .rb-lr .nm b,body[data-theme="dark"] .rb-lr .mt b,body[data-theme="dark"] .rb-bars b,body[data-theme="dark"] .rb-gt b,body[data-theme="dark"] .rb-gt .k{color:#E8EFEA}
+body[data-theme="dark"] .rb-lr{background:rgba(255,255,255,.03);border-color:#2B363B}body[data-theme="dark"] .rb-lr:hover{border-color:#C9A961;background:rgba(201,169,97,.08)}
+body[data-theme="dark"] .rb-bars div{color:#B5C4BB}body[data-theme="dark"] .rb-bars i,body[data-theme="dark"] .rb-gt i,body[data-theme="dark"] .rb-lr .mt i{background:rgba(255,255,255,.08)}
+body[data-theme="dark"] .rb-capb td,body[data-theme="dark"] .rb-capb th{border-color:#2B363B}
+
+/* فحص الصور: تخصص الملاحظة وتغطية الفحص */
+.ia-grp{font-size:10.5px;font-weight:700;color:#6B7A72;background:#F0F3F0;border-radius:99px;padding:1px 8px}
+.ia-cov{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:6px 0;font-size:11px}
+.ia-cov .t{font-weight:800;color:#3E4B44}
+.ia-cov span:not(.t){padding:2px 9px;border-radius:99px;font-weight:700;border:1px solid transparent}
+.ia-cov .bad{background:#FDF1E1;color:#A5631A;border-color:#F1D9B3}.ia-cov .ok{background:#E6F3EC;color:#0E6B45;border-color:#C7E3D3}.ia-cov .na{background:#F3F5F3;color:#8A968F}
+.ia-cnt{font-size:11.5px;font-weight:800;color:#0B3D27;margin:4px 0}
+body[data-theme="dark"] .ia-grp{background:rgba(255,255,255,.07);color:#B5C4BB}body[data-theme="dark"] .ia-cov .t,body[data-theme="dark"] .ia-cnt{color:#DCE6E0}
+body[data-theme="dark"] .ia-cov .bad{background:rgba(217,150,70,.14);color:#E7B676;border-color:rgba(217,150,70,.3)}body[data-theme="dark"] .ia-cov .ok{background:rgba(63,178,122,.12);color:#7FD3A8;border-color:rgba(63,178,122,.28)}body[data-theme="dark"] .ia-cov .na{background:rgba(255,255,255,.05);color:#8396A0}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15566,13 +15604,13 @@ var IMGA={items:[], focus:"all", running:0, MAXC:2, verify:true};
 var IA_DISC="نتائج الفحص مؤشرات أولية مساندة ولا تُعد اعتمادًا هندسيًا أو بديلًا عن المعاينة الميدانية ومراجعة المهندس المختص.";
 function imgAuditOpen(){ try{setNavActive("imgaudit");}catch(e){} RERENDER=""; PRINT_NAME=""; IS_REPORT=false; IMGA={items:[],focus:"all",running:0,MAXC:2};
   show(label("فحص صور المشاريع")
-    +'<div class="ia-wrap"><div class="ia-intro">ارفع صورة أو أكثر من الموقع. تُضغط الصور تلقائيًا في المتصفح ثم تُحلّل كل صورة بشكل مستقل لتحديد المشاكل (سلامة/إنشائية/جودة) مع الوصف والمعالجة ونسبة الثقة.</div>'
+    +'<div class="ia-wrap"><div class="ia-intro">ارفع صورة أو أكثر من الموقع. تُفحص كل صورة كاملةً ومعها أربع قصاصات مكبّرة بواسطة ثلاثة فاحصين متخصصين يعملون معاً: <b>الإنشائي وحديد التسليح والشدات</b>، و<b>التشطيبات (مباني، لياسة، دهانات، بلاط، عزل، تمديدات)</b>، و<b>السلامة وتنظيم الموقع</b> — ثم يُعاد التحقق من الملاحظات غير المؤكدة على قصاصة مكبّرة. لكل ملاحظة: الموضع والدليل والقياس التقديري والأثر والمعالجة والمسؤول والمهلة.</div>'
     +'<div class="ia-disc">⚠ '+IA_DISC+'</div>'
     +'<div class="ia-focus"><span>نوع الفحص:</span>'
-      +'<label><input type="radio" name="iaf" value="all" checked onchange="_iaSetFocus(this.value)"> شامل</label>'
+      +'<label><input type="radio" name="iaf" value="all" checked onchange="_iaSetFocus(this.value)"> شامل (3 فاحصين متخصصين)</label>'
       +'<label><input type="radio" name="iaf" value="safety" onchange="_iaSetFocus(this.value)"> سلامة</label>'
-      +'<label><input type="radio" name="iaf" value="structural" onchange="_iaSetFocus(this.value)"> إنشائي</label>'
-      +'<label><input type="radio" name="iaf" value="quality" onchange="_iaSetFocus(this.value)"> جودة</label></div>'
+      +'<label><input type="radio" name="iaf" value="structural" onchange="_iaSetFocus(this.value)"> إنشائي وحديد تسليح</label>'
+      +'<label><input type="radio" name="iaf" value="finishes" onchange="_iaSetFocus(this.value)"> تشطيبات ودهانات</label></div>'
     +'<div class="ia-ctx"><label><span>المشروع (اختياري — يجعل الملاحظات أدق)</span><select id="iaProj" onchange="_iaSetProj(this.value)"><option value="">— بدون تحديد —</option>'+((typeof DATA!=="undefined"&&DATA)?DATA.map(function(p,idx){ return '<option value="'+idx+'">'+esc((p.code?p.code+" · ":"")+(p.name||""))+'</option>'; }).join(""):"")+'</select></label>'
       +'<label><span>ملاحظة للفاحص الآلي (اختياري)</span><input id="iaNote" placeholder="مثال: مرحلة صب الأسقف، أو ركّز على السقالات" oninput="IMGA.note=this.value"></label></div>'
     +'<label class="ia-upl" id="iaUpl">📷 اختر صور الموقع (واحدة أو أكثر)<input type="file" accept="image/*" multiple onchange="_iaPick(this)"></label>'
@@ -15624,40 +15662,47 @@ function _iaPump(){ // شغّل حتى MAXC متزامن
 }
 function _iaItem(id){ return IMGA.items.filter(function(x){return x.id===id;})[0]; }
 function _iaCropBox(imgDataUrl,bbox){ return new Promise(function(res){ try{ var im=new Image(); im.onload=function(){ var W=im.naturalWidth,H=im.naturalHeight; var mx=0.06; var x=Math.max(0,(bbox.x-mx))*W, y=Math.max(0,(bbox.y-mx))*H; var w=Math.min(1-(bbox.x),bbox.w+mx*2)*W, h=Math.min(1-(bbox.y),bbox.h+mx*2)*H; w=Math.max(24,w); h=Math.max(24,h); var cv=document.createElement("canvas"); var scale=Math.min(2, 512/Math.max(w,h)); cv.width=Math.round(w*scale); cv.height=Math.round(h*scale); var ctx=cv.getContext("2d"); ctx.drawImage(im,x,y,w,h,0,0,cv.width,cv.height); res(cv.toDataURL("image/jpeg",0.85)); }; im.onerror=function(){res(null);}; im.src=imgDataUrl; }catch(e){ res(null); } }); }
-function _iaAnalyzeOne(it){ if(!it||!it.img)return; it.status="analyzing"; it.t0=Date.now(); it.err=""; it.phase="اكتشاف"; IMGA.running++;
-  var ctrl=("AbortController" in window)?new AbortController():null; it.ctrl=ctrl; _iaRenderAll();
-  fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({image:it.img,focus:IMGA.focus,mode:"detect",ctx:_iaCtx()}),signal:ctrl?ctrl.signal:undefined})
-  .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
-  .then(function(res){
-    if(!res.ok||res.j.error){ throw new Error((res.j&&res.j.error)||"خطأ الاكتشاف"); }
-    var cands=res.j.notes||[]; it.scene=res.j.scene||""; it.overall=res.j.overall||null; it.positives=res.j.positives||[]; it.limits=res.j.limits||[]; it.summary=(it.overall&&it.overall.summary)||it.scene||"";
-    if(!cands.length || IMGA.verify===false){ it.notes=cands; it.status="done"; it.ms=Date.now()-it.t0; it.ctrl=null; IMGA.running=Math.max(0,IMGA.running-1); _iaRenderAll(); _iaPump(); return; }
-    // المرحلة 2: تحقق بالقصاصات (بالتسلسل لتفادي الحدود)
-    it.phase="تحقق"; _iaRenderAll();
-    var verified=[]; var i=0;
-    function nextV(){ if(i>=cands.length){ // دمج المكرر IoU
-        it.notes=_iaDedup(verified); it.status="done"; it.ms=Date.now()-it.t0; it.ctrl=null; IMGA.running=Math.max(0,IMGA.running-1); _iaRenderAll(); _iaPump(); return; }
-      var n=cands[i++];
-      if(!n.bbox){ verified.push(n); return nextV(); }
-      _iaCropBox(it.img,n.bbox).then(function(crop){ if(!crop){ verified.push(n); return nextV(); }
-        fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"verify",image:it.img,crop:crop,title:n.problem,type:n.type,where:n.where||"",evidence:n.evidence||"",focus:IMGA.focus,ctx:_iaCtx()}),signal:ctrl?ctrl.signal:undefined})
-        .then(function(r){return r.json();}).then(function(v){
-          if(v && v.match===false){ /* مرفوض */ }
-          else { if(v){ if(v.type)n.type=VALID_OK(v.type,n.type); if(v.severity)n.severity=v.severity; if(v.confidence!=null)n.confidence=Math.max(0,Math.min(100,parseInt(v.confidence,10)||n.confidence)); if(v.verificationStatus)n.verificationStatus=v.verificationStatus; if(v.problem)n.problem=v.problem; if(v.evidence)n.evidence=v.evidence; if(v.immediate)n.immediate=v.immediate; if(v.fix)n.fix=v.fix; if(v.specialty)n.specialty=v.specialty; ["where","impact","owner","deadline","ref"].forEach(function(k){ if(v[k]) n[k]=v[k]; }); n.needsReview=(n.confidence<55); }
-            if(IMGA.focus==="all" || n.type===({safety:"سلامة",structural:"إنشائي",quality:"جودة"}[IMGA.focus])) verified.push(n); }
-          nextV();
-        }).catch(function(){ verified.push(n); nextV(); });
-      });
-    }
-    nextV();
-  })
-  .catch(function(e){ it.ctrl=null; IMGA.running=Math.max(0,IMGA.running-1);
-    if(e && e.name==="AbortError"){ it.status="canceled"; it.err="أُلغي التحليل"; } else { it.status="error"; it.err=(e&&e.message)||"تعذّر الاتصال بخدمة الفحص (تأكد أنك على الرابط المنشور)"; }
-    _iaRenderAll(); _iaPump(); });
-}
+/* قصاصات مكبّرة (2×2 بتداخل) لرؤية التفاصيل الدقيقة: شروخ شعرية، تباعد الحديد، عيوب الدهان */
+function _iaTiles(imgDataUrl){ return new Promise(function(res){ try{ var im=new Image(); im.onload=function(){ var W=im.naturalWidth,H=im.naturalHeight, f=0.56;
+    var R=[{x:1-f,y:0,w:f,h:f},{x:0,y:0,w:f,h:f},{x:1-f,y:1-f,w:f,h:f},{x:0,y:1-f,w:f,h:f}], out=[];
+    R.forEach(function(r){ var sw=r.w*W, sh=r.h*H, sc=Math.min(1.6,1100/Math.max(sw,sh)); var cv=document.createElement("canvas"); cv.width=Math.round(sw*sc); cv.height=Math.round(sh*sc);
+      var cx=cv.getContext("2d"); cx.imageSmoothingQuality="high"; cx.drawImage(im,r.x*W,r.y*H,sw,sh,0,0,cv.width,cv.height); out.push(cv.toDataURL("image/jpeg",0.84)); });
+    res({tiles:out,rects:R}); }; im.onerror=function(){ res({tiles:[],rects:[]}); }; im.src=imgDataUrl; }catch(e){ res({tiles:[],rects:[]}); } }); }
+var IA_PASSES={all:["struct","finish","safety"],structural:["struct"],finishes:["finish"],quality:["finish"],safety:["safety"]};
+var IA_PASS_L={struct:"الإنشائي والحديد",finish:"التشطيبات والدهانات",safety:"السلامة"};
+function _iaPost(body,signal){ return fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:signal})
+  .then(function(r){ return r.text().then(function(t){ var j; try{ j=JSON.parse(t); }catch(e){ j={error:r.status===504||r.status===502?"انتهت مهلة الخادم":"استجابة غير صالحة ("+r.status+")"}; } if(!r.ok||j.error) throw new Error(j.error||"خطأ"); return j; }); }); }
+function _iaAnalyzeOne(it){ if(!it||!it.img)return; it.status="analyzing"; it.t0=Date.now(); it.err=""; it.phase="تجهيز القصاصات المكبّرة"; IMGA.running++;
+  var ctrl=("AbortController" in window)?new AbortController():null, sig=ctrl?ctrl.signal:undefined; it.ctrl=ctrl; _iaRenderAll();
+  var passes=IA_PASSES[IMGA.focus]||IA_PASSES.all, ctx=_iaCtx(), fail=[];
+  var finish=function(){ it.ctrl=null; IMGA.running=Math.max(0,IMGA.running-1); it.ms=Date.now()-it.t0; _iaRenderAll(); _iaPump(); };
+  _iaTiles(it.img).then(function(T){ it.phase="فحص "+passes.map(function(p){ return IA_PASS_L[p]; }).join(" + "); _iaRenderAll();
+    return Promise.all(passes.map(function(ps){
+      var body={image:it.img,tiles:T.tiles,tileRects:T.rects,pass:ps,focus:IMGA.focus,mode:"detect",ctx:ctx};
+      return _iaPost(body,sig).catch(function(e){ if(e&&e.name==="AbortError") throw e; /* إعادة مرة بدون قصاصات لو فشل */ return _iaPost({image:it.img,pass:ps,focus:IMGA.focus,mode:"detect",ctx:ctx},sig).catch(function(e2){ if(e2&&e2.name==="AbortError") throw e2; fail.push(IA_PASS_L[ps]+": "+(e2&&e2.message||"خطأ")); return null; }); }); })); })
+  .then(function(RS){ var ok=RS.filter(Boolean); if(!ok.length) throw new Error(fail.join(" · ")||"تعذّر الفحص");
+    var cands=[], cov=[], pos=[], lim=[], O=null, rank={"خطر":3,"يحتاج تدخل":2,"مقبول":1,"جيد":0};
+    ok.forEach(function(j){ (j.notes||[]).forEach(function(n){ cands.push(n); }); (j.coverage||[]).forEach(function(c){ if(!cov.some(function(z){ return z.cat===c.cat; })) cov.push(c); });
+      (j.positives||[]).forEach(function(x){ if(pos.indexOf(x)<0) pos.push(x); }); (j.limits||[]).forEach(function(x){ if(lim.indexOf(x)<0) lim.push(x); });
+      var o=j.overall||{}; if(!O||(rank[o.rating]||0)>(rank[O.rating]||0)) O={stage:o.stage||(O&&O.stage)||"",rating:o.rating||(O&&O.rating)||"",summary:o.summary||(O&&O.summary)||""}; if(!it.scene&&j.scene) it.scene=j.scene; });
+    if(ok.length>1){ var sm=ok.map(function(j){ return j.overall&&j.overall.summary; }).filter(Boolean); if(sm.length) O.summary=sm.join(" "); }
+    it.overall=O; it.coverage=cov; it.positives=pos.slice(0,5); it.limits=lim.slice(0,4); it.summary=(O&&O.summary)||it.scene||""; it.warn=fail.length?("تعذّر جزء من الفحص — "+fail.join(" · ")):"";
+    cands=_iaDedup(cands);
+    if(!cands.length||IMGA.verify===false){ it.notes=_iaSort(cands); it.status="done"; return finish(); }
+    /* التحقق بالقصاصة للملاحظات غير المؤكدة فقط، بالتوازي (3 في نفس الوقت) */
+    it.phase="تحقق من الملاحظات غير المؤكدة"; _iaRenderAll();
+    var todo=cands.filter(function(n){ return n.bbox&&((n.confidence||0)<78||n.verificationStatus!=="مؤكد"); }), drop={}, k=0;
+    var worker=function(){ if(k>=todo.length) return Promise.resolve(); var n=todo[k++];
+      return _iaCropBox(it.img,n.bbox).then(function(crop){ if(!crop) return;
+        return _iaPost({mode:"verify",image:it.img,crop:crop,title:n.problem,type:n.type,cat:n.cat||"",where:n.where||"",evidence:n.evidence||"",ctx:ctx},sig).then(function(v){
+          if(v&&v.match===false){ drop[cands.indexOf(n)]=1; return; }
+          if(v){ ["severity","verificationStatus","problem","where","evidence","measure","impact","immediate","fix","owner","deadline","ref","specialty"].forEach(function(f){ if(v[f]) n[f]=v[f]; }); if(v.confidence!=null) n.confidence=v.confidence; n.needsReview=(n.confidence<55); n.verified=true; } }).catch(function(e){ if(e&&e.name==="AbortError") throw e; }); }).then(worker); };
+    return Promise.all([worker(),worker(),worker()]).then(function(){ it.notes=_iaSort(cands.filter(function(n,i){ return !drop[i]; })); it.status="done"; finish(); }); })
+  .catch(function(e){ if(e&&e.name==="AbortError"){ it.status="canceled"; it.err="أُلغي التحليل"; } else { it.status="error"; it.err=(e&&e.message)||"تعذّر الاتصال بخدمة الفحص (تأكد أنك على الرابط المنشور)"; } finish(); }); }
+function _iaSort(L){ var r={"عالية":0,"متوسطة":1,"منخفضة":2}; return L.slice().sort(function(a,b){ var d=(r[a.severity]!=null?r[a.severity]:1)-(r[b.severity]!=null?r[b.severity]:1); return d||((b.confidence||0)-(a.confidence||0)); }).slice(0,36); }
 function VALID_OK(t,d){ return ["سلامة","إنشائي","جودة"].indexOf(t)>=0?t:d; }
 function _iaIoU(a,b){ if(!a||!b)return 0; var ax2=a.x+a.w,ay2=a.y+a.h,bx2=b.x+b.w,by2=b.y+b.h; var ix=Math.max(0,Math.min(ax2,bx2)-Math.max(a.x,b.x)); var iy=Math.max(0,Math.min(ay2,by2)-Math.max(a.y,b.y)); var inter=ix*iy; var uni=a.w*a.h+b.w*b.h-inter; return uni>0?inter/uni:0; }
-function _iaDedup(notes){ var out=[]; notes.forEach(function(n){ var dup=false; for(var k=0;k<out.length;k++){ if(out[k].type===n.type && _iaIoU(out[k].bbox,n.bbox)>0.55){ dup=true; if((n.confidence||0)>(out[k].confidence||0)) out[k]=n; break; } } if(!dup) out.push(n); }); return out; }
+function _iaDedup(notes){ var out=[]; notes.forEach(function(n){ var dup=false; for(var k=0;k<out.length;k++){ var io=_iaIoU(out[k].bbox,n.bbox); if((out[k].cat&&out[k].cat===n.cat&&io>0.45)||(out[k].type===n.type&&io>0.7)){ dup=true; if((n.confidence||0)>(out[k].confidence||0)) out[k]=n; break; } } if(!dup) out.push(n); }); return out; }
 function _iaRetry(id){ var it=_iaItem(id); if(!it||!it.img)return; it.status="queued"; it.err=""; it.notes=[]; it.summary=""; _iaRenderAll(); _iaPump(); }
 function _iaCancel(id){ var it=_iaItem(id); if(!it)return; if(it.ctrl){ try{it.ctrl.abort();}catch(e){} } else if(it.status==="queued"){ it.status="canceled"; it.err="أُلغي"; } _iaRenderAll(); }
 function _iaRemove(id){ var it=_iaItem(id); if(it&&it.ctrl){ try{it.ctrl.abort();}catch(e){} } IMGA.items=IMGA.items.filter(function(x){return x.id!==id;}); _iaRenderAll(); }
@@ -15689,10 +15734,11 @@ function _iaCard(it,idx){
   if(it.status==="error"){ body='<div class="ia-errbox">⚠ '+esc(it.err||"حدث خطأ")+'</div>'; }
   else if(it.img){
     var rows=(it.notes||[]).map(function(n,i){ var col=_iaColor(n.type);
-      return '<div class="ia-note" id="ntc_'+it.id+'_'+i+'" style="--c:'+col+'" onclick="_iaFocusMk(\''+it.id+'\','+i+')"><div class="ia-nh"><span class="ia-badge" style="background:'+col+'">'+(i+1)+'</span><b>'+esc(n.type||"")+'</b><span class="ia-sev sev-'+_sevCls(n.severity)+'">'+esc(n.severity||"")+'</span><span class="ia-conf">ثقة '+ar(n.confidence||0)+'%</span></div>'
+      return '<div class="ia-note" id="ntc_'+it.id+'_'+i+'" style="--c:'+col+'" onclick="_iaFocusMk(\''+it.id+'\','+i+')"><div class="ia-nh"><span class="ia-badge" style="background:'+col+'">'+(i+1)+'</span><b>'+esc(n.cat||n.type||"")+'</b>'+(n.cat&&n.type?'<span class="ia-grp">'+esc(n.type)+'</span>':'')+'<span class="ia-sev sev-'+_sevCls(n.severity)+'">'+esc(n.severity||"")+'</span><span class="ia-conf">ثقة '+ar(n.confidence||0)+'%'+(n.verificationStatus&&n.verificationStatus!=="مؤكد"?' · '+esc(n.verificationStatus):'')+(n.verified?' · ✓ تحقق مكبّر':'')+'</span></div>'
         +'<div class="ia-prob"><b>المشكلة:</b> '+esc(n.problem||"")+'</div>'
         +(n.where?('<div class="ia-ev"><b>الموضع:</b> '+esc(n.where)+'</div>'):"")
         +(n.evidence?('<div class="ia-ev"><b>الدليل:</b> '+esc(n.evidence)+'</div>'):"")
+        +(n.measure?('<div class="ia-ev"><b>القياس التقديري:</b> '+esc(n.measure)+'</div>'):"")
         +(n.impact?('<div class="ia-imp"><b>الأثر:</b> '+esc(n.impact)+'</div>'):"")
         +(n.immediate?('<div class="ia-imm"><b>إجراء فوري:</b> '+esc(n.immediate)+'</div>'):"")
         +'<div class="ia-fix"><b>المعالجة:</b> '+esc(n.fix||"")+'</div>'
@@ -15701,6 +15747,9 @@ function _iaCard(it,idx){
     }).join("");
     var O=it.overall||{}, rc={"جيد":"ok","مقبول":"mid","يحتاج تدخل":"hi","خطر":"hi"}[O.rating]||"";
     var summ=(it.summary||O.rating)?('<div class="ia-summary">'+(O.rating?'<span class="ia-rate '+rc+'">'+esc(O.rating)+'</span>':'')+(O.stage?'<b>المرحلة:</b> '+esc(O.stage)+' · ':'')+'<b>التقييم:</b> '+esc(it.summary||"")+'</div>'):"";
+    if((it.coverage||[]).length){ var cvc={"ملاحظات":"bad","سليم":"ok","غير ظاهر":"na"}; summ+='<div class="ia-cov"><span class="t">ما تم فحصه:</span>'+it.coverage.map(function(c){ return '<span class="'+(cvc[c.state]||"na")+'" title="'+esc(c.state)+'">'+(c.state==="ملاحظات"?"⚠ ":(c.state==="سليم"?"✓ ":"· "))+esc(c.cat)+'</span>'; }).join("")+'</div>'; }
+    if(it.warn) summ+='<div class="ia-lim" style="color:#A5631A">⚠ '+esc(it.warn)+'</div>';
+    if(it.status==="done"&&(it.notes||[]).length){ var gc={}; it.notes.forEach(function(n){ var k=n.cat||n.type; gc[k]=(gc[k]||0)+1; }); summ+='<div class="ia-cnt">'+ar(it.notes.length)+' ملاحظة: '+Object.keys(gc).map(function(k){ return esc(k)+' '+ar(gc[k]); }).join(" · ")+'</div>'; }
     summ+=((it.positives||[]).length?'<div class="ia-pos">✓ '+it.positives.map(esc).join(" · ")+'</div>':'')+((it.limits||[]).length?'<div class="ia-lim">ⓘ لا يمكن الحكم من الصورة على: '+it.limits.map(esc).join(" · ")+'</div>':'');
     var empt=(it.status==="done"&&!(it.notes||[]).length)?'<div class="mt-empty">لا مشاكل واضحة في هذه الصورة (لا يعني ذلك سلامة الموقع بالكامل).</div>':"";
     body='<div class="ia-grid"><div><div class="ia-imgbox'+(IMGA.addFor===it.id?" adding":"")+'" id="iabox_'+it.id+'" onclick="_iaImgClick(event,\''+it.id+'\')"><img src="'+it.img+'" class="ia-img">'+markers+'</div><div class="ia-imgtools"><button class="ia-a'+(IMGA.addFor===it.id?" on":"")+'" onclick="event.stopPropagation();_iaAddMode(\''+it.id+'\')">'+(IMGA.addFor===it.id?"↩ اضغط على الصورة لتحديد الموضع (أو إلغاء)":"➕ إضافة ملاحظة يدوية")+'</button><span class="ia-hint">اسحب أي علامة لتصحيح موضعها</span></div></div><div class="ia-notes">'+summ+rows+empt+'</div></div>';
@@ -15742,7 +15791,7 @@ function _iaGenReport(){ var g=function(id){var e=document.getElementById(id);re
   var done=IMGA.items.filter(function(x){return x.status==="done";});
   var anyApproved=done.some(function(it){return (it.notes||[]).some(function(n){return n.status==="approved";});});
   var pick=function(n){ if(n.status==="excluded")return false; if(n.status==="approved")return true; if(meta.inclRev)return true; if(!anyApproved)return true; return false; };
-  var all=[]; done.forEach(function(it,ii){ (it.notes||[]).forEach(function(n,ni){ if(pick(n)) all.push({ref:"ص"+(ii+1)+"-م"+(ni+1),type:n.type,severity:n.severity,problem:n.problem,where:n.where||"",fix:n.fix||""}); }); });
+  var all=[]; done.forEach(function(it,ii){ (it.notes||[]).forEach(function(n,ni){ if(pick(n)) all.push({ref:"ص"+(ii+1)+"-م"+(ni+1),type:n.type,cat:n.cat||"",severity:n.severity,problem:n.problem,where:n.where||"",fix:n.fix||""}); }); });
   var ctx=_iaCtx(P);
   var wait=document.getElementById("iaReportBar"); if(wait) wait.insertAdjacentHTML("afterbegin",'<div class="mst ok" id="iaRepWait">● جارٍ إعداد التقرير والملخّص التنفيذي…</div>');
   var sumP=all.length?fetch("/.netlify/functions/analyze-image",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mode:"summary",notes:all,ctx:ctx})})
@@ -15754,8 +15803,8 @@ function _iaGenReport(){ var g=function(id){var e=document.getElementById(id);re
     var secs=done.map(function(it,idx){ var ns=(it.notes||[]).map(function(n,i){ return {n:n,i:i}; }).filter(function(x){ return pick(x.n); }), O=it.overall||{};
       var rows=ns.map(function(x){ var n=x.n;
         return '<tr><td class="c"><span class="nb" style="background:'+_iaColor(n.type)+'">'+(x.i+1)+'</span></td>'
-          +'<td><b>'+esc(n.problem||"")+'</b>'+(n.where?'<div class="sub">الموضع: '+esc(n.where)+'</div>':'')+(n.evidence?'<div class="sub">الدليل: '+esc(n.evidence)+'</div>':'')+(n.impact?'<div class="sub imp">الأثر: '+esc(n.impact)+'</div>':'')+'</td>'
-          +'<td class="c"><span class="tg">'+esc(n.type||"")+'</span><span class="sv '+(sevC[n.severity]||"mid")+'">'+esc(n.severity||"")+'</span><div class="sub">ثقة '+ar(n.confidence||0)+'%'+(n.verificationStatus?' · '+esc(n.verificationStatus):'')+'</div></td>'
+          +'<td><b>'+esc(n.problem||"")+'</b>'+(n.where?'<div class="sub">الموضع: '+esc(n.where)+'</div>':'')+(n.evidence?'<div class="sub">الدليل: '+esc(n.evidence)+'</div>':'')+(n.measure?'<div class="sub">القياس التقديري: '+esc(n.measure)+'</div>':'')+(n.impact?'<div class="sub imp">الأثر: '+esc(n.impact)+'</div>':'')+'</td>'
+          +'<td class="c"><span class="tg">'+esc(n.cat||n.type||"")+'</span>'+(n.cat?'<div class="sub">'+esc(n.type||"")+'</div>':'')+'<span class="sv '+(sevC[n.severity]||"mid")+'">'+esc(n.severity||"")+'</span><div class="sub">ثقة '+ar(n.confidence||0)+'%'+(n.verificationStatus?' · '+esc(n.verificationStatus):'')+'</div></td>'
           +'<td>'+(n.immediate?'<div><b>فوري:</b> '+esc(n.immediate)+'</div>':'')+esc(n.fix||"")+(n.ref?'<div class="sub">المرجع: '+esc(n.ref)+'</div>':'')+'</td>'
           +'<td class="c">'+esc(n.owner||"—")+(n.deadline?'<div class="sub">'+esc(n.deadline)+'</div>':'')+'</td>'
           +'<td class="c">'+({approved:"معتمدة",excluded:"مستبعدة"}[n.status]||"للمراجعة")+'</td></tr>'; }).join("")||'<tr><td colspan="6" class="c muted">لا ملاحظات مدرجة لهذه الصورة</td></tr>';
@@ -15769,6 +15818,7 @@ function _iaGenReport(){ var g=function(id){var e=document.getElementById(id);re
     var kpi='<div class="kpis"><div><b>'+ar(total)+'</b>ملاحظة</div><div class="hi"><b>'+ar(counts["عالية"])+'</b>عالية الخطورة</div><div class="mid"><b>'+ar(counts["متوسطة"])+'</b>متوسطة</div><div class="lo"><b>'+ar(counts["منخفضة"])+'</b>منخفضة</div><div><b>'+ar(counts["سلامة"])+'</b>سلامة</div><div><b>'+ar(counts["إنشائي"])+'</b>إنشائي</div><div><b>'+ar(counts["جودة"])+'</b>جودة</div></div>';
     var exec=S?('<div class="exec"><div class="eh"><b>الملخّص التنفيذي</b><span class="rk '+({"مرتفع":"hi","متوسط":"mid","منخفض":"ok"}[S.risk]||"mid")+'">مستوى المخاطر: '+esc(S.risk||"")+'</span></div><p>'+esc(S.verdict||"")+'</p>'
         +((S.actions||[]).length?'<table class="tbl act"><thead><tr><th>#</th><th>الإجراء المطلوب</th><th>المسؤول</th><th>المهلة</th><th>الملاحظات المرتبطة</th></tr></thead><tbody>'+S.actions.map(function(a,i){ return '<tr><td class="c">'+(i+1)+'</td><td>'+esc(a.action)+'</td><td class="c">'+esc(a.owner||"—")+'</td><td class="c">'+esc(a.deadline||"—")+'</td><td class="c">'+(a.refs||[]).map(esc).join("، ")+'</td></tr>'; }).join("")+'</tbody></table>':'')
+        +((S.disciplines||[]).length?'<table class="tbl act"><thead><tr><th>#</th><th>التخصص</th><th>التقييم</th><th colspan="2">الملاحظة</th></tr></thead><tbody>'+S.disciplines.map(function(d,i){ return '<tr><td class="c">'+(i+1)+'</td><td><b>'+esc(d.cat)+'</b></td><td class="c"><span class="rt '+(rateC[d.state]||"mid")+'">'+esc(d.state||"—")+'</span></td><td colspan="2">'+esc(d.note||"")+'</td></tr>'; }).join("")+'</tbody></table>':'')
         +((S.themes||[]).length?'<div class="th"><b>أنماط متكررة:</b> '+S.themes.map(esc).join(" · ")+'</div>':'')+'</div>')
       :'<div class="exec"><div class="eh"><b>الملخّص التنفيذي</b></div><p>إجمالي الملاحظات المدرجة '+ar(total)+': سلامة '+ar(counts["سلامة"])+' · إنشائي '+ar(counts["إنشائي"])+' · جودة '+ar(counts["جودة"])+' — منها '+ar(counts["عالية"])+' عالية الخطورة تتطلب معالجة فورية.</p></div>';
     var fname=(meta.proj+"-"+meta.date).replace(/[^\w؀-ۿ\- ]/g,"").slice(0,60);
@@ -17082,11 +17132,15 @@ function rbHandle(raw,forced){ var q=_rbN(raw); if(!q) return {t:"اكتب سؤ�
   if(/^(ارجع|رجوع|رجعني|الصفحه السابقه|اللي قبلها)$/.test(q)){ try{ history.back(); }catch(e){} return {t:"✓ رجعت للصفحة السابقة."}; }
   if(_rbHas(q,["اطبع","طباعه","اطبعلي","نزل pdf","نزلها pdf","تنزيل pdf"])&&!_rbHas(q,["لوحات"])){ try{ printAnswer(); }catch(e){} return {t:"✓ فتحت نافذة الطباعة/التنزيل للصفحة الحالية."}; }
   if(_rbHas(q,["امسح الفلاتر","الغي الفلاتر","شيل الفلاتر","كل المشاريع بدون فلتر","الغاء الفلتر","امسح الفلتر"])){ var c0=_rbCur(); if(c0==="reg"){ prClear(); } else if(c0==="dash"){ dashResetFilter(); } return {t:"✓ مسحت الفلاتر."}; }
+  if(/^(السلام عليكم|سلام|مرحبا|اهلا|هلا|هاي|صباح الخير|مساء الخير|ازيك|ازيكم|عامل ايه|شلونك|كيفك|كيف الحال)( .*)?$/.test(q)&&q.split(" ").length<=4) return {t:"أهلاً بك 👋 اسألني عن أي مشروع أو قطاع أو منطقة، مثل: «كام مشروع متأخر؟» أو «أعلى 5 مشاريع قيمة» أو «ملخص المحفظة»."};
+  if(/^(شكرا|متشكر|تسلم|تسلمي|يعطيك العافيه|مشكور|جزاك الله خير|ميرسي)( .*)?$/.test(q)&&q.split(" ").length<=5) return {t:"العفو 🌿 تحت أمرك."};
   /* المشروع */
   var pron=/(بتاعه|بتاعها|له|عنه|فيه|ده|دا|هذا|نفسه|نفس المشروع|المشروع ده|المشروع هذا|حقه|تبعه|لوحته|لوحتها|بطاقته|بطاقتها|تقريره|تقريرها|صوره|مقاوله|حيوده|انجازه|قيمته|حالته|مدته)( |$)/.test(q+" "+String(raw).replace(/[\u064B-\u0652]/g,"").replace(/[ة]/g,"ه"));
   if(pron&&(RB.ctx||_rbPageProj())&&!(R0probe(raw))) forced=forced||RB.ctx||_rbPageProj();
   var R=forced?{p:forced,sure:true,cands:[forced]}:rbResolve(raw);
   var f=_rbField(q), cat=_qxCatIn(q), pg=_rbPage(q);
+  var strongGo=_rbHas(q,["افتح","افتحلي","افتح لي","روح","روح على","وديني","ودني","خدني","انتقل","اذهب"]);
+  if(!strongGo&&!pron&&!(pg&&q.split(" ").length<=4)&&!(R&&R.sure)&&!_rbHas(q,["قارن","مقارنه","الفرق بين","عدل","غير","حدث"])){ var AG0=null; try{ AG0=_rbAgg(raw,q); }catch(e){} if(AG0) return AG0; }
   var _left=_rbLeft(raw).filter(function(w){ var X=_rbIndex(); return !X.geo[w]&&!/^(كل|جميع|عدد|متوسط|اجمالي|المشاريع|مشاريع|قطاع|منطقه)$/.test(w); });
   if(!R&&f&&!pron&&_left.length&&!pg&&!cat&&!/(المشاريع|مشاريع|القطاع|قطاع|المنطقه|منطقه|كل|متوسط|اجمالي|عدد)/.test(q)) return {t:"لم أجد مشروعاً باسم «"+_left.join(" ")+"». اكتب جزءاً أوضح من اسم المشروع أو كوده (مثل FI-06)."};
   if(!R&&(pron||f)&&!pg&&!cat){ var cp=RB.ctx||_rbPageProj(); if(cp&&(pron||!/(المشاريع|مشاريع|القطاع|قطاع|المنطقه|منطقه|كل|متوسط|اجمالي|عدد)/.test(q))) R={p:cp,sure:true,cands:[cp]}; }
@@ -17112,11 +17166,101 @@ function rbHandle(raw,forced){ var q=_rbN(raw); if(!q) return {t:"اكتب سؤ�
     if(_rbCur()==="dash"&&(S2.secs.length||S2.regs.length||cat)){ DASH_FILTER={region:S2.regs.slice(),sector:S2.secs.slice(),ptype:"",cat:cat?[cat]:""}; ["region","sector"].forEach(function(k){ if(!DASH_FILTER[k].length) DASH_FILTER[k]=""; }); execDashboard(); }
     if(_rbCur()==="reg"&&(S2.secs.length||S2.regs.length||cat)){ if(S2.secs.length) PR.sector=S2.secs.slice(); if(S2.regs.length) PR.region=S2.regs.slice(); if(cat) PR.cat=[cat]; projRegOpen(true); }
     return {t:"✓ فتحت «"+pg[2]+"»."}; }
+  /* إجابة مباشرة داخل المحادثة */
+  if(!strongGo){ var AG=null; try{ AG=_rbAgg(raw,q); }catch(e){ AG=null; } if(AG) return AG; }
   /* المحرك العام */
-  var ok=false; try{ ok=qxRoute(raw); }catch(e){}
+  var CP=strongGo?{ok:(function(){ try{ return qxRoute(raw); }catch(e){ return false; } })()}:_rbCapture(function(){ return qxRoute(raw); }); var ok=CP.ok;
+  if(CP.h) return {h:CP.h};
   if(ok){ return {t:"✓ عرضت النتيجة في الصفحة"+(ANSWER_TITLE?": «"+ANSWER_TITLE+"»":"")+"."}; }
   try{ window.ask(raw); return {t:"✓ عرضت الإجابة في الصفحة."}; }catch(e){}
   return {t:"لم أفهم الطلب تماماً. جرّب مثلاً: «كام الحيود لمزاد الرايس» أو «افتح لوحة الأداء واعرض المتأخرة فقط»."}; }
+/* ===== محرك الإجابات داخل المحادثة: أعداد، قوائم، ترتيب، توزيع، ملخص المحفظة ===== */
+var RB_L={};
+function _rbFin(p){ try{ return isFinishedP(p)||(_hoMode()&&p.handover==="1"); }catch(e){ return false; } }
+function _rbA(p){ var a=pct(p.actual); return a==null?0:Math.max(0,Math.min(1,a)); }
+function _rbV(p){ return _dxBase(p)||0; }
+function _rbD(p){ return _dxN(p.disbursed)||0; }
+function _rbEnd(p){ try{ var t=_dxTime(p); return t&&t.ok?t.left:null; }catch(e){ return null; } }
+function _rbSum(L,f){ return L.reduce(function(s,p){ return s+(f(p)||0); },0); }
+function _rbAvgA(L){ var X=L.map(function(p){ return pct(p.actual); }).filter(function(v){ return v!=null; }); return X.length?X.reduce(function(a,b){ return a+Math.min(1,b); },0)/X.length:0; }
+var RB_ST=[
+  ["fin","المشاريع المنتهية",["منتهي","منتهيه","المنتهيه","المنتهي","مكتمل","مكتمله","المكتمله","منجز","منجزه","المنجزه","اكتملت","خلصت","خلصانه","سلمت","المسلمه","تم تسليمها","استلام","الاستلام"],function(p){ return _rbFin(p); }],
+  ["stop","المشاريع المتوقفة",["متوقف","متوقفه","المتوقفه","المتوقف","موقوف","موقوفه","واقفه","معلق","معلقه","ايقاف"],function(p){ return _isStopped(p); }],
+  ["over","المشاريع المتجاوزة لتاريخ النهاية",["متجاوز","متجاوزه","المتجاوزه","تجاوزت","تجاوز المده","انتهت مدتها","خلصت مدتها","عدت مدتها","منتهيه المده","فات موعدها"],function(p){ return !_rbFin(p)&&_overdue(p); }],
+  ["soon","مشاريع تنتهي مدتها قريباً",["تنتهي قريب","هتخلص قريب","قربت تخلص","قربت تنتهي","على وشك","قرب نهايتها","تنتهي خلال","تخلص خلال","نهايتها قربت"],function(p){ var l=_rbEnd(p); return !_rbFin(p)&&l!=null&&l>=0&&l<=(RB_L.days||60); }],
+  ["risk","المشاريع عالية المخاطر",["خطر","خطره","الخطره","مخاطر","حرجه","الحرجه","حرج","عالية المخاطر","في خطر"],function(p){ var r=analyzeProject(p); return !r.done&&r.score>=3; }],
+  ["spend","مشاريع الصرف فيها أعلى من الإنجاز",["الصرف اعلى","صرف اعلى","الصرف اكبر","المنصرف اعلى","صرفها اعلى"],function(p){ var r=analyzeProject(p); return r.sr!=null&&r.a!=null&&r.sr>r.a+0.10; }],
+  ["run","المشاريع قيد التنفيذ",["قيد التنفيذ","تحت التنفيذ","شغاله","الشغاله","جاريه","الجاريه","قائمه حاليا"],function(p){ return !_rbFin(p)&&!_isStopped(p)&&_rbA(p)>0; }]
+];
+function _rbAggSet(q,raw){ var S=_qxSub(q), L=S.list.slice(), lab=[], cm=""; try{ cm=_qxContractorIn(norm(raw)); }catch(e){}
+  if(cm){ L=L.filter(function(p){ return _dxTxt(p.contractor)===cm; }); lab.push("المقاول "+cm); }
+  var cat=_qxCatIn(q), st=null;
+  RB_ST.forEach(function(s){ if(!st&&_rbHas(q,s[2])) st=s; });
+  if(st&&st[0]==="fin"&&/(منتهي|منتهيه|خلصت|انتهت) (المده|مدتها|مدته)/.test(q)) st=RB_ST[2];
+  if(st){ L=L.filter(st[3]); lab.unshift(st[1]); }
+  if(cat){ L=L.filter(function(p){ return !_rbFin(p)&&_dxCatOf(analyzeProject(p))===cat; }); lab.unshift("المشاريع ("+DX_CAT[cat].l+")"); }
+  if(S.title) lab.push(S.title);
+  return {L:L,S:S,cm:cm,cat:cat,st:st,title:lab.join(" · ")||"كل المشاريع",filtered:!!(cat||st||cm||S.secs.length||S.regs.length)}; }
+function _rbRow(p,metric){ var a=_rbA(p), C=DX_CAT[_dxCatOf(analyzeProject(p))]||DX_CAT.ns;
+  return '<button class="rb-lr" onclick="projCard(\''+esc(p.code)+'\')"><span class="nm"><b>'+esc(_rxSnRB(p))+'</b><em>'+esc([p.code,p.sector,p.region].filter(Boolean).join(" · "))+'</em></span>'
+    +'<span class="mt">'+(metric||('<i style="--w:'+Math.round(a*100)+'%;--c:'+(_rbFin(p)?"#2E9B66":C.c)+'"></i><b>'+_dxPct(a)+'</b>'))+'</span></button>'; }
+function _rbKpi(L){ return '<div class="rb-kp"><div><b>'+ar(L.length)+'</b><span>مشروع</span></div><div><b>'+_dxM(_rbSum(L,_rbV))+'</b><span>القيمة</span></div><div><b>'+_dxPct(_rbAvgA(L))+'</b><span>متوسط الإنجاز</span></div></div>'; }
+function _rbPageBtn(L,title){ RB._agL=L; RB._agT=title; return '<div class="rb-acts"><button onclick="_rbAggPage()">عرض القائمة كاملة في الصفحة ↗</button></div>'; }
+function _rbAggPage(){ try{ projectTable((RB._agL||[]).slice(),RB._agT||"المشاريع","region",RB._agT||"المشاريع"); }catch(e){} }
+function _rbList(L,title,n,sorter,metric){ var X=L.slice(); if(sorter) X.sort(sorter); var k=Math.min(n||6,X.length);
+  return '<div class="rb-ag"><div class="rb-l">'+esc(title)+'</div>'+_rbKpi(L)+(k?'<div class="rb-ls">'+X.slice(0,k).map(function(p){ return _rbRow(p,metric&&metric(p)); }).join("")+'</div>':'<div class="rb-sub">لا توجد مشاريع مطابقة.</div>')
+    +(X.length>k?'<div class="rb-sub">و'+ar(X.length-k)+' مشروع آخر.</div>':'')+(X.length?_rbPageBtn(X,title):'')+'</div>'; }
+function _rbStatusMix(L){ var c={ok:0,watch:0,late:0,stumb:0,ns:0}, f=0, s=0; L.forEach(function(p){ if(_rbFin(p)){ f++; return; } if(_isStopped(p)) s++; c[_dxCatOf(analyzeProject(p))]++; });
+  var rows=[["منتهية",f,"#2E9B66"]].concat(["ok","watch","late","stumb","ns"].map(function(k){ return [DX_CAT[k].l,c[k],DX_CAT[k].c]; }));
+  var mx=Math.max.apply(null,rows.map(function(r){ return r[1]; }).concat([1]));
+  return '<div class="rb-bars">'+rows.filter(function(r){ return r[1]; }).map(function(r){ return '<div><span>'+r[0]+'</span><i><u style="width:'+Math.round(r[1]/mx*100)+'%;background:'+r[2]+'"></u></i><b>'+ar(r[1])+'</b></div>'; }).join("")+'</div>'+(s?'<div class="rb-sub">منها '+ar(s)+' متوقفة.</div>':''); }
+function _rbGroup(L,dim,title){ var G={}; L.forEach(function(p){ var k=dim==="contractor"?(_dxTxt(p.contractor)||"غير محدد"):(String(p[dim]||"غير محدد").trim()); (G[k]=G[k]||[]).push(p); });
+  var R=Object.keys(G).filter(function(k){ return !(dim==="contractor"&&k==="غير محدد"); }).map(function(k){ return {k:k,L:G[k],v:_rbSum(G[k],_rbV),a:_rbAvgA(G[k])}; }).sort(function(a,b){ return b.L.length-a.L.length||b.v-a.v; });
+  var mx=Math.max.apply(null,R.map(function(r){ return r.L.length; }).concat([1]));
+  return '<div class="rb-ag"><div class="rb-l">'+esc(title)+'</div><div class="rb-gt">'+R.slice(0,dim==="contractor"?10:14).map(function(r){ return '<div><span class="k">'+esc(r.k)+'</span><i><u style="width:'+Math.round(r.L.length/mx*100)+'%"></u></i><b>'+ar(r.L.length)+'</b><em>'+_dxM(r.v)+' · '+_dxPct(r.a)+'</em></div>'; }).join("")+'</div>'
+    +(R.length>10&&dim==="contractor"?'<div class="rb-sub">و'+ar(R.length-10)+' مقاول آخر.</div>':'')+'<div class="rb-sub">العدد · القيمة · متوسط الإنجاز</div></div>'; }
+function _rbAgg(raw,q){ if(typeof DATA==="undefined"||!DATA||!DATA.length) return null;
+  var A=_rbAggSet(q,raw), L=A.L, n=(_qxNums(q).filter(function(x){ return x>=1&&x<=50; })[0])||0;
+  var mDays=q.match(/خلال (\d+) (يوم|ايام)/); RB_L.days=mDays?+mDays[1]:(/(شهرين)/.test(q)?60:(/(شهر)/.test(q)?30:60)); if(A.st&&A.st[0]==="soon"){ A=_rbAggSet(q,raw); L=A.L; }
+  var countQ=/(^| )(كام|كم|عدد|كمية|وش عدد|ايش عدد|اجمالي عدد)( |$)/.test(q);
+  var totQ=_rbHas(q,["اجمالي القيمه","اجمالي قيمه","مجموع القيمه","مجموع قيم","قيمه المحفظه","حجم المحفظه","القيمه الاجماليه","اجمالي المحفظه","كام قيمه","قيمتها كام","قيمتهم كام","اجمالي العقود","قيمه العقود"]);
+  var spendQ=_rbHas(q,["اجمالي المنصرف","اجمالي الصرف","المنصرف كام","صرفنا كام","نسبه الصرف","اجمالي المصروف","كم صرف","كام اتصرف"]);
+  var avgQ=_rbHas(q,["متوسط الانجاز","متوسط نسبه الانجاز","نسبه انجاز المحفظه","انجاز المحفظه","الانجاز العام","متوسط انجاز"]);
+  var sumQ=_rbHas(q,["ملخص المحفظه","وضع المحفظه","الوضع العام","حاله المحفظه","ملخص عام","نظره عامه","ملخص المشاريع","وضع المشاريع","ايه الوضع","الوضع ايه","ملخص البرنامج"]);
+  var byDim=_rbHas(q,["حسب القطاع","حسب القطاعات","على القطاعات","توزيع القطاعات","لكل قطاع","كل قطاع"])?"sector":_rbHas(q,["حسب المنطقه","حسب المناطق","على المناطق","توزيع المناطق","لكل منطقه","كل منطقه"])?"region":_rbHas(q,["حسب المقاول","حسب المقاولين","لكل مقاول","كل مقاول","المقاولين","المقاولون"])?"contractor":_rbHas(q,["حسب النوع","حسب نوع","لكل نوع"])?"ptype":"";
+  var hi=_rbHas(q,["اعلى","اكبر","اكثر","افضل","الاعلى","الاكبر","الاكثر","الافضل","اغلى","top"]), lo=_rbHas(q,["اقل","اضعف","ادنى","اصغر","الاقل","الاضعف","الادنى","اسوا","الاسوا"]);
+  var byVal=_rbHas(q,["قيمه","القيمه","تكلفه","ميزانيه","اغلى","عقد"]), byProg=_rbHas(q,["انجاز","الانجاز","تقدم","نسبه"]), bySpend=_rbHas(q,["صرف","الصرف","منصرف"]), byDev=_rbHas(q,["حيود","انحراف","تاخر","تاخير"]);
+  var listQ=_rbHas(q,["ايه هي","ما هي","مين","اعرض","هات","ورني","وريني","قائمه","اسماء","ايش هي","وش هي","اذكر","طلعلي"]);
+  /* المقاولين: الأكثر مشاريع */
+  if(byDim==="contractor"||(_rbHas(q,["مقاول","المقاول"])&&(hi||countQ)&&!A.cm)) return {h:_rbGroup(L,"contractor","المقاولون حسب عدد المشاريع"+(A.title!=="كل المشاريع"?" — "+A.title:""))};
+  if(byDim) return {h:_rbGroup(L,byDim,{sector:"التوزيع حسب القطاع",region:"التوزيع حسب المنطقة",ptype:"التوزيع حسب نوع المشروع"}[byDim]+(A.filtered?" — "+A.title:""))};
+  /* ترتيب: أعلى/أقل */
+  if((hi||lo)&&!(A.st&&A.st[0]==="spend")&&(byVal||byProg||bySpend||byDev||_rbHas(q,["مشاريع","المشاريع","مشروع"]))){ var K=n||5, base=L;
+    if(byProg&&!A.st) base=L.filter(function(p){ return !_rbFin(p)&&(!lo||_dxCatOf(analyzeProject(p))!=="ns"); });
+    var key=byDev?function(p){ return _dxDev(p)||0; }:(bySpend?function(p){ var v=_rbV(p); return v?_rbD(p)/v:0; }:(byProg?_rbA:_rbV));
+    var met=byVal||(!byProg&&!bySpend&&!byDev)?function(p){ return '<b>'+_dxM(_rbV(p))+'</b>'; }:(bySpend?function(p){ var v=_rbV(p); return '<b>'+_dxPct(v?_rbD(p)/v:0)+'</b>'; }:(byDev?function(p){ return '<b>'+_dxPct(_dxDev(p)||0)+'</b>'; }:null));
+    var lab=(lo?"الأقل ":"الأعلى ")+(byDev?"حيوداً":(bySpend?"صرفاً":(byProg?"إنجازاً":"قيمة")));
+    return {h:_rbList(base,lab+" — "+A.title,K,function(a,b){ return lo?key(a)-key(b):key(b)-key(a); },met)}; }
+  /* ملخص المحفظة */
+  if(sumQ||(countQ&&!A.filtered&&_rbHas(q,["مشاريع","المشاريع","مشروع"]))){ var D=L;
+    return {h:'<div class="rb-ag"><div class="rb-l">'+(A.filtered?esc(A.title):'ملخص المحفظة')+'</div>'+_rbKpi(D)+'<div class="rb-kp"><div><b>'+_dxM(_rbSum(D,_rbD))+'</b><span>المنصرف</span></div><div><b>'+_dxPct(_rbSum(D,_rbV)?_rbSum(D,_rbD)/_rbSum(D,_rbV):0)+'</b><span>نسبة الصرف</span></div><div><b>'+ar(D.filter(function(p){ return !_rbFin(p)&&_overdue(p); }).length)+'</b><span>متجاوزة المدة</span></div></div>'+_rbStatusMix(D)
+      +'<div class="rb-acts"><button onclick="DASH_FILTER={region:\'\',sector:\'\',ptype:\'\',cat:\'\'};execDashboard()">لوحة الأداء</button><button onclick="projRegOpen()">سجل المشاريع</button></div></div>'}; }
+  if(totQ||spendQ||avgQ){ var v=_rbSum(L,_rbV), d=_rbSum(L,_rbD);
+    var big=totQ?['إجمالي القيمة',_dxM(v)]:(spendQ?['إجمالي المنصرف',_dxM(d)]:['متوسط الإنجاز',_dxPct(_rbAvgA(L))]);
+    return {h:'<div class="rb-ag"><div class="rb-l">'+esc(A.title)+'</div><div class="rb-big">'+big[1]+'</div><div class="rb-sub">'+big[0]+' لـ'+ar(L.length)+' مشروع'+(spendQ?' — نسبة الصرف '+_dxPct(v?d/v:0)+' من '+_dxM(v):'')+(totQ?' — المنصرف '+_dxM(d)+' ('+_dxPct(v?d/v:0)+')':'')+'</div>'+_rbStatusMix(L)+'</div>'}; }
+  /* عدد/قائمة لفئة أو حالة أو نطاق */
+  if(A.filtered&&(countQ||listQ||A.cat||A.st||_rbHas(q,["مشاريع","المشاريع"]))){ var srt=A.st&&A.st[0]==="soon"?function(a,b){ return (_rbEnd(a)||0)-(_rbEnd(b)||0); }:(A.st&&A.st[0]==="over"?function(a,b){ return (_daysOverdue(b)||0)-(_daysOverdue(a)||0); }:(A.cat?function(a,b){ return (_dxDev(b)||0)-(_dxDev(a)||0); }:function(a,b){ return _rbV(b)-_rbV(a); }));
+    var mt=A.st&&A.st[0]==="soon"?function(p){ return '<b>'+ar(_rbEnd(p))+' يوم</b>'; }:(A.st&&A.st[0]==="over"?function(p){ return '<b>+'+ar(_daysOverdue(p))+' يوم</b>'; }:(A.cat&&A.cat!=="ok"&&A.cat!=="ns"?function(p){ return '<b style="color:'+DX_CAT[A.cat].c+'">حيود '+_dxPct(_dxDev(p)||0)+'</b>'; }:null));
+    var h=_rbList(L,A.title,n||(countQ?5:8),srt,mt); if(countQ) h=h.replace('<div class="rb-ag">','<div class="rb-ag"><div class="rb-big">'+ar(L.length)+' <small>مشروع</small></div>');
+    return {h:h}; }
+  return null; }
+/* التقاط إجابات المحرك العام لعرضها داخل المحادثة بدل فتح صفحة */
+function _rbCapture(fn){ var cap=null, orig=_qxShow; _qxShow=function(t,h,pn){ cap={t:t,h:h,pn:pn}; }; var ok=false; try{ ok=fn(); }catch(e){} _qxShow=orig;
+  if(!cap) return {ok:ok};
+  var txt=String(cap.h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(), rows=(String(cap.h).match(/<tr/g)||[]).length, heavy=/<canvas|<svg[^>]*viewBox="0 0 [5-9]\d\d|class="(?:dx|dash3|pdl)/.test(cap.h);
+  if(txt.length<=1400&&rows<=12&&!heavy){ RB._cap=cap; return {ok:true,h:'<div class="rb-cap"><div class="rb-l">'+esc(cap.t||"")+'</div><div class="rb-capb">'+cap.h+'</div><div class="rb-acts"><button onclick="_rbCapPage()">عرض في الصفحة ↗</button></div></div>'}; }
+  orig(cap.t,cap.h,cap.pn); return {ok:true,page:true,t:cap.t}; }
+function _rbCapPage(){ var c=RB._cap; if(c) _qxShow(c.t,c.h,c.pn); }
 function _rbCmp(a,b){ var row=function(k,fa,fb){ return '<tr><th>'+k+'</th><td>'+fa+'</td><td>'+fb+'</td></tr>'; }, ra=analyzeProject(a), rb=analyzeProject(b);
   return '<div class="rb-pc"><span class="rb-l">مقارنة مشروعين</span><table class="rb-ct"><tr><th></th><th>'+esc(_rxSnRB(a))+'</th><th>'+esc(_rxSnRB(b))+'</th></tr>'
     +row("الكود",a.code,b.code)+row("الفعلي",_rbPct(a.actual),_rbPct(b.actual))+row("المخطط",_rbPct(a.planned),_rbPct(b.planned))+row("الحالة",DX_CAT[_dxCatOf(ra)].l,DX_CAT[_dxCatOf(rb)].l)
