@@ -6183,6 +6183,54 @@ html.kiosk #lw .lw-ctl button[title^="رابط"],html.kiosk #lw .lw-ctl button[t
   html.ro .mbtabs{box-shadow:none}
   body.nav-open #roBanner{display:none!important}
 }
+
+/* ===== مركز التقارير المبسّط ===== */
+.rp2 .rp2-st,.rp2 .rp2-go{background:#fff;border:1px solid #E3E8E3;border-radius:18px;padding:18px 20px;margin-top:14px}
+.rp2 .rp2-st.dis{opacity:.55}
+.rp2-sh{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.rp2-sh>i{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#0E5A3A;color:#fff;font-style:normal;font-weight:900;font-size:16px}
+.rp2-st.dis .rp2-sh>i{background:#C9D2CC}
+.rp2-sh b{display:block;font-size:17px;font-weight:900;color:#14241B}.rp2-sh span{font-size:12.5px;font-weight:700;color:#7D8A82}
+.rp2-scopes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rp2-sc{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 12px;border:1.5px solid #E3E8E3;border-radius:16px;background:#FAFBF9;font:inherit;cursor:pointer;text-align:center}
+.rp2-sc .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#EAF3EE;color:#0E5A3A}
+.rp2-sc b{font-size:15.5px;font-weight:900;color:#14241B}.rp2-sc em{font-style:normal;font-size:12px;font-weight:700;color:#7D8A82}
+.rp2-sc:hover{border-color:#9DC2AD}
+.rp2-sc.on{border-color:#0E5A3A;background:#F1F8F4;box-shadow:0 0 0 3px rgba(14,90,58,.12)}.rp2-sc.on .ic{background:#0E5A3A;color:#fff}
+.rp2-sub{margin-top:14px;padding-top:14px;border-top:1px dashed #E3E8E3}
+.rp2-pp{display:flex;align-items:center;gap:12px;background:#F6F8F6;border-radius:14px;padding:12px 14px}
+.rp2-pp em{font-style:normal;font-weight:900;background:#0E5A3A;color:#fff;border-radius:8px;padding:3px 9px;direction:ltr}
+.rp2-pp div{flex:1;min-width:0}.rp2-pp b{display:block;font-size:14.5px;color:#14241B}.rp2-pp span{font-size:12px;color:#6B7A72;font-weight:700}.rp2-pp i{font-style:normal;font-weight:900}
+.rp2-types{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rp2-t{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:start;text-align:right;padding:14px;border:1.5px solid #E3E8E3;border-radius:16px;background:#fff;font:inherit;cursor:pointer}
+.rp2-t:disabled{cursor:not-allowed}
+.rp2-t .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#F3EEE2;color:#9A7A3E}
+.rp2-t b{display:block;font-size:14.5px;font-weight:900;color:#14241B}.rp2-t em{display:block;font-style:normal;font-size:12.5px;font-weight:700;color:#4A574F;margin-top:2px}
+.rp2-t small{display:block;font-size:11px;color:#8A968F;font-weight:700;margin-top:6px}
+.rp2-t .fm{font-style:normal;font-size:10.5px;font-weight:800;color:#6B7A72;background:#F2F4F2;border-radius:99px;padding:3px 9px;white-space:nowrap}
+.rp2-t:not(:disabled):hover{border-color:#C9B07A}
+.rp2-t.on{border-color:#B08A45;background:#FBF8F1;box-shadow:0 0 0 3px rgba(176,138,69,.15)}.rp2-t.on .ic{background:#B08A45;color:#fff}
+.rp2 .rp2-go{display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,#0B3A22,#1E5B3A);border:0}
+.rp2 .rp2-go .rp2-sh{margin:0}.rp2-go .rp2-sh>i{background:#D9B166;color:#0B3A22}.rp2-go .rp2-sh b{color:#fff}.rp2-go .rp2-sh span{color:#C9D9CE}
+.rp2-go>button{height:50px;padding:0 28px;border:0;border-radius:14px;background:#D9B166;color:#0B3A22;font:inherit;font-size:15.5px;font-weight:900;cursor:pointer;white-space:nowrap}
+.rp2 .rp2-go.dis{background:#F2F4F2}.rp2-go.dis .rp2-sh>i{background:#C9D2CC;color:#fff}.rp2-go.dis .rp2-sh b{color:#7D8A82}.rp2-go.dis .rp2-sh span{color:#9AA5A0}.rp2-go>button:disabled{background:#DCE2DE;color:#8A968F;cursor:not-allowed}
+.rp2-adv{text-align:center;margin-top:14px}.rp2-adv button{border:0;background:none;font:inherit;font-size:13px;font-weight:800;color:#6B7A72;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+#pcRpM{position:fixed;inset:0;z-index:10050;background:rgba(6,20,13,.5);display:flex;align-items:center;justify-content:center;padding:16px}
+.pcr-box{position:relative;width:min(560px,100%);background:#fff;border-radius:22px;padding:22px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);max-height:92vh;overflow:auto}
+.pcr-x{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:10px;border:1px solid #E3E8E3;background:#fff;cursor:pointer;font-size:15px}
+.pcr-h b{display:block;font-size:19px;font-weight:900;color:#0B3A22}.pcr-h span{font-size:12.5px;font-weight:700;color:#7D8A82}
+.pcr-l{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.pcr-l button{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:right;padding:12px;border:1.5px solid #E3E8E3;border-radius:14px;background:#fff;font:inherit;cursor:pointer}
+.pcr-l button:hover{border-color:#0E5A3A;background:#F6FAF7}
+.pcr-l .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:#EAF3EE;color:#0E5A3A}
+.pcr-l b{display:block;font-size:14.5px;color:#14241B}.pcr-l em{font-style:normal;font-size:12px;font-weight:700;color:#7D8A82}.pcr-l i{font-style:normal;font-weight:900;color:#0E5A3A}
+.pcr-n{margin-top:14px;font-size:12px;font-weight:700;color:#7D8A82;background:#F6F8F6;border-radius:12px;padding:10px 12px}
+body[data-theme="dark"] .rp2 .rp2-st,body[data-theme="dark"] .rp2-t,body[data-theme="dark"] .rp2-sc,body[data-theme="dark"] .pcr-box,body[data-theme="dark"] .pcr-l button{background:#182226;border-color:#2B363B}
+body[data-theme="dark"] .rp2-sh b,body[data-theme="dark"] .rp2-sc b,body[data-theme="dark"] .rp2-t b,body[data-theme="dark"] .pcr-l b,body[data-theme="dark"] .rp2-pp b{color:#EEF3F0}
+body[data-theme="dark"] .rp2-t em{color:#C3D1CC}body[data-theme="dark"] .rp2-sc.on,body[data-theme="dark"] .rp2-t.on{background:rgba(217,177,102,.08)}
+body[data-theme="dark"] .rp2-pp,body[data-theme="dark"] .pcr-n{background:rgba(255,255,255,.04)}body[data-theme="dark"] .pcr-h b{color:#D9C9A3}
+@media screen and (max-width:760px){.rp2-scopes{grid-template-columns:1fr}.rp2-sc{flex-direction:row;text-align:right;padding:12px}.rp2-sc .ic{width:44px;height:44px}.rp2-sc em{margin-inline-start:auto}
+  .rp2 .rp2-go{flex-direction:column;align-items:stretch}.rp2-go>button{width:100%}.rp2-types{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -10584,7 +10632,7 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var hero='<div class="pc4-hero"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +'<div class="pc4-ht"><div class="pc4-kick">بطاقة مشروع · <b>'+esc(p.code)+'</b>'+(_dxTxt(p.competition_no)?' · منافسة '+esc(_dxTxt(p.competition_no)):'')+'</div><h1>'+esc(p.name||"")+'</h1><div class="pc4-chips">'+chips+'</div></div>'
     +'<div class="pc4-hr"><div class="pc4-rg">'+ring+'</div><img class="pc4-logo" src="'+LOGO_W+'" alt="ريف"></div></div>';
-  var acts='<div class="pc4-bar noprint"><button class="pc3-back" onclick="projRegOpen(true)">'+_pcIco("back")+' سجل المشاريع</button><div class="pc3-acts"><button class="pc3-b pri" onclick="pmOpen(\''+q+'\',true)">'+_pcIco("edit")+' تعديل البيانات</button><button class="pc3-b go2" onclick="projDash(\''+q+'\')">'+_pcIco("dash")+' لوحة المشروع</button></div></div>';
+  var acts='<div class="pc4-bar noprint"><button class="pc3-back" onclick="projRegOpen(true)">'+_pcIco("back")+' سجل المشاريع</button><div class="pc3-acts"><button class="pc3-b pri" onclick="pmOpen(\''+q+'\',true)">'+_pcIco("edit")+' تعديل البيانات</button><button class="pc3-b go2" onclick="projDash(\''+q+'\')">'+_pcIco("dash")+' لوحة المشروع</button><button class="pc3-b rpb" onclick="pcReport(\''+q+'\')">'+_pcIco("print")+' تقرير المشروع</button></div></div>';
   var info='<div class="pc4-info">'+[["sec","القطاع",p.sector],["reg","المنطقة",p.region],["typ","النوع",p.ptype],["ctr","المقاول",p.contractor],["cns","الاستشاري",p.consultant],["pm","مدير المشروع",pmName]].map(function(x){ return '<div><i>'+ico(x[0])+'</i><span>'+x[1]+'</span><b title="'+esc(_dxTxt(x[2])||"")+'">'+_pcV(x[2])+'</b></div>'; }).join("")+'</div>';
   var chg=v-orig, cl=_dxN(p.claims_count), ap=_dxN(p.approved);
   var kp=function(cls,l,val,sub,bar,mk){ return '<div class="pc4-k '+(cls||"")+'"><span>'+l+'</span><b>'+val+'</b><em>'+sub+'</em>'+(bar!=null?'<div class="pc4-bar2"><u style="width:'+(Math.max(0,Math.min(1,bar))*100).toFixed(1)+'%"></u>'+(mk!=null?'<s style="inset-inline-start:'+(Math.max(0,Math.min(1,mk))*100).toFixed(1)+'%"></s>':'')+'</div>':'')+'</div>'; };
@@ -10836,12 +10884,12 @@ function rpGo(type){ try{ mselFlushRP(); }catch(e){} var L=_rpList(); if(!L.leng
   if(type==="program"){ reportBuilder(); setTimeout(function(){ _rpCheck(".rbchk",codes); try{ rbCount(); }catch(e){} try{ rbBuild(); }catch(e){} _rpAfter(); },80); return; } }
 /* شريط التقرير الجاهز: رجوع + ملء الشاشة + تنزيل */
 function _rpAfter(){ setTimeout(function(){ try{ setNavActive("report"); var c=document.querySelector("#answer .acard"); if(!c||c.querySelector(".rp-ready")) return; var d=document.createElement("div"); d.className="rp-ready noprint";
-  d.innerHTML='<button onclick="'+(RP.mode==="p"?'rpOneOpen()':'reportPrepOpen(true)')+'">→ تعديل الاختيار</button><span>التقرير جاهز</span><button class="ic" onclick="wkFullscreen()" title="ملء الشاشة">⛶ ملء الشاشة</button><button class="ok" onclick="printAnswer()">⬇ تنزيل PDF</button>';
+  d.innerHTML='<button onclick="_rpBack()">'+_rpBackLbl()+'</button><span>التقرير جاهز</span><button class="ic" onclick="wkFullscreen()" title="ملء الشاشة">⛶ ملء الشاشة</button><button class="ok" onclick="printAnswer()">⬇ تنزيل PDF</button>';
   c.insertBefore(d,c.firstChild); try{ c.scrollIntoView({block:"start"}); window.scrollTo(0,0); }catch(e){} }catch(e){} },150); }
 function rpPdView(L,ttl){ var save={code:PD.code}; _PD_CAP=[]; _PD_CAPTURE=true; try{ L.forEach(function(p){ try{ projDash(p.code); }catch(e){} }); }finally{ _PD_CAPTURE=false; } PD.code=save.code;
   var pages=_PD_CAP.map(function(h){ return '<div class="rp-pdp">'+h+'</div>'; }).join(""); _PD_CAP=[]; window._RP_PDL=L;
   PRINT_NAME="لوحات المشاريع — "+ttl+" - "+MONTHLBL; ANSWER_TITLE="لوحات المشاريع";
-  show('<div class="rp-pdv"><div class="rp-ready noprint"><button onclick="'+(RP.mode==="p"?'rpOneOpen()':'reportPrepOpen(true)')+'">→ تعديل الاختيار</button><span>لوحات المشاريع · '+esc(ttl)+' · '+ar(L.length)+' لوحة</span><button class="ic" onclick="wkFullscreen()">⛶ ملء الشاشة</button><button class="ok" onclick="pdPrintMany(window._RP_PDL)">⬇ تنزيل PDF</button></div>'+pages+'</div>');
+  show('<div class="rp-pdv"><div class="rp-ready noprint"><button onclick="_rpBack()">'+_rpBackLbl()+'</button><span>لوحات المشاريع · '+esc(ttl)+' · '+ar(L.length)+' لوحة</span><button class="ic" onclick="wkFullscreen()">⛶ ملء الشاشة</button><button class="ok" onclick="pdPrintMany(window._RP_PDL)">⬇ تنزيل PDF</button></div>'+pages+'</div>');
   try{ setNavActive("report"); }catch(e){}
   var W=DXL.W, H=Math.round(W*728/1058); document.querySelectorAll("#answer .rp-pdp .dx-canvas").forEach(function(c){ var host=c.closest(".rp-pdp"); var k=(host.clientWidth||1058)/W; c.classList.add("fit"); c.style.width=W+"px"; c.style.height=H+"px"; c.style.zoom=k.toFixed(4); });
   try{ _cldFillGalleries(); }catch(e){} setTimeout(function(){ document.querySelectorAll("#answer .rp-pdp .dx-canvas").forEach(function(c){ try{ _dxTrim(c); }catch(e){} }); },300); }
@@ -10871,6 +10919,66 @@ function rpOneGo(type){ var p=DATA.find(function(x){ return String(x.code)===RP.
   if(type==="weekly"){ weeklyBuilder(); setTimeout(function(){ _rpCheck(".wkchk",codes); try{ wkCount(); }catch(e){} try{ wkBuild(); }catch(e){} _rpAfter(); },80); return; } }
 try{ window.rpOneOpen=rpOneOpen; window.rpOneFilter=rpOneFilter; window.rpOneGo=rpOneGo; }catch(e){}
 try{ window.reportPrepOpen=reportPrepOpen; window.rpMSet=rpMSet; window.rpGo=rpGo; }catch(e){}
+/* ================= مركز التقارير المبسّط: ٣ خطوات — عن ماذا؟ · أي نوع؟ · عرض ================= */
+var RP2={scope:"all",type:""};
+var RP2_IC={all:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/>',f:'<path d="M4 6h16M7 12h10M10 18h4"/>',p:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  portfolio:'<path d="M4 4h12l4 4v12H4z"/><path d="M8 13h8M8 17h5M8 9h4"/>',general:'<path d="M4 19V5M4 19h16"/><path d="M8 15v-4M12 15V8M16 15v-6"/>',list:'<path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
+  pd:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+  cards:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>',weekly:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',
+  detail:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',gal:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>'};
+/* [المفتاح، الاسم، الوصف، المحتوى، الشكل] */
+var RP2_TYPES={
+  all:[["portfolio","تقرير برنامج ريف","التقرير العام الرسمي للمحفظة كاملة","المؤشرات · حالة الجدول · القطاعات · المتابعة · المالية · التفاصيل","شرائح"],
+       ["general","تقرير عام بالمؤشرات","ملخص المؤشرات وتوزيع المشاريع وجدول تفاصيلها","مؤشرات · رسوم التوزيع · جدول","شرائح"],
+       ["list","قائمة المشاريع","جدول بكل بيانات المشاريع — قابل للتعديل والتصدير Excel","جدول قابل للتصدير","جدول"],
+       ["pd","لوحات المشاريع","صفحة أفقية لكل مشروع بكل مؤشراته","لوحة لكل مشروع","صفحة لكل مشروع"],
+       ["cards","بطاقات المشاريع","بطاقة لكل مشروع بالصور والمؤشرات","صور · مؤشرات · بيانات","بطاقة لكل مشروع"],
+       ["weekly","التقرير الأسبوعي","تقرير المتابعة الأسبوعي للمشاريع","الجدول الزمني · المالية · الجودة · المستجدات","صفحات"]],
+  p:[["detail","التقرير التفصيلي","كل بيانات المشروع في تقرير واحد","الجدول الزمني · المالية والمستخلصات · الجودة · المخاطر · المستجدات","شرائح"],
+     ["gal","التقرير التفصيلي مع الصور","نفس التقرير التفصيلي ومعه معرض صور المشروع","كل ما سبق + معرض الصور","شرائح"],
+     ["pd","لوحة المشروع","صفحة أفقية واحدة بكل المؤشرات — للعرض والاجتماعات","صفحة واحدة","صفحة"],
+     ["cards","بطاقة المشروع","بطاقة مختصرة بالصور والمؤشرات","صور · مؤشرات","بطاقة"],
+     ["weekly","التقرير الأسبوعي","تقرير المتابعة الأسبوعي للمشروع","الجدول الزمني · المالية · الجودة · المستجدات","صفحات"]]};
+RP2_TYPES.f=RP2_TYPES.all.filter(function(x){ return x[0]!=="portfolio"; });
+function _rp2Ic(k,s){ return '<svg viewBox="0 0 24 24" width="'+(s||22)+'" height="'+(s||22)+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(RP2_IC[k]||"")+'</svg>'; }
+function reportPrepOpen(keep){ RP.mode="f"; RP.back=null; try{ setNavActive("report"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=false; ANSWER_TITLE=""; if(!keep){ RP.f={}; }
+  var sc=RP2.scope; if(sc==="p"&&!RP.one) {}
+  var L=_rpList(), any=Object.keys(RP.f).some(function(k){ return (RP.f[k]||[]).length; });
+  var S=[["all","المحفظة كاملة","كل مشاريع البرنامج ("+ar(DATA.length)+" مشروع)"],["f","مجموعة مشاريع","قطاع أو منطقة أو مقاول أو أكثر"],["p","مشروع واحد","تقرير لمشروع محدد"]];
+  var step1='<section class="rp2-st"><div class="rp2-sh"><i>١</i><div><b>التقرير عن إيه؟</b><span>اختر نطاق التقرير</span></div></div><div class="rp2-scopes">'
+    +S.map(function(x){ return '<button class="rp2-sc'+(sc===x[0]?' on':'')+'" onclick="RP2.scope=\''+x[0]+'\';RP2.type=\'\';reportPrepOpen(true)"><span class="ic">'+_rp2Ic(x[0],24)+'</span><b>'+x[1]+'</b><em>'+x[2]+'</em></button>'; }).join("")+'</div>';
+  if(sc==="f"){ step1+='<div class="rp2-sub"><div class="rp-fs">'+RP_FIELDS.map(function(x){ return '<div class="rp-f"><span>'+x[1]+'</span>'+_mselHTML("rp",x[0],x[2],_rpOpts(x[0]),RP.f[x[0]]||[],x[0]==="cat"?(RP.f.cat||[]).map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "):"")+'</div>'; }).join("")+'</div>'
+      +'<div class="rp-sum"><b id="rpN">'+ar(L.length)+' مشروع</b><span>'+esc(_rpTitle())+'</span>'+(any?'<button class="hb-clr" onclick="RP.f={};reportPrepOpen(true)">✕ مسح الفلاتر</button>':'')+'</div></div>'; }
+  if(sc==="p"){ var p=RP.one?DATA.find(function(x){ return String(x.code)===RP.one; }):null;
+    if(p){ var r=analyzeProject(p), k=_dxCatOf(r); step1+='<div class="rp2-sub"><div class="rp2-pp"><em>'+esc(p.code)+'</em><div><b>'+esc(p.name||"")+'</b><span>'+esc(p.sector||"")+' · '+esc(p.region||"")+' · <i style="color:'+DX_CAT[k].c+'">'+DX_CAT[k].l+'</i> · الإنجاز '+_dxPct(r.a||0)+'</span></div><button class="hb-clr" onclick="RP.one=null;reportPrepOpen(true)">تغيير المشروع</button></div></div>'; }
+    else { var list=DATA.slice().sort(function(a,b){ return String(a.code).localeCompare(String(b.code),"en",{numeric:true}); }).map(function(x){ return '<button class="rp1-it" data-q="'+esc(_normAr([x.code,x.name,x.sector,x.region,x.contractor].join(" ")).toLowerCase())+'" onclick="RP.one=\''+esc(String(x.code)).replace(/'/g,"\\'")+'\';reportPrepOpen(true)"><em>'+esc(x.code)+'</em><span><b>'+esc(x.name||"")+'</b><small>'+esc(x.sector||"")+' · '+esc(x.region||"")+'</small></span></button>'; }).join("");
+      step1+='<div class="rp2-sub"><div class="rp1-s"><input id="rp1Q" type="search" placeholder="ابحث بالاسم أو الكود أو المنطقة أو المقاول…" oninput="rpOneFilter(this.value)" autocomplete="off"><span id="rp1N">'+ar(DATA.length)+' مشروع</span></div><div class="rp1-l" id="rp1L">'+list+'</div></div>'; } }
+  step1+='</section>';
+  var ready=(sc==="p"?!!RP.one:L.length>0), T=RP2_TYPES[sc];
+  var step2='<section class="rp2-st'+(ready?'':' dis')+'"><div class="rp2-sh"><i>٢</i><div><b>نوع التقرير</b><span>'+(ready?'اختر الشكل المناسب':(sc==="p"?'اختر المشروع أولاً':'لا توجد مشاريع مطابقة للفلاتر'))+'</span></div></div><div class="rp2-types">'
+    +T.map(function(x){ return '<button class="rp2-t'+(RP2.type===x[0]?' on':'')+'" '+(ready?'':'disabled ')+'onclick="RP2.type=\''+x[0]+'\';reportPrepOpen(true)"><span class="ic">'+_rp2Ic(x[0])+'</span><span class="tx"><b>'+x[1]+'</b><em>'+x[2]+'</em><small>'+x[3]+'</small></span><i class="fm">'+x[4]+'</i></button>'; }).join("")+'</div></section>';
+  var tt=RP2.type?T.filter(function(x){ return x[0]===RP2.type; })[0]:null;
+  var who=sc==="all"?"المحفظة كاملة":sc==="p"?(function(){ var p=DATA.find(function(x){ return String(x.code)===RP.one; }); return p?(p.alias||p.name):""; })():(_rpTitle()+" · "+ar(L.length)+" مشروع");
+  var step3='<section class="rp2-go'+(ready&&tt?'':' dis')+'"><div class="rp2-sh"><i>٣</i><div><b>'+(tt?esc(tt[1]):'عرض التقرير')+'</b><span>'+(tt?esc(who):'اختر نوع التقرير لتفعيل العرض')+'</span></div></div>'
+    +'<button '+(ready&&tt?'':'disabled ')+'onclick="rp2Go()">عرض التقرير ←</button></section>';
+  var html='<div class="hb-page rp rp2"><div class="hb-head"><div><div class="hb-kick">التقارير</div><h1>إعداد تقرير</h1><div class="hb-sub">ثلاث خطوات: اختر النطاق، ثم نوع التقرير، ثم اعرضه — ومن صفحة التقرير تطبع أو تنزّل PDF</div></div></div>'
+    +step1+step2+step3+'<div class="rp2-adv"><button onclick="reportBuilder()">تقرير مخصّص متقدم — اختيار المشاريع والأقسام يدوياً ←</button></div></div>';
+  show(html); }
+function rp2Go(){ var t=RP2.type; if(!t) return; if(RP2.scope==="p"){ RP.mode="p"; rpOneGo(t); return; } if(RP2.scope==="all") RP.f={}; RP.mode="f"; rpGo(t); }
+function rpOneOpen(code){ RP2.scope="p"; if(code!=null) RP.one=String(code); reportPrepOpen(true); }
+/* الرجوع من التقرير: للبطاقة إن فُتح منها، وإلا لصفحة التقارير بنفس الاختيار */
+function _rpBack(){ if(RP.back){ var c=RP.back; RP.back=null; projCard(c); return; } reportPrepOpen(true); }
+function _rpBackLbl(){ return RP.back?"→ العودة لبطاقة المشروع":"→ تعديل الاختيار"; }
+/* من بطاقة المشروع: كل أنواع تقرير المشروع */
+function pcReport(code){ var p=DATA.find(function(x){ return String(x.code)===String(code); }); if(!p) return; var old=document.getElementById("pcRpM"); if(old) old.remove();
+  var m=document.createElement("div"); m.id="pcRpM"; m.setAttribute("dir","rtl"); m.className="noprint";
+  m.innerHTML='<div class="pcr-box"><button class="pcr-x" onclick="document.getElementById(\'pcRpM\').remove()">✕</button><div class="pcr-h"><b>تقرير المشروع</b><span>'+esc(p.code)+' · '+esc(p.alias||p.name)+'</span></div>'
+    +'<div class="pcr-l">'+RP2_TYPES.p.map(function(x){ return '<button onclick="pcReportGo(\''+esc(String(p.code)).replace(/'/g,"\\'")+'\',\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0])+'</span><span class="tx"><b>'+x[1]+'</b><em>'+x[2]+'</em></span><i>←</i></button>'; }).join("")+'</div>'
+    +'<div class="pcr-n">يُفتح التقرير للاستعراض، ومنه تطبع أو تنزّل PDF، وزر «العودة لبطاقة المشروع» يرجعك هنا.</div></div>';
+  m.addEventListener("click",function(e){ if(e.target===m) m.remove(); }); document.body.appendChild(m); }
+function pcReportGo(code,t){ var m=document.getElementById("pcRpM"); if(m) m.remove(); RP.one=String(code); RP2.scope="p"; RP2.type=t; RP.mode="p"; RP.back=String(code); rpOneGo(t); }
+try{ window.reportPrepOpen=reportPrepOpen; window.rp2Go=rp2Go; window.rpOneOpen=rpOneOpen; window._rpBack=_rpBack; window.pcReport=pcReport; window.pcReportGo=pcReportGo; }catch(e){}
+
 function _rpModes(on){ return '<div class="rp-modes noprint">'+(on==="f"?'<div class="rp-mode on"><b>تقرير حسب الفلاتر</b><span>اختر قطاعاً أو منطقة أو مقاولاً أو أكثر من اختيار</span></div>':'<button class="rp-mode" onclick="reportPrepOpen(true)"><b>تقرير حسب الفلاتر</b><span>← الرجوع لاختيار المشاريع بالفلاتر</span></button>')
   +(on==="b"?'<div class="rp-mode on"><b>بناء تقرير من البداية</b><span>اختيار المشاريع والأقسام يدوياً</span></div>':'<button class="rp-mode" onclick="reportBuilder()"><b>بناء تقرير من البداية</b><span>اختيار المشاريع والأقسام يدوياً ←</span></button>')+(on==="p"?'<div class="rp-mode on"><b>تقرير مشروع واحد</b><span>ابحث عن مشروع واختر نوع تقريره</span></div>':'<button class="rp-mode" onclick="rpOneOpen()"><b>تقرير مشروع واحد</b><span>ابحث عن مشروع واختر نوع تقريره ←</span></button>')+'</div>'; }
 try{ (function(){ var orig=window.reportBuilder; if(typeof orig!=="function"||orig._rp) return;
