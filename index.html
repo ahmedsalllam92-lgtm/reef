@@ -12384,7 +12384,7 @@ function _lwScene(k,R){
         +'<div class="lw-sr2">'+(t.ok?'<div class="lw-tl"><div><span>الزمن المنقضي</span><i><u class="g" style="--w:'+_lwP(Math.min(1,t.frac))+'"></u></i><b>'+_lwP(t.frac)+'</b></div><div><span>الإنجاز الفعلي</span><i><u style="--w:'+_lwP(Math.min(1,x.a))+'"></u></i><b>'+_lwP(x.a)+'</b></div></div>':'')
           +(st?'<div class="lw-st"><span>الموقف الحالي</span><p>'+esc(String(st).slice(0,180))+'</p></div>':'')
           +'<div class="lw-ct">المقاول: <b>'+esc(_dxTxt(p.contractor)||"—")+'</b></div></div></div>'
-      +'<div class="lw-q">'+C.map(function(y,i){ return '<span class="'+(i===j?'on':(i<j?'past':''))+'"'+(i===j&&!LW.paused?' style="--qd:'+(LW_SPOT_MS/1000)+'s"':'')+'><i>'+ar(i+1)+'</i>'+esc(String(y.p.alias||y.p.name).slice(0,34))+'<b>'+_lwP(y.a)+'</b></span>'; }).join("")+'</div></div>'; }
+      +'<div class="lw-q">'+C.map(function(y,i){ return '<span class="'+(i===j?'on':(i<j?'past':''))+'"'+(i===j&&!LW.paused?' style="--qd:'+(LW_SPOT_MS/1000)+'s"':'')+'><i>'+ar(i+1)+'</i>'+esc(y.p.alias?String(y.p.alias).slice(0,30):(y.p.code+' · '+String(y.p.region||y.p.sector||"").slice(0,22)))+'<b>'+_lwP(y.a)+'</b></span>'; }).join("")+'</div></div>'; }
   if(k==="con"){ var CN=R.filter(function(x){ return /إنشاء/.test(String(x.p.ptype||"")); }), cw=_wProg(CN,false), done=CN.filter(function(x){ return x.fin; }), act=CN.filter(function(x){ return !x.fin&&!x.r.stopped; }).sort(function(a,b){ return b.a-a.a; });
     var cv=CN.reduce(function(a,x){return a+x.v;},0), b75=act.filter(function(x){ return x.a>=0.75; }).length;
     var tile=function(v,l,c){ return '<div style="--c:'+c+'"><b>'+v+'</b><span>'+l+'</span></div>'; };
