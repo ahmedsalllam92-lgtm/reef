@@ -7384,6 +7384,17 @@ body[data-theme="dark"] .gd-ctl,body[data-theme="dark"] .gd-tocp{background:#fff
 
 @media print{ body.gd-print .gd-cvmeta{grid-template-columns:repeat(4,minmax(0,1fr))!important} body.gd-print .gd-cvtop{padding-top:14mm!important} }
 .gd-cvhd{margin-bottom:18px}.gd-cvmain{margin-top:auto;padding-top:10px}
+
+/* عناوين الدليل أوضح */
+.gd-h2{display:flex!important;align-items:center;gap:12px!important;margin:26px 0 12px!important;padding:10px 14px!important;border-radius:10px;background:linear-gradient(90deg,#EEF6F1,#F8FBF9 70%,transparent);border-inline-start:5px solid #0E5A3A;font-size:calc(var(--fs) + 4px)!important;font-weight:900!important;color:#0B3D27!important;break-after:avoid}
+.gd-h2 span{flex:none;font-size:13px!important;font-weight:900!important;color:#fff!important;background:#0E5A3A!important;border:0!important;border-radius:7px!important;padding:3px 10px!important;direction:ltr}
+.gd-h3{display:flex!important;align-items:baseline;gap:10px;margin:20px 0 8px!important;padding:0 0 6px!important;border-inline-start:0!important;border-bottom:1.5px solid #E7DDC2;font-size:calc(var(--fs) + 2px)!important;font-weight:900!important;color:#14241B!important;break-after:avoid}
+.gd-h3 span{flex:none;font-size:12.5px!important;font-weight:900!important;color:#8C6D3A!important;background:#FBF5E8;border:1px solid #EADFC2;border-radius:6px;padding:1px 8px;margin:0!important;direction:ltr}
+@media print{
+  body.gd-print .gd-h2{font-size:14.5pt!important;padding:6px 10px!important;margin:16px 0 8px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-h2 span{font-size:10.5pt!important;padding:1px 8px!important;background:#0E5A3A!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-h3{font-size:12.5pt!important;margin:12px 0 6px!important}body.gd-print .gd-h3 span{font-size:10pt!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
