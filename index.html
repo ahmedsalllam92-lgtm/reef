@@ -7024,6 +7024,23 @@ body[data-theme="dark"] .pmp-pg{color:#14241B}
 
 .pmq-lsel optgroup{font-weight:800;color:#9A7A3E}.pmq-lsel option{color:#14241B;font-weight:600}
 .pmq>.pmq-lsel{border-style:dashed;border-color:#0E6B45;color:#0E6B45;font-weight:800}
+
+/* الخريطة الشاملة: لون موحّد + شريط مراحل هادئ */
+.pmm-rib{display:flex!important;gap:0!important;position:relative;padding:4px 0 2px}
+.pmm-rib:before{content:"";position:absolute;top:21px;inset-inline:6%;height:2px;background:linear-gradient(90deg,#C9A961,#0E5A3A);opacity:.35}
+.pmm-rib div{flex:1!important;min-width:0!important;clip-path:none!important;background:none!important;border-radius:0!important;color:#14241B!important;padding:0 4px!important;display:flex!important;flex-direction:column;align-items:center;gap:6px!important;text-align:center;animation:pmIn .6s ease both!important}
+.pmm-rib div:nth-child(2){animation-delay:.05s!important}.pmm-rib div:nth-child(3){animation-delay:.1s!important}.pmm-rib div:nth-child(4){animation-delay:.15s!important}.pmm-rib div:nth-child(5){animation-delay:.2s!important}.pmm-rib div:nth-child(6){animation-delay:.25s!important}.pmm-rib div:nth-child(7){animation-delay:.3s!important}.pmm-rib div:nth-child(8){animation-delay:.35s!important}
+.pmm-rib b{position:relative;z-index:1;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid #0E5A3A;color:#0E5A3A!important;font-size:12.5px!important;font-weight:900;opacity:1!important;box-shadow:0 6px 14px -10px rgba(11,58,34,.7)}
+.pmm-rib div:first-child b,.pmm-rib div:last-child b{background:#0E5A3A;color:#fff!important;border-color:#0E5A3A}
+.pmm-rib span{font-size:11.5px!important;font-weight:800;color:#3E4B44;white-space:normal!important;line-height:1.4;overflow:visible!important}
+body[data-theme="dark"] .pmm-rib b{background:#141D21;border-color:#3FB27A;color:#A9E2C0!important}body[data-theme="dark"] .pmm-rib div:first-child b,body[data-theme="dark"] .pmm-rib div:last-child b{background:#1E6B45;color:#fff!important}body[data-theme="dark"] .pmm-rib span{color:#C9D6CF}
+/* رؤوس الأعمدة بدرجتين من الأخضر مع لمسة ذهبية */
+.pmm-ch{background:linear-gradient(150deg,#14603D,#0B3A22)!important}
+.pmm-ch:before{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;background:linear-gradient(90deg,#B8954F,#F0D9A0,#B8954F)}
+.pmm-step i{color:#0E5A3A!important;border-color:#CFE0D5!important}
+.pmm-step:hover i,.pmm-step.done i{background:#0E5A3A!important;color:#fff!important;border-color:#0E5A3A!important}
+
+.pmm-ch .no{display:none!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15549,7 +15566,7 @@ function _pmMasterHTML(){ var M=pmData().master, ed=PMX.edit, g=0, si=0, rowIdx=
       si++; rowIdx++; });
     html+='</div>'; });
   return '<div class="pms" id="pmStage">'+head+html+'<div class="pms-play" id="pmCap"></div></div>'; }
-function _pmStC(i){ return ["#0E6B45","#2F7D6B","#7A8F3C","#B8954F","#3B6E8F","#5B5F97","#8C5A3C","#14402B"][i%8]; }
+function _pmStC(i){ return "#0E5A3A"; }
 function pmMEdit(kind,ix,el){ var M=pmData().master, v=(el.textContent||"").replace(/\s+/g," ").trim(); if(!v) return; _pmSnap();
   if(kind==="title") M.title=v; else if(kind==="track") M.tracks[ix[0]].name=v; else if(kind==="sname") M.tracks[ix[0]].stages[ix[1]].name=v; else if(kind==="ssub") M.tracks[ix[0]].stages[ix[1]].sub=v; else if(kind==="step") M.tracks[ix[0]].stages[ix[1]].steps[ix[2]]=v; pmSave(); }
 function pmMStep(ti,sj,k,dir){ var S=pmData().master.tracks[ti].stages[sj].steps; _pmSnap(); if(dir===0){ if(!confirm("حذف الخطوة «"+S[k]+"»؟")){ PMX.undo.pop(); return; } S.splice(k,1); } else { var j=k+dir; if(j<0||j>=S.length){ PMX.undo.pop(); return; } var t=S[k]; S[k]=S[j]; S[j]=t; } pmSave(); pmRender(); }
