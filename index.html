@@ -7021,6 +7021,9 @@ body[data-theme="dark"] .pmp-pg{color:#14241B}
 
 .pmm-ch .no{left:16px!important;right:auto!important;inset-inline-end:auto!important;top:10px!important;font-size:26px!important;opacity:.35!important}
 .pmm-ch .ic{bottom:12px;left:14px}
+
+.pmq-lsel optgroup{font-weight:800;color:#9A7A3E}.pmq-lsel option{color:#14241B;font-weight:600}
+.pmq>.pmq-lsel{border-style:dashed;border-color:#0E6B45;color:#0E6B45;font-weight:800}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15653,7 +15656,7 @@ function pmOpReset(){ var op=_pmOp(), n=parseInt(String(op.id).replace(/^op/,"")
 function _pmInspHTML(op){ var id=PMX.sel, nd=id?op.nodes[_pmIdx(op,id)]:null;
   if(!nd){ return '<div class="pmq"><h3>إعدادات العملية</h3><p class="pmq-h">اضغط أي خطوة لتعديلها، أو اسحبها لتغيير ترتيبها أو جهتها.</p>'
     +'<div class="pmq-bt"><button class="pmb pri" onclick="pmAddEnd(\'task\')">'+_pmIc("plus",14)+' خطوة</button><button class="pmb" onclick="pmAddEnd(\'dec\')">'+_pmIc("plus",14)+' قرار</button></div>'
-    +'<label>الجهات المسؤولة (الصفوف)</label><div class="pmq-lanes">'+op.lanes.map(function(nm,i){ return '<div><input value="'+esc(nm)+'" onchange="pmLaneSet('+i+',this)"><button onclick="pmLaneMove('+i+',-1)" title="أعلى">▲</button><button onclick="pmLaneMove('+i+',1)" title="أسفل">▼</button><button class="x" onclick="pmLaneDel('+i+')" title="حذف">×</button></div>'; }).join("")+'</div><button class="pmq-add" onclick="pmLaneAdd()">+ جهة</button>'
+    +'<label>الجهات المسؤولة (الصفوف)</label><div class="pmq-lanes">'+op.lanes.map(function(nm,i){ return '<div><input value="'+esc(nm)+'" onchange="pmLaneSet('+i+',this)"><button onclick="pmLaneMove('+i+',-1)" title="أعلى">▲</button><button onclick="pmLaneMove('+i+',1)" title="أسفل">▼</button><button class="x" onclick="pmLaneDel('+i+')" title="حذف">×</button></div>'; }).join("")+'</div>'+_pmLaneSel(op,"pmLaneAddSel(this)",-1)+''
     +'<div class="pmq-foot"><button class="pmb" onclick="pmOpReset()">'+_pmIc("reset",14)+' استعادة الأصل</button></div></div>'; }
   var K=[["start","بداية"],["task","خطوة"],["dec","قرار"],["end","نهاية"]], i=_pmIdx(op,id);
   var outs=op.links.map(function(l,li){ return l.f===id?li:-1; }).filter(function(x){ return x>=0; });
@@ -15661,7 +15664,7 @@ function _pmInspHTML(op){ var id=PMX.sel, nd=id?op.nodes[_pmIdx(op,id)]:null;
   return '<div class="pmq"><div class="pmq-top"><h3>تحرير الخطوة</h3><button class="pmb" onclick="PMX.sel=null;pmRender()">إغلاق</button></div>'
     +'<label>النص</label><textarea id="pmTxt" rows="3" oninput="pmTxtLive(\''+id+'\',this)">'+esc(nd.t)+'</textarea>'
     +'<div class="pmq-2"><div><label>النوع</label><select onchange="pmSet(\''+id+'\',\'k\',this.value)">'+K.map(function(k){ return '<option value="'+k[0]+'"'+(nd.k===k[0]?" selected":"")+'>'+k[1]+'</option>'; }).join("")+'</select></div>'
-    +'<div><label>الجهة</label><select onchange="pmSet(\''+id+'\',\'lane\',this.value)">'+op.lanes.map(function(nm,j){ return '<option value="'+j+'"'+((nd.lane|0)===j?" selected":"")+'>'+esc(nm)+'</option>'; }).join("")+'</select></div></div>'
+    +'<div><label>الجهة</label>'+_pmLaneSel(op,"pmLaneChoose(\'"+id+"\',this)",nd.lane|0)+'</div></div>'
     +'<div class="pmq-bt"><button class="pmb" onclick="pmMove(\''+id+'\',-1)" '+(i?'':'disabled')+'>‹ تقديم</button><button class="pmb" onclick="pmMove(\''+id+'\',1)" '+(i<op.nodes.length-1?'':'disabled')+'>تأخير ›</button><button class="pmb" onclick="pmAddAfter(\''+id+'\',\'task\')">+ خطوة بعدها</button></div>'
     +'<label>ينتقل إلى</label><div class="pmq-links">'+(outs.length?outs.map(function(li){ var l=op.links[li]; return '<div class="pmq-l '+l.k+'"><select onchange="pmLinkSet('+li+',\'t\',this.value)">'+opt(l.t)+'</select><select onchange="pmLinkSet('+li+',\'k\',this.value)"><option value="n"'+(l.k==="n"?" selected":"")+'>انتقال</option><option value="y"'+(l.k==="y"?" selected":"")+'>نعم</option><option value="no"'+(l.k==="no"?" selected":"")+'>لا / إعادة</option></select><button class="x" onclick="pmLinkDel('+li+')">×</button>'+(l.k==="no"||l.k==="y"?'<input value="'+esc(l.lb||(l.k==="y"?"نعم":"لا"))+'" placeholder="نص السهم" onchange="pmLinkSet('+li+',\'lb\',this.value)">':'')+'</div>'; }).join(""):'<p class="pmq-h">لا توجد روابط صادرة.</p>')+'</div><button class="pmq-add" onclick="pmLinkAdd(\''+id+'\')">+ رابط</button>'
     +'<div class="pmq-foot"><button class="pmb" onclick="pmDup(\''+id+'\')">نسخ</button><button class="pmb danger" onclick="pmDel(\''+id+'\')">حذف الخطوة</button></div></div>'; }
@@ -15816,6 +15819,20 @@ function _pmPrintFit(){ document.querySelectorAll(".pmp-fit").forEach(function(f
 function pmPrintNow(t){ PRINT_NAME=(t||"خريطة العمليات")+" - "+MONTHLBL; document.body.classList.add("pm-printall"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("pm-printall"); PRINT_NAME=""; },1500); }
 function pmPrint(ev){ pmPrintMenu(ev); }
 try{ ["pmPrintMenu","pmPrintGo","pmPrintNow","pmGoOp","pmPrint"].forEach(function(k){ window[k]=eval(k); }); }catch(e){}
+/* قائمة الجهات: جهات العملية + كل الجهات المدرجة في الخريطة + جهة جديدة */
+function _pmNormL(s){ return String(s||"").replace(/\s+/g," ").trim(); }
+function _pmAllLanes(){ var seen={}, out=[]; pmData().phases.forEach(function(ph){ ph.ops.forEach(function(o){ (o.lanes||[]).forEach(function(l){ var k=_pmNormL(l); if(k&&!seen[k]){ seen[k]=1; out.push(k); } }); }); }); return out.sort(function(a,b){ return a.localeCompare(b,"ar"); }); }
+function _pmLaneSel(op,handler,cur){ var mine={}; op.lanes.forEach(function(l){ mine[_pmNormL(l)]=1; }); var other=_pmAllLanes().filter(function(l){ return !mine[l]; });
+  return '<select class="pmq-lsel" onchange="'+handler+'">'+(cur<0?'<option value="" selected>+ إضافة جهة…</option>':'')
+    +(cur>=0?'<optgroup label="جهات هذه العملية">'+op.lanes.map(function(nm,j){ return '<option value="i:'+j+'"'+(cur===j?" selected":"")+'>'+esc(nm)+'</option>'; }).join("")+'</optgroup>':'')
+    +(other.length?'<optgroup label="جهات أخرى في الخريطة ('+other.length+')">'+other.map(function(nm){ return '<option value="n:'+esc(nm)+'">'+esc(nm)+'</option>'; }).join("")+'</optgroup>':'')
+    +'<option value="new">＋ جهة جديدة (اكتب اسمها)…</option></select>'; }
+function _pmLaneResolve(op,val){ if(!val) return -1; if(val.indexOf("i:")===0) return +val.slice(2); var nm=val.indexOf("n:")===0?val.slice(2):null;
+  if(val==="new"){ nm=prompt("اسم الجهة الجديدة:",""); if(!nm) return -1; } nm=_pmNormL(nm); if(!nm) return -1;
+  var j=op.lanes.map(_pmNormL).indexOf(nm); if(j>=0) return j; op.lanes.push(nm); return op.lanes.length-1; }
+function pmLaneChoose(id,sel){ var op=_pmOp(), nd=op.nodes[_pmIdx(op,id)]; if(!nd) return; _pmSnap(); var j=_pmLaneResolve(op,sel.value); if(j<0){ PMX.undo.pop(); pmRender(); return; } nd.lane=j; pmSave(); pmRender(); }
+function pmLaneAddSel(sel){ var op=_pmOp(); _pmSnap(); var n0=op.lanes.length, j=_pmLaneResolve(op,sel.value); if(j<0||op.lanes.length===n0){ PMX.undo.pop(); pmRender(); return; } pmSave(); pmRender(); }
+try{ window.pmLaneChoose=pmLaneChoose; window.pmLaneAddSel=pmLaneAddSel; }catch(e){}
 /* ===================== منشئ النماذج الإجرائية الجديدة (Visio) ===================== */
 var OPS_CUSTOM=null, OPS_B={idx:-1,connect:false,del:false,from:null};
 function _opsLoadCustom(){ return _opsDBx().then(function(db){ return new Promise(function(res){ var rq=db.transaction("tpl","readonly").objectStore("tpl").get("ops_custom"); rq.onsuccess=function(){ OPS_CUSTOM=(rq.result&&rq.result.data)||[]; res(); }; rq.onerror=function(){ OPS_CUSTOM=[]; res(); }; }); }).catch(function(){ OPS_CUSTOM=[]; }); }
