@@ -50,6 +50,18 @@ export default async (req) => {
       if (d.since && String(d.since) === String(meta.at)) return J(200, { ok: true, same: true, at: meta.at });
       const pf = await P.get("pf", { type: "json" }); return J(200, { ok: true, pf });
     }
+    if (d.action === "pm_put") {
+      const M = d.d; if (!M || typeof M !== "object" || !Array.isArray(M.phases)) return J(400, { error: "بيانات الخريطة غير صالحة" });
+      const body = JSON.stringify(M); if (body.length > 4000000) return J(413, { error: "حجم الخريطة كبير" });
+      const at = String(d.at || new Date().toISOString()); if (isNaN(Date.parse(at))) return J(400, { error: "تاريخ غير صالح" });
+      const P = pfStore(); const m = await P.get("pm_meta", { type: "json" });
+      if (m && !d.force && Date.parse(m.at) >= Date.parse(at)) return J(200, { ok: true, kept: true, at: m.at });
+      const hk = "pmh_" + Date.now(); await P.setJSON(hk, { at, by: clean(d.by, 60), d: M });
+      const hist = ((m && m.hist) || []).concat([{ k: hk, at, by: clean(d.by, 60) }]); while (hist.length > 30) { const old = hist.shift(); try { await P.delete(old.k); } catch (e) {} }
+      await P.setJSON("pm", { at, d: M }); await P.setJSON("pm_meta", { at, hist }); return J(200, { ok: true, at });
+    }
+    if (d.action === "pm_hist") { const m = await pfStore().get("pm_meta", { type: "json" }); return J(200, { ok: true, list: ((m && m.hist) || []).slice().reverse() }); }
+    if (d.action === "pm_ver") { const k = clean(d.k, 40); if (!/^pmh_\d+$/.test(k)) return J(400, { error: "نسخة غير صالحة" }); const v = await pfStore().get(k, { type: "json" }); return J(200, { ok: !!v, d: v && v.d, at: v && v.at }); }
     if (d.action === "pm_get") {
       const P = pfStore(); const m = await P.get("pm_meta", { type: "json" });
       if (!m) return J(200, { ok: true, none: true });
@@ -78,14 +90,6 @@ export default async (req) => {
       if (meta && !d.force && Date.parse(meta.at) >= Date.parse(pf.at)) return J(200, { ok: true, kept: true, at: meta.at });
       const rec = { name: clean(pf.name, 160), sheet: clean(pf.sheet, 80), at: String(pf.at || new Date().toISOString()), data: pf.data, cancelled: Array.isArray(pf.cancelled) ? pf.cancelled.slice(0, 2000) : [] };
       await P.setJSON("pf", rec); await P.setJSON("meta", { at: rec.at, name: rec.name, n: rec.data.length }); return J(200, { ok: true, at: rec.at });
-    }
-    if (d.action === "pm_put") {
-      const M = d.d; if (!M || typeof M !== "object" || !Array.isArray(M.phases)) return J(400, { error: "بيانات الخريطة غير صالحة" });
-      if (JSON.stringify(M).length > 4000000) return J(413, { error: "حجم الخريطة كبير" });
-      const at = String(d.at || new Date().toISOString()); if (isNaN(Date.parse(at))) return J(400, { error: "تاريخ غير صالح" });
-      const P = pfStore(); const m = await P.get("pm_meta", { type: "json" });
-      if (m && !d.force && Date.parse(m.at) >= Date.parse(at)) return J(200, { ok: true, kept: true, at: m.at });
-      await P.setJSON("pm", { at, d: M }); await P.setJSON("pm_meta", { at }); return J(200, { ok: true, at });
     }
     if (d.action === "pe_put") {
       const E = d.edits; if (!E || typeof E !== "object" || Array.isArray(E)) return J(400, { error: "تعديلات غير صالحة" });
