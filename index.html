@@ -6967,6 +6967,60 @@ body[data-theme="dark"] .pmh-box{background:#141D21;color:#E3ECE6}body[data-them
 /* روابط المشاركة: الخريطة للعرض فقط */
 html.ro [onclick*="pmEdit"],html.ro [onclick*="pmHistory"],html.ro .pmx-hint,html.ro .pmx-insp,html.ro .pmn-tb,html.ro .pmm-cm,html.ro .pmm-se,html.ro .pmm-add,html.ro .pmo-tools,html.ro .pmsx-it.add,html.ro .pmt.add{display:none!important}
 html.ro .pmx [data-ed]{outline:none!important;pointer-events:none}
+
+/* ===== خريطة العمليات v3: تبويبات، أيقونات، روابط، طباعة ===== */
+.pmt .pmt-n{font-weight:900;color:inherit}
+.pmm-rib div{flex:1!important;min-width:0!important}
+.pmm-ch .ic{position:absolute;left:14px;bottom:12px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);z-index:1}
+.pmm-ch .no{left:auto!important;right:auto;top:8px;inset-inline-end:14px;font-size:34px!important;opacity:.18!important}
+.pmm-ch{padding-inline-end:70px!important}
+.pmm-th em{font-style:normal;font-size:12px;font-weight:800;color:#9A7A3E;background:#FBF5E8;border:1px solid #EADFC2;border-radius:99px;padding:2px 10px}
+.pmm-steps{counter-reset:none}
+.pmm-step:nth-child(even){background:color-mix(in srgb,var(--c) 3.5%,#fff)}
+.pmm-step i{background:linear-gradient(135deg,#fff,color-mix(in srgb,var(--c) 10%,#fff))!important}
+.pmm-step.lk{cursor:pointer}.pmm-step .go{flex:none;align-self:center;font-style:normal;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 10%,#fff);opacity:.55;transition:.2s}
+.pmm-step.lk:hover .go{opacity:1;background:var(--c);color:#fff}.pmm-step.lk:hover span{color:var(--c)}
+.pmm-ht p b{color:#0E6B45}
+body[data-theme="dark"] .pmm-step:nth-child(even){background:rgba(255,255,255,.02)}body[data-theme="dark"] .pmm-step i{background:#141D21!important}body[data-theme="dark"] .pmm-th em{background:rgba(201,169,97,.1);border-color:rgba(201,169,97,.3);color:#E9D29A}
+/* قائمة الطباعة */
+.pmpm{position:absolute;z-index:100050;width:290px;background:#fff;border:1px solid #E3E8E3;border-radius:14px;padding:6px;box-shadow:0 24px 50px -20px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:4px}
+.pmpm button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:start;border:0;background:none;border-radius:10px;padding:8px 10px;font:inherit;cursor:pointer}.pmpm button:hover{background:#F2F7F3}
+.pmpm b{font-size:13px;color:#14241B}.pmpm span{font-size:11.5px;color:#6B7A72}.pmpm .all{background:#FBF5E8}.pmpm .all b{color:#7A5C22}
+body[data-theme="dark"] .pmpm{background:#141D21;border-color:#2B363B}body[data-theme="dark"] .pmpm b{color:#E3ECE6}body[data-theme="dark"] .pmpm button:hover{background:rgba(255,255,255,.05)}
+/* معاينة الطباعة */
+.pmp-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:12px 16px;margin-bottom:16px;border-radius:14px;background:#0B3A22;color:#fff}.pmp-bar>div{flex:1;display:flex;flex-direction:column}.pmp-bar span{font-size:12px;color:#BFE3CD}
+.pmp-pages{display:flex;flex-direction:column;align-items:center;gap:18px;overflow-x:auto;padding-bottom:20px}
+.pmp-pg{position:relative;width:1062px;min-height:735px;flex:none;background:#fff;border:1px solid #E3E8E3;box-shadow:0 18px 40px -26px rgba(0,0,0,.4);padding:22px 26px 40px;display:flex;flex-direction:column;gap:12px;color:#14241B;overflow:hidden}
+.pmp-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:3px solid #0B3A22;position:relative}.pmp-h:after{content:"";position:absolute;bottom:-3px;inset-inline-start:0;width:90px;height:3px;background:#C9A961}
+.pmp-h span{font-size:12px;font-weight:800;color:#9A7A3E}.pmp-h h2{margin:2px 0 0;font-size:21px;font-weight:900;color:#0B3D27}.pmp-h img{height:44px}
+.pmp-fit{position:relative;width:100%;overflow:hidden}
+.pmp-fit .pmc{background:transparent}
+.pmp-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px}.pmp-info>div{border:1px solid #E3E8E3;border-inline-start:4px solid #0E6B45;border-radius:10px;padding:8px 12px;background:#F7FAF8}.pmp-info>div+div{border-inline-start-color:#C9A961}
+.pmp-info b{font-size:12px;color:#0B3D27}.pmp-info p{margin:3px 0 0;font-size:11px;line-height:1.75;color:#3E4B44}
+.pmp-f{position:absolute;bottom:12px;inset-inline:26px;display:flex;justify-content:space-between;font-size:10.5px;color:#7D8A82;border-top:1px solid #E7ECE8;padding-top:6px}
+.pmp-cv{background:radial-gradient(circle at 30% 18%,#3D5A4A,#1F2D24 72%);color:#fff;align-items:center;justify-content:center;text-align:center;gap:10px}
+.pmp-cvc i{position:absolute;width:60px;height:60px;border:2px solid #C9A961}.pmp-cvc i:nth-child(1){top:26px;right:26px;border-left:0;border-bottom:0}.pmp-cvc i:nth-child(2){top:26px;left:26px;border-right:0;border-bottom:0}.pmp-cvc i:nth-child(3){bottom:26px;right:26px;border-left:0;border-top:0}.pmp-cvc i:nth-child(4){bottom:26px;left:26px;border-right:0;border-top:0}
+.pmp-cv img{height:76px;margin-bottom:10px}.pmp-cv span{font-size:15px;font-weight:800;color:#E9D29A}.pmp-cv h1{margin:0;font-size:40px;font-weight:900}.pmp-cv p{margin:0;font-size:15px;color:#CFE0D5}.pmp-cv em{font-style:normal;margin-top:10px;background:linear-gradient(135deg,#E9D29A,#B8954F);color:#14201A;font-weight:800;border-radius:99px;padding:6px 20px}
+.pmp-div{justify-content:center;background:linear-gradient(135deg,#FBFAF5,#EEF3EE)}.pmp-div b{font-size:70px;font-weight:900;color:#C9A961;line-height:1}.pmp-div h2{margin:6px 0 0;font-size:32px;font-weight:900;color:#0B3D27}.pmp-div p{margin:0;font-size:16px;font-weight:800;color:#9A7A3E}
+.pmp-div ol{margin:14px 0 0;padding-inline-start:22px;columns:2;column-gap:40px;font-size:13.5px;font-weight:700;line-height:2.1;color:#3E4B44}
+.pmp-ms{padding:16px}.pmp-ms .pmm{zoom:.74;gap:12px}.pmp-ms .pmm-col,.pmp-ms .pmm-rib div{animation:none!important}.pmp-ms .pmm-step .go{display:none}
+body[data-theme="dark"] .pmp-pg{color:#14241B}
+@media print{
+  body.pm-printall .pmp{page:pmland}
+  body.pm-printall .pmp-pages{display:block;overflow:visible;padding:0}
+  body.pm-printall .pmp-pg{width:auto;min-height:192mm;border:0;box-shadow:none;break-after:page;page-break-after:always;margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.pm-printall .pmp-pg:last-child{break-after:auto;page-break-after:auto}
+  body.pm-printall .pmp-ms .pmm-track{break-inside:avoid}
+}
+
+.pmp-ms .pmm-cols{grid-template-columns:repeat(var(--n),minmax(0,1fr))!important;gap:22px}.pmp-ms .pmm-col:not(:last-child):after{display:grid!important}
+.pmp-ms .pmm{zoom:.7}.pmp-ms .pmm-hero{grid-template-columns:minmax(0,1fr) auto!important;padding:16px 20px}
+
+.pmp-info p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+@media print{ body.pm-printall .pmp-pg{height:190mm!important;min-height:0!important;box-sizing:border-box;overflow:hidden} }
+
+.pmm-ch .no{left:16px!important;right:auto!important;inset-inline-end:auto!important;top:10px!important;font-size:26px!important;opacity:.35!important}
+.pmm-ch .ic{bottom:12px;left:14px}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15463,11 +15517,11 @@ var PM_I={edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',play:'
 function _pmIc(k,s){ return '<svg viewBox="0 0 24 24" width="'+(s||16)+'" height="'+(s||16)+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+PM_I[k]+'</svg>'; }
 function pmRender(){ if(_pmRO()) PMX.edit=false; var D=pmData(), V=PMX.view, ed=PMX.edit;
   var tabs='<button class="pmt'+(V==="master"?" on":"")+'" onclick="pmGo(\'master\')"><i>'+_pmIc("map",15)+'</i>الخريطة الشاملة</button>'
-    +D.phases.map(function(ph,i){ return '<button class="pmt'+(V===i?" on":"")+'" onclick="pmGo('+i+')"><b>'+(i+1)+'</b>'+esc(ph.name)+'<small>'+ph.ops.length+'</small></button>'; }).join("")
+    +D.phases.map(function(ph,i){ return '<button class="pmt'+(V===i?" on":"")+'" onclick="pmGo('+i+')"><span class="pmt-n">'+esc(_pmPhLabel(ph,i))+'</span><small>'+ph.ops.length+'</small></button>'; }).join("")
     +(ed?'<button class="pmt add" onclick="pmPhaseAdd()">'+_pmIc("plus",14)+' مرحلة</button>':'');
   var bar='<div class="pmx-bar"><div class="pmx-tt"><span class="pmx-k">العمليات الإجرائية</span><h1>خريطة العمليات الإجرائية</h1><p>'+(V==="master"?esc(D.master.sub):'مخطط سير كل عملية بالجهات المسؤولة وخطواتها وقراراتها — اضغط أي خطوة لتفاصيلها')+'</p></div>'
     +'<div class="pmx-acts">'+(ed?'<span class="pmx-stat" id="pmStat">'+(PMX.dirty?"":"محفوظ ✓")+'</span><button class="pmb" title="تراجع (Ctrl+Z)" onclick="pmUndo()" '+(PMX.undo.length?'':'disabled')+'>'+_pmIc("undo")+'</button><button class="pmb" title="إعادة" onclick="pmRedo()" '+(PMX.redo.length?'':'disabled')+'>'+_pmIc("redo")+'</button>':'')
-    +'<button class="pmb" onclick="pmPlay()" id="pmPlayB">'+_pmIc(PMX.play?"stop":"play")+(PMX.play?" إيقاف":" عرض المسار")+'</button><button class="pmb" onclick="pmFull()" title="ملء الشاشة">'+_pmIc("full")+'</button><button class="pmb" onclick="pmPrint()" title="طباعة / PDF">'+_pmIc("print")+'</button>'
+    +'<button class="pmb" onclick="pmPlay()" id="pmPlayB">'+_pmIc(PMX.play?"stop":"play")+(PMX.play?" إيقاف":" عرض المسار")+'</button><button class="pmb" onclick="pmFull()" title="ملء الشاشة">'+_pmIc("full")+'</button><button class="pmb" onclick="pmPrintMenu(event)" title="طباعة / PDF">'+_pmIc("print")+'</button>'
     +(ed?'<button class="pmb" onclick="pmHistory()" title="استرجاع نسخة سابقة">'+_pmIc("reset")+' سجل النسخ</button>':'')+(_pmRO()?'':'<button class="pmb pri'+(ed?" on":"")+'" onclick="pmEdit()">'+_pmIc("edit")+(ed?" إنهاء التعديل":" تعديل")+'</button>')+'</div></div>'
     +(ed?'<div class="pmx-hint">✎ <b>وضع التعديل:</b> اضغط على أي نص منقّط لتعديله مباشرة · '+(V==="master"?'استخدم ▲▼× بجانب كل خطوة و«إضافة خطوة» أسفل كل مرحلة':'اضغط خطوة لتحريرها من اللوحة الجانبية، واسحبها لتغيير جهتها أو ترتيبها، ودبل-كليك لتعديل نصها')+' · <b>كل تعديل يُحفظ تلقائياً</b> ويمكن التراجع (Ctrl+Z).</div>':'');
   var body=V==="master"?_pmMasterHTML():_pmPhaseHTML();
@@ -15700,6 +15754,68 @@ function _pmStep(){ var P=PMX.play; if(!P) return; var cap=document.getElementBy
   P.i++; P.t=setTimeout(_pmStep,1500); }
 function pmStopPlay(){ if(PMX.play){ clearTimeout(PMX.play.t); PMX.play=null; } var c=document.getElementById("pmCanvas"); if(c) c.classList.remove("playing"); document.querySelectorAll(".pmm-step.cur,.pmm-step.done,.pmn.cur,.pmn.done,.pmm-col.act").forEach(function(e){ e.classList.remove("cur","done","act"); }); }
 try{ ["pmHistory","pmRestore","pmTxtLive","pmMAdd","pmStopPlay"].forEach(function(k){ window[k]=eval(k); }); }catch(e){}
+/* ---------- أسماء المراحل في التبويبات ---------- */
+function _pmPhLabel(ph,i){ if(/^ملاحق/.test(ph.name||"")) return "ملاحق"+(ph.sub?": "+ph.sub:""); return (i+1)+". "+(ph.sub||ph.name); }
+/* ---------- ربط خطوات الخريطة الشاملة بخرائط العمليات التفصيلية ---------- */
+function _pmNormT(s){ return String(s||"").replace(/[ً-ْ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/^\s*\d+\s*[-–.]\s*(تابع\s*[-–]?\s*)?/,"").replace(/[()\-–،,.:]/g," ").split(/\s+/).map(function(w){ return w.replace(/^(وال|بال|لل|ال|و)/,""); }).filter(function(w){ return w.length>2&&!/^(علي|من|في|الي|عن|مع|مشروع|مشاريع|مشروعات)$/.test(w); }); }
+function _pmOpIndex(){ var L=[]; pmData().phases.forEach(function(ph,pi){ ph.ops.forEach(function(o,oi){ if(/تابع/.test(o.title)) return; L.push({pi:pi,oi:oi,t:o.title,w:_pmNormT(o.title)}); }); }); return L; }
+function _pmMatchOp(step,IDX){ var w=_pmNormT(step); if(w.length<1) return null; var best=null,bs=0; IDX.forEach(function(x){ var sh=w.filter(function(a){ return x.w.indexOf(a)>=0; }).length; if(!sh) return; var sc=sh/Math.max(w.length,x.w.length); if(sh>=2&&sc>bs||sc>=0.99&&sc>bs){ bs=sc; best=x; } }); return bs>=0.5?best:null; }
+function pmGoOp(pi,oi){ pmStopPlay(); PMX.view=pi; PMX.ph=pi; PMX.op=oi; PMX.sel=null; PMX.zoom=0; pmRender(); try{ document.getElementById("pmx").scrollIntoView({behavior:"smooth"}); }catch(e){} }
+var PM_STI=['<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>','<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>','<path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0z"/>','<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>','<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/>','<path d="M2 20h20M5 20V9l7-5 7 5v11"/><path d="M9 20v-6h6v6"/>','<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/>','<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>'];
+function _pmStIc(i){ return '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+PM_STI[i%PM_STI.length]+'</svg>'; }
+/* ---------- الخريطة الشاملة v3 ---------- */
+function _pmMasterHTML(){ var M=pmData().master, ed=PMX.edit, g=0, si=0, html="", IDX=_pmOpIndex();
+  var all=[]; M.tracks.forEach(function(t){ t.stages.forEach(function(s){ all.push(s); }); }); var tot=all.reduce(function(a,s){ return a+s.steps.length; },0), linked=0;
+  M.tracks.forEach(function(t,ti){
+    if(ti) html+='<div class="pmm-bridge"><span>'+_pmIc("play",13)+' ينتقل المشروع إلى '+esc(t.name.split("—")[0].trim())+'</span></div>';
+    html+='<div class="pmm-track"><div class="pmm-th"><i>'+String(ti+1).padStart(2,"0")+'</i><b'+_pmEd("m.t."+ti+".name")+'>'+esc(t.name)+'</b><u></u><em>'+t.stages.reduce(function(a,s){ return a+s.steps.length; },0)+' خطوة</em></div><div class="pmm-cols" style="--n:'+t.stages.length+'">';
+    t.stages.forEach(function(s,sj){ var c=_pmStC(si);
+      html+='<div class="pmm-col" style="--c:'+c+';--d:'+(si*0.08).toFixed(2)+'s"><div class="pmm-ch"><span class="ic">'+_pmStIc(si)+'</span><b class="no">'+String(si+1).padStart(2,"0")+'</b><span class="nm"'+_pmEd("m.t."+ti+".s."+sj+".name")+'>'+esc(s.name)+'</span><strong'+_pmEd("m.t."+ti+".s."+sj+".sub")+'>'+esc(s.sub)+'</strong><em>'+s.steps.length+' خطوات</em>'
+        +(ed?'<div class="pmm-cm"><button onclick="pmMStage('+ti+','+sj+',1)">+ مرحلة</button><button class="x" onclick="pmMStage('+ti+','+sj+',0)">حذف</button></div>':'')+'</div><ol class="pmm-steps">'
+        +s.steps.map(function(st,k){ g++; var m=ed?null:_pmMatchOp(st,IDX); if(m) linked++;
+          return '<li class="pmm-step'+(m?" lk":"")+'" data-g="'+g+'"'+(m?' onclick="pmGoOp('+m.pi+','+m.oi+')" title="فتح مخطط «'+esc(m.t)+'»"':'')+'><i>'+g+'</i><span'+_pmEd("m.t."+ti+".s."+sj+".st."+k)+'>'+esc(st)+'</span>'+(m?'<em class="go">'+_pmIc("map",13)+'</em>':'')
+          +(ed?'<div class="pmm-se"><button title="أعلى" onclick="pmMStep('+ti+','+sj+','+k+',-1)">▲</button><button title="أسفل" onclick="pmMStep('+ti+','+sj+','+k+',1)">▼</button><button class="x" title="حذف" onclick="pmMStep('+ti+','+sj+','+k+',0)">×</button></div>':'')+'</li>'; }).join("")
+        +'</ol>'+(ed?'<button class="pmm-add" onclick="pmMAdd('+ti+','+sj+')">'+_pmIc("plus",14)+' إضافة خطوة</button>':'')+'</div>'; si++; });
+    html+='</div></div>'; });
+  var ribbon='<div class="pmm-rib">'+all.map(function(s,i){ return '<div style="--c:'+_pmStC(i)+'"><b>'+String(i+1).padStart(2,"0")+'</b><span>'+esc(s.sub||s.name)+'</span></div>'; }).join("")+'</div>';
+  var hero='<div class="pmm-hero"><div class="pmm-ht"><span class="pmm-k">المسار الكامل للعمليات</span><h2'+_pmEd("m.title")+'>'+esc(M.title)+'</h2><p>من الفكرة حتى إغلاق المشروع — '+M.tracks.length+' مسار، '+all.length+' مراحل، '+tot+' خطوة'+(linked?' · <b>'+linked+'</b> خطوة مرتبطة بمخطط تفصيلي (اضغطها لفتحه)':'')+'</p></div>'
+    +'<div class="pmm-stats"><div><b>'+M.tracks.length+'</b><span>مسار</span></div><div><b>'+all.length+'</b><span>مرحلة</span></div><div><b>'+tot+'</b><span>خطوة</span></div></div>'+ribbon+'</div>';
+  return '<div class="pmm" id="pmStage">'+hero+html+'<div class="pmm-end"><span>✓</span><b>إغلاق ملف المشروع</b><em>نهاية المسار الكامل</em></div><div class="pms-play" id="pmCap"></div></div>'; }
+/* ---------- الطباعة: معاينة صفحات أفقية مع ملاءمة كل مخطط لصفحته ---------- */
+function pmPrintMenu(ev){ if(ev) ev.stopPropagation(); var m=document.getElementById("pmPM"); if(m){ m.remove(); return; } var b=ev&&ev.currentTarget; m=document.createElement("div"); m.id="pmPM"; m.className="pmpm";
+  var inPh=PMX.view!=="master", op=_pmOp(), ph=pmData().phases[PMX.ph];
+  m.innerHTML=(inPh&&op?'<button onclick="pmPrintGo(\'op\')"><b>العملية الحالية</b><span>'+esc(op.title)+'</span></button>':'')+(inPh?'<button onclick="pmPrintGo(\'ph\')"><b>كل عمليات المرحلة</b><span>'+esc(_pmPhLabel(ph,PMX.ph))+' · '+ph.ops.length+' عملية</span></button>':'')
+    +'<button onclick="pmPrintGo(\'master\')"><b>الخريطة الشاملة</b><span>المسار الكامل للعمليات</span></button><button class="all" onclick="pmPrintGo(\'all\')"><b>كل العمليات الإجرائية</b><span>غلاف + الخريطة الشاملة + كل المراحل وعملياتها</span></button>';
+  document.body.appendChild(m); if(b){ var r=b.getBoundingClientRect(); m.style.top=(r.bottom+6+window.scrollY)+"px"; m.style.left=Math.max(8,r.left+window.scrollX)+"px"; }
+  setTimeout(function(){ document.addEventListener("click",function h(){ var x=document.getElementById("pmPM"); if(x) x.remove(); document.removeEventListener("click",h); }); },0); }
+function _pmCanvasOnly(op){ var keep={edit:PMX.edit,sel:PMX.sel}; PMX.edit=false; PMX.sel=null; var h=_pmOpHTML(op); PMX.edit=keep.edit; PMX.sel=keep.sel;
+  var a=h.indexOf('<div class="pmc"'), b=h.indexOf('<div class="pms-play"'); return h.slice(a,b).replace(/ id="[^"]*"/g,""); }
+function _pmPrintOp(op,ph,pi){ var G=_pmLayout(op);
+  return '<section class="pmp-pg"><div class="pmp-h"><div><span>'+esc(_pmPhLabel(ph,pi))+'</span><h2>'+esc(op.title)+'</h2></div><img src="'+LOGO+'" alt=""></div>'
+    +'<div class="pmp-fit" data-w="'+G.W+'" data-h="'+G.H+'">'+_pmCanvasOnly(op)+'</div>'
+    +'<div class="pmp-info">'+(op.scope?'<div><b>نطاق العمل</b><p>'+esc(op.scope)+'</p></div>':'')+((op.docs||[]).length?'<div><b>المستندات الداعمة</b><p>'+op.docs.map(esc).join(" · ")+'</p></div>':'')+'</div>'
+    +'<div class="pmp-f"><span>دليل الإجراءات التشغيلية — خريطة العمليات الإجرائية</span><span>'+esc(MONTHLBL)+'</span></div></section>'; }
+function pmPrintGo(kind){ var m=document.getElementById("pmPM"); if(m) m.remove(); pmStopPlay(); var D=pmData(), pages="", title="";
+  var keepV=PMX.view, keepPh=PMX.ph, keepOp=PMX.op;
+  var cover=function(t,s){ return '<section class="pmp-pg pmp-cv"><div class="pmp-cvc"><i></i><i></i><i></i><i></i></div><img src="'+LOGO_W+'" alt=""><span>دليل الإجراءات التشغيلية لإدارة المشاريع</span><h1>'+esc(t)+'</h1><p>'+esc(s)+'</p><em>'+esc(MONTHLBL)+'</em></section>'; };
+  var masterPg=function(){ var kv=PMX.edit; PMX.edit=false; var s=_pmMasterHTML().replace(/ id="[^"]*"/g,"").replace(/<div class="pms-play"[^>]*><\/div>/,""); PMX.edit=kv; var bi=s.indexOf('<div class="pmm-bridge">');
+    if(bi<0) return '<section class="pmp-pg pmp-ms">'+s+'</section>'; return '<section class="pmp-pg pmp-ms">'+s.slice(0,bi)+'</div></section><section class="pmp-pg pmp-ms">'+'<div class="pmm">'+s.slice(bi)+'</section>'; };
+  var phPages=function(pi){ var ph=D.phases[pi], s='<section class="pmp-pg pmp-div"><b>'+(/^ملاحق/.test(ph.name)?"ملاحق":String(pi+1).padStart(2,"0"))+'</b><h2>'+esc(ph.name)+'</h2><p>'+esc(ph.sub||"")+'</p><ol>'+ph.ops.map(function(o){ return '<li>'+esc(o.title)+'</li>'; }).join("")+'</ol></section>';
+    ph.ops.forEach(function(o,oi){ PMX.ph=pi; PMX.op=oi; s+=_pmPrintOp(o,ph,pi); }); return s; };
+  if(kind==="op"){ var op=_pmOp(); title=op.title; pages=_pmPrintOp(op,D.phases[PMX.ph],PMX.ph); }
+  else if(kind==="ph"){ title=_pmPhLabel(D.phases[PMX.ph],PMX.ph); pages=phPages(PMX.ph); }
+  else if(kind==="master"){ title="الخريطة الشاملة للعمليات"; pages=masterPg(); }
+  else { title="كل العمليات الإجرائية"; pages=cover("خريطة العمليات الإجرائية","الخريطة الشاملة وكل المراحل وعملياتها التفصيلية")+masterPg(); D.phases.forEach(function(_,pi){ pages+=phPages(pi); }); }
+  PMX.view=keepV; PMX.ph=keepPh; PMX.op=keepOp;
+  var n=(pages.match(/class="pmp-pg/g)||[]).length;
+  IS_REPORT=true; PRINT_NAME=""; show('<div class="pmp" id="pmp"><div class="pmp-bar noprint"><div><b>معاينة الطباعة</b><span>'+esc(title)+' · '+n+' صفحة أفقية</span></div><button class="pmb" onclick="pmRender()">‹ رجوع</button><button class="pmb pri" onclick="pmPrintNow(\''+esc(title).replace(/'/g,"")+'\')">'+_pmIc("print")+' طباعة / حفظ PDF</button></div><div class="pmp-pages">'+pages+'</div></div>'); IS_REPORT=false;
+  _pmPrintFit(); setTimeout(_pmPrintFit,200); }
+function _pmPrintFit(){ document.querySelectorAll(".pmp-fit").forEach(function(f){ var W=+f.getAttribute("data-w"), H=+f.getAttribute("data-h"), c=f.querySelector(".pmc"); if(!c) return; var aw=Math.min(f.clientWidth||930,930), ah=470;
+    var k=Math.min(aw/W, ah/H, 1.2), inn=f.querySelector(".pmp-in"); if(!inn){ inn=document.createElement("div"); inn.className="pmp-in"; f.insertBefore(inn,c); inn.appendChild(c); }
+    inn.style.cssText="position:relative;overflow:hidden;margin:0 auto;width:"+(W*k).toFixed(1)+"px;height:"+(H*k).toFixed(1)+"px"; c.style.transformOrigin="top right"; c.style.transform="scale("+k.toFixed(4)+")"; c.style.position="absolute"; c.style.top="0"; c.style.right="0"; c.style.left="auto"; f.style.height="auto"; }); }
+function pmPrintNow(t){ PRINT_NAME=(t||"خريطة العمليات")+" - "+MONTHLBL; document.body.classList.add("pm-printall"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("pm-printall"); PRINT_NAME=""; },1500); }
+function pmPrint(ev){ pmPrintMenu(ev); }
+try{ ["pmPrintMenu","pmPrintGo","pmPrintNow","pmGoOp","pmPrint"].forEach(function(k){ window[k]=eval(k); }); }catch(e){}
 /* ===================== منشئ النماذج الإجرائية الجديدة (Visio) ===================== */
 var OPS_CUSTOM=null, OPS_B={idx:-1,connect:false,del:false,from:null};
 function _opsLoadCustom(){ return _opsDBx().then(function(db){ return new Promise(function(res){ var rq=db.transaction("tpl","readonly").objectStore("tpl").get("ops_custom"); rq.onsuccess=function(){ OPS_CUSTOM=(rq.result&&rq.result.data)||[]; res(); }; rq.onerror=function(){ OPS_CUSTOM=[]; res(); }; }); }).catch(function(){ OPS_CUSTOM=[]; }); }
