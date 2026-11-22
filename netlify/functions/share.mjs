@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 
 const J = (code, obj) => new Response(JSON.stringify(obj), { status: code, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
 const store = () => globalThis.__REEF_SHARE_STORE || getStore({ name: "reef-shares", consistency: "strong" });
+const pfStore = () => globalThis.__REEF_PF_STORE || getStore({ name: "reef-portfolio", consistency: "strong" });
 const DAY = 864e5;
 const clean = (s, n) => String(s == null ? "" : s).replace(/[\u0000-\u001f<>]/g, " ").trim().slice(0, n || 120);
 function expiryFrom(d, base) {
@@ -38,6 +39,17 @@ export default async (req) => {
       if (d.count) { r.views = (r.views || 0) + 1; r.lastView = Date.now(); await S.setJSON(tok, r); }
       return J(200, { ok: true, exp: r.exp, label: r.label, scope: r.scope || null });
     }
+    // ===== آخر نسخة من المحفظة المرفوعة: يقرؤها الزائر برابط صالح (أو المسؤول بالمفتاح) =====
+    if (d.action === "pf_get") {
+      let ok = false;
+      if (/^[A-Za-z0-9_-]{16,64}$/.test(tok)) { const r = await S.get(tok, { type: "json" }); ok = !!(r && !r.revoked && r.exp >= Date.now()); }
+      if (!ok && process.env.SHARE_ADMIN_KEY && safeEq(d.key, process.env.SHARE_ADMIN_KEY)) ok = true;
+      if (!ok) return J(403, { ok: false, error: "غير مصرح" });
+      const P = pfStore(); const meta = await P.get("meta", { type: "json" });
+      if (!meta) return J(200, { ok: true, none: true });
+      if (d.since && String(d.since) === String(meta.at)) return J(200, { ok: true, same: true, at: meta.at });
+      const pf = await P.get("pf", { type: "json" }); return J(200, { ok: true, pf });
+    }
     // ===== عمليات الإدارة (تتطلب المفتاح) =====
     const KEY = process.env.SHARE_ADMIN_KEY;
     if (!KEY) return J(500, { error: "لم يُضبط مفتاح الإدارة SHARE_ADMIN_KEY في إعدادات Netlify" });
@@ -47,6 +59,13 @@ export default async (req) => {
       const token = crypto.randomBytes(18).toString("base64url");
       const r = { token, label: clean(d.label) || "رابط مشاركة", created: Date.now(), exp: expiryFrom(d), revoked: false, views: 0, scope: cleanScope(d.scope) };
       await S.setJSON(token, r); return J(200, { ok: true, link: view(r) });
+    }
+    if (d.action === "pf_put") {
+      const pf = d.pf; if (!pf || !Array.isArray(pf.data) || !pf.data.length || pf.data.length > 2000) return J(400, { error: "بيانات المحفظة غير صالحة" });
+      const P = pfStore(); const meta = await P.get("meta", { type: "json" });
+      if (meta && !d.force && Date.parse(meta.at) >= Date.parse(pf.at)) return J(200, { ok: true, kept: true, at: meta.at });
+      const rec = { name: clean(pf.name, 160), sheet: clean(pf.sheet, 80), at: String(pf.at || new Date().toISOString()), data: pf.data, cancelled: Array.isArray(pf.cancelled) ? pf.cancelled.slice(0, 2000) : [] };
+      await P.setJSON("pf", rec); await P.setJSON("meta", { at: rec.at, name: rec.name, n: rec.data.length }); return J(200, { ok: true, at: rec.at });
     }
     if (d.action === "list") {
       const { blobs } = await S.list();
