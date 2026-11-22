@@ -7327,6 +7327,63 @@ body[data-theme="dark"] .cw2 .cw-ev span{color:color-mix(in srgb,var(--c) 60%,#f
 @page gdbook{size:A4 portrait;margin:16mm 11mm 18mm;@bottom-center{content:counter(page);font-size:9pt;color:#7D8A82}}
 
 .cw2 .cw-ev.sm b{flex:1;min-width:0}
+
+/* ===================== الدليل v3: غلاف إصدار رسمي + ضبط الوثيقة + تنسيق رسمي ===================== */
+.gd-cover{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;text-align:start!important;padding:0!important;gap:0!important;min-height:620px!important;background:#FBFAF6!important;color:#14241B!important}
+.gd-cover:before{display:none!important}.gd-cvc{display:none}
+.gd-cvtop{position:relative;flex:0 0 62%;min-height:390px;padding:34px 44px 70px;background:linear-gradient(155deg,#1B5A3B 0%,#0F3A25 55%,#0A2A1B 100%);color:#fff;clip-path:polygon(0 0,100% 0,100% 84%,0 100%);overflow:hidden;display:flex;flex-direction:column}
+.gd-pat{position:absolute;inset:0;width:100%;height:100%}
+.gd-cvglow{position:absolute;width:520px;height:520px;border-radius:50%;top:-220px;left:-160px;background:radial-gradient(circle,rgba(233,210,154,.28),transparent 62%)}
+.gd-cvwm{position:absolute;left:-40px;bottom:30px;width:360px;opacity:.06;transform:rotate(-8deg)}
+.gd-cvhd{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px}.gd-cvhd img{height:54px}
+.gd-cvbadge{font-size:12px;font-weight:800;color:#E9D29A;border:1px solid rgba(233,210,154,.5);border-radius:99px;padding:5px 14px;background:rgba(0,0,0,.15)}
+.gd-cvmain{position:relative;margin-top:auto;display:flex;flex-direction:column;align-items:flex-start;gap:12px;max-width:640px}
+.gd-cvk{font-size:12.5px!important;font-weight:900;color:#14201A!important;background:linear-gradient(135deg,#F0D9A0,#C9A961)!important;border-radius:6px!important;padding:4px 12px!important}
+.gd-cover h1{margin:0!important;font-size:38px!important;line-height:1.35!important;font-weight:900;color:#fff!important;max-width:none!important}
+.gd-cvrule{display:block;width:90px;height:4px;border-radius:4px;background:linear-gradient(90deg,#C9A961,#F0D9A0)}
+.gd-cover p{margin:0!important;font-size:14px!important;line-height:2!important;color:#D6E5DB!important;max-width:600px!important}
+.gd-cvbot{position:relative;flex:1;display:flex;flex-direction:column;gap:18px;padding:6px 44px 28px}
+.gd-cvmeta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #E3DCC6;border-radius:14px;overflow:hidden;background:#fff}
+.gd-cvmeta div{display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-inline-start:1px solid #EFE9D8}.gd-cvmeta div:first-child{border-inline-start:0}
+.gd-cvmeta span{font-size:11px;font-weight:800;color:#9A7A3E}.gd-cvmeta b{font-size:14px;font-weight:900;color:#0B3D27;direction:ltr;text-align:right}.gd-cvmeta b.ok{color:#1E7A4D}
+.gd-cvstats{display:flex;gap:22px;font-size:13px;color:#5E6C62;font-weight:700}.gd-cvstats b{font-size:18px;color:#0B3D27;margin-inline-end:4px}
+.gd-cvfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;border-top:2px solid #0E5A3A;position:relative}.gd-cvfoot:after{content:"";position:absolute;top:-2px;inset-inline-start:0;width:120px;height:2px;background:#C9A961}
+.gd-cvfoot b{font-size:13px;color:#0B3D27}.gd-cvfoot span{font-size:12px;color:#7D8A82}
+/* ضبط الوثيقة */
+.gd-ctl{padding:34px 48px;border-bottom:1px solid #EEF1EE}.gd-ctl h2{margin:0 0 14px;font-size:20px;font-weight:900;color:#0B3D27;padding-bottom:8px;border-bottom:2px solid #0B3A22}
+.gd-ctl h3{margin:20px 0 8px;font-size:15px;font-weight:900;color:#0E5A3A}
+.gd-ctlt{width:100%;border-collapse:collapse;font-size:13px}.gd-ctlt th{background:#F1F6F2;color:#0E5A3A;font-weight:800;text-align:start;padding:9px 12px;border:1px solid #D5E1D8;width:16%}.gd-ctlt td{padding:9px 12px;border:1px solid #D5E1D8;color:#14241B}
+.gd-ctlt.rev th{width:auto}.gd-ctlt.sig th{width:33.3%;text-align:center}.gd-ctlt.sig td{height:70px}
+/* المحتويات */
+.gd-tocl{grid-template-columns:1fr!important;gap:0!important}
+.gd-tocl div{display:flex!important;align-items:baseline;gap:12px;background:none!important;border-radius:0!important;padding:7px 4px!important;border-bottom:1px solid #EEF1EE}
+.gd-tocl div.l1{font-size:14.5px!important;font-weight:900!important;color:#0B3D27!important;margin-top:6px;border-bottom-color:#DCE6DF}.gd-tocl div.l1 i{font-size:15px!important;color:#C9A961!important;min-width:30px}
+.gd-tocl div.l2{font-size:13px!important;font-weight:700!important;color:#3E4B44!important;padding-inline-start:42px!important}.gd-tocl div.l2 i{font-style:normal;font-size:12px;color:#7D8A82;min-width:30px}
+.gd-tocl u{flex:1;border-bottom:1px dotted #C3CCC6;transform:translateY(-4px)}
+/* رأس الفصل */
+.gd-chh{align-items:flex-end!important;gap:18px!important;padding-bottom:14px!important;margin-bottom:18px!important}
+.gd-chn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;border-radius:12px;background:linear-gradient(150deg,#14603D,#0B3A22);color:#fff;min-width:78px;box-shadow:0 10px 20px -14px rgba(11,58,34,.8)}
+.gd-chn span{font-size:10.5px;font-weight:800;color:#E9D29A;white-space:nowrap}.gd-chn b{font-size:24px;font-weight:900;line-height:1}
+.gd-chh i{display:none!important}
+.gd-h3 span{font-size:11.5px;font-weight:900;color:#9A7A3E;margin-inline-end:8px}
+.gd-p{text-align:justify;text-justify:inter-word}
+.gd-tb td:first-child{font-weight:800;color:#0B3D27}
+/* داكن: الغلاف يبقى كما هو */
+body[data-theme="dark"] .gd-ctl,body[data-theme="dark"] .gd-tocp{background:#fff}
+@media (max-width:980px){.gd-cvtop{padding:24px 20px 60px}.gd-cvbot{padding:6px 20px 20px}.gd-cvmeta{grid-template-columns:1fr 1fr}.gd-cover h1{font-size:26px!important}.gd-ctl{padding:24px 18px}}
+/* طباعة */
+@media print{
+  body.gd-print .gd-cover{height:296mm!important;padding:0!important;display:flex!important}
+  body.gd-print .gd-cvtop{flex:0 0 63%;padding:16mm 16mm 30mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-cvbot{padding:4mm 16mm 12mm}body.gd-print .gd-cover h1{font-size:28pt!important}body.gd-print .gd-cover p{font-size:11.5pt!important}
+  body.gd-print .gd-cvmeta,body.gd-print .gd-cvk,body.gd-print .gd-cvfoot{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-ctl{padding:0!important;border:0;break-after:page}body.gd-print .gd-ctlt{font-size:10.5pt}body.gd-print .gd-ctlt th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.gd-print .gd-tocl div{padding:4px 2px!important}body.gd-print .gd-tocl div.l1{font-size:12pt!important}body.gd-print .gd-tocl div.l2{font-size:10.5pt!important}
+  body.gd-print .gd-chn{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none}body.gd-print .gd-chh{border-bottom:1.5pt solid #0B3A22!important}
+}
+
+@media print{ body.gd-print .gd-cvmeta{grid-template-columns:repeat(4,minmax(0,1fr))!important} body.gd-print .gd-cvtop{padding-top:14mm!important} }
+.gd-cvhd{margin-bottom:18px}.gd-cvmain{margin-top:auto;padding-top:10px}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -16192,24 +16249,42 @@ function guideOpen(id){ try{ setNavActive("kb"); }catch(e){} RERENDER=null; if(!
   var g=_gdById(id); if(!g) return; GD.cur=g; GD.hits=[]; GD.hi=-1;
   var html=_gdDocHTML(g);
   IS_REPORT=true; PRINT_NAME=""; show(html); IS_REPORT=false; try{ window.scrollTo(0,0); }catch(e){} _gdBind(); }
-function _gdDocHTML(g){ var B=g.b, toc=[], ch=0, sub=0, out="", i=0, inChap=false;
+function _gdDocNo(g){ return "REEF-PM-"+String(g.id).replace(/^g/,"").padStart(2,"0"); }
+function _gdDocHTML(g){ var B=g.b, toc=[], ch=0, sub=0, s3=0, out="", i=0, inChap=false, AR_ORD=["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر"];
   var esc2=function(t){ return esc(t).replace(/^([^:]{2,45}):\s/,'<b class="gd-term">$1:</b> '); };
+  var openCh=function(title){ if(inChap) out+='</section>'; ch++; sub=0; s3=0; var aid="gdc"+ch; toc.push({id:aid,t:title,l:1,n:ch});
+    out+='<section class="gd-ch" id="'+aid+'"><div class="gd-chh"><div class="gd-chn"><span>الفصل '+(AR_ORD[ch-1]||ch)+'</span><b>'+String(ch).padStart(2,"0")+'</b></div><h2>'+esc(title)+'</h2></div>'; inChap=true; };
   while(i<B.length){ var b=B[i];
-    if(b.k==="h"&&b.l===1){ if(inChap) out+='</section>'; ch++; sub=0; var aid="gdc"+ch; toc.push({id:aid,t:b.t,l:1,n:ch}); out+='<section class="gd-ch" id="'+aid+'"><div class="gd-chh"><i>'+String(ch).padStart(2,"0")+'</i><h2>'+esc(b.t)+'</h2></div>'; inChap=true; i++; continue; }
-    if(!inChap){ ch++; toc.push({id:"gdc"+ch,t:"تمهيد",l:1,n:ch}); out+='<section class="gd-ch" id="gdc'+ch+'"><div class="gd-chh"><i>'+String(ch).padStart(2,"0")+'</i><h2>تمهيد</h2></div>'; inChap=true; }
-    if(b.k==="h"){ sub++; var sid="gds"+ch+"_"+sub; if(b.l===2) toc.push({id:sid,t:b.t,l:2}); out+=(b.l===2?'<h3 class="gd-h2" id="'+sid+'"><span>'+ch+'.'+sub+'</span>'+esc(b.t)+'</h3>':'<h4 class="gd-h3" id="'+sid+'">'+esc(b.t)+'</h4>'); i++; continue; }
+    if(b.k==="h"&&b.l===1){ openCh(b.t); i++; continue; }
+    if(!inChap) openCh("تمهيد");
+    if(b.k==="h"){ var sid; if(b.l===2){ sub++; s3=0; sid="gds"+ch+"_"+sub; toc.push({id:sid,t:b.t,l:2,n:ch+"."+sub}); out+='<h3 class="gd-h2" id="'+sid+'"><span>'+ch+'.'+sub+'</span>'+esc(b.t)+'</h3>'; }
+      else { s3++; sid="gds"+ch+"_"+sub+"_"+s3; out+='<h4 class="gd-h3" id="'+sid+'"><span>'+ch+'.'+(sub||1)+'.'+s3+'</span>'+esc(b.t)+'</h4>'; } i++; continue; }
     if(b.k==="li"){ var items=[]; while(i<B.length&&B[i].k==="li"){ items.push(B[i].t); i++; } var prev=B[i-items.length-1]||{}, steps=items.length>=3&&items.length<=12&&/(خطوات|الإجراءات|آلية|مراحل|تسلسل|يتم|كالتالي|التالي)/.test(prev.t||"");
       out+=steps?'<ol class="gd-steps">'+items.map(function(t,k){ return '<li><i>'+(k+1)+'</i><span>'+esc2(t)+'</span></li>'; }).join("")+'</ol>':'<ul class="gd-list">'+items.map(function(t){ return '<li>'+esc2(t)+'</li>'; }).join("")+'</ul>'; continue; }
     if(b.k==="tbl"){ var R=b.rows, nc=Math.max.apply(null,R.map(function(r){ return r.length; }));
-      out+='<div class="gd-tw"><table class="gd-tb"><thead><tr>'+R[0].map(function(c){ var lv=/مدير إدارة المشاريع|مدير ادارة المشاريع/.test(c)?" lv3":(/مدير المشروع/.test(c)?" lv2":(/فريق العمل/.test(c)?" lv1":"")); return '<th class="'+lv+'">'+esc(c)+'</th>'; }).join("")+(R[0].length<nc?'<th colspan="'+(nc-R[0].length)+'"></th>':'')+'</tr></thead><tbody>'+R.slice(1).map(function(r){ return '<tr>'+r.map(function(c,ci){ return '<td'+(r.length===1&&nc>1?' colspan="'+nc+'" class="grp"':'')+'>'+esc(c)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div>'; i++; continue; }
+      out+='<div class="gd-tw"><table class="gd-tb"><thead><tr>'+R[0].map(function(c){ var lv=/مدير إدارة المشاريع|مدير ادارة المشاريع/.test(c)?" lv3":(/مدير المشروع/.test(c)?" lv2":(/فريق العمل/.test(c)?" lv1":"")); return '<th class="'+lv+'">'+esc(c)+'</th>'; }).join("")+(R[0].length<nc?'<th colspan="'+(nc-R[0].length)+'"></th>':'')+'</tr></thead><tbody>'+R.slice(1).map(function(r){ return '<tr>'+r.map(function(c){ return '<td'+(r.length===1&&nc>1?' colspan="'+nc+'" class="grp"':'')+'>'+esc(c)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div>'; i++; continue; }
     var t=b.t; if(/^(ملاحظة|ملاحظه|تنبيه|هام|مهم|ملحوظة)\s*[:：-]/.test(t)) out+='<div class="gd-note">'+esc2(t)+'</div>'; else out+='<p class="gd-p">'+esc2(t)+'</p>'; i++; }
   if(inChap) out+='</section>';
   var tocH=toc.map(function(x){ return '<a href="#'+x.id+'" class="l'+x.l+'" onclick="event.preventDefault();_gdGo(\''+x.id+'\')">'+(x.l===1?'<i>'+String(x.n).padStart(2,"0")+'</i>':'')+'<span>'+esc(x.t)+'</span></a>'; }).join("");
-  var nch=toc.filter(function(x){ return x.l===1; }).length;
-  var cover='<div class="gd-cover"><div class="gd-cvc"><i></i><i></i><i></i><i></i></div><img src="'+LOGO_W+'" alt="ريف"><span class="gd-cvk">'+esc(g.cat)+'</span><h1>'+esc(g.title)+'</h1><p>'+esc(g.sum)+'</p><div class="gd-cvm"><div><b>'+nch+'</b><span>فصل</span></div><div><b>'+g.nt+'</b><span>جدول</span></div><div><b>'+g.mins+'</b><span>دقيقة قراءة</span></div></div><em>برنامج التنمية الريفية الزراعية المستدامة — ريف · دليل معتمد</em></div>';
-  var tocPage='<div class="gd-tocp"><h2>المحتويات</h2><div class="gd-tocl">'+toc.filter(function(x){ return x.l===1; }).map(function(x){ return '<div><i>'+String(x.n).padStart(2,"0")+'</i><span>'+esc(x.t)+'</span></div>'; }).join("")+'</div></div>';
-  var bar='<div class="gd-bar noprint"><button class="gd-back" onclick="pmKbList()">‹ المكتبة</button><div class="gd-bt"><b>'+esc(g.title)+'</b><span>'+esc(g.cat)+'</span></div><div class="gd-sr"><input id="gdIn" placeholder="ابحث داخل الدليل…" oninput="_gdFind(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();_gdNext(event.shiftKey?-1:1);}"><em id="gdHits"></em><button onclick="_gdNext(-1)" title="السابق">‹</button><button onclick="_gdNext(1)" title="التالي">›</button></div><button class="gd-fz" onclick="_gdFs(-1)" title="تصغير الخط">ع-</button><button class="gd-fz" onclick="_gdFs(1)" title="تكبير الخط">ع+</button><button class="gd-pr" onclick="guidePrint()">'+_gdIc("report",16)+' طباعة / PDF</button><u id="gdProg"></u></div>';
-  return '<div class="gd" id="gdRoot" style="--fs:'+GD.fs+'px">'+bar+'<div class="gd-wrap"><aside class="gd-toc noprint"><b>فهرس الدليل</b><nav id="gdToc">'+tocH+'</nav></aside><article class="gd-doc" id="gdDoc">'+cover+tocPage+out+'<div class="gd-end"><span>✓</span>نهاية الدليل — '+esc(g.title)+'</div></article></div></div>'; }
+  var nch=toc.filter(function(x){ return x.l===1; }).length, no=_gdDocNo(g);
+  var pat='<svg class="gd-pat" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><defs><pattern id="gdp_'+g.id+'" width="56" height="56" patternUnits="userSpaceOnUse"><path d="M28 0L56 28 28 56 0 28z" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/><circle cx="28" cy="28" r="9" fill="none" stroke="rgba(233,210,154,.10)" stroke-width="1"/><path d="M28 19c4 4 4 14 0 18-4-4-4-14 0-18z" fill="rgba(255,255,255,.05)"/></pattern></defs><rect width="400" height="400" fill="url(#gdp_'+g.id+')"/></svg>';
+  var cover='<div class="gd-cover"><div class="gd-cvtop">'+pat+'<div class="gd-cvglow"></div><img class="gd-cvwm" src="'+LOGO_W+'" alt=""><div class="gd-cvhd"><img src="'+LOGO_W+'" alt="ريف"><span class="gd-cvbadge">دليل إجرائي معتمد</span></div>'
+    +'<div class="gd-cvmain"><span class="gd-cvk">'+esc(g.cat)+'</span><h1>'+esc(g.title)+'</h1><i class="gd-cvrule"></i><p>'+esc(g.sum)+'</p></div></div>'
+    +'<div class="gd-cvbot"><div class="gd-cvmeta"><div><span>رقم الوثيقة</span><b>'+no+'</b></div><div><span>الإصدار</span><b>1.0</b></div><div><span>تاريخ الإصدار</span><b>'+esc(MONTHLBL)+'</b></div><div><span>الحالة</span><b class="ok">معتمد</b></div></div>'
+    +'<div class="gd-cvstats"><span><b>'+nch+'</b> فصول</span><span><b>'+g.nt+'</b> جداول</span><span><b>'+g.mins+'</b> دقيقة قراءة</span></div>'
+    +'<div class="gd-cvfoot"><b>برنامج التنمية الريفية الزراعية المستدامة — ريف</b><span>دليل الإجراءات التشغيلية لإدارة المشاريع</span></div></div></div>';
+  var ctl='<div class="gd-ctl"><h2>ضبط الوثيقة</h2><table class="gd-ctlt"><tr><th>عنوان الوثيقة</th><td>'+esc(g.title)+'</td><th>رقم الوثيقة</th><td>'+no+'</td></tr><tr><th>المجال</th><td>'+esc(g.cat)+'</td><th>الإصدار</th><td>1.0</td></tr><tr><th>الجهة المالكة</th><td>مكتب إدارة المشاريع — برنامج ريف</td><th>التصنيف</th><td>داخلي</td></tr><tr><th>تاريخ الإصدار</th><td>'+esc(MONTHLBL)+'</td><th>الحالة</th><td>معتمد</td></tr></table>'
+    +'<h3>سجل الإصدارات</h3><table class="gd-ctlt rev"><thead><tr><th>الإصدار</th><th>التاريخ</th><th>وصف التعديل</th><th>المُعِد</th></tr></thead><tbody><tr><td>1.0</td><td>'+esc(MONTHLBL)+'</td><td>الإصدار الأول المعتمد</td><td>مكتب إدارة المشاريع</td></tr></tbody></table>'
+    +'<h3>الاعتماد</h3><table class="gd-ctlt sig"><tr><th>الإعداد</th><th>المراجعة</th><th>الاعتماد</th></tr><tr><td></td><td></td><td></td></tr></table></div>';
+  var tocPage='<div class="gd-tocp"><h2>المحتويات</h2><div class="gd-tocl">'+toc.map(function(x){ return '<div class="l'+x.l+'"><i>'+(x.l===1?String(x.n).padStart(2,"0"):x.n)+'</i><span>'+esc(x.t)+'</span><u></u></div>'; }).join("")+'</div></div>';
+  var bar='<div class="gd-bar noprint"><button class="gd-back" onclick="pmKbList()">‹ المكتبة</button><div class="gd-bt"><b>'+esc(g.title)+'</b><span>'+esc(g.cat)+' · '+no+'</span></div><div class="gd-sr"><input id="gdIn" placeholder="ابحث داخل الدليل…" oninput="_gdFind(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();_gdNext(event.shiftKey?-1:1);}"><em id="gdHits"></em><button onclick="_gdNext(-1)" title="السابق">‹</button><button onclick="_gdNext(1)" title="التالي">›</button></div><button class="gd-fz" onclick="_gdFs(-1)" title="تصغير الخط">ع-</button><button class="gd-fz" onclick="_gdFs(1)" title="تكبير الخط">ع+</button><button class="gd-pr" onclick="guidePrint()">'+_gdIc("report",16)+' طباعة / PDF</button><u id="gdProg"></u></div>';
+  return '<div class="gd" id="gdRoot" style="--fs:'+GD.fs+'px">'+bar+'<div class="gd-wrap"><aside class="gd-toc noprint"><b>فهرس الدليل</b><nav id="gdToc">'+tocH+'</nav></aside><article class="gd-doc" id="gdDoc">'+cover+ctl+tocPage+out+'<div class="gd-end"><span>✓</span>نهاية الدليل — '+esc(g.title)+'</div></article></div></div>'; }
+function guidePrint(){ var g=GD.cur; if(!g) return; PRINT_NAME=g.title+" - برنامج ريف"; var st=document.getElementById("gdPgStyle"); if(!st){ st=document.createElement("style"); st.id="gdPgStyle"; document.head.appendChild(st); }
+  var q=function(s){ return '"'+String(s).replace(/["\\]/g,"")+'"'; };
+  st.textContent='@page gdbook{size:A4 portrait;margin:20mm 12mm 18mm;@top-right{content:'+q(g.title)+';font-size:8.5pt;color:#0E5A3A;font-weight:700;vertical-align:bottom;padding-bottom:3mm;border-bottom:.6pt solid #C9A961}@top-left{content:'+q(_gdDocNo(g)+" · الإصدار 1.0")+';font-size:8pt;color:#7D8A82;vertical-align:bottom;padding-bottom:3mm;border-bottom:.6pt solid #C9A961}@bottom-center{content:"صفحة " counter(page);font-size:8.5pt;color:#7D8A82}@bottom-right{content:"برنامج ريف — دليل الإجراءات التشغيلية";font-size:7.5pt;color:#A0ABA4}}';
+  document.body.classList.add("gd-print"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("gd-print"); PRINT_NAME=""; },1500); }
+try{ window.guidePrint=guidePrint; }catch(e){}
+
 function _gdGo(id){ var e=document.getElementById(id); if(!e) return; var y=e.getBoundingClientRect().top+window.scrollY-90; window.scrollTo({top:y,behavior:"smooth"}); }
 function _gdBind(){ if(window._gdSB) window.removeEventListener("scroll",window._gdSB); var toc=document.querySelectorAll("#gdToc a"), heads=[].map.call(toc,function(a){ return document.getElementById(a.getAttribute("href").slice(1)); });
   window._gdSB=function(){ var d=document.getElementById("gdDoc"); if(!d){ window.removeEventListener("scroll",window._gdSB); return; } var r=d.getBoundingClientRect(), p=Math.max(0,Math.min(1,-r.top/(r.height-window.innerHeight))); var u=document.getElementById("gdProg"); if(u) u.style.width=(p*100).toFixed(1)+"%";
@@ -16222,7 +16297,6 @@ function _gdFind(q){ var doc=document.getElementById("gdDoc"); if(!doc) return; 
   nodes.slice(0,600).forEach(function(tn){ var s=tn.nodeValue, frag=document.createDocumentFragment(), last=0, m; re.lastIndex=0; while((m=re.exec(s))){ frag.appendChild(document.createTextNode(s.slice(last,m.index))); var mk=document.createElement("mark"); mk.className="gdm"; mk.textContent=m[0]; frag.appendChild(mk); GD.hits.push(mk); last=m.index+m[0].length; } frag.appendChild(document.createTextNode(s.slice(last))); tn.parentNode.replaceChild(frag,tn); });
   if(hc) hc.textContent=GD.hits.length?("1/"+GD.hits.length):"لا نتائج"; if(GD.hits.length) _gdNext(1); }
 function _gdNext(d){ if(!GD.hits.length) return; if(GD.hi>=0) GD.hits[GD.hi].classList.remove("cur"); GD.hi=(GD.hi+d+GD.hits.length)%GD.hits.length; var m=GD.hits[GD.hi]; m.classList.add("cur"); var y=m.getBoundingClientRect().top+window.scrollY-window.innerHeight/3; window.scrollTo({top:y,behavior:"smooth"}); var hc=document.getElementById("gdHits"); if(hc) hc.textContent=(GD.hi+1)+"/"+GD.hits.length; }
-function guidePrint(){ var g=GD.cur; if(!g) return; PRINT_NAME=g.title+" - برنامج ريف"; document.body.classList.add("gd-print"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("gd-print"); PRINT_NAME=""; },1500); }
 try{ ["pmKbList","kbTopicOpen","guideOpen","guidePrint","_gdGo","_gdFs","_gdFind","_gdNext","_gdLibRender"].forEach(function(k){ window[k]=eval(k); }); window.GD=GD; }catch(e){}
 /* ===================== منشئ النماذج الإجرائية الجديدة (Visio) ===================== */
 var OPS_CUSTOM=null, OPS_B={idx:-1,connect:false,del:false,from:null};
