@@ -5799,6 +5799,87 @@ body[data-theme="dark"] .pc6-a{background:radial-gradient(circle at 50% 45%,#182
 body[data-theme="dark"] .pc6-a b{color:color-mix(in srgb,var(--c6) 45%,#E9F5EE)}
 body[data-theme="dark"] .pc6-b.ac u{background:color-mix(in srgb,var(--c6) 65%,#BFE6CF)}
 body[data-theme="dark"] .pc6-cat{color:color-mix(in srgb,var(--c6) 45%,#E9F5EE)}
+
+/* ===== موبايل: لوحة الأداء — عمود واحد فعلاً (قاعدة «غير ملء الشاشة» كانت تفرض عمودين) ===== */
+@media screen and (max-width:900px){
+  .dxf .dx-canvas .dxf-g3,.dxf .dx-canvas:not(.fit) .dxf-g3{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto!important;grid-template-areas:"sec" "sch" "fin" "cl" "reg"!important}
+}
+
+/* ===== موبايل: مراجعة شاملة ===== */
+@media screen and (max-width:700px){
+  /* لوحة الأداء: جدول القطاعات — الاسم والعدد والقيمة في سطر والشريط تحتها */
+  .dxf .dxf-sr.sv,.dxf .dxf-sh.sv{grid-template-columns:minmax(0,1fr) 40px 96px!important;grid-template-areas:"n a p" "b b b"!important;row-gap:5px!important}
+  .dxf .dxf-sr.sv .dxf-sn{grid-area:n}.dxf .dxf-sr.sv .dxf-sb{grid-area:b}.dxf .dxf-sr.sv .dxf-sa{grid-area:a;text-align:center}.dxf .dxf-sr.sv .dxf-sp{grid-area:p;text-align:end;white-space:nowrap}
+  .dxf .dxf-sh.sv>span:nth-child(1){grid-area:n}.dxf .dxf-sh.sv>span:nth-child(2){display:none}.dxf .dxf-sh.sv>span:nth-child(3){grid-area:a;text-align:center}.dxf .dxf-sh.sv>span:nth-child(4){grid-area:p;text-align:end}
+  /* لوحة المشروع: آخر المستجدات — عمود واحد بنص كامل */
+  .dx .g-nt .pd-notes{display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;overflow:visible!important}
+  .dx .g-nt .pd-note p{-webkit-line-clamp:unset!important;display:block!important}
+  .dx .g-nt .pd-notes .pd-note.pd-short>div>span,.dx .g-nt .pd-notes .pd-note.pd-short>div>b{white-space:normal!important}
+  /* التقارير: صفحات الجداول — تمرير أفقي بدل القص */
+  .report .rpage.tablepage{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
+  .report .rpage.tablepage table{min-width:620px}
+  .report .rpage.flow{overflow-x:auto!important}
+  /* بطاقة المشروع: لوحة الأداء رأسياً */
+  .pc6 .pc6-body{padding:12px;gap:12px}
+  .pc6-top{grid-template-columns:1fr!important;justify-items:center;gap:14px}
+  .pc6-sm{width:100%}
+  .pc6-sm b{font-size:17px}
+  .pc6-r{grid-template-columns:82px minmax(0,1fr) 40px;gap:8px}
+  .pc6-fin{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .pc6-f.dark{grid-column:span 2}
+  .pc6-f b{font-size:17px}
+  .pc6-dl{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .pc6-dl>div.w2{grid-column:span 2}
+  .pc6 .pc6-perf,.pc6 .pc6-info,.pc6 .pc4-ph{padding:14px}
+  /* الرئيسية */
+  .hm .hm-sum{grid-template-columns:repeat(2,1fr)!important}
+  .hm .hm-al{grid-template-columns:8px minmax(0,1fr)!important}
+  .hm .hm-al span{grid-column:2;justify-self:start}
+}
+
+@media screen and (max-width:700px){
+  #answer .g-nt .pd-notes,#answer .g-nt .pd-notes.nt2{display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;overflow:visible!important}
+  #answer .g-nt .pd-note{width:auto!important;max-height:none!important;overflow:visible!important}
+  #answer .g-nt .pd-note p{-webkit-line-clamp:unset!important;display:block!important;overflow:visible!important}
+  #answer .pd-dur{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+}
+
+@media screen and (max-width:700px){
+  #answer .g-ph{height:auto!important;min-height:0!important;overflow:visible!important}
+  #answer .g-ph .pds-host,#answer .g-ph .pds{height:auto!important;flex:none!important}
+  #answer .g-ph .pds-stage{height:auto!important;flex:none!important;aspect-ratio:4/3;min-height:0!important}
+}
+
+@media screen and (max-width:700px){
+  #answer .pdl-g>.dx-card,#answer .dx-gr>.dx-card{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+  #answer .pdl-g>.dx-card>*{flex:none!important}
+  #answer .pdl-g .km-svg,#answer .pdl-g svg.km{max-height:300px}
+  #answer .g-ph .pds{gap:8px}
+}
+
+@media screen and (max-width:700px){
+  #answer .dx-card.g-map,#answer .dx-card.g-cmp,#answer .dx-card.g-rk,#answer .dx-card.g-pt{height:auto!important;min-height:0!important;overflow:visible!important}
+}
+
+@media screen and (max-width:700px){
+  #answer .dx-gr.pdl-g,#answer .dx-land .fit .pdl-g{grid-template-rows:none!important;grid-auto-rows:auto!important;height:auto!important}
+}
+
+@media screen and (max-width:700px){
+  #answer .dx-card.g-map{display:block!important;height:auto!important}
+  #answer .dx-card.g-map .kp{height:auto!important;display:flex;flex-direction:column;gap:6px}
+  #answer .dx-card.g-map .kp-svg{height:auto!important;max-height:300px;width:100%}
+}
+
+@media screen and (max-width:700px){
+  .dxf .dxf-g3>section,.dxf .dxf-g3>.g-reg{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+  .dxf .dxf-g3{grid-template-rows:none!important;grid-auto-rows:auto!important;height:auto!important}
+  .dxf .dxf-g3 .geo-map,.dxf .dxf-g3 .geo-map>.km{height:auto!important;flex:none!important}
+  .dxf .dxf-g3 .geo-map .km-svg{height:auto!important;max-height:340px;flex:none!important}
+  .dxf .dxf-g3 .geo-map .km-side{position:static!important;flex-direction:row;flex-wrap:wrap}
+  .dxf .dxf-g3 .geo-k{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .dxf .dxf-g3 .geo-k>div:last-child{grid-column:span 2}
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
