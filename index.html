@@ -5497,15 +5497,15 @@ body[data-theme="dark"] .hm-k em .hm-ks{color:#E3C88E}
 #answer:has(.hb-reg) .rtool.ppt,#answer:has(.hb-reg) #pptxBtn{display:none!important}
 @media print{
   .hb-reg{display:block!important}.hb-reg>*{margin-bottom:10px}
-  .hb-reg .hb-cards{display:block!important;orphans:1;widows:1}
-  .hb-reg .hb-cards>.hb-card{display:inline-flex!important;flex-direction:column;vertical-align:top;width:calc(50% - 10px)!important;margin:0 4px 12px!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  .hb-reg .hb-cards{display:block!important;orphans:1;widows:1;zoom:.82}
+  .hb-reg .hb-cards>.hb-card{display:inline-flex!important;flex-direction:column;vertical-align:top;width:calc(25% - 9px)!important;margin:0 4px 10px!important;break-inside:avoid!important;page-break-inside:avoid!important}
   .hb-reg .hb-card .hb-cf b,.hb-reg .hb-card .hb-cc,.hb-reg .hb-card .hb-cf2 b,.hb-reg .hb-card .hb-cc2 span{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
   .hb-reg .hb-card img{break-inside:avoid}
   .hb-reg .hb-card button,.hb-reg .hb-card .noprint{display:none!important}
-  .hb-reg .hb-cimg{height:118px!important;min-height:0!important;aspect-ratio:auto!important}
+  .hb-reg .hb-cimg{height:92px!important;min-height:0!important;aspect-ratio:auto!important}
   .hb-reg{page:hbregp}
 }
-@page hbregp{size:A4 portrait;margin:8mm}
+@page hbregp{size:A4 landscape;margin:7mm}
 
 /* مشاركة لوحة: نافذة الإنشاء */
 #dxShM{position:fixed;inset:0;z-index:100050;background:rgba(6,20,14,.55);display:grid;place-items:center;padding:16px;backdrop-filter:blur(3px)}
@@ -6601,6 +6601,14 @@ body[data-theme="dark"] .ia-cov .bad{background:rgba(217,150,70,.14);color:#E7B6
 body:not([data-theme="dark"]) #lw .lw-spot2 .lw-phph{background:radial-gradient(circle at 50% 45%,#E3EEE7,#C9DACF 70%)}
 body:not([data-theme="dark"]) #lw .lw-spot2 .lw-phph img{filter:invert(1) hue-rotate(180deg)}
 @media (prefers-reduced-motion:reduce){#lw *{animation-duration:.01s!important;animation-iteration-count:1!important}}
+
+/* شريط آخر التحديثات: مسافات أوسع بين الأخبار */
+#lw .lw-tkm span{padding:0 64px!important;position:relative}
+#lw .lw-tkm span:after{content:"";position:absolute;inset-inline-end:-5px;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:#C9A961;box-shadow:0 0 0 4px rgba(201,169,97,.18)}
+#lw .lw-tkm span{border-inline-end-color:transparent!important}
+
+/* شاشة العرض: بدون الخط الجانبي في بطاقات المؤشرات */
+#lw .lw-k:before{display:none!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -7437,7 +7445,7 @@ function paginateReportPages(){
 function show(html){
   const topic=(ANSWER_TITLE||"").replace(/\s*[—-].*$/,"").trim();
   if(!PRINT_NAME && topic) PRINT_NAME="تقرير "+topic+" - "+MONTHLBL;
-  const cover=(IS_REPORT||/class="dash dash3|class="pc3/.test(html))?"":printCoverHTML(topic||"محفظة المشاريع");
+  const cover=(IS_REPORT||/class="dash dash3|class="pc3|hb-reg"/.test(html))?"":printCoverHTML(topic||"محفظة المشاريع");
   const tools=PRINT_NAME?exportToolbar():"";
   A.innerHTML='<div class="acard">'+tools+cover+html+'</div>';
   try{ var _hh=A.querySelector('.hb-head .hb-hb, .hm-hero .hb-hb, .dxbar .dxbar-x, .dxf2 .dxbar-x, .pc3-acts'), _rt=A.querySelector('.acard > .rtools'); if(_hh&&_rt){ Array.prototype.slice.call(_rt.querySelectorAll('.rtool')).forEach(function(b){ b.classList.add('hb-rt','noprint'); _hh.insertBefore(b,_hh.firstChild); }); _rt.style.display='none'; } _hbFitTable(); }catch(e){} try{ setTimeout(_tbTitle,0); }catch(e){}
@@ -12446,10 +12454,10 @@ function _lwCount(root,fresh){ if(!root) return; LW.nums=LW.nums||{}; var els=ro
 function _lwSpotList(R){ var A=R.filter(function(x){ return !x.fin&&!x.r.stopped&&x.a>0.05&&/إنشاء|توريد/.test(String(x.p.ptype||"")); }).sort(function(a,b){ return b.v-a.v; }).slice(0,8); return A.sort(function(a,b){ return b.a-a.a; }); }
 function _lwTicker(R){ try{ _chgRun(); }catch(e){} var E=_chgList().slice(0,24);
   if(E.length){ var s=E.map(function(x){ var c=CHG_T[x.t]||["#C9A961","•"]; return '<span><i class="ci" style="background:'+c[0]+'">'+c[1]+'</i><b>'+esc(x.n)+'</b>'+esc(x.x)+'<em>'+_chgAgo(x.at)+'</em></span>'; }).join("");
-    return '<div class="lw-tk"><div class="lw-tkl">آخر التحديثات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(60,E.length*10)+'s">'+s+s+'</div></div></div>'; }
+    return '<div class="lw-tk"><div class="lw-tkl">آخر التحديثات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(110,E.length*15)+'s">'+s+s+'</div></div></div>'; }
   var L=R.filter(function(x){ return _dxTxt(x.p.last_note)||_dxTxt(x.p.build_status); }).sort(function(a,b){ return (_dxDt(b.p.last_update)||0)-(_dxDt(a.p.last_update)||0); }).slice(0,14);
   var s2=L.map(function(x){ return '<span><i style="background:'+x.col+'"></i><b>'+esc(x.p.alias||x.p.name)+'</b>'+esc(String(_dxTxt(x.p.last_note)||_dxTxt(x.p.build_status)).replace(/\s+/g," ").slice(0,140))+'</span>'; }).join("");
-  return '<div class="lw-tk"><div class="lw-tkl">آخر المستجدات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(60,L.length*9)+'s">'+s2+s2+'</div></div></div>'; }
+  return '<div class="lw-tk"><div class="lw-tkl">آخر المستجدات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(110,L.length*14)+'s">'+s2+s2+'</div></div></div>'; }
 function _lwRender(dataChanged){ var c=document.getElementById("lwC"); if(!c) return; var R=_lwRows(); var k=LW_SC[LW.i%LW_SC.length];
   var ds=R.map(function(x){ return x.p.code+":"+Math.round(x.a*1000)+":"+Math.round(x.d)+":"+(x.fin?1:0); }).join("|");
   if(dataChanged&&ds===LW.ds){ var tk0=document.getElementById("lwTk"); try{ _chgRun(); }catch(e){} var _E0=_chgList(), sg0=_E0.length+"|"+(_E0[0]?_E0[0].at+_E0[0].c:"")+"|"+R.length; if(tk0&&sg0!==LW.lastSig){ tk0.innerHTML=_lwTicker(R); LW.lastSig=sg0; } _lwClock(); return; }
