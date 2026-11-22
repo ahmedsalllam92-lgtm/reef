@@ -6449,6 +6449,10 @@ body[data-theme="dark"] .rp2-go>button:disabled{background:#26323A;color:#6F8289
 body[data-theme="dark"] .rp2-sub{border-color:#2B363B}
 body[data-theme="dark"] .rp2-adv button{color:#9DB0B8}
 body[data-theme="dark"] .pcr-x{background:#182226;border-color:#2B363B;color:#C9D6CF}
+
+#lw .lw-tkm span i.ci{width:24px!important;height:24px!important;border-radius:7px!important;display:inline-grid;place-items:center;color:#0E1418;font-style:normal;font-size:13px;font-weight:900}
+#lw .lw-tkm span em{font-style:normal;font-size:15px;font-weight:700;color:#8396A0;margin-inline-start:4px}
+body:not([data-theme="dark"]) #lw .lw-tkm span i.ci{color:#fff}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -6778,7 +6782,7 @@ async function refreshData(first){ if(typeof PF!=="undefined"&&PF){ renderFooter
     LAST_ERR=null; _LASTCSV_SIG=sig; LAST_CHANGE=new Date();
     const nd=capPlannedData(d);
     if(typeof UPLOAD_MODE!=="undefined"&&UPLOAD_MODE&&typeof LIVE_BAK!=="undefined"){ LIVE_BAK=nd; renderFooter(true); return; }
-    DATA=nd; renderFooter(true);
+    DATA=nd; try{ _chgRun(); }catch(e){} renderFooter(true);
     const ok=_canRerender();
     if(ok===true){ SILENT_RENDER=true; try{ RERENDER(); }catch(e){} SILENT_RENDER=false; REFRESH_PENDING=false; }
     else if(ok==="edit"){ REFRESH_PENDING=true; renderFooter(true); }
@@ -10429,7 +10433,7 @@ function pfApply(){ var R=PF_PENDING; if(!R) return; try{ if(window._STG_PENDING
   if(R.cancelSheet&&R.cancelSheet.length) canc=canc.filter(function(c){ return c.src!=="sheet"; }).concat(R.cancelSheet);
   var rec={name:R.name, sheet:R.sheet, at:new Date().toISOString(), data:R.data, cancelled:canc};
   try{ localStorage.setItem(PF_KEY,JSON.stringify(rec)); }catch(e){ alert("تم التحديث لهذه الجلسة فقط — تعذّر الحفظ في المتصفح (المساحة ممتلئة؟)."); }
-  PF=rec; PF_PENDING=null; DATA=capPlannedData(R.data.map(function(x){ return Object.assign({},x); }));
+  PF=rec; PF_PENDING=null; DATA=capPlannedData(R.data.map(function(x){ return Object.assign({},x); })); try{ _chgRun(); }catch(e){}
   try{ if(typeof cldInvalidate==="function") cldInvalidate(); }catch(e){}
   try{ renderFooter(typeof SHEET_CSV_URL!=="undefined"&&!!SHEET_CSV_URL); }catch(e){}
   try{ var st=document.querySelector(".side-stat b"); if(st) st.textContent=ar(DATA.length); }catch(e){}
@@ -12234,15 +12238,44 @@ function _lwScene(k,R){
       +'<div class="lw-cl">'+act.slice(0,9).map(function(x,i){ return '<div class="lw-cr" style="animation-delay:'+(i*0.07).toFixed(2)+'s"><b class="rk">'+ar(i+1)+'</b><div class="nm"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.code)+' · '+esc(x.p.sector||"")+' · '+esc(x.p.region||"")+' · '+_dxM(x.v)+'</span></div>'
         +'<div class="pg"><i><u style="--w:'+_lwP(Math.min(1,x.a))+'"></u>'+(x.pl!=null?'<s style="inset-inline-start:'+_lwP(Math.min(1,x.pl))+'" title="المخطط"></s>':'')+'</i><b>'+_lwP(x.a)+'</b></div></div>'; }).join("")+'</div></div>'; }
   return ""; }
-function _lwTicker(R){ var L=R.filter(function(x){ return _dxTxt(x.p.last_note)||_dxTxt(x.p.build_status); }).sort(function(a,b){ return (_dxDt(b.p.last_update)||0)-(_dxDt(a.p.last_update)||0); }).slice(0,14);
-  var s=L.map(function(x){ return '<span><i style="background:'+x.col+'"></i><b>'+esc(x.p.alias||x.p.name)+'</b>'+esc(String(_dxTxt(x.p.last_note)||_dxTxt(x.p.build_status)).replace(/\s+/g," ").slice(0,140))+'</span>'; }).join("");
-  return '<div class="lw-tk"><div class="lw-tkl">آخر المستجدات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(60,L.length*9)+'s">'+s+s+'</div></div></div>'; }
+/* ===== سجل التحديثات: يقارن كل تحديث للبيانات بالذي قبله ويسجّل ما تغيّر ===== */
+var CHG_KEY="reef_chg_v1";
+function _chgFin(p){ try{ return isFinishedP(p)||(_hoMode()&&p.handover==="1"); }catch(e){ return false; } }
+function _chgSnap(D){ var o={}; (D||[]).forEach(function(p){ if(!p||!p.code) return; o[p.code]={a:Math.round((pct(p.actual)||0)*1000)/10,d:Math.round(_dxN(p.disbursed)||0),cl:Math.round(_dxN(p.claims_count)||0),ap:Math.round(_dxN(p.approved)||0),f:_chgFin(p)?1:0,s:String(p.status||""),n:String(p.alias||p.name||"")}; }); return o; }
+function _chgLoad(){ try{ return JSON.parse(localStorage.getItem(CHG_KEY)||"null"); }catch(e){ return null; } }
+function _chgSave(o){ try{ localStorage.setItem(CHG_KEY,JSON.stringify(o)); }catch(e){} }
+function _chgRun(){ try{ if(typeof DATA==="undefined"||!DATA||!DATA.length) return; var cur=_chgSnap(DATA), st=_chgLoad();
+    if(!st){ var base=(typeof SNAPSHOT!=="undefined"&&SNAPSHOT)?_chgSnap(SNAPSHOT):cur; st={base:base,ev:[],at:(typeof SNAPSHOT_DATE!=="undefined"?SNAPSHOT_DATE:"")}; }
+    var B=st.base||{}, now=Date.now(), ev=[], M=function(v){ return _dxM(v); };
+    var cx={}; try{ cancelledAll().forEach(function(c){ if(c.code) cx[c.code]=1; }); }catch(e){}
+    Object.keys(cur).forEach(function(k){ var c=cur[k], b=B[k]; if(!b){ ev.push({t:"new",c:k,n:c.n,x:"أُضيف إلى المحفظة"}); return; }
+      if(c.f&&!b.f) ev.push({t:"done",c:k,n:c.n,x:"اكتمل المشروع"});
+      else if(c.a>=b.a+1) ev.push({t:"up",c:k,n:c.n,x:"ارتفع الإنجاز من "+Math.round(b.a)+"% إلى "+Math.round(c.a)+"%"});
+      if(c.cl>b.cl) ev.push({t:"cl",c:k,n:c.n,x:(c.cl-b.cl>1?"إضافة "+ar(c.cl-b.cl)+" مستخلصات":"إضافة المستخلص رقم "+ar(c.cl))});
+      else if(c.ap>b.ap+1000) ev.push({t:"ap",c:k,n:c.n,x:"اعتماد مستخلص بقيمة "+M(c.ap-b.ap)});
+      if(c.d>b.d+1000) ev.push({t:"pay",c:k,n:c.n,x:"صرف "+M(c.d-b.d)+" — إجمالي المنصرف "+M(c.d)});
+      if(/إيقاف|متوقف/.test(c.s)&&!/إيقاف|متوقف/.test(b.s)) ev.push({t:"stop",c:k,n:c.n,x:"إيقاف المشروع"});
+      if(!/إيقاف|متوقف/.test(c.s)&&/إيقاف|متوقف/.test(b.s)) ev.push({t:"res",c:k,n:c.n,x:"استئناف المشروع"}); });
+    Object.keys(B).forEach(function(k){ if(!cur[k]) ev.push({t:"cx",c:k,n:B[k].n,x:cx[k]?"أُلغي المشروع وسُحب من المحفظة":"خرج من المحفظة"}); });
+    if(ev.length){ ev.forEach(function(e){ e.at=now; }); st.ev=ev.concat(st.ev||[]).slice(0,120); }
+    st.base=cur; _chgSave(st); return ev.length; }catch(e){ return 0; } }
+function _chgList(){ var st=_chgLoad(); return (st&&st.ev)||[]; }
+function _chgAgo(t){ var d=Math.floor((Date.now()-t)/864e5); if(d<=0){ var h=Math.floor((Date.now()-t)/36e5); return h<1?"الآن":"منذ "+ar(h)+" ساعة"; } return d===1?"أمس":"منذ "+ar(d)+" يوم"; }
+var CHG_T={done:["#3FB27A","✓"],up:["#5CD49A","▲"],cl:["#D9B166","＋"],ap:["#D9B166","✓"],pay:["#6FA9D8","﷼"],cx:["#E0705F","✕"],stop:["#E0705F","❚❚"],res:["#5CD49A","▶"],"new":["#C9A961","★"]};
+try{ window._chgRun=_chgRun; window._chgList=_chgList; }catch(e){}
+
+function _lwTicker(R){ try{ _chgRun(); }catch(e){} var E=_chgList().slice(0,24);
+  if(E.length){ var s=E.map(function(x){ var c=CHG_T[x.t]||["#C9A961","•"]; return '<span><i class="ci" style="background:'+c[0]+'">'+c[1]+'</i><b>'+esc(x.n)+'</b>'+esc(x.x)+'<em>'+_chgAgo(x.at)+'</em></span>'; }).join("");
+    return '<div class="lw-tk"><div class="lw-tkl">آخر التحديثات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(60,E.length*10)+'s">'+s+s+'</div></div></div>'; }
+  var L=R.filter(function(x){ return _dxTxt(x.p.last_note)||_dxTxt(x.p.build_status); }).sort(function(a,b){ return (_dxDt(b.p.last_update)||0)-(_dxDt(a.p.last_update)||0); }).slice(0,14);
+  var s2=L.map(function(x){ return '<span><i style="background:'+x.col+'"></i><b>'+esc(x.p.alias||x.p.name)+'</b>'+esc(String(_dxTxt(x.p.last_note)||_dxTxt(x.p.build_status)).replace(/\s+/g," ").slice(0,140))+'</span>'; }).join("");
+  return '<div class="lw-tk"><div class="lw-tkl">آخر المستجدات</div><div class="lw-tkw"><div class="lw-tkm" style="--d:'+Math.max(60,L.length*9)+'s">'+s2+s2+'</div></div></div>'; }
 function _lwRender(dataChanged){ var c=document.getElementById("lwC"); if(!c) return; var R=_lwRows(); var k=LW_SC[LW.i%LW_SC.length];
   var rail=document.getElementById("lwRail"); if(rail) rail.innerHTML=_lwKpis(R);
   var st=document.getElementById("lwStage"); if(st){ st.innerHTML='<div class="lw-scn sc-'+k[0]+'">'+_lwScene(k[0],R)+'</div>'; }
   var tt=document.getElementById("lwTitle"); if(tt) tt.textContent=k[1];
   var dots=document.getElementById("lwDots"); if(dots) dots.innerHTML=LW_SC.map(function(s,j){ return '<i class="'+(j===LW.i%LW_SC.length?'on':'')+'"'+(j===LW.i%LW_SC.length&&!LW.paused?' style="--d:'+(LW.dur/1000)+'s"':'')+'></i>'; }).join("");
-  var tk=document.getElementById("lwTk"); var sig=R.map(function(x){ return x.p.code+(x.p.last_note||x.p.build_status||"").length; }).join("|"); if(tk&&(!tk.innerHTML||sig!==LW.lastSig)){ tk.innerHTML=_lwTicker(R); }
+  var tk=document.getElementById("lwTk"); try{ _chgRun(); }catch(e){} var _E=_chgList(); var sig=_E.length+"|"+(_E[0]?_E[0].at+_E[0].c:"")+"|"+R.length; if(tk&&(!tk.innerHTML||sig!==LW.lastSig)){ tk.innerHTML=_lwTicker(R); }
   if(dataChanged&&LW.lastSig&&sig!==LW.lastSig){ var f=document.getElementById("lwFlash"); if(f){ f.classList.remove("on"); void f.offsetWidth; f.classList.add("on"); } }
   LW.lastSig=sig; _lwClock(); }
 function _lwNext(d){ LW.i=(LW.i+(d||1)+LW_SC.length)%LW_SC.length; if(LW_SC[LW.i][0]==="spot") LW.spotI++; _lwRender(false); _lwArm(); }
@@ -12579,7 +12612,7 @@ function _dataStamp(){ try{ var el=document.getElementById("dataStamp"); if(!el)
   else if(typeof SHEET_CSV_URL!=="undefined"&&SHEET_CSV_URL&&typeof LAST_REFRESH!=="undefined"&&LAST_REFRESH) s="Google Sheets · "+LAST_REFRESH.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
   else s="بيانات المحفظة · "+fmtDateTxt(SNAPSHOT_DATE);
   el.textContent=s; try{ var u=document.getElementById("rtbUpd"); if(u){ var dt=(typeof PF!=="undefined"&&PF)?_pfWhen(PF.at).split(" · ")[0]:((typeof SHEET_CSV_URL!=="undefined"&&SHEET_CSV_URL&&typeof LAST_REFRESH!=="undefined"&&LAST_REFRESH)?(fmtDateTxt(LAST_REFRESH.toISOString().slice(0,10))+" · "+LAST_REFRESH.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})):fmtDateTxt(SNAPSHOT_DATE)); u.innerHTML='<i></i>آخر تحديث: <b>'+esc(dt)+'</b>'; } }catch(e){} var st=document.querySelector(".side-stat b"); if(st) st.textContent=ar(DATA.length); }catch(e){} try{ _tbAlCount(); }catch(e){} }
-function _hubBoot(){ try{ _applyEdits(DATA); }catch(e){} try{ _dataStamp(); _syncDicts(); }catch(e){}
+function _hubBoot(){ try{ _applyEdits(DATA); }catch(e){} try{ setTimeout(_chgRun,400); }catch(e){} try{ _dataStamp(); _syncDicts(); }catch(e){}
   try{ _tbMount(); }catch(e){} try{ _sbMount(); }catch(e){} try{ _sbFx(); }catch(e){}
   try{ _autoView(); window.addEventListener("resize",function(){ clearTimeout(window._avT); window._avT=setTimeout(_autoView,200); }); }catch(e){}
   try{ setInterval(_cldAutoRefresh,180000); }catch(e){} try{ _raMount(); }catch(e){} try{ _setHero(false); }catch(e){}
