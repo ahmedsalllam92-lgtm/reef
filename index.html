@@ -6963,6 +6963,10 @@ body[data-theme="dark"] .pmh-box{background:#141D21;color:#E3ECE6}body[data-them
 
 .pmm-rib div{min-width:120px}
 .pmsx-it{flex:1 0 130px!important}
+
+/* روابط المشاركة: الخريطة للعرض فقط */
+html.ro [onclick*="pmEdit"],html.ro [onclick*="pmHistory"],html.ro .pmx-hint,html.ro .pmx-insp,html.ro .pmn-tb,html.ro .pmm-cm,html.ro .pmm-se,html.ro .pmm-add,html.ro .pmo-tools,html.ro .pmsx-it.add,html.ro .pmt.add{display:none!important}
+html.ro .pmx [data-ed]{outline:none!important;pointer-events:none}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15440,7 +15444,7 @@ function _pmLS(){ try{ var o=JSON.parse(localStorage.getItem(PM_KEY)||"null"); i
 function _pmFix(d){ (d.phases||[]).forEach(function(ph){ (ph.ops||[]).forEach(function(o){ o.nodes=o.nodes||[]; o.links=o.links||[]; o.lanes=o.lanes||["الجهة"]; o.docs=o.docs||[];
     o.nodes.forEach(function(n,i){ if(n.k==="end") return; var has=o.links.some(function(l){ return l.f===n.id&&l.k!=="no"; }); if(!has&&o.nodes[i+1]) o.links.push({f:n.id,t:o.nodes[i+1].id,k:n.k==="dec"?"y":"n"}); }); }); }); return d; }
 function pmData(){ if(!PMX.d){ var s=_pmLS(); if(s){ PMX.d=s.d; PMX.at=s.at||""; } else { PMX.d=_pmFix(pmDefault()); PMX.at=""; } } return PMX.d; }
-function pmSave(){ PMX.at=new Date().toISOString(); try{ localStorage.setItem(PM_KEY,JSON.stringify({at:PMX.at,d:PMX.d})); }catch(e){} PMX.dirty=false; clearTimeout(pmSave._t); pmSave._t=setTimeout(_pmPush,900); _pmStat("محفوظ ✓"); }
+function pmSave(){ if(_pmRO()) return; PMX.at=new Date().toISOString(); try{ localStorage.setItem(PM_KEY,JSON.stringify({at:PMX.at,d:PMX.d})); }catch(e){} PMX.dirty=false; clearTimeout(pmSave._t); pmSave._t=setTimeout(_pmPush,900); _pmStat("محفوظ ✓"); }
 function _pmPush(){ try{ var k=_shKey(); if(!k||location.protocol==="file:") return; _pmStat("جارٍ المزامنة…"); _shareApi({action:"pm_put",key:k,d:PMX.d,at:PMX.at}).then(function(){ _pmStat("محفوظ ومزامَن ✓"); }).catch(function(){ _pmStat("محفوظ على هذا الجهاز"); }); }catch(e){} }
 function _pmPull(cb){ try{ if(location.protocol==="file:") return cb&&cb(); _shareApi({action:"pm_get",since:PMX.at}).then(function(j){ if(j&&j.ok&&!j.none&&!j.same&&j.d&&j.d.phases){ if(!PMX.at||Date.parse(j.at)>Date.parse(PMX.at)){ PMX.d=_pmFix(j.d); PMX.at=j.at; try{ localStorage.setItem(PM_KEY,JSON.stringify({at:PMX.at,d:PMX.d})); }catch(e){} if(document.querySelector(".pmx")) pmRender(); } else if(_shKey()) _pmPush(); } else if(j&&j.none&&_shKey()&&PMX.at) _pmPush(); cb&&cb(); }).catch(function(){ cb&&cb(); }); }catch(e){ cb&&cb(); } }
 function _pmStat(t){ var e=document.getElementById("pmStat"); if(e) e.textContent=t; }
@@ -15450,27 +15454,28 @@ function pmRedo(){ if(!PMX.redo.length) return; PMX.undo.push(JSON.stringify(PMX
 function _pmOp(){ var ph=pmData().phases[PMX.ph]; return ph&&ph.ops[PMX.op]; }
 function _pmNid(){ return "u"+Date.now().toString(36)+Math.floor(Math.random()*999); }
 function procGuidesOpen(){ try{ setNavActive("kbguide"); }catch(e){} pmKbList(); }
-function procMapOpen(view){ try{ setNavActive("procmap"); }catch(e){} RERENDER=null; pmData(); if(view!=null) PMX.view=view; PMX.sel=null; pmRender(); _pmPull(); }
+function procMapOpen(view){ try{ setNavActive("procmap"); }catch(e){} if(_pmRO()) PMX.edit=false; RERENDER=null; pmData(); if(view!=null) PMX.view=view; PMX.sel=null; pmRender(); _pmPull(); }
 try{ window.opsGuideOpen=function(){ procMapOpen(0); }; }catch(e){}
 /* ---------- الصفحة ---------- */
 var PM_I={edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',play:'<path d="M7 5l12 7-12 7z"/>',stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',full:'<path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/>',print:'<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/>',
   undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',redo:'<path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/>',plus:'<path d="M12 5v14M5 12h14"/>',map:'<rect x="3" y="4" width="7" height="6" rx="1.5"/><rect x="14" y="4" width="7" height="6" rx="1.5"/><rect x="8.5" y="14" width="7" height="6" rx="1.5"/><path d="M10 7h4M6.5 10v2.5h11V10M12 12.5V14"/>',
   zin:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/>',zout:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6"/>',fit:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'};
 function _pmIc(k,s){ return '<svg viewBox="0 0 24 24" width="'+(s||16)+'" height="'+(s||16)+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+PM_I[k]+'</svg>'; }
-function pmRender(){ var D=pmData(), V=PMX.view, ed=PMX.edit;
+function pmRender(){ if(_pmRO()) PMX.edit=false; var D=pmData(), V=PMX.view, ed=PMX.edit;
   var tabs='<button class="pmt'+(V==="master"?" on":"")+'" onclick="pmGo(\'master\')"><i>'+_pmIc("map",15)+'</i>الخريطة الشاملة</button>'
     +D.phases.map(function(ph,i){ return '<button class="pmt'+(V===i?" on":"")+'" onclick="pmGo('+i+')"><b>'+(i+1)+'</b>'+esc(ph.name)+'<small>'+ph.ops.length+'</small></button>'; }).join("")
     +(ed?'<button class="pmt add" onclick="pmPhaseAdd()">'+_pmIc("plus",14)+' مرحلة</button>':'');
   var bar='<div class="pmx-bar"><div class="pmx-tt"><span class="pmx-k">العمليات الإجرائية</span><h1>خريطة العمليات الإجرائية</h1><p>'+(V==="master"?esc(D.master.sub):'مخطط سير كل عملية بالجهات المسؤولة وخطواتها وقراراتها — اضغط أي خطوة لتفاصيلها')+'</p></div>'
     +'<div class="pmx-acts">'+(ed?'<span class="pmx-stat" id="pmStat">'+(PMX.dirty?"":"محفوظ ✓")+'</span><button class="pmb" title="تراجع (Ctrl+Z)" onclick="pmUndo()" '+(PMX.undo.length?'':'disabled')+'>'+_pmIc("undo")+'</button><button class="pmb" title="إعادة" onclick="pmRedo()" '+(PMX.redo.length?'':'disabled')+'>'+_pmIc("redo")+'</button>':'')
     +'<button class="pmb" onclick="pmPlay()" id="pmPlayB">'+_pmIc(PMX.play?"stop":"play")+(PMX.play?" إيقاف":" عرض المسار")+'</button><button class="pmb" onclick="pmFull()" title="ملء الشاشة">'+_pmIc("full")+'</button><button class="pmb" onclick="pmPrint()" title="طباعة / PDF">'+_pmIc("print")+'</button>'
-    +(ed?'<button class="pmb" onclick="pmHistory()" title="استرجاع نسخة سابقة">'+_pmIc("reset")+' سجل النسخ</button>':'')+((typeof SHARE!=="undefined"&&SHARE&&SHARE.token)?'':'<button class="pmb pri'+(ed?" on":"")+'" onclick="pmEdit()">'+_pmIc("edit")+(ed?" إنهاء التعديل":" تعديل")+'</button>')+'</div></div>'
+    +(ed?'<button class="pmb" onclick="pmHistory()" title="استرجاع نسخة سابقة">'+_pmIc("reset")+' سجل النسخ</button>':'')+(_pmRO()?'':'<button class="pmb pri'+(ed?" on":"")+'" onclick="pmEdit()">'+_pmIc("edit")+(ed?" إنهاء التعديل":" تعديل")+'</button>')+'</div></div>'
     +(ed?'<div class="pmx-hint">✎ <b>وضع التعديل:</b> اضغط على أي نص منقّط لتعديله مباشرة · '+(V==="master"?'استخدم ▲▼× بجانب كل خطوة و«إضافة خطوة» أسفل كل مرحلة':'اضغط خطوة لتحريرها من اللوحة الجانبية، واسحبها لتغيير جهتها أو ترتيبها، ودبل-كليك لتعديل نصها')+' · <b>كل تعديل يُحفظ تلقائياً</b> ويمكن التراجع (Ctrl+Z).</div>':'');
   var body=V==="master"?_pmMasterHTML():_pmPhaseHTML();
   IS_REPORT=true; PRINT_NAME=""; show('<div class="pmx'+(ed?" editing":"")+'" id="pmx">'+bar+'<div class="pmx-tabs">'+tabs+'</div><div class="pmx-body" id="pmBody">'+body+'</div></div>'); IS_REPORT=false;
   if(V!=="master") setTimeout(_pmFit,0); _pmBindKeys(); _pmEdBind(); }
 function pmGo(v){ pmStopPlay(); PMX.view=v; if(v!=="master"){ PMX.ph=v; PMX.op=0; } PMX.sel=null; PMX.zoom=0; pmRender(); }
-function pmEdit(){ pmStopPlay(); PMX.edit=!PMX.edit; PMX.sel=null; if(PMX.edit&&!_shKey()) setTimeout(function(){ _pmStat("التعديل يُحفظ على هذا الجهاز — احفظ مفتاح الإدارة لمزامنته"); },50); pmRender(); }
+function _pmRO(){ try{ return document.documentElement.classList.contains("ro")||!!(typeof SHARE!=="undefined"&&SHARE&&SHARE.token); }catch(e){ return false; } }
+function pmEdit(){ if(_pmRO()){ PMX.edit=false; return; } pmStopPlay(); PMX.edit=!PMX.edit; PMX.sel=null; if(PMX.edit&&!_shKey()) setTimeout(function(){ _pmStat("التعديل يُحفظ على هذا الجهاز — احفظ مفتاح الإدارة لمزامنته"); },50); pmRender(); }
 /* ---------- الخريطة الشاملة ---------- */
 function _pmMasterHTML(){ var M=pmData().master, ed=PMX.edit, g=0, si=0, rowIdx=0, html="";
   var all=[]; M.tracks.forEach(function(t){ t.stages.forEach(function(s){ all.push(s); }); }); var tot=all.reduce(function(a,s){ return a+s.steps.length; },0);
@@ -15643,7 +15648,7 @@ function _pmEdBind(){ if(window._pmEdB) return; window._pmEdB=1;
   document.addEventListener("focusout",function(e){ var el=e.target; if(el&&el._snap){ el._snap=0; if(PMX.dirty){ clearTimeout(_pmEdBind._t); pmSave(); } } }); }
 function pmTxtLive(id,el){ var op=_pmOp(), nd=op.nodes[_pmIdx(op,id)]; if(!nd) return; var v=el.value.replace(/\s+/g," ").trim(); if(!v) return; nd.t=v; var n=document.querySelector('.pmn[data-id="'+id+'"] > span'); if(n) n.textContent=v; PMX.dirty=true; clearTimeout(_pmEdBind._t); _pmEdBind._t=setTimeout(pmSave,700); }
 /* ---------- الحفظ والمزامنة: يحفظ لكل المستخدمين مع سجل نسخ ---------- */
-function pmSave(){ PMX.at=new Date().toISOString(); try{ localStorage.setItem(PM_KEY,JSON.stringify({at:PMX.at,d:PMX.d})); }catch(e){} PMX.dirty=false; _pmStat("✓ تم الحفظ "+new Date().toLocaleTimeString("ar-SA-u-nu-latn",{hour:"2-digit",minute:"2-digit"})); clearTimeout(pmSave._t); pmSave._t=setTimeout(_pmPush,1200); }
+function pmSave(){ if(_pmRO()) return; PMX.at=new Date().toISOString(); try{ localStorage.setItem(PM_KEY,JSON.stringify({at:PMX.at,d:PMX.d})); }catch(e){} PMX.dirty=false; _pmStat("✓ تم الحفظ "+new Date().toLocaleTimeString("ar-SA-u-nu-latn",{hour:"2-digit",minute:"2-digit"})); clearTimeout(pmSave._t); pmSave._t=setTimeout(_pmPush,1200); }
 function _pmPush(){ try{ if(location.protocol==="file:") return; _shareApi({action:"pm_put",key:_shKey()||"",d:PMX.d,at:PMX.at,by:(function(){ try{ return localStorage.getItem("reef_user_name")||""; }catch(e){ return ""; } })()}).then(function(j){ if(j&&j.ok) _pmStat("✓ محفوظ للجميع "+new Date().toLocaleTimeString("ar-SA-u-nu-latn",{hour:"2-digit",minute:"2-digit"})); else _pmStat("✓ محفوظ على هذا الجهاز"); }).catch(function(){ _pmStat("✓ محفوظ على هذا الجهاز (سيُزامَن لاحقاً)"); }); }catch(e){} }
 function pmHistory(){ if(location.protocol==="file:"){ alert("سجل النسخ يعمل على الموقع المنشور."); return; } _shareApi({action:"pm_hist"}).then(function(j){ var L=(j&&j.list)||[]; var ov=document.getElementById("pmHist"); if(!ov){ ov=document.createElement("div"); ov.id="pmHist"; ov.className="pmh-ov"; document.body.appendChild(ov); }
     ov.innerHTML='<div class="pmh-box"><div class="pmh-hd"><b>سجل النسخ المحفوظة</b><button onclick="this.closest(\'.pmh-ov\').remove()">✕</button></div><p>كل حفظ يُسجَّل هنا. اختر نسخة لاسترجاعها إن حدث خطأ في التعديل.</p><div class="pmh-l">'+(L.length?L.map(function(x){ return '<div><span><b>'+esc(new Date(x.at).toLocaleString("ar-SA-u-nu-latn",{dateStyle:"medium",timeStyle:"short"}))+'</b>'+(x.by?'<em>'+esc(x.by)+'</em>':'')+'</span><button onclick="pmRestore(\''+esc(x.k)+'\')">استرجاع</button></div>'; }).join(""):'<em>لا توجد نسخ بعد.</em>')+'</div></div>'; }).catch(function(e){ alert("تعذّر جلب السجل: "+(e&&e.message||"")); }); }
