@@ -7060,6 +7060,10 @@ body[data-theme="dark"] .pmm-rib b{background:#141D21;border-color:#3FB27A;color
 @keyframes pmGold{0%{transform:scale(1)}18%{transform:scale(1.035)}36%{transform:scale(1)}54%{transform:scale(1.02)}72%,100%{transform:scale(1)}}
 @keyframes pmSweep2{from{background-position:130% 0}to{background-position:-130% 0}}
 body[data-theme="dark"] .pmm-rib div.on span{color:#E9D29A!important}
+
+/* سهم الانتقال بين المراحل: يشير لليسار (اتجاه المسار) */
+.pmm-col:not(:last-child):after{content:""!important;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B8954F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6l-6 6 6 6'/%3E%3C/svg%3E") center/14px no-repeat!important}
+body[data-theme="dark"] .pmm-col:not(:last-child):after{background-color:#141D21!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
