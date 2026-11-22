@@ -5596,6 +5596,52 @@ body[data-theme="dark"] .dx .dx-mk{box-shadow:0 0 0 1.5px #1B2428}
 }
 
 .acard.wkfs-fallback .dx .dx-actions .dx-btn{border-color:#1E5B3A;background:#1E5B3A;color:#fff}
+
+/* ===== الرئيسية v2: ترتيب أهدأ ===== */
+.hb-page.hm{display:flex;flex-direction:column;gap:16px}
+.hm .hm-kpis{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px}
+.hm .hm-k{padding:16px 18px;border-radius:14px}
+.hm .hm-row.r1{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)!important;gap:16px;align-items:stretch}
+.hm .hm-card{border-radius:14px;padding:16px 18px}
+.hm .hm-card>header{margin-bottom:12px}
+.hm .hmg-stage{min-height:300px}
+.hm .hm-alc{display:flex;flex-direction:column}
+.hm .hm-sum{grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.hm .hm-sum div{padding:10px 6px;border-radius:10px;cursor:pointer;border:1px solid transparent}
+.hm .hm-sum div:hover{border-color:var(--h-line)}
+.hm .hm-sum b{font-size:22px;line-height:1.1}
+.hm .hm-alerts{gap:0;border:1px solid var(--h-line);border-radius:12px;overflow:hidden}
+.hm-alall{margin-top:auto;align-self:stretch;height:38px;border-radius:10px;border:1px dashed var(--h-line);background:transparent;color:var(--h-g);font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.hm .hm-alerts+.hm-alall{margin-top:12px}
+.hm .hm-alc .hm-alall{margin-top:auto}
+.hm .hm-alc .hm-alerts{margin-bottom:12px}
+.hm-alall:hover{background:var(--h-soft);border-style:solid}
+body[data-theme="dark"] .hm-alall{border-color:#2B363B;color:#D9C9A3}
+.hm .hm-al{display:grid;grid-template-columns:8px minmax(0,1fr) auto;align-items:center;gap:10px;padding:11px 14px;border-radius:0;background:transparent!important;border-bottom:1px solid var(--h-line)}
+.hm .hm-al:last-child{border-bottom:0}
+.hm .hm-al:hover{background:var(--h-soft)!important;transform:none!important;box-shadow:none!important}
+.hm .hm-al i{margin-top:0}
+.hm .hm-al b{font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm .hm-al span{font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;background:#FBF2E2;color:#8A6420;white-space:nowrap}
+.hm .hm-al.bad span{background:#FBEAE7;color:#A94438}
+.hm .hm-secs{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px}
+.hm .hm-sec{padding:12px 14px;border-radius:12px}
+.hm-cx{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:99px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#E9DCC2;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.hm-cx b{color:#fff}
+.hm-cx:hover{background:rgba(255,255,255,.16)}
+.hm-qrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--h-line);border-radius:14px;background:#fff}
+.hm-qt{font-size:12.5px;font-weight:900;color:var(--h-ink);margin-inline-end:6px}
+.hm-qrow button{height:32px;padding:0 14px;border-radius:99px;border:1px solid var(--h-line);background:#FAFBF9;color:var(--h-g);font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.hm-qrow button:hover{background:var(--h-g);color:#fff;border-color:var(--h-g)}
+body[data-theme="dark"] .hm-qrow{background:#172024;border-color:#2B363B}
+body[data-theme="dark"] .hm-qrow button{background:rgba(255,255,255,.04);border-color:#2B363B;color:#D9C9A3}
+body[data-theme="dark"] .hm-qrow button:hover{background:#B89968;color:#14241B}
+body[data-theme="dark"] .hm .hm-alerts,body[data-theme="dark"] .hm .hm-al{border-color:#2B363B}
+body[data-theme="dark"] .hm .hm-al:hover{background:rgba(255,255,255,.04)!important}
+body[data-theme="dark"] .hm .hm-al span{background:rgba(217,177,102,.12);color:#E2C27E}
+body[data-theme="dark"] .hm .hm-al.bad span{background:rgba(214,110,96,.14);color:#EBA196}
+@media (max-width:1100px){.hm .hm-row.r1{grid-template-columns:1fr!important}.hm .hm-secs{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:700px){.hm .hm-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hm .hm-secs{grid-template-columns:1fr!important}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -9732,7 +9778,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
     +k("قيمة المشاريع",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" ("+_dxPct(tv?td/tv:0)+")","","execDashboard()","mo",tv?td/tv:0)
     +k("متوسط الإنجاز",_dxPct(avgA),"","من إجمالي "+ar(D.length)+" مشروع · القائمة <span class=\"hm-ks\">"+_dxPct(_wProg(rows,true).a)+"</span>","","execDashboard()","pg",avgA)
     +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['watch','late','stumb'])","al",D.length?off.length/D.length:0)
-    +k("الملغاة",ar(cancelledAll().length),"مشروع","سجل المشاريع الملغاة","mut","cancelledOpen()","cx")+'</div>';
+    +'</div>';
   var rec='<section class="hm-card"><header><h3>آخر المشاريع تحديثاً</h3><button onclick="PR.sort=\'upd\';PR.dir=-1;projRegOpen(true)">عرض الكل ←</button></header>'
     +(recent.length?'<div class="hm-list">'+recent.map(function(p){ return '<div class="hm-li" role="button" onclick="projDash(\''+esc(p.code)+'\')"><div class="hm-lt"><b>'+esc(p.alias||p.name)+'</b><span>'+esc(p.code)+' · '+esc(p.sector||"")+' · '+fmtDateTxt(p.last_update)+'</span></div>'+_hbBadge(_hbStatus(p))+_hbProg(p)+'</div>'; }).join("")+'</div>'
       :'<div class="hb-empty">لا توجد تواريخ تحديث في البيانات الحالية.</div>')+'</section>';
@@ -9741,20 +9787,21 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
   stopped.slice(0,2).forEach(function(r){ al.push({c:"bad",t:"مشروع متوقف",p:r.p}); });
   soon.slice(0,3).forEach(function(r){ al.push({c:"warn",t:(r.t.left<=0?"ينتهي اليوم":"ينتهي خلال "+ar(r.t.left)+" يوم")+" · الإنجاز "+_dxPct(r.a),p:r.p}); });
   rows.filter(function(r){ return r.sr!=null&&r.a!=null&&r.sr>r.a+0.15&&!r.done; }).slice(0,2).forEach(function(r){ al.push({c:"warn",t:"الصرف "+_dxPct(r.sr)+" أعلى من الإنجاز "+_dxPct(r.a),p:r.p}); });
-  var hl='<section class="hm-card"><header><h3>أبرز التنبيهات</h3><button onclick="execDashboard()">لوحة الأداء ←</button></header>'
+  al=al.slice(0,6);
+  var hl='<section class="hm-card hm-alc"><header><h3>تحتاج متابعة</h3><button onclick="execDashboard()">لوحة الأداء ←</button></header>'
     +'<div class="hm-sum"><div class="bad" role="button" onclick="hmList(\'overdue\')"><b>'+ar(overdue.length)+'</b><span>متجاوز النهاية</span></div><div class="bad" role="button" onclick="hmList(\'stopped\')"><b>'+ar(stopped.length)+'</b><span>متوقف</span></div><div class="warn" role="button" onclick="hmList(\'soon\')"><b>'+ar(soon.length)+'</b><span>ينتهي خلال ٦٠ يوماً</span></div><div role="button" onclick="hmList(\'var\')"><b>'+ar(varPend.length)+'</b><span>مغايرات تحت الإجراء</span></div></div>'
-    +'<div class="hm-alerts">'+al.map(function(a){ return '<div class="hm-al '+a.c+'" role="button" onclick="projDash(\''+esc(a.p.code)+'\')"><i></i><div><b>'+esc(a.p.alias||a.p.name)+'</b><span>'+esc(a.t)+'</span></div></div>'; }).join("")+'</div></section>';
+    +'<div class="hm-alerts">'+(al.length?al.map(function(a){ return '<div class="hm-al '+a.c+'" role="button" onclick="projDash(\''+esc(a.p.code)+'\')" title="'+esc((a.p.alias||a.p.name)+' — '+a.t)+'"><i></i><b>'+esc(a.p.alias||a.p.name)+'</b><span>'+esc(a.t)+'</span></div>'; }).join(""):'<div class="hb-empty">لا توجد تنبيهات حالياً</div>')+'</div><button class="hm-alall noprint" onclick="prOpenCat([\'watch\',\'late\',\'stumb\'])">كل المشاريع التي تحتاج متابعة ('+ar(off.length)+') ←</button></section>';
   var bySec=_dxGroup(rows,function(r){ return r.p.sector; });
   var secs=Object.keys(bySec).map(function(s){ var rs=bySec[s]; return {s:s,n:rs.length,a:_dxAvg(rs.map(function(r){return r.a;}))||0,v:rs.reduce(function(x,r){ return x+_dxBase(r.p); },0)}; }).sort(function(a,b){ return b.v-a.v; });
   var sec='<section class="hm-card"><header><h3>القطاعات</h3><button onclick="execDashboard()">التفاصيل ←</button></header><div class="hm-secs">'
     +secs.map(function(s){ return '<div class="hm-sec" role="button" onclick="PR.sector=\''+esc(s.s).replace(/'/g,"\\'")+'\';projRegOpen(true)"><b>'+esc(s.s)+'</b><span>'+ar(s.n)+' مشروع · '+_dxM(s.v)+'</span><i><em style="width:'+(Math.min(1,s.a)*100).toFixed(0)+'%"></em></i><small>'+_dxPct(s.a)+'</small></div>'; }).join("")+'</div></section>';
   var Q=[["لوحة الأداء","execDashboard()","المؤشرات العامة للمحفظة"],["سجل المشاريع","projRegOpen()","جدول وبطاقات كل المشاريع"],["لوحة مشروع","projDashOpen()","تفاصيل مشروع واحد"],["التقرير الأسبوعي","weeklyBuilder()","تقرير لكل مشروع"],
     ["بطاقات المشاريع","cardsBuilder()","بطاقة لكل مشروع بالصور"],["المحتوى المحلي","lcAuditOpen()","مراجعة تقرير الالتزام"],["النماذج","openFormsMenu()","محاضر ونماذج جاهزة"],["تحديث المحفظة","pfOpen()","رفع محفظة Excel أحدث"]];
-  var quick='<section class="hm-card"><header><h3>الوصول السريع</h3></header><div class="hm-quick">'+Q.map(function(q){ return '<button onclick="'+q[1]+'"><b>'+esc(q[0])+'</b><span>'+esc(q[2])+'</span></button>'; }).join("")+'</div></section>';
+  var quick='<div class="hm-qrow noprint"><span class="hm-qt">الوصول السريع</span>'+Q.map(function(q){ return '<button onclick="'+q[1]+'" title="'+esc(q[2])+'">'+esc(q[0])+'</button>'; }).join("")+'</div>';
   var html='<div class="hb-page hm">'
     +'<div class="hm-hero"><i class="hm-fx"></i><div class="hm-ht"><div class="hm-greet">'+greet+' · '+esc(fmtDateTxt(new Date().toISOString().slice(0,10)))+'</div><h1>ملخص مشاريع برنامج ريف</h1><div class="hm-sub">برنامج التنمية الريفية الزراعية المستدامة · '+esc(MONTHLBL)+'</div></div>'
-      +'<div class="hm-hr">'+_dxSrc()+'<div class="hb-hb noprint"><button class="hb-btn sm ic" onclick="wkFullscreen()" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button></div><button class="hm-brf" onclick="briefOpen(1)" title="عرض سينمائي للمحفظة يُبنى من البيانات الحالية"><i><svg viewBox="0 0 24 24" width="12" height="12"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></i>رحلة المحفظة</button><button class="hm-ask" onclick="raOpen(true)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg> اسأل مساعد ريف</button></div></div>'
-    +kpis+'<div class="hm-row r1">'+_hmgHTML(D)+hl+'</div><div class="hm-row r2">'+sec+quick+'</div></div>';
+      +'<div class="hm-hr">'+_dxSrc()+'<button class="hm-cx noprint" onclick="cancelledOpen()" title="سجل المشاريع الملغاة"><b>'+ar(cancelledAll().length)+'</b> ملغى ←</button>'+'<div class="hb-hb noprint"><button class="hb-btn sm ic" onclick="wkFullscreen()" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button></div><button class="hm-brf" onclick="briefOpen(1)" title="عرض سينمائي للمحفظة يُبنى من البيانات الحالية"><i><svg viewBox="0 0 24 24" width="12" height="12"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></i>رحلة المحفظة</button><button class="hm-ask" onclick="raOpen(true)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg> اسأل مساعد ريف</button></div></div>'
+    +kpis+'<div class="hm-row r1">'+_hmgHTML(D)+hl+'</div>'+sec+quick+'</div>';
   show(html); try{ document.querySelectorAll('#answer .hm-hero .hb-rt, #answer .hm-hero .rtool').forEach(function(b){ b.remove(); }); }catch(e){} hmgStart(); }
 
 
