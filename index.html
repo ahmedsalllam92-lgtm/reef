@@ -6405,6 +6405,18 @@ body[data-theme="dark"] .hb-cards.v3 .hb-pq2b u{filter:saturate(.55) brightness(
 body[data-theme="dark"] .hb-cards.v3 .hb-pq2b{background:rgba(255,255,255,.07)!important}
 body[data-theme="dark"] .hb-cards.v3 .hb-pq2h b{filter:saturate(.6) brightness(1.35)}
 body[data-theme="dark"] .hb-cards.v3 .hb-pq2b i{background:#E9D29A!important}
+
+/* حلقة الإنجاز في بطاقات شريط الصور */
+.hmg-c{position:relative;width:auto!important;min-width:340px}
+.hmg-c>div{flex:1}
+.hmg-c .hmg-rg{position:relative;flex:none;width:74px;height:74px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 50% 45%,#2C4A40,#15291F 72%);box-shadow:0 6px 14px -8px rgba(0,0,0,.6)}
+.hmg-c .hmg-rg svg{position:absolute;inset:0;width:100%;height:100%}
+.hmg-c .hmg-rg .tk line{stroke:rgba(255,255,255,.22);stroke-width:1}
+.hmg-c .hmg-rg .bg{fill:none;stroke:rgba(255,255,255,.1);stroke-width:5}
+.hmg-c .hmg-rg .fg{fill:none;stroke-width:5;stroke-linecap:round}
+.hmg-c .hmg-rg b{position:relative;font-size:18px;font-weight:900;color:#fff;line-height:1;margin-top:-7px;max-width:none}
+.hmg-c .hmg-rg b small{font-size:9px;color:#E2C27E;margin-inline-start:1px}
+.hmg-c .hmg-rg em{position:absolute;bottom:18px;font-style:normal;font-size:8px;font-weight:800;color:#C9D6CF}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -11299,13 +11311,17 @@ try{ window.prOpenCat=prOpenCat; }catch(e){}
 
 /* ---------------- معرض صور المشاريع في الرئيسية ---------------- */
 var HMG={i:0,t:null,slides:[],pause:false};
+/* حلقة الإنجاز داخل بطاقات شريط الصور */
+function _hmgRing(p){ var a=0; try{ a=analyzeProject(p).a||0; }catch(e){ a=pct(p.actual)||0; } a=Math.max(0,Math.min(1,a)); var R=24,C=2*Math.PI*R, id="hgr"+String(p.code).replace(/[^A-Za-z0-9]/g,"");
+  var ticks=""; for(var i=0;i<36;i++){ var ang=i*10*Math.PI/180, r1=31, r2=i%3?33:34.5; ticks+='<line x1="'+(36+r1*Math.sin(ang)).toFixed(1)+'" y1="'+(36-r1*Math.cos(ang)).toFixed(1)+'" x2="'+(36+r2*Math.sin(ang)).toFixed(1)+'" y2="'+(36-r2*Math.cos(ang)).toFixed(1)+'"/>'; }
+  return '<span class="hmg-rg" title="الإنجاز الفعلي '+Math.round(a*100)+'%"><svg viewBox="0 0 72 72"><defs><linearGradient id="'+id+'" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F0D9A0"/><stop offset="1" stop-color="#B8954F"/></linearGradient></defs><g class="tk">'+ticks+'</g><circle cx="36" cy="36" r="'+R+'" class="bg"/><circle cx="36" cy="36" r="'+R+'" class="fg" stroke="url(#'+id+')" stroke-dasharray="'+(C*a).toFixed(1)+' '+C.toFixed(1)+'" transform="rotate(-90 36 36)"/></svg><b>'+Math.round(a*100)+'<small>%</small></b><em>الإنجاز</em></span>'; }
 function _hmgHTML(D){ var projs=[], slides=[];
   D.forEach(function(p){ var u=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean); if(!u.length) return; var pi=projs.length; projs.push({p:p,u:u}); u.forEach(function(x){ slides.push({pi:pi,u:x}); }); });
   HMG.slides=slides; HMG.projs=projs; HMG.i=0;
   var head='<header><h3>صور المشاريع</h3><div class="hmg-tl">'+(slides.length?'<button class="hmg-pj" onclick="hmgProj(-1)" title="المشروع السابق">›</button><div class="hmg-dd"><button class="hmg-ddb" onclick="event.stopPropagation();hmgDD()" title="اختر مشروعاً"><span id="hmgDDl">'+esc(projs[0].p.code)+'</span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="hmg-ddm" id="hmgDDm" onclick="event.stopPropagation()"><input placeholder="ابحث عن مشروع…" oninput="hmgDDf(this.value)"><div class="hmg-ddl">'+projs.map(function(o,j){ return '<button data-j="'+j+'" data-s="'+esc(_lcNorm((o.p.code||"")+" "+(o.p.alias||o.p.name)+" "+(o.p.sector||"")))+'" onclick="hmgGoProj('+j+');hmgDD(false)"><b>'+esc(o.p.code)+'</b><span>'+esc(o.p.alias||o.p.name)+'</span><em>'+ar(o.u.length)+' صور</em></button>'; }).join("")+'</div></div></div><button class="hmg-pj" onclick="hmgProj(1)" title="المشروع التالي">‹</button>':'')+'<span class="hmg-cnt" id="hmgCnt">'+(slides.length?ar(1)+' / '+ar(slides.length):'')+'</span></div></header>';
   if(!slides.length) return '<section class="hm-card hmg">'+head+'<div class="hb-empty">لا توجد صور مشاريع في البيانات الحالية.</div></section>';
   var st=slides.map(function(s,k){ return '<div class="hmg-s'+(k===0?' on':'')+'" data-k="'+k+'"><img referrerpolicy="no-referrer" alt="" '+(k<2?'src':'data-src')+'="'+esc(s.u)+'" onerror="this.parentNode.classList.add(\'err\')"></div>'; }).join("");
-  var cards=projs.map(function(o,j){ var p=o.p; return '<button class="hmg-c'+(j===0?' on':'')+'" data-j="'+j+'" onclick="hmgGoProj('+j+')" title="'+esc(p.alias||p.name)+'"><img loading="lazy" referrerpolicy="no-referrer" alt="" src="'+esc(o.u[0])+'" onerror="this.style.visibility=\'hidden\'"><div><b>'+esc(p.alias||p.name)+'</b><span>'+esc(p.sector||"")+'</span>'+_hbBadge(_hbStatus(p))+'</div></button>'; }).join("");
+  var cards=projs.map(function(o,j){ var p=o.p; return '<button class="hmg-c'+(j===0?' on':'')+'" data-j="'+j+'" onclick="hmgGoProj('+j+')" title="'+esc(p.alias||p.name)+'"><img loading="lazy" referrerpolicy="no-referrer" alt="" src="'+esc(o.u[0])+'" onerror="this.style.visibility=\'hidden\'"><div><b>'+esc(p.alias||p.name)+'</b><span>'+esc(p.sector||"")+'</span>'+_hbBadge(_hbStatus(p))+'</div>'+_hmgRing(p)+'</button>'; }).join("");
   return '<section class="hm-card hmg" onmouseenter="HMG.pause=true" onmouseleave="HMG.pause=false">'+head
     +'<div class="hmg-stage" onclick="hmgOpen()">'+st+'<div class="hmg-ov"><b id="hmgName">'+esc(projs[0].p.alias||projs[0].p.name)+'</b><span id="hmgSub">'+esc(projs[0].p.code)+' · '+esc(projs[0].p.sector||"")+'</span></div>'
     +'<button class="hmg-nav nx" onclick="event.stopPropagation();hmgStep(1)" aria-label="التالي">‹</button><button class="hmg-nav pv" onclick="event.stopPropagation();hmgStep(-1)" aria-label="السابق">›</button><i class="hmg-pb" id="hmgPb"></i></div>'
