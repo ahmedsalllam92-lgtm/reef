@@ -7192,6 +7192,27 @@ body[data-theme="dark"] .gd-doc{border-color:#2B363B}
 .gd-bar{top:8px}
 
 .gd-tb th.lv1{background:#1E8E4E}.gd-tb th.lv2{background:#D9A31A;color:#14201A}.gd-tb th.lv3{background:#B0433A}
+
+/* بطاقتا نطاق العمل والمستندات الداعمة */
+.pmi{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)!important;gap:14px!important}
+.pmi>div{position:relative;overflow:hidden;border:1px solid #E3E8E3!important;border-inline-start:1px solid #E3E8E3!important;border-radius:18px!important;padding:16px 18px!important;background:#fff!important;box-shadow:0 14px 28px -26px rgba(11,58,34,.6)}
+.pmi>div:before{content:"";position:absolute;inset-inline:0;top:0;height:4px}.pmi-s:before{background:linear-gradient(90deg,#0E5A3A,#3FA06E)}.pmi-d:before{background:linear-gradient(90deg,#B8954F,#E9D29A)}
+.pmi h4{display:flex!important;align-items:center;gap:10px;margin:2px 0 12px!important;font-size:14.5px!important;font-weight:900;color:#0B3D27!important}
+.pmi h4:before{content:"";flex:none;width:34px;height:34px;border-radius:11px;background:#EEF6F1 center/18px no-repeat}
+.pmi-s h4:before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E5A3A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Ccircle cx='12' cy='12' r='5'/%3E%3Ccircle cx='12' cy='12' r='1.5'/%3E%3C/svg%3E")}
+.pmi-d h4:before{background-color:#FBF5E8;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239A7A3E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5M9 13h6M9 17h4'/%3E%3C/svg%3E")}
+.pmi h4 em{font-style:normal;margin-inline-start:auto;font-size:11.5px;font-weight:900;color:#7A5C22;background:#FBF5E8;border:1px solid #EADFC2;border-radius:99px;padding:1px 9px}
+.pmi-s p{font-size:13.5px!important;line-height:2.05!important;color:#2E3B34!important;text-align:justify;padding:12px 14px;border-radius:12px;background:#F7FAF8}
+.pmi ul{counter-reset:pmd;gap:7px!important}
+.pmi li{counter-increment:pmd;position:relative;display:flex!important;align-items:center;gap:10px;justify-content:flex-start!important;padding:9px 12px!important;border-radius:12px!important;background:#FCFAF4!important;border:1px solid #EFE6CF!important;font-size:12.5px!important;font-weight:800!important;color:#14241B!important;transition:.15s}
+.pmi li:before{content:counter(pmd);flex:none;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:900;background:linear-gradient(135deg,#E9D29A,#B8954F);color:#14201A}
+.pmi li span{flex:1}.pmi li button{margin-inline-start:auto}
+.pmi li:hover{border-color:#C9A961;transform:translateX(-2px)}
+.pmi-pr{margin-top:4px}.pmi-pr>div{box-shadow:none;padding:10px 14px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.pmi-pr h4{margin-bottom:8px!important;font-size:12.5px!important}.pmi-pr h4:before{width:26px;height:26px;background-size:14px}
+.pmi-pr .pmi-s p{font-size:10.5px!important;line-height:1.8!important;padding:8px 10px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}.pmi-pr li{padding:5px 8px!important;font-size:10.5px!important}.pmi-pr li:before{width:18px;height:18px;font-size:9.5px}
+body[data-theme="dark"] .pmi>div{background:#141D21!important;border-color:#2B363B!important}body[data-theme="dark"] .pmi h4{color:#A9E2C0!important}body[data-theme="dark"] .pmi-s p{background:rgba(255,255,255,.03);color:#C9D6CF!important}
+body[data-theme="dark"] .pmi li{background:rgba(201,169,97,.06)!important;border-color:rgba(201,169,97,.2)!important;color:#E3ECE6!important}body[data-theme="dark"] .pmi h4:before{background-color:rgba(255,255,255,.06)}
+body[data-theme="dark"] .pmp-pg .pmi>div{background:#fff!important;border-color:#E3E8E3!important}body[data-theme="dark"] .pmp-pg .pmi h4{color:#0B3D27!important}body[data-theme="dark"] .pmp-pg .pmi-s p{background:#F7FAF8;color:#2E3B34!important}body[data-theme="dark"] .pmp-pg .pmi li{background:#FCFAF4!important;color:#14241B!important;border-color:#EFE6CF!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15763,7 +15784,7 @@ function _pmOpHTML(op){ var G=_pmLayout(op), L=PML, ed=PMX.edit, num=0;
     return '<div class="pmn k-'+nd.k+(sel?" sel":"")+'" data-id="'+nd.id+'" style="left:'+p.x+'px;top:'+p.y+'px;width:'+p.w+'px;height:'+p.h+'px">'+inner+(isStep?'<i class="pmnum">'+num+'</i>':'')
       +(ed&&sel?'<div class="pmn-tb"><button onclick="event.stopPropagation();pmAddAfter(\''+nd.id+'\',\'task\')">+ خطوة</button><button onclick="event.stopPropagation();pmAddAfter(\''+nd.id+'\',\'dec\')">+ قرار</button><button onclick="event.stopPropagation();pmDup(\''+nd.id+'\')">نسخ</button><button class="x" onclick="event.stopPropagation();pmDel(\''+nd.id+'\')">حذف</button></div>':'')+'</div>'; }).join("");
   var defs='<defs><marker id="pmA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="pmah"/></marker><marker id="pmAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="pmahr"/></marker></defs>';
-  var info='<div class="pmi"><div class="pmi-s"><h4>نطاق العمل</h4><p'+_pmEd("op.scope")+'>'+esc(op.scope||(ed?"اكتب نطاق العمل…":"—"))+'</p></div><div class="pmi-d"><h4>المستندات الداعمة</h4>'+((op.docs||[]).length?'<ul>'+op.docs.map(function(d,i){ return '<li><span'+_pmEd("op.docs."+i)+'>'+esc(d)+'</span>'+(ed?'<button onclick="pmDocDel('+i+')">×</button>':'')+'</li>'; }).join("")+'</ul>':'<p>—</p>')+(ed?'<button class="pmi-add" onclick="pmDocAdd()">+ مستند</button>':'')+'</div></div>';
+  var info='<div class="pmi"><div class="pmi-s"><h4>نطاق العمل</h4><p'+_pmEd("op.scope")+'>'+esc(op.scope||(ed?"اكتب نطاق العمل…":"—"))+'</p></div><div class="pmi-d"><h4>المستندات الداعمة'+((op.docs||[]).length?'<em>'+op.docs.length+'</em>':'')+'</h4>'+((op.docs||[]).length?'<ul>'+op.docs.map(function(d,i){ return '<li><span'+_pmEd("op.docs."+i)+'>'+esc(d)+'</span>'+(ed?'<button onclick="pmDocDel('+i+')">×</button>':'')+'</li>'; }).join("")+'</ul>':'<p>—</p>')+(ed?'<button class="pmi-add" onclick="pmDocAdd()">+ مستند</button>':'')+'</div></div>';
   var legend='<div class="pmlg"><span><i class="n"></i>انتقال</span><span><i class="y"></i>موافقة (نعم)</span><span><i class="no"></i>إعادة / رفض</span><span><b class="d"></b>قرار</span><span><b class="s"></b>بداية</span><span><b class="e"></b>نهاية / المرحلة التالية</span></div>';
   return '<div class="pmh"><div><span class="pmh-k">'+esc(op.pill||pmData().phases[PMX.ph].sub||"")+'</span><h2'+_pmEd("op.title")+'>'+esc(op.title)+'</h2></div><div class="pmz"><button class="pmb" onclick="pmZoom(-1)" title="تصغير">'+_pmIc("zout")+'</button><span id="pmZv">100%</span><button class="pmb" onclick="pmZoom(1)" title="تكبير">'+_pmIc("zin")+'</button><button class="pmb" onclick="pmZoom(0)" title="ملاءمة">'+_pmIc("fit")+'</button></div></div>'
     +'<div class="pmv" id="pmStage"><div class="pmc" id="pmCanvas" style="width:'+G.W+'px;height:'+G.H+'px" data-w="'+G.W+'" data-h="'+G.H+'">'+lanes+'<svg class="pmsvg" width="'+G.W+'" height="'+G.H+'" viewBox="0 0 '+G.W+' '+G.H+'">'+defs+paths+'</svg>'+labels+nodes+'</div><div class="pms-play" id="pmCap"></div></div>'+legend+info; }
@@ -15964,7 +15985,7 @@ function _pmCanvasOnly(op){ var keep={edit:PMX.edit,sel:PMX.sel}; PMX.edit=false
 function _pmPrintOp(op,ph,pi){ var G=_pmLayout(op);
   return '<section class="pmp-pg"><div class="pmp-h"><div><span>'+esc(_pmPhLabel(ph,pi))+'</span><h2>'+esc(op.title)+'</h2></div><img src="'+LOGO+'" alt=""></div>'
     +'<div class="pmp-fit" data-w="'+G.W+'" data-h="'+G.H+'">'+_pmCanvasOnly(op)+'</div>'
-    +'<div class="pmp-info">'+(op.scope?'<div><b>نطاق العمل</b><p>'+esc(op.scope)+'</p></div>':'')+((op.docs||[]).length?'<div><b>المستندات الداعمة</b><p>'+op.docs.map(esc).join(" · ")+'</p></div>':'')+'</div>'
+    +'<div class="pmi pmi-pr">'+'<div class="pmi-s"><h4>نطاق العمل</h4><p>'+esc(op.scope||"—")+'</p></div>'+'<div class="pmi-d"><h4>المستندات الداعمة'+((op.docs||[]).length?'<em>'+op.docs.length+'</em>':'')+'</h4>'+((op.docs||[]).length?'<ul>'+op.docs.map(function(d){ return '<li><span>'+esc(d)+'</span></li>'; }).join("")+'</ul>':'<p>—</p>')+'</div></div>'
     +'<div class="pmp-f"><span>دليل الإجراءات التشغيلية — خريطة العمليات</span><span>'+esc(MONTHLBL)+'</span></div></section>'; }
 function _pmBuildPrint(kind){ var D=pmData(), pages="", title="";
   var keepV=PMX.view, keepPh=PMX.ph, keepOp=PMX.op;
