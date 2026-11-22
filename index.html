@@ -7064,6 +7064,20 @@ body[data-theme="dark"] .pmm-rib div.on span{color:#E9D29A!important}
 /* سهم الانتقال بين المراحل: يشير لليسار (اتجاه المسار) */
 .pmm-col:not(:last-child):after{content:""!important;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B8954F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6l-6 6 6 6'/%3E%3C/svg%3E") center/14px no-repeat!important}
 body[data-theme="dark"] .pmm-col:not(:last-child):after{background-color:#141D21!important}
+
+/* طباعة الخريطة الشاملة في صفحة واحدة */
+.pmp-one{justify-content:center}
+.pmp-one .pmm{gap:8px!important}
+.pmp-one .pmm-stats,.pmp-one .pmm-end,.pmp-one .pmm-ht p,.pmp-one .pmm-th em{display:none!important}
+.pmp-one .pmm-hero{grid-template-columns:1fr!important;padding:10px 18px!important;gap:8px!important}
+.pmp-one .pmm-ht h2{font-size:22px;margin:0}
+.pmp-one .pmm-cols{gap:18px!important}
+.pmp-one .pmm-ch{min-height:0!important;padding:10px 14px 10px 60px!important}
+.pmp-one .pmm-ch .ic{width:32px;height:32px;bottom:8px}
+.pmp-one .pmm-steps{padding:8px 10px 10px!important}
+.pmp-one .pmm-step{padding:5px 4px!important}
+.pmp-one .pmm-bridge{margin:2px 0}
+.pmp-one .pmm-track{gap:8px!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15842,7 +15856,7 @@ function pmPrintGo(kind){ var m=document.getElementById("pmPM"); if(m) m.remove(
   var keepV=PMX.view, keepPh=PMX.ph, keepOp=PMX.op;
   var cover=function(t,s){ return '<section class="pmp-pg pmp-cv"><div class="pmp-cvc"><i></i><i></i><i></i><i></i></div><img src="'+LOGO_W+'" alt=""><span>دليل الإجراءات التشغيلية لإدارة المشاريع</span><h1>'+esc(t)+'</h1><p>'+esc(s)+'</p><em>'+esc(MONTHLBL)+'</em></section>'; };
   var masterPg=function(){ var kv=PMX.edit; PMX.edit=false; var s=_pmMasterHTML().replace(/ id="[^"]*"/g,"").replace(/<div class="pms-play"[^>]*><\/div>/,""); PMX.edit=kv; var bi=s.indexOf('<div class="pmm-bridge">');
-    if(bi<0) return '<section class="pmp-pg pmp-ms">'+s+'</section>'; return '<section class="pmp-pg pmp-ms">'+s.slice(0,bi)+'</div></section><section class="pmp-pg pmp-ms">'+'<div class="pmm">'+s.slice(bi)+'</section>'; };
+    return '<section class="pmp-pg pmp-ms pmp-one">'+s+'</section>'; };
   var phPages=function(pi){ var ph=D.phases[pi], s='<section class="pmp-pg pmp-div"><b>'+(/^ملاحق/.test(ph.name)?"ملاحق":String(pi+1).padStart(2,"0"))+'</b><h2>'+esc(ph.name)+'</h2><p>'+esc(ph.sub||"")+'</p><ol>'+ph.ops.map(function(o){ return '<li>'+esc(o.title)+'</li>'; }).join("")+'</ol></section>';
     ph.ops.forEach(function(o,oi){ PMX.ph=pi; PMX.op=oi; s+=_pmPrintOp(o,ph,pi); }); return s; };
   if(kind==="op"){ var op=_pmOp(); title=op.title; pages=_pmPrintOp(op,D.phases[PMX.ph],PMX.ph); }
@@ -15853,7 +15867,8 @@ function pmPrintGo(kind){ var m=document.getElementById("pmPM"); if(m) m.remove(
   var n=(pages.match(/class="pmp-pg/g)||[]).length;
   IS_REPORT=true; PRINT_NAME=""; show('<div class="pmp" id="pmp"><div class="pmp-bar noprint"><div><b>معاينة الطباعة</b><span>'+esc(title)+' · '+n+' صفحة أفقية</span></div><button class="pmb" onclick="pmRender()">‹ رجوع</button><button class="pmb pri" onclick="pmPrintNow(\''+esc(title).replace(/'/g,"")+'\')">'+_pmIc("print")+' طباعة / حفظ PDF</button></div><div class="pmp-pages">'+pages+'</div></div>'); IS_REPORT=false;
   _pmPrintFit(); setTimeout(_pmPrintFit,200); }
-function _pmPrintFit(){ document.querySelectorAll(".pmp-fit").forEach(function(f){ var W=+f.getAttribute("data-w"), H=+f.getAttribute("data-h"), c=f.querySelector(".pmc"); if(!c) return; var aw=Math.min(f.clientWidth||930,930), ah=470;
+function _pmPrintFit(){ document.querySelectorAll(".pmp-one .pmm").forEach(function(m){ var av=600, z=0.8; m.style.zoom=z; while(z>0.3&&m.scrollHeight*z>av){ z-=0.02; m.style.zoom=z.toFixed(2); } });
+  document.querySelectorAll(".pmp-fit").forEach(function(f){ var W=+f.getAttribute("data-w"), H=+f.getAttribute("data-h"), c=f.querySelector(".pmc"); if(!c) return; var aw=Math.min(f.clientWidth||930,930), ah=470;
     var k=Math.min(aw/W, ah/H, 1.2), inn=f.querySelector(".pmp-in"); if(!inn){ inn=document.createElement("div"); inn.className="pmp-in"; f.insertBefore(inn,c); inn.appendChild(c); }
     inn.style.cssText="position:relative;overflow:hidden;margin:0 auto;width:"+(W*k).toFixed(1)+"px;height:"+(H*k).toFixed(1)+"px"; c.style.transformOrigin="top right"; c.style.transform="scale("+k.toFixed(4)+")"; c.style.position="absolute"; c.style.top="0"; c.style.right="0"; c.style.left="auto"; f.style.height="auto"; }); }
 function pmPrintNow(t){ PRINT_NAME=(t||"خريطة العمليات")+" - "+MONTHLBL; document.body.classList.add("pm-printall"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("pm-printall"); PRINT_NAME=""; },1500); }
