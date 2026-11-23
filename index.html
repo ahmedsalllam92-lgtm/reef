@@ -13392,14 +13392,15 @@ function payRegOpen(keep){ try{setNavActive("payreg");}catch(e){} try{ _initDash
   RERENDER=function(){ payRegOpen(true); }; ANSWER_TITLE=""; IS_REPORT=false; PRINT_NAME="سجل المستخلصات — "+MONTHLBL; _dxSetHash("payments");
   var all=_payLoad().rows, L=_pySorted(_pyList()), base=_pyList("st"), anyF=!!(PY.q||_pyArr("sector").length||_pyArr("ptype").length||_pyArr("fn").length||_pyArr("year").length||_pyArr("st").length);
   var tot=all.reduce(function(a,o){ return a+_payN(o.v); },0), paid=all.filter(function(o){ return /منصرف/.test(o.st||""); }), und=all.filter(function(o){ return /إجراء/.test(o.st||""); });
-  var pv=paid.reduce(function(a,o){ return a+_payN(o.v); },0), uv=und.reduce(function(a,o){ return a+_payN(o.v); },0);
+  /* المنصرف وتحت الإجراء من عمودي تاب المشاريع (نفس أرقام المحفظة) */
+  var pv=(DATA||[]).reduce(function(a,p){ return a+_dxN(p.disbursed); },0), uv=(DATA||[]).reduce(function(a,p){ return a+_dxN(p.under_proc); },0), tvAll=(DATA||[]).reduce(function(a,p){ return a+_dxBase(p); },0);
   var dl=paid.map(_payDur).filter(function(x){ return x>0; }), avgD=dl.length?Math.round(dl.reduce(function(a,b){ return a+b; },0)/dl.length):null;
   var projN={}; all.forEach(function(o){ projN[o.c]=1; });
   var M=function(x){ var m=_dxMs(x); return m[0]+'<small>'+_rU(m[1])+'</small>'; };
   var stats='<div class="hb-hero kfx py-hero"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +'<div><span>عدد المستخلصات</span><b>'+ar(all.length)+'<small>مستخلص</small></b><em>لـ '+ar(Object.keys(projN).length)+' مشروع</em></div>'
     +'<div><span>إجمالي قيمة المستخلصات</span><b>'+M(tot)+'</b><em>كل المستخلصات المسجّلة</em></div>'
-    +'<div><span>المنصرف</span><b>'+M(pv)+'</b><div class="hb-hb"><u style="width:'+(tot?(pv/tot*100).toFixed(1):0)+'%"></u></div><em>'+_dxPct(tot?pv/tot:0)+' · '+ar(paid.length)+' مستخلص</em></div>'
+    +'<div><span>المنصرف</span><b>'+M(pv)+'</b><div class="hb-hb"><u style="width:'+(tvAll?(pv/tvAll*100).toFixed(1):0)+'%"></u></div><em>'+_dxPct(tvAll?pv/tvAll:0)+' من القيمة التعاقدية · '+ar(paid.length)+' مستخلص</em></div>'
     +'<div><span>تحت الإجراء</span><b>'+M(uv)+'</b><em>'+ar(und.length)+' مستخلص</em></div>'
     +'<div><span>متوسط مدة الصرف</span><b>'+(avgD==null?'—':ar(avgD)+'<small>يوم</small>')+'</b><em>من التسليم للمالية حتى الصرف</em></div></div>';
   var bySt={}; base.forEach(function(o){ var s=o.st||"—"; bySt[s]=(bySt[s]||0)+1; }); var sts=Object.keys(bySt).sort(function(a,b){ return bySt[b]-bySt[a]; });
@@ -13415,7 +13416,7 @@ function payRegOpen(keep){ try{setNavActive("payreg");}catch(e){} try{ _initDash
   if(!L.length) body='<div class="hb-empty">لا توجد مستخلصات مطابقة.</div>';
   else if(PY.view==="proj"){ var G={}, order=[]; L.forEach(function(o){ if(!G[o.c]){ G[o.c]=[]; order.push(o.c); } G[o.c].push(o); });
     body='<div class="hb-cards py-cards">'+order.map(function(c){ var g=G[c].slice().sort(function(a,b){ return _payN(a.no)-_payN(b.no); }), f=g[0], last=g[g.length-1];
-      var cv=_payN(f.cv), sum=g.reduce(function(a,o){ return a+_payN(o.v); },0), gp=g.filter(function(o){ return /منصرف/.test(o.st||""); }).reduce(function(a,o){ return a+_payN(o.v); },0), gu=sum-gp;
+      var cv=_payN(f.cv), sum=g.reduce(function(a,o){ return a+_payN(o.v); },0), gp=g.filter(function(o){ return /منصرف/.test(o.st||""); }).reduce(function(a,o){ return a+_payN(o.v); },0), gu=sum-gp, _P=(DATA||[]).filter(function(x){ return x.code===c; })[0]; if(_P){ gp=_dxN(_P.disbursed); gu=_dxN(_P.under_proc); }
       var cr=Math.max.apply(null,g.map(function(o){ return _payN(o.cr); }).concat([cv?sum/cv:0])); cr=Math.min(1,cr);
       return '<article class="hb-card py-card" onclick="pyOpen(\''+esc(c).replace(/'/g,"\\'")+'\')"><div class="hb-cb hb-cb2">'
         +'<div class="py-ch">'+cp(f)+'<span class="py-cnt">'+ar(g.length)+' مستخلص</span></div><h4>'+esc(f.n||c)+'</h4>'
