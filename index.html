@@ -8341,6 +8341,15 @@ body[data-theme="dark"] .sh-t .sh-dl{background:#16252C;border-color:rgba(205,22
 .m4-pipe{align-items:stretch}.m4-st{justify-content:center}
 #wkReport.mgr:fullscreen .wkfs-exit,#wkReport.mgr.wkfs-fallback .wkfs-exit{top:auto!important;bottom:14px;left:14px;opacity:.75}
 .hb-tw:has(.sh-t){overflow:visible!important}
+
+/* وضع العرض بملء الشاشة: شريحة واحدة في المنتصف */
+#wkReport.mgr.mg-fs{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:0!important;padding:0 0 56px!important;overflow:hidden!important;background:#0E1A14;scroll-snap-type:none!important}
+#wkReport.mgr.mg-fs .mgs{display:none;margin:0!important;border-radius:8px;box-shadow:0 20px 60px -20px rgba(0,0,0,.8)}
+#wkReport.mgr.mg-fs .mgs.on{display:flex}
+.mgf-nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:99px;padding:5px 8px;z-index:20}
+.mgf-nav button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:16px;cursor:pointer;font-family:inherit}.mgf-nav button:hover{background:rgba(255,255,255,.22)}
+.mgf-nav span{color:#E9E4D6;font-size:13px;font-weight:700;min-width:54px;text-align:center}
+.m4-ar{align-self:center}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -14049,7 +14058,7 @@ function mgrReportOpen(){ try{ setNavActive("report"); }catch(e){} IS_REPORT=tru
   show(bar+'<div class="report mgr" id="wkReport"><button class="wkfs-exit noprint" onclick="wkFullscreen()">✕ خروج من ملء الشاشة</button>'+_mgrSlides()+'</div>'); setTimeout(_mgrFit,30); }
 function _mgrFit(){ try{ var r=document.querySelector(".mgr"); if(!r) return; var w=r.clientWidth-(parseFloat(getComputedStyle(r).paddingLeft)||0)*2; var fs=document.fullscreenElement===r||document.webkitFullscreenElement===r; var k=fs?Math.min(innerWidth/1280,innerHeight/720):Math.min(1,w/1280); r.style.setProperty("--mgz",k.toFixed(4)); }catch(e){} }
 function mgrPrint(){ document.body.classList.add("mgr-print"); try{ printAnswer(); }catch(e){ window.print(); } setTimeout(function(){ document.body.classList.remove("mgr-print"); },1500); }
-try{ window.addEventListener("resize",_mgrFit); document.addEventListener("fullscreenchange",function(){ [60,250,600].forEach(function(ms){ setTimeout(_mgrFit,ms); }); setTimeout(function(){ var r=document.querySelector(".mgr.mg-fs"); if(r) r.scrollTop=0; },700); }); window.mgrReportOpen=mgrReportOpen; window.mgrPrint=mgrPrint; }catch(e){}
+try{ window.addEventListener("resize",_mgrFit); document.addEventListener("fullscreenchange",function(){ [60,250,600].forEach(function(ms){ setTimeout(_mgrFit,ms); });  }); window.mgrReportOpen=mgrReportOpen; window.mgrPrint=mgrPrint; }catch(e){}
 
 /* ===== شرائح التقارير v3: مسار المشاريع + دونات مالية + بطاقات قطاعات (بلا خطوط جانبية) ===== */
 function _mgrDonut(segs,big,small,sz){ sz=sz||190; var R=sz/2-14, C=2*Math.PI*R, tot=segs.reduce(function(a,s){ return a+Math.max(0,s.v); },0)||1, off=0;
@@ -14128,10 +14137,15 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
 /* ملء الشاشة: شريحة واحدة تملأ الشاشة، والتنقل بالأسهم */
 function _mgrFit(){ try{ var r=document.querySelector(".mgr"); if(!r) return; var fs=(document.fullscreenElement||document.webkitFullscreenElement)===r||r.classList.contains("wkfs-fallback");
     var S=r.querySelectorAll(".mgs");
-    if(fs){ var W=r.clientWidth||innerWidth, H=r.clientHeight||innerHeight, k=Math.min((W-24)/1280,(H-24)/720); r.style.setProperty("--mgz",k.toFixed(4)); var m=Math.max(0,(H/k-720)/2); S.forEach(function(s){ s.style.margin=m.toFixed(2)+"px auto"; }); if(!r.classList.contains("mg-fs")) r.scrollTop=0; r.classList.add("mg-fs"); }
-    else { var w=r.clientWidth-(parseFloat(getComputedStyle(r).paddingLeft)||0)*2; r.style.setProperty("--mgz",Math.min(1,w/1280).toFixed(4)); S.forEach(function(s){ s.style.margin=""; }); r.classList.remove("mg-fs"); } }catch(e){} }
-document.addEventListener("keydown",function(e){ var r=document.querySelector(".mgr.mg-fs"); if(!r) return; var d=(e.key==="ArrowDown"||e.key==="PageDown"||e.key===" "||e.key==="ArrowLeft")?1:((e.key==="ArrowUp"||e.key==="PageUp"||e.key==="ArrowRight")?-1:0); if(!d) return; e.preventDefault();
-  var S=[].slice.call(r.querySelectorAll(".mgs")), y=r.scrollTop, h=r.clientHeight, cur=Math.round(y/h); var t=S[Math.max(0,Math.min(S.length-1,cur+d))]; if(t) r.scrollTo({top:Math.max(0,cur+d)*h,behavior:"smooth"}); });
+    if(fs){ if(!r.classList.contains("mg-fs")){ r.classList.add("mg-fs"); MGF.i=0; } _mgfNav(r); var k=Math.min((innerWidth-40)/1280,(innerHeight-96)/720); r.style.setProperty("--mgz",k.toFixed(4)); S.forEach(function(s){ s.style.margin=""; }); _mgfShow(r); }
+    else { r.classList.remove("mg-fs"); S.forEach(function(s){ s.style.margin=""; s.classList.remove("on"); }); var nv=r.querySelector(".mgf-nav"); if(nv) nv.remove(); var w=r.clientWidth-(parseFloat(getComputedStyle(r).paddingLeft)||0)*2; r.style.setProperty("--mgz",Math.min(1,w/1280).toFixed(4)); } }catch(e){} }
+/* وضع العرض: شريحة واحدة في المنتصف + أزرار وأسهم */
+var MGF={i:0};
+function _mgfShow(r){ var S=r.querySelectorAll(".mgs"); MGF.i=Math.max(0,Math.min(S.length-1,MGF.i)); S.forEach(function(s,j){ s.classList.toggle("on",j===MGF.i); }); var c=r.querySelector(".mgf-c"); if(c) c.textContent=ar(MGF.i+1)+" / "+ar(S.length); }
+function _mgfNav(r){ if(r.querySelector(".mgf-nav")) return; var n=document.createElement("div"); n.className="mgf-nav noprint"; n.innerHTML='<button onclick="mgfGo(-1)" title="السابق">→</button><span class="mgf-c"></span><button onclick="mgfGo(1)" title="التالي">←</button>'; r.appendChild(n); }
+function mgfGo(d){ var r=document.querySelector(".mgr.mg-fs"); if(!r) return; MGF.i+=d; _mgfShow(r); }
+try{ window.mgfGo=mgfGo; }catch(e){}
+document.addEventListener("keydown",function(e){ var r=document.querySelector(".mgr.mg-fs"); if(!r) return; var d=(e.key==="ArrowDown"||e.key==="PageDown"||e.key===" "||e.key==="ArrowLeft"||e.key==="Enter")?1:((e.key==="ArrowUp"||e.key==="PageUp"||e.key==="ArrowRight"||e.key==="Backspace")?-1:(e.key==="Home"?-99:(e.key==="End"?99:0))); if(!d) return; e.preventDefault(); mgfGo(d); });
 
 function _brfData(){ var D=(!BRF.all&&typeof _dashFilt==="function")?_dashFilt():DATA.slice(); D=D||[];
   var rows=D.map(analyzeProject); rows.forEach(function(r){ r.cat=_dxCatOf(r); });
