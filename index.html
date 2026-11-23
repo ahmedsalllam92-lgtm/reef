@@ -7952,6 +7952,32 @@ body:not([data-theme="dark"]) :is(.hm-k,.hm-card,.dx-card,.dx-kpi,.dxf-p,.hb-car
 body:not([data-theme="dark"]) :is(.hm-sec,.hm-al,.hmg-c){border:1px solid #DCE4DE!important}
 body:not([data-theme="dark"]) :is(.hm-card header,.hm-card>header){border-bottom-color:#E2E8E3!important}
 body:not([data-theme="dark"]) :is(.hm-k,.hm-card,.hb-card,.gdc,.kb-card):hover{border-color:#C3D0C7!important}
+
+/* جداول الأدلة: دمج الخلايا، عنوان الجدول، الملاحظات، الأعمدة القصيرة بلا كسر */
+.gd-tcap{margin:14px 0 0;padding:8px 14px;background:#0B3A22;color:#F0D9A0;font-weight:900;font-size:calc(var(--fs) - 1.5px);border-radius:10px 10px 0 0}
+.gd-tcap+.gd-tw,.gd-tcap+.gd-tnote+.gd-tw{margin-top:0}
+.gd-tnote{margin:8px 0}
+.gd-tb th{vertical-align:middle;text-align:center}
+.gd-tb th[colspan]{background:#145B3A}
+.gd-tb td[rowspan]{vertical-align:middle;background:#F3F7F4!important;font-weight:800;color:#0B3D27}
+.gd-tb .sh{white-space:nowrap;text-align:center}
+.gd-tb td.mk{text-align:center;font-weight:900;color:#0E5A3A}
+.gd-tb.wide{font-size:calc(var(--fs) - 3.5px)}
+.gd-tb.wide td,.gd-tb.wide th{padding:6px 8px}
+.gd-tb td:empty{background:#FCFDFC}
+body.gd-print .gd-tcap{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-after:avoid}
+body.gd-print .gd-tb.wide{font-size:8.5pt}
+
+.gd-cvline{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;color:#5E6C62;font-weight:700;padding:4px 0 0}
+.gd-cvline b{color:#0B3D27;font-weight:900;direction:ltr;unicode-bidi:isolate}
+.gd-cvline span+span{position:relative}.gd-cvline span+span:before{content:"";position:absolute;inset-inline-start:-12px;top:50%;width:4px;height:4px;border-radius:50%;background:#C9A961;transform:translateY(-50%)}
+body.gd-print .gd-cvline{font-size:11pt}
+
+.gd-tb.form td{background:#fff!important;border:1px solid #C9D5CD;padding:9px 12px;font-weight:600;color:#2E3B34}
+.gd-tb.form td.lb{background:#F3F7F4!important;font-weight:800;color:#0B3D27;white-space:nowrap}
+.gd-tb.form td.cl{width:0;padding:0;border-left:0;border-right:0;background:transparent!important}
+.gd-tb.form td.fill{min-width:120px}
+.gd-tb.form td:first-child{font-weight:800}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -11655,7 +11681,7 @@ function pmKbAnswer(q){ try{setNavActive("kb");}catch(e){} RERENDER=null; var m=
   var best=m[0].e; var related=m.slice(1,5).map(function(x){return x.e;});
   var relHTML=related.length?('<div class="kb-rel"><span>مواضيع ذات صلة:</span> '+related.map(function(e){return '<button class="kb-chip" onclick="ask(\''+esc(e.title)+'\')">'+esc(e.title)+'</button>';}).join("")+'</div>'):"";
   PRINT_NAME="دليل إدارة المشاريع — "+esc(best.title); IS_REPORT=false;
-  show(label("إدارة المشاريع — دليل معرفي")+_kbCard(best)+relHTML+'<div class="kb-note noprint">مبني على أدلة برنامج ريف الإجرائية المعتمدة — بدون اتصال خارجي.</div>');
+  show(label("إدارة المشاريع — دليل معرفي")+_kbCard(best)+relHTML+'<div class="kb-note noprint">مبني على أدلة برنامج ريف الإجرائية — بدون اتصال خارجي.</div>');
   return true;
 }
 function pmKbList(){ try{setNavActive("kb");}catch(e){} RERENDER=null;
@@ -16902,12 +16928,12 @@ function _gdLoad(){ if(GD.data) return Promise.resolve(GD.data); if(GD.loading) 
 function _gdById(id){ return (GD.data||[]).filter(function(g){ return g.id===id; })[0]; }
 /* ---------- المكتبة ---------- */
 function pmKbList(){ try{ setNavActive("kb"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=true;
-  show('<div class="gdl"><div class="gdl-hero"><div class="gdl-ht"><span>الحوكمة والإجراءات</span><h1>مكتبة الأدلة الإجرائية</h1><p>الأدلة والنماذج المعتمدة لبرنامج ريف — كاملة ومنسّقة للقراءة والبحث والطباعة.</p></div><div class="gdl-load"><i></i>جارٍ تحميل الأدلة…</div></div></div>'); IS_REPORT=false;
+  show('<div class="gdl"><div class="gdl-hero"><div class="gdl-ht"><span>الحوكمة والإجراءات</span><h1>مكتبة الأدلة الإجرائية</h1><p>الأدلة والنماذج لبرنامج ريف — كاملة ومنسّقة للقراءة والبحث والطباعة.</p></div><div class="gdl-load"><i></i>جارٍ تحميل الأدلة…</div></div></div>'); IS_REPORT=false;
   _gdLoad().then(function(){ _gdLibRender(); }).catch(function(){ var l=document.querySelector(".gdl-load"); if(l) l.innerHTML="تعذّر تحميل الأدلة — تأكد من الاتصال (تعمل على الموقع المنشور)."; _gdLibRender(true); }); }
 function _gdLibRender(offline){ var G=GD.data||[], cats=[]; G.forEach(function(g){ if(cats.indexOf(g.cat)<0) cats.push(g.cat); });
   var q=_gdNorm(GD.q), L=G.filter(function(g){ return (!GD.cat||g.cat===GD.cat)&&(!q||_gdNorm(g.title+" "+g.cat+" "+g.sum).indexOf(q)>=0); });
   var mins=G.reduce(function(a,g){ return a+g.mins; },0), nt=G.reduce(function(a,g){ return a+g.nt; },0);
-  var hero='<div class="gdl-hero"><div class="gdl-ht"><span>الحوكمة والإجراءات</span><h1>مكتبة الأدلة الإجرائية</h1><p>الأدلة والنماذج المعتمدة لبرنامج ريف — كاملة ومنسّقة للقراءة والبحث والطباعة.</p>'
+  var hero='<div class="gdl-hero"><div class="gdl-ht"><span>الحوكمة والإجراءات</span><h1>مكتبة الأدلة الإجرائية</h1><p>الأدلة والنماذج لبرنامج ريف — كاملة ومنسّقة للقراءة والبحث والطباعة.</p>'
     +'<div class="gdl-sr"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="gdQ" placeholder="ابحث في الأدلة… (مثال: المخاطر، المستخلص، البوابة)" value="'+esc(GD.q)+'" oninput="GD.q=this.value;_gdLibRender();var e=document.getElementById(\'gdQ\');e.focus();e.setSelectionRange(e.value.length,e.value.length)"></div></div>'
     +'<div class="gdl-st"><div><b>'+G.length+'</b><span>دليل ونموذج</span></div><div><b>'+cats.length+'</b><span>مجال</span></div><div><b>'+nt+'</b><span>جدول ومصفوفة</span></div><div><b>'+Math.round(mins/60)+'+</b><span>ساعة قراءة</span></div></div></div>';
   var chips='<div class="gdl-cats"><button class="'+(!GD.cat?"on":"")+'" onclick="GD.cat=\'\';_gdLibRender()">الكل <em>'+G.length+'</em></button>'+cats.map(function(c){ var n=G.filter(function(g){ return g.cat===c; }).length; return '<button class="'+(GD.cat===c?"on":"")+'" onclick="GD.cat=\''+esc(c)+'\';_gdLibRender()">'+esc(c)+' <em>'+n+'</em></button>'; }).join("")+'</div>';
@@ -16931,6 +16957,30 @@ function guideOpen(id){ try{ setNavActive("kb"); }catch(e){} RERENDER=null; if(!
   var html=_gdDocHTML(g);
   IS_REPORT=true; PRINT_NAME=""; show(html); IS_REPORT=false; try{ window.scrollTo(0,0); }catch(e){} _gdBind(); }
 function _gdDocNo(g){ return "REEF-PM-"+String(g.id).replace(/^g/,"").padStart(2,"0"); }
+
+/* جداول الأدلة: تحافظ على الخلايا المدمجة (أفقياً ورأسياً) كما في ملف Word، وتفصل العنوان والملاحظات عن رأس الجدول */
+function _gdTbl(R0){ var C=function(c){ return typeof c==="string"?{t:c}:c; }, R=R0.map(function(r){ return r.map(C); });
+  var w=function(r){ return r.reduce(function(a,c){ return a+(c.cs||1); },0); }, nc=Math.max.apply(null,R.map(w));
+  var lv=function(s){ return /مدير إدارة المشاريع|مدير ادارة المشاريع/.test(s)?" lv3":(/مدير المشروع/.test(s)?" lv2":(/فريق العمل/.test(s)?" lv1":"")); };
+  /* جدول تعريفات معكوس (الوصف قبل المصطلح) */
+  if(R[0].length===2&&/^الوصف$/.test(R[0][0].t)&&/^(التعريفات|التعريف|المصطلح)$/.test(R[0][1].t)) R=R.map(function(r){ return r.length===2?[r[1],r[0]]:r; });
+  var cap=[], note=[];
+  while(R.length>1&&R[0].length===1&&(R[0][0].cs||1)>=nc){ var x=R.shift()[0].t; if(x.length>90||/^ملاحظ/.test(x)) note.push(x); else cap.push(x); }
+  var nh=1; while(nh<Math.min(3,R.length-1)&&R[nh-1].some(function(c){ return !c.t||(c.cs||1)>1; })&&!R[nh].some(function(c){ return (c.rs||1)>1; })&&R[nh].every(function(c){ return c.t.length<45; })) nh++;
+  if(R.length===1) nh=1;
+  /* نموذج (حقول وقيم): لا رأس أخضر — التسميات بخط عريض */
+  var all=[].concat.apply([],R), lab=all.filter(function(c){ return /[:：]\s*$/.test(c.t)||/☐|□/.test(c.t); }).length, colon=all.filter(function(c){ return /^[:：]$/.test(c.t); }).length, xs=all.filter(function(c){ return /^x{6,}$/i.test(c.t); }).length;
+  var form=R.length>1&&(lab>=3||colon>=2||xs>=2);
+  if(form){ return (cap.length?'<div class="gd-tcap">'+cap.map(esc).join(" · ")+'</div>':'')+(note.length?'<div class="gd-note gd-tnote">'+note.map(esc).join("<br>")+'</div>':'')+'<div class="gd-tw"><table class="gd-tb form"><tbody>'
+      +R.map(function(r){ return '<tr>'+r.map(function(c){ var s=c.t||"", v=/^x{6,}$/i.test(s)?"":s, a=(c.cs>1?' colspan="'+c.cs+'"':'')+(c.rs>1?' rowspan="'+c.rs+'"':''), k=/[:：]\s*$/.test(s)||(c.cs>1&&s.length<60&&!/☐|□/.test(s))?' class="lb"':(/^[:：]$/.test(s)?' class="cl"':(v?'':' class="fill"'));
+        return '<td'+a+k+'>'+esc(/^[:：]$/.test(s)?"":v)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div>'; }
+  var cell=function(c,tag){ var s=c.t||"", a=(c.cs>1?' colspan="'+c.cs+'"':'')+(c.rs>1?' rowspan="'+c.rs+'"':''), cls=(tag==="th"?lv(s):"")+(s.length<=14?" sh":"")+(c.cs>=nc&&tag==="td"?" grp":"")+(/^x$/i.test(s)?" mk":"");
+    return '<'+tag+a+(cls?' class="'+cls.trim()+'"':'')+'>'+esc(s)+'</'+tag+'>'; };
+  var head=R.slice(0,nh), body=R.slice(nh);
+  if(!body.length) body=[Array.apply(null,{length:nc}).map(function(){ return {t:""}; })];
+  return (cap.length?'<div class="gd-tcap">'+cap.map(esc).join(" · ")+'</div>':'')+(note.length?'<div class="gd-note gd-tnote">'+note.map(esc).join("<br>")+'</div>':'')
+    +'<div class="gd-tw"><table class="gd-tb'+(nc>=6?' wide':'')+'"><thead>'+head.map(function(r){ return '<tr>'+r.map(function(c){ return cell(c,"th"); }).join("")+'</tr>'; }).join("")+'</thead><tbody>'
+    +body.map(function(r){ return '<tr>'+r.map(function(c){ return cell(c,"td"); }).join("")+'</tr>'; }).join("")+'</tbody></table></div>'; }
 function _gdDocHTML(g){ var B=g.b, toc=[], ch=0, sub=0, s3=0, out="", i=0, inChap=false, AR_ORD=["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر"];
   var esc2=function(t){ return esc(t).replace(/^([^:]{2,45}):\s/,'<b class="gd-term">$1:</b> '); };
   var openCh=function(title){ if(inChap) out+='</section>'; ch++; sub=0; s3=0; var aid="gdc"+ch; toc.push({id:aid,t:title,l:1,n:ch});
@@ -16942,20 +16992,18 @@ function _gdDocHTML(g){ var B=g.b, toc=[], ch=0, sub=0, s3=0, out="", i=0, inCha
       else { s3++; sid="gds"+ch+"_"+sub+"_"+s3; out+='<h4 class="gd-h3" id="'+sid+'"><span>'+ch+'.'+(sub||1)+'.'+s3+'</span>'+esc(b.t)+'</h4>'; } i++; continue; }
     if(b.k==="li"){ var items=[]; while(i<B.length&&B[i].k==="li"){ items.push(B[i].t); i++; } var prev=B[i-items.length-1]||{}, steps=items.length>=3&&items.length<=12&&/(خطوات|الإجراءات|آلية|مراحل|تسلسل|يتم|كالتالي|التالي)/.test(prev.t||"");
       out+=steps?'<ol class="gd-steps">'+items.map(function(t,k){ return '<li><i>'+(k+1)+'</i><span>'+esc2(t)+'</span></li>'; }).join("")+'</ol>':'<ul class="gd-list">'+items.map(function(t){ return '<li>'+esc2(t)+'</li>'; }).join("")+'</ul>'; continue; }
-    if(b.k==="tbl"){ var R=b.rows, nc=Math.max.apply(null,R.map(function(r){ return r.length; }));
-      out+='<div class="gd-tw"><table class="gd-tb"><thead><tr>'+R[0].map(function(c){ var lv=/مدير إدارة المشاريع|مدير ادارة المشاريع/.test(c)?" lv3":(/مدير المشروع/.test(c)?" lv2":(/فريق العمل/.test(c)?" lv1":"")); return '<th class="'+lv+'">'+esc(c)+'</th>'; }).join("")+(R[0].length<nc?'<th colspan="'+(nc-R[0].length)+'"></th>':'')+'</tr></thead><tbody>'+R.slice(1).map(function(r){ return '<tr>'+r.map(function(c){ return '<td'+(r.length===1&&nc>1?' colspan="'+nc+'" class="grp"':'')+'>'+esc(c)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div>'; i++; continue; }
+    if(b.k==="tbl"){ out+=_gdTbl(b.rows); i++; continue; }
     var t=b.t; if(/^(ملاحظة|ملاحظه|تنبيه|هام|مهم|ملحوظة)\s*[:：-]/.test(t)) out+='<div class="gd-note">'+esc2(t)+'</div>'; else out+='<p class="gd-p">'+esc2(t)+'</p>'; i++; }
   if(inChap) out+='</section>';
   var tocH=toc.map(function(x){ return '<a href="#'+x.id+'" class="l'+x.l+'" onclick="event.preventDefault();_gdGo(\''+x.id+'\')">'+(x.l===1?'<i>'+String(x.n).padStart(2,"0")+'</i>':'')+'<span>'+esc(x.t)+'</span></a>'; }).join("");
   var nch=toc.filter(function(x){ return x.l===1; }).length, no=_gdDocNo(g);
   var pat='<svg class="gd-pat" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><defs><pattern id="gdp_'+g.id+'" width="56" height="56" patternUnits="userSpaceOnUse"><path d="M28 0L56 28 28 56 0 28z" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/><circle cx="28" cy="28" r="9" fill="none" stroke="rgba(233,210,154,.10)" stroke-width="1"/><path d="M28 19c4 4 4 14 0 18-4-4-4-14 0-18z" fill="rgba(255,255,255,.05)"/></pattern></defs><rect width="400" height="400" fill="url(#gdp_'+g.id+')"/></svg>';
-  var cover='<div class="gd-cover"><div class="gd-cvtop">'+pat+'<div class="gd-cvglow"></div><img class="gd-cvwm" src="'+LOGO_W+'" alt=""><div class="gd-cvhd"><img src="'+LOGO_W+'" alt="ريف"><span class="gd-cvbadge">دليل إجرائي معتمد</span></div>'
-    +'<div class="gd-cvmain"><span class="gd-cvk">'+esc(g.cat)+'</span><h1>'+esc(g.title)+'</h1><i class="gd-cvrule"></i><p>'+esc(g.sum)+'</p></div></div>'
-    +'<div class="gd-cvbot"><div class="gd-cvmeta"><div><span>رقم الوثيقة</span><b>'+no+'</b></div><div><span>الإصدار</span><b>1.0</b></div><div><span>تاريخ الإصدار</span><b>'+esc(MONTHLBL)+'</b></div><div><span>الحالة</span><b class="ok">معتمد</b></div></div>'
-    +'<div class="gd-cvstats"><span><b>'+nch+'</b> فصول</span><span><b>'+g.nt+'</b> جداول</span><span><b>'+g.mins+'</b> دقيقة قراءة</span></div>'
+  var cover='<div class="gd-cover"><div class="gd-cvtop">'+pat+'<div class="gd-cvglow"></div><img class="gd-cvwm" src="'+LOGO_W+'" alt=""><div class="gd-cvhd"><img src="'+LOGO_W+'" alt="ريف"></div>'
+    +'<div class="gd-cvmain"><span class="gd-cvk">'+esc(g.cat)+'</span><h1>'+esc(g.title)+'</h1><i class="gd-cvrule"></i><p>أحد أدلة إدارة المشاريع في برنامج ريف</p></div></div>'
+    +'<div class="gd-cvbot"><div class="gd-cvline"><span>رقم الوثيقة <b>'+no+'</b></span><span>الإصدار <b>1.0</b></span><span>'+esc(MONTHLBL)+'</span></div>'
     +'<div class="gd-cvfoot"><b>برنامج التنمية الريفية الزراعية المستدامة — ريف</b><span>دليل الإجراءات التشغيلية لإدارة المشاريع</span></div></div></div>';
-  var ctl='<div class="gd-ctl"><h2>ضبط الوثيقة</h2><table class="gd-ctlt"><tr><th>عنوان الوثيقة</th><td>'+esc(g.title)+'</td><th>رقم الوثيقة</th><td>'+no+'</td></tr><tr><th>المجال</th><td>'+esc(g.cat)+'</td><th>الإصدار</th><td>1.0</td></tr><tr><th>الجهة المالكة</th><td>مكتب إدارة المشاريع — برنامج ريف</td><th>التصنيف</th><td>داخلي</td></tr><tr><th>تاريخ الإصدار</th><td>'+esc(MONTHLBL)+'</td><th>الحالة</th><td>معتمد</td></tr></table>'
-    +'<h3>سجل الإصدارات</h3><table class="gd-ctlt rev"><thead><tr><th>الإصدار</th><th>التاريخ</th><th>وصف التعديل</th><th>المُعِد</th></tr></thead><tbody><tr><td>1.0</td><td>'+esc(MONTHLBL)+'</td><td>الإصدار الأول المعتمد</td><td>مكتب إدارة المشاريع</td></tr></tbody></table>'
+  var ctl='<div class="gd-ctl"><h2>ضبط الوثيقة</h2><table class="gd-ctlt"><tr><th>عنوان الوثيقة</th><td>'+esc(g.title)+'</td><th>رقم الوثيقة</th><td>'+no+'</td></tr><tr><th>المجال</th><td>'+esc(g.cat)+'</td><th>الإصدار</th><td>1.0</td></tr><tr><th>الجهة المالكة</th><td>مكتب إدارة المشاريع — برنامج ريف</td><th>التصنيف</th><td>داخلي</td></tr><tr><th>تاريخ الإصدار</th><td colspan="3">'+esc(MONTHLBL)+'</td></tr></table>'
+    +'<h3>سجل الإصدارات</h3><table class="gd-ctlt rev"><thead><tr><th>الإصدار</th><th>التاريخ</th><th>وصف التعديل</th><th>المُعِد</th></tr></thead><tbody><tr><td>1.0</td><td>'+esc(MONTHLBL)+'</td><td>الإصدار الأول</td><td>مكتب إدارة المشاريع</td></tr></tbody></table>'
     +'<h3>الاعتماد</h3><table class="gd-ctlt sig"><tr><th>الإعداد</th><th>المراجعة</th><th>الاعتماد</th></tr><tr><td></td><td></td><td></td></tr></table></div>';
   var tocPage='<div class="gd-tocp"><h2>المحتويات</h2><div class="gd-tocl">'+toc.map(function(x){ return '<div class="l'+x.l+'"><i>'+(x.l===1?String(x.n).padStart(2,"0"):x.n)+'</i><span>'+esc(x.t)+'</span><u></u></div>'; }).join("")+'</div></div>';
   var bar='<div class="gd-bar noprint"><button class="gd-back" onclick="pmKbList()">‹ المكتبة</button><div class="gd-bt"><b>'+esc(g.title)+'</b><span>'+esc(g.cat)+' · '+no+'</span></div><div class="gd-sr"><input id="gdIn" placeholder="ابحث داخل الدليل…" oninput="_gdFind(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();_gdNext(event.shiftKey?-1:1);}"><em id="gdHits"></em><button onclick="_gdNext(-1)" title="السابق">‹</button><button onclick="_gdNext(1)" title="التالي">›</button></div><button class="gd-fz" onclick="_gdFs(-1)" title="تصغير الخط">ع-</button><button class="gd-fz" onclick="_gdFs(1)" title="تكبير الخط">ع+</button><button class="gd-pr" onclick="guidePrint()">'+_gdIc("report",16)+' طباعة / PDF</button><u id="gdProg"></u></div>';
