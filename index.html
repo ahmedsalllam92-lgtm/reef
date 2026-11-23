@@ -8663,6 +8663,20 @@ body[data-theme="dark"] .dx-tipr span,body[data-theme="dark"] .dx-tipr b{color:#
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style id="mobFs">
+/* ملء الشاشة على الموبايل (بدون Fullscreen API): مقاس الشاشة المرئي فعلاً + فوق كل العناصر */
+html body .acard.wkfs-fallback{z-index:100000!important;height:var(--rvh,100vh)!important}
+html body #wkReport.wkfs-fallback{z-index:100000!important;width:var(--rvw,100vw)!important;height:var(--rvh,100vh)!important}
+html body .acard.wkfs-fallback.wkfs-land,html body #wkReport.wkfs-fallback.wkfs-land{position:fixed!important;inset:auto!important;left:0!important;top:0!important;width:var(--rvh,100vh)!important;height:var(--rvw,100vw)!important;transform-origin:0 0!important;transform:translateX(var(--rvw,100vw)) rotate(90deg)!important}
+html body .acard:has(#wkReport.wkfs-fallback):not(.wkfs-fallback){zoom:1!important;transform:none!important}
+body.wkfs-on #roBanner,body.wkfs-on #mbTabs,body.wkfs-on .ra-fab,body:has(:fullscreen) #roBanner,body:has(:fullscreen) .ra-fab{display:none!important}
+/* اللوحة العامة في ملء الشاشة على الموبايل: تخطيط سطح المكتب داخل اللوحة المكبّرة/المصغّرة */
+html body .dxf .dx-canvas.fit .dxf-sr.sv,html body .dxf .dx-canvas.fit .dxf-sh.sv{grid-template-columns:130px minmax(0,1fr) 52px 96px!important;grid-template-areas:none!important;row-gap:0!important}
+html body .dxf .dx-canvas.fit .dxf-sr.sv>*,html body .dxf .dx-canvas.fit .dxf-sh.sv>*{grid-area:auto!important}
+html body .dxf .dx-canvas.fit .dxf-sh.sv span:nth-child(2){display:block!important}
+.acard.wkfs-fallback .dxf-head .msel,.acard.wkfs-fallback .dxf-head .dxf-flt,.acard:fullscreen .dxf-head .msel{display:none!important}
+@media screen and (max-width:760px){ .mg-bar>span{display:none!important} .mg-bar{gap:8px!important;flex-wrap:nowrap!important} .mg-bar button{white-space:nowrap} }
+</style>
 <style id="lwPipe">
 #lw .l4-flow .s-tender{--sc:#C9A54E}#lw .l4-flow .s-award{--sc:#8FA9B5}#lw .l4-flow .s-run{--sc:#3FAE7A}#lw .l4-flow .s-done{--sc:#2E9466}
 html body #lw.v4 .l4-flow{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:40px;padding:6px 4px 10px}
@@ -11308,15 +11322,17 @@ function wkFitScale(){ const el=document.getElementById("wkReport"); if(!el||!el
 function wkSyncLand(){ const el=document.getElementById("wkReport"); if(!el||!el.classList.contains("wkfs-fallback"))return;
   if(wkIsMobile()&&wkIsPortrait()) el.classList.add("wkfs-land"); else el.classList.remove("wkfs-land");
   wkFitScale(); try{rpFit();}catch(e){} }
+function _rvSet(){ try{ var d=document.documentElement; d.style.setProperty("--rvw",window.innerWidth+"px"); d.style.setProperty("--rvh",window.innerHeight+"px"); }catch(e){} }
+try{ _rvSet(); window.addEventListener("resize",_rvSet); window.addEventListener("orientationchange",function(){ [60,250,600].forEach(function(ms){ setTimeout(function(){ _rvSet(); try{ _mgrFit(); }catch(e){} },ms); }); }); if(window.visualViewport) window.visualViewport.addEventListener("resize",_rvSet); }catch(e){}
 function wkIsMobile(){ try{ return window.matchMedia("(pointer:coarse)").matches || document.body.classList.contains("view-mobile") || window.innerWidth<=820; }catch(e){ return window.innerWidth<=820; } }
 function wkFullscreen(){ const el=document.getElementById("wkReport")||document.querySelector("#answer .acard"); if(!el)return;
   const inFb=el.classList.contains("wkfs-fallback"), inNative=document.fullscreenElement||document.webkitFullscreenElement;
   if(inFb||inNative){ el.classList.remove("wkfs-fallback","wkfs-land"); el.style.removeProperty("--pgw"); el.style.removeProperty("--wkscale"); document.body.classList.remove("wkfs-on");
     try{ var _d=el.querySelector(".dash3"); if(_d){ _d.style.zoom=""; _d.style.width=""; _d.style.maxWidth=""; _d.style.margin=""; } }catch(e){}
-    setTimeout(dashFitFS,60);
+    setTimeout(dashFitFS,60); setTimeout(function(){ try{ _mgrFit(); }catch(e){} },60);
     if(inNative){ try{(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}catch(e){} }
     try{ if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock(); }catch(e){} return; }
-  if(wkIsMobile()){ el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); wkSyncLand(); _dashFitBurst();
+  if(wkIsMobile()){ _rvSet(); el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); wkSyncLand(); _dashFitBurst(); [30,200,600].forEach(function(ms){ setTimeout(function(){ try{ _mgrFit(); }catch(e){} },ms); });
     const req=el.requestFullscreen||el.webkitRequestFullscreen;
     const after=()=>{ try{ if(screen.orientation&&screen.orientation.lock) screen.orientation.lock("landscape").then(function(){},function(){}); }catch(e){} setTimeout(wkSyncLand,80); setTimeout(wkSyncLand,400); };
     if(req){ try{ const p=req.call(el); if(p&&p.then){p.then(after,after);} else after(); }catch(e){ after(); } } else { after(); } }
@@ -14795,8 +14811,9 @@ function _mgrFit(){ try{ var r=document.querySelector(".mgr"); if(!r) return; va
     S.forEach(function(s){ s.style.margin=""; s.style.width=""; s.style.height=""; s.classList.remove("on"); });
     var cs=getComputedStyle(r), w=r.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0);
     var top=Math.max(0,(S[0]?S[0].getBoundingClientRect().top:0)-(r.getBoundingClientRect().top)), h=window.innerHeight-Math.max(90,r.getBoundingClientRect().top+window.scrollY>0?110:90);
-    var k2=Math.max(0.45,Math.min(1.6,w/1280)); /* يملأ عرض الصفحة مثل لوحة الأداء */ r.style.setProperty("--mgz",k2.toFixed(4)); }catch(e){} }
-(function(){ var tm=null; document.addEventListener("mousemove",function(){ var r=document.querySelector(".mgr.mg-fs"); if(!r) return; r.classList.add("ui"); clearTimeout(tm); tm=setTimeout(function(){ r.classList.remove("ui"); },2200); }); })();
+    var k2=Math.min(1.6,w/1280); /* يملأ عرض الصفحة مثل لوحة الأداء */ r.style.setProperty("--mgz",k2.toFixed(4)); }catch(e){} }
+(function(){ var tm=null, show=function(ms){ var r=document.querySelector(".mgr.mg-fs"); if(!r) return; r.classList.add("ui"); clearTimeout(tm); tm=setTimeout(function(){ r.classList.remove("ui"); },ms); };
+  document.addEventListener("mousemove",function(){ show(2200); }); document.addEventListener("touchstart",function(){ show(3500); },{passive:true}); })();
 
 function _brfData(){ var D=(!BRF.all&&typeof _dashFilt==="function")?_dashFilt():DATA.slice(); D=D||[];
   var rows=D.map(analyzeProject); rows.forEach(function(r){ r.cat=_dxCatOf(r); });
