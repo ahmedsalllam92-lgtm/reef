@@ -2499,7 +2499,8 @@ body[data-theme="dark"] .cph-sel{background:#1B2428;border-color:#2B363B;color:#
 .dxf .dxf-fr.big{grid-template-columns:1fr auto;border:0;padding-top:0}
 .dxf .dxf-fr.big b{font-size:22px;color:var(--f-g)}
 .dxf-capq{display:flex;align-items:baseline;gap:8px;margin:2px 0 8px;font-size:12.5px;font-weight:800;color:var(--f-ink2)}.dxf-capq b{font-size:15px;color:var(--f-ink);font-weight:900}.dxf-capq em{font-style:normal;margin-inline-start:auto;font-size:12px;font-weight:800;color:var(--f-g);background:rgba(30,91,58,.08);padding:2px 8px;border-radius:6px}
-.dxf-fin.cap .dxf-fr{padding:9px 0;position:relative}.dxf-fin.cap .dxf-fr:last-child{border-bottom:0}.dxf-fin.cap .has-capt{cursor:help}.dxf-fin.cap .has-capt>span:first-child{text-decoration:underline dotted rgba(0,0,0,.25);text-underline-offset:4px}
+.dxf-fin.cap{justify-content:flex-start;gap:2px}.caprows{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;max-height:360px}.dxf-fin.cap .dxf-capq{margin-top:0}.dxf-fin.cap .dxf-stk{margin-bottom:6px}.capbud{font-size:17px;font-weight:900;color:var(--f-g,#1E5B3A);white-space:nowrap}.capbud-s{font-size:11px;color:var(--f-mut,#8A948D);margin-inline-start:6px}
+.dxf-fin.cap .dxf-fr{padding:8px 0;position:relative}.dxf-fin.cap .dxf-fr:last-child{border-bottom:0}.dxf-fin.cap .has-capt{cursor:help}.dxf-fin.cap .has-capt>span:first-child{text-decoration:underline dotted rgba(0,0,0,.25);text-underline-offset:4px}
 .capt{position:absolute;inset-inline-start:0;bottom:calc(100% + 6px);z-index:30;display:none;flex-direction:column;gap:6px;min-width:230px;padding:10px 12px;background:#fff;border:1px solid var(--f-line,#E4E7E2);border-radius:10px;box-shadow:0 14px 30px -14px rgba(14,59,39,.35);font-size:12px}
 .has-capt:hover .capt{display:flex}.capt>b{font-size:12.5px;color:var(--f-ink,#1B2A22)}.capt>span{display:flex;align-items:center;gap:7px;font-weight:700;color:var(--f-ink2,#46574D)}.capt>span i{width:9px;height:9px;border-radius:2px;margin:0!important}.capt>span em{margin-inline-start:auto;font-style:normal;font-weight:900;color:var(--f-ink,#1B2A22);font-size:12.5px}.capt small{color:var(--f-mut,#8A948D);font-size:10.5px;font-weight:600}.dxf-fin.cap .dxf-fr.sub span{padding-inline-start:10px}.dxf-cmp b small{font-size:11px;font-weight:700;color:var(--f-mut)}
 .dxf .dxf-stk{display:flex;gap:2px;height:12px;border-radius:2px;overflow:hidden;background:#EEEBE3;margin:4px 0 6px}
@@ -15772,19 +15773,20 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +'<div class="dxf-foot2"><span>ضمن المسار <b>'+ar(onT)+'</b></span><span class="dn">خارج المسار <b>'+ar(offT)+'</b></span></div>';
   /* الوضع المالي */
   /* الميزانية الرأسمالية: كل مشاريع المحفظة (القيمة بعد الزيادة/التخفيض) مقارنة بإجمالي الميزانية، مع قيمة مشاريع البند 449 */
+  var capNote="";
   var finF=(function(){ var BUD=(typeof PF!=="undefined"&&PF&&PF.capBudget)||1500000000, C=D.filter(function(p){ return /^449/.test(String(p.budget_item||"").trim()); }), cv=C.reduce(function(a,p){ return a+_dxBase(p); },0);
     var g={run:0,done:0,tender:0,award:0}, cd=0, cu=0, ca=0, oth=0; D.forEach(function(p){ var st=_geoNowSt(p), v=_dxBase(p), cap=/^449/.test(String(p.budget_item||"").trim()); if(st==="done"||st==="run"){ if(cap){ ca+=v; cd+=_dxN(p.disbursed); cu+=_dxN(p.under_proc); } else oth+=v; } g[st]=(g[st]||0)+v; });
     /* الصرف من المشاريع الرأسمالية (البند 449) فقط؛ المشاريع القائمة على بنود أخرى في سطر مستقل */
     var act=g.run+g.done, rest=Math.max(0,ca-cd-cu), all=act+g.tender+g.award, filt=D.length!==DATA.length, base=filt?(all||1):BUD, left=Math.max(0,BUD-all);
     var cl=cd+cu, rem=Math.max(0,act-cl);
     var tip='<span class="capt"><b>المطالبات المعتمدة</b><span><i style="background:'+DX.g+'"></i>المنصرف<em>'+_dxM(cd)+'</em></span><span><i style="background:'+DX.blue+'"></i>تحت الإجراء<em>'+_dxM(cu)+'</em></span><small>من المشاريع الرأسمالية (البند 449)</small></span>';
-    var segs=[{l:"المطالبات المعتمدة",v:cl,c:DX.g,t:tip},{l:"المتبقي من عقود المشاريع القائمة",v:rem,c:"#B9CDBF",h:oth?"يشمل "+_dxM(oth)+" لمشاريع قائمة على بنود أخرى":""},{l:"في إجراءات الترسية",v:g.award,c:"#8E7CC3"},{l:"في إجراءات الطرح",v:g.tender,c:"#C9A54E"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:left,c:"#E4DFD3"}]);
+    var segs=[{l:"المطالبات المعتمدة",v:cl,c:DX.g,t:tip},{l:"المتبقي من عقود المشاريع القائمة",v:rem,c:"#B9CDBF",h:oth?"يشمل "+_dxM(oth)+" لمشاريع قائمة على بنود أخرى":""},{l:"في إجراءات الترسية",v:g.award,c:"#F3C4BE"},{l:"في إجراءات الطرح",v:g.tender,c:"#C9A54E"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:left,c:"#E4DFD3"}]);
     var P=function(v){ return _dxPct(base?v/base:0); };
+    capNote='<b class="capbud">'+String(_dxM(base)).replace(/(\.\d*?)0+(\s)/,"$1$2").replace(/\.(\s)/,"$1")+' '+RYL+'</b>'+(filt?'<small class="capbud-s">ضمن التصفية</small>':'');
     return '<div class="dxf-fin cap">'
-      +'<div class="dxf-fr big"><span>'+(filt?'قيمة المشاريع ضمن التصفية':'إجمالي الميزانية')+'</span><b>'+_dxM(base)+'</b></div>'
       +'<div class="dxf-capq"><span>المشاريع القائمة والمنتهية</span><b>'+_dxM(act)+'</b><em>'+P(act)+'</em></div>'
       +'<div class="dxf-stk">'+segs.map(function(x){ return x.v>0?'<i style="flex:'+x.v+';background:'+x.c+'"></i>':''; }).join("")+'</div>'
-      +segs.map(function(x){ return '<div class="dxf-fr'+(x.t?' has-capt':'')+'"'+(x.h?' title="'+esc(x.h)+'"':'')+'><span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span><b>'+_dxM(x.v)+'</b><em>'+P(x.v)+'</em>'+(x.t||'')+'</div>'; }).join("")
+      +'<div class="caprows">'+segs.map(function(x){ return '<div class="dxf-fr'+(x.t?' has-capt':'')+'"'+(x.h?' title="'+esc(x.h)+'"':'')+'><span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span><b>'+_dxM(x.v)+'</b><em>'+P(x.v)+'</em>'+(x.t||'')+'</div>'; }).join("")+'</div>'
       +'</div>'; })();
   /* المشاريع التي تتطلب متابعة */
   var lvCls={"عالي":"bad","متوسط":"warn","منخفض":"low","سليم":"ok"};
@@ -15806,7 +15808,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
       +kpiF
       +'<div class="dx-gr dxf-g3">'+fBox("g-sec","المشاريع حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","وضع المشاريع","",schF)
         +fBox("g-reg","التوزيع الجغرافي عبر الزمن","حرّك الشريط للعودة بالزمن · اضغط منطقة للتصفية",geoBox(_dashFiltExcept("region"),DASH_FILTER.region))
-        +fBox("g-fin","الميزانية الرأسمالية","",finF)+fBox("g-cl","إحصائيات الجودة والاعتمادات",ar(D.length)+" مشروع",clBody)+'</div>'
+        +fBox("g-fin","الميزانية الرأسمالية",capNote,finF)+fBox("g-cl","إحصائيات الجودة والاعتمادات",ar(D.length)+" مشروع",clBody)+'</div>'
     +'</div></div>');
 }
 
