@@ -13184,7 +13184,7 @@ function _brfScenes(X){ var S=[], pc=function(x){ return _dxPct(x); }, M=functio
   if(0) S.push({k:"st",d:4200,lbl:"وضع المشاريع",cap:'<b>'+ar(X.cnt.ok)+'</b> مشروعاً منتظماً ضمن المسار، و<b>'+ar(offN)+'</b> خارج المسار ('+ar(X.cnt.stumb)+' متعثّر و'+ar(X.cnt.late)+' متأخر)، و<b>'+ar(X.cnt.watch)+'</b> يحتاج متابعة، و<b>'+ar(X.cnt.ns)+'</b> لم يبدأ بعد.'});
   if(0) S.push({k:"tm",d:4200,lbl:"الأداء الزمني",cap:'من <b>'+ar(T.run)+'</b> مشروعاً قيد التنفيذ، <b>'+ar(T.hb[0].n+T.hb[1].n)+'</b> في المسار أو متقدّمة، و<b>'+ar(T.hb[3].n+T.hb[4].n)+'</b> متأخرة بأكثر من 15%؛ و<b>'+ar(T.ext)+'</b> مشروعاً حصلت على تمديد بإجمالي <b>'+ar(Math.round(T.extM))+'</b> شهراً.'});
   if(X.top.length){ var tv=X.top.reduce(function(a,r){ return a+_dxBase(r.p); },0); S.push({k:"top",d:4500,lbl:"أكبر المشاريع قيمة",cap:'أكبر <b>'+ar(X.top.length)+'</b> مشاريع تمثّل <b>'+pc(X.val?tv/X.val:0)+'</b> من قيمة المحفظة بإجمالي <b>'+M(tv)+'</b>.'}); }
-  if(X.spotA) S.push({k:"spot",d:5600,lbl:"مشروع في الواجهة",tag:"الأكبر قيمة قيد التنفيذ",r:X.spotA,cap:'<b>'+esc(X.spotA.p.name||X.spotA.p.code)+'</b> بقيمة <b>'+M(_dxBase(X.spotA.p))+'</b> وإنجاز فعلي <b>'+pc(X.spotA.a||0)+'</b> مقابل <b>'+pc(X.spotA.pl||0)+'</b> مخطط.'});
+  if(X.spotA) S.push({k:"spot",d:5600,lbl:"مشروع في الواجهة",tag:"إنجاز مرتفع · مشروع إنشائي",r:X.spotA,cap:'<b>'+esc(X.spotA.p.name||X.spotA.p.code)+'</b> بقيمة <b>'+M(_dxBase(X.spotA.p))+'</b> وإنجاز فعلي <b>'+pc(X.spotA.a||0)+'</b> مقابل <b>'+pc(X.spotA.pl||0)+'</b> مخطط.'});
   if(X.ctL.length){ var c0=X.ctL[0]; S.push({k:"ctr",d:4200,lbl:"المقاولون",cap:'<b>'+ar(X.ctL.length)+'</b> مقاولاً ينفّذون المحفظة؛ أكبرهم <b>'+esc(c0.k)+'</b> بـ<b>'+ar(c0.n)+'</b> مشاريع وقيمة <b>'+M(c0.v)+'</b>.'}); }
   if(0) S.push(X.off.length?{k:"off",d:4800,lbl:"تحتاج انتباهاً",cap:'<b>'+ar(X.off.length)+'</b> مشروعاً خارج المسار بقيمة <b>'+M(X.off.reduce(function(a,r){ return a+_dxBase(r.p); },0))+'</b>، أبرزها <b>'+esc(X.off[0].p.name||X.off[0].p.code)+'</b>.'}:{k:"att0",d:3000,lbl:"تحتاج انتباهاً",cap:'لا توجد مشاريع خارج المسار.'});
   if(0&&X.spotB) S.push({k:"spot",d:5600,lbl:"يتطلب تدخلاً",tag:"الأكثر حاجة للتدخل",r:X.spotB,cap:'<b>'+esc(X.spotB.p.name||X.spotB.p.code)+'</b>: إنجاز <b>'+pc(X.spotB.a||0)+'</b> مقابل <b>'+pc(X.spotB.pl||0)+'</b> مخطط'+((X.spotB.reasons||[])[0]?' — '+esc(X.spotB.reasons[0]):'')+'.'});
@@ -13239,7 +13239,13 @@ function _brfPhotos(X){ X.ph={}; X.D.forEach(function(p){ var u=_brfImgs(p); if(
   wp.slice().sort(function(a,b){ return _dxBase(b.p)-_dxBase(a.p); }).forEach(function(r){ var k=r.p.sector||"أخرى"; (by[k]=by[k]||[]).push(r); });
   var ks=Object.keys(by), wall=[], i=0; while(wall.length<7&&ks.some(function(k){ return by[k].length>i; })){ ks.forEach(function(k){ if(wall.length<7&&by[k][i]) wall.push(by[k][i]); }); i++; }
   X.wall=wall;
-  X.spotA=wp.filter(function(r){ return !r.done&&r.cat!=="ns"; }).sort(function(a,b){ return _dxBase(b.p)-_dxBase(a.p); })[0]||null;
+  /* مشروع في الواجهة: مشروع إنشائي قيد التنفيذ بإنجاز مرتفع — يتغيّر في كل مرة تُفتح الرحلة */
+  var _cons=wp.filter(function(r){ return !r.done&&!_isStopped(r.p)&&/إنشاء/.test(r.p.ptype||"")&&(r.a||0)>0&&(r.a||0)<1; }).sort(function(a,b){ return (b.a||0)-(a.a||0); });
+  var _hi=_cons.filter(function(r){ return (r.a||0)>=0.6; }); if(_hi.length<4) _hi=_cons.slice(0,Math.min(6,_cons.length));
+  var _seen=[]; try{ _seen=JSON.parse(localStorage.getItem("reef_brf_spot")||"[]")||[]; }catch(e){}
+  var _fresh=_hi.filter(function(r){ return _seen.indexOf(r.p.code)<0; }); if(!_fresh.length){ _fresh=_hi.filter(function(r){ return r.p.code!==_seen[_seen.length-1]; }); _seen=[]; } if(!_fresh.length) _fresh=_hi;
+  X.spotA=_fresh.length?_fresh[Math.floor(Math.random()*_fresh.length)]:null;
+  if(X.spotA){ try{ _seen.push(X.spotA.p.code); localStorage.setItem("reef_brf_spot",JSON.stringify(_seen.slice(-Math.max(1,_hi.length-1)))); }catch(e){} }
   X.spotB=X.off.filter(function(r){ return X.ph[r.p.code]&&(!X.spotA||r!==X.spotA); })[0]||null;
   /* تحميل مسبق */
   var pre=[]; wall.forEach(function(r,j){ pre.push(_brfSz(X.ph[r.p.code][0],j?720:1400)); });
