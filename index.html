@@ -8210,6 +8210,85 @@ body[data-theme="dark"] .mgs{box-shadow:0 22px 50px -26px rgba(0,0,0,.9),0 0 0 1
 .mg-pst{justify-content:center;gap:5px;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 9%,#fff),color-mix(in srgb,var(--c) 3%,#fff))!important;border:1px solid color-mix(in srgb,var(--c) 14%,#fff)}
 .mg-pst .ic{width:50px;height:50px}.mg-pst em{font-size:14px}.mg-pst b{font-size:54px}.mg-pst s{font-size:12.5px}
 .mg-pst .mg-sub li{font-size:11.5px;padding:5px 9px}
+
+/* ===================== شرائح التقارير — الطابع الرسمي الهادئ ===================== */
+.mgr .mgs{background:#FFFFFF;box-shadow:0 14px 34px -24px rgba(8,45,26,.45),0 0 0 1px rgba(11,58,36,.10)}
+.mgr .mgs:before{display:none}
+.mgr .mgs-h{padding:20px 40px 12px;border-bottom:1px solid #0B3A24}
+.mgr .mgs-h:after{height:1px;width:110px;bottom:-1px}
+.mgr .mgs-no{width:auto;height:auto;padding:0 12px 0 0;border-radius:0;background:none;box-shadow:none;color:#9A7A3E;font-size:15px;border-inline-end:1px solid #D9CFB6;margin-inline-end:2px;padding-inline-end:12px}
+.mgr .mgs-h h2{font-size:21px;font-weight:800}.mgr .mgs-h h2 em{font-size:13px}
+.mgr .mgs-h p{font-size:12px;font-weight:600;color:#7D8A82}
+.mgr .mgs-h img{height:36px}
+.mgr .mgs-b{padding:16px 40px 12px;gap:14px}
+.mgr .mgs-f{font-size:10.5px;font-weight:600;border-top:1px solid #ECE7DA;padding:8px 40px 11px}.mgr .mgs-f b{background:none;color:#7D8A82;font-weight:700;padding:0;font-size:11px}
+/* المؤشرات: سطر رسمي أبيض بفواصل رفيعة بدل الشريط الأخضر */
+.mgr .mg-band{background:#fff;border:1px solid #E3E6E1;border-radius:12px;box-shadow:none}
+.mgr .mg-band .mg-bk{padding:13px 18px;color:#14241B;border-inline-start:1px solid #EEF0EC;grid-template-columns:1fr;grid-template-areas:"em" "b" "i"}
+.mgr .mg-band .ic{display:none}
+.mgr .mg-band em{font-size:11.5px;font-weight:700;color:#6B7568}
+.mgr .mg-band b{font-size:22px;font-weight:800;color:#0B3A24}.mgr .mg-band b small{font-size:12px;color:#6B7568;font-weight:700}
+.mgr .mg-band i{font-size:11px;color:#7D8A82;font-weight:600}
+.mgr .mg-band s{color:#9A7A3E;font-weight:700}
+.mgr .mg-reg{border-inline-start:1px solid #EEF0EC}.mgr .mg-reg em{color:#6B7568;font-weight:700}.mgr .mg-reg span b{color:#0B3A24;font-size:12px}.mgr .mg-reg span i{background:#C9B48A;border-radius:3px 3px 0 0}.mgr .mg-reg span u{color:#6B7568}
+/* الكتل البيضاء */
+.mgr :is(.mg-pp,.mg-fd,.gx-cats,.mg-fin,.mg-sx,.gx-top){border:1px solid #E3E6E1;border-radius:12px;box-shadow:none;padding:13px 16px}
+.mgr .mg-ph b{font-size:13.5px;font-weight:800}.mgr .mg-ph span{font-size:11px;font-weight:600}
+/* مسار المشاريع: ألوان محايدة ورقم بلون واحد */
+.mgr .mg-pst{background:#FAFAF7!important;border:1px solid #EEF0EC;border-radius:10px;gap:3px;padding:12px 10px}
+.mgr .mg-pst .ic{width:30px;height:30px;background:transparent;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 35%,#fff)}
+.mgr .mg-pst .ic svg{width:16px;height:16px}
+.mgr .mg-pst em{font-size:12.5px;font-weight:700;color:#4A564E}
+.mgr .mg-pst b{font-size:32px;font-weight:800;color:#0B3A24}
+.mgr .mg-pst s{font-size:11px;font-weight:600}
+.mgr .mg-pst.z{opacity:.55}
+.mgr .mg-pst .mg-sub li{background:#fff;border:1px solid #EEF0EC;font-size:11px;padding:4px 8px}.mgr .mg-pst .mg-sub li span{font-weight:600}.mgr .mg-pst .mg-sub li b{font-weight:700!important;font-size:11px!important}
+.mgr .mg-pbar{height:5px}
+.mgr .mg-arw{width:16px;opacity:.7}
+/* الدونات والقوائم */
+.mgr .mg-dn2 b{font-size:20px;font-weight:800}
+.mgr :is(.mg-fdb li,.gx-lg li){background:none;border-bottom:1px solid #F0F1EE;border-radius:0;padding:6px 4px}
+.mgr :is(.mg-fdb li,.gx-lg li) b{font-size:14px;font-weight:800}.mgr :is(.mg-fdb li,.gx-lg li) span{font-weight:600;font-size:11.5px}.mgr :is(.mg-fdb li,.gx-lg li) em{font-weight:700;color:#7D8A82}
+.mgr .mg-fdb li.o{border:0;padding-top:8px}
+.mgr .gx-lg li b{font-size:17px}
+/* تصنيف قيد التنفيذ (تقرير المدير) */
+.mgr .mg-cat{border:1px solid #E3E6E1;border-radius:12px;box-shadow:none;padding:13px 14px;gap:6px}
+.mgr .mg-cat .ic{width:26px;height:26px;background:none;border:1px solid color-mix(in srgb,var(--c) 35%,#fff)}.mgr .mg-cat .ic svg{width:15px;height:15px}
+.mgr .mg-cat em{font-size:14px;font-weight:800;color:#14241B}
+.mgr .mg-cat u{background:none;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 40%,#fff);font-weight:700}
+.mgr .mg-cat b{font-size:30px;font-weight:800;color:#0B3A24}.mgr .mg-cat b small{font-size:12px}
+.mgr .mg-cat .rule{background:#FAFAF7;border:1px solid #EEF0EC;font-size:12px;font-weight:700}.mgr .mg-cat .rule i{color:#7D8A82;font-weight:700}
+.mgr .mg-cat p{font-size:11.5px;font-weight:600;min-height:0}
+.mgr .mg-cat .vv{font-size:14px;font-weight:800}
+.mgr .mg-dn b{font-size:30px;font-weight:800}
+.mgr .mg-def{background:#FAFAF7;border:1px solid #EEF0EC}.mgr .mg-def b{color:#4A564E;font-weight:800;font-size:12px}.mgr .mg-def span{font-weight:600;color:#5E6C62}
+.mgr .mg-sxh b{font-size:13px;font-weight:800}.mgr .mg-sx .r{font-weight:600;font-size:12px}.mgr .mg-sx .r .b{height:14px;border-radius:4px}
+/* الجداول */
+.mgr .mg-tb{border:1px solid #E3E6E1;border-radius:10px;font-size:12px}
+.mgr .mg-tb th{background:#F3F5F2;color:#0B3A24;font-weight:800;font-size:11.5px;border-bottom:1px solid #0B3A24}.mgr .mg-tb th small{color:#7D8A82}
+.mgr .mg-tb td{font-weight:600;border-top:1px solid #F0F1EE}
+.mgr .mg-tb tbody tr:nth-child(even) td{background:#FCFCFA}
+.mgr .mg-tb td.nm b{font-weight:800}
+.mgr .mg-tb td.dv{font-size:13px;font-weight:800}
+.mgr .mg-tb td.pg u i,.mgr .mg-wdc u.pb i{background:#2F6B4E}
+.mgr .mg-pill{font-weight:700;font-size:11px;padding:2px 9px;background:none!important;border:1px solid currentColor}
+.mgr .gx-s{font-weight:700;background:none!important;border:1px solid currentColor}
+.mgr .gx-t{font-weight:700}
+/* بطاقات المتوقفة والسحب والقطاعات */
+.mgr :is(.mg-spc,.mg-wdc,.gd3c){border:1px solid #E3E6E1!important;border-radius:12px;box-shadow:none}
+.mgr :is(.mg-spc,.mg-wdc) .hd em{background:none;color:#0B3A24;border:1px solid #CBD5CE;font-weight:800}
+.mgr :is(.mg-spc,.mg-wdc) .nm{font-size:13.5px;font-weight:800}
+.mgr :is(.mg-spc .kv div,.mg-wdc .kv div,.mg-wdc .pr div){background:#FAFAF7;border:1px solid #F0F1EE}
+.mgr :is(.mg-spc .kv b,.mg-wdc .kv b,.mg-wdc .pr b){font-size:13px;font-weight:800}
+.mgr .mg-spc .dur i{background:#B9776F}
+.mgr .mg-wdc .ln{background:#FAFAF7;border:1px solid #EEF0EC;border-inline-start-width:1px}
+.mgr .mg-wd:is(.n1,.n2,.n3) .mg-wdc .nm{font-size:15px}.mgr .mg-wd:is(.n1,.n2,.n3) .mg-wdc :is(.kv,.pr) b{font-size:14px}
+.mgr .gd3c .t>b{font-weight:800}.mgr .gd3.big .gd3c .t>b{font-size:17px}.mgr .gd3.big .mg-rg b{font-size:18px}
+.mgr .mg-rg circle:last-child{stroke:#2F6B4E}
+.mgr .gd3c .bd{background:none;border:1px solid #E7B9B4;font-weight:700}
+.mgr .mg-empty{font-size:15px;font-weight:700;border-style:solid;border-color:#E3E6E1}
+.mgr .mg-band.b4 .mg-bk b,.mgr .mg-band .mg-bk b{color:#0B3A24}
+.mgr .mg-c2{align-items:start}.mgr .mg-cats{align-items:start}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
