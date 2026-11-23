@@ -7946,6 +7946,12 @@ html[data-theme="dark"] body[data-theme="dark"]:not([data-dark="x"]) :is(.msel-m
 /* شارات القطاعات ذات الخلفية الباستيل: نص داكن ليبقى مقروءاً */
 html[data-theme="dark"] body[data-theme="dark"]:not([data-dark="x"]) .sg-sec{color:#17221C!important;font-weight:800}
 /* DK3-END */
+
+/* الوضع الفاتح: حدود وظلال أوضح للكروت الرئيسية حتى لا تذوب البيانات في الخلفية */
+body:not([data-theme="dark"]) :is(.hm-k,.hm-card,.dx-card,.dx-kpi,.dxf-p,.hb-card,.hb-tw,.hb-stats,.sg-c,.sg-k,.kb-card,.gdc,.rp-card,.rp2-st,.pc4-card,.pc3-card,.pf-box,.tablewrap){border:1px solid #D2DCD5!important;box-shadow:0 1px 2px rgba(8,45,26,.06),0 10px 24px -16px rgba(8,45,26,.28)!important}
+body:not([data-theme="dark"]) :is(.hm-sec,.hm-al,.hmg-c){border:1px solid #DCE4DE!important}
+body:not([data-theme="dark"]) :is(.hm-card header,.hm-card>header){border-bottom-color:#E2E8E3!important}
+body:not([data-theme="dark"]) :is(.hm-k,.hm-card,.hb-card,.gdc,.kb-card):hover{border-color:#C3D0C7!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -12970,7 +12976,7 @@ function hmgShow(k){ var S=HMG.slides; if(!S.length) return; k=(k+S.length)%S.le
   var ddl=document.getElementById('hmgDDl'); if(ddl) ddl.textContent=p.code; document.querySelectorAll('#hmgDDm .hmg-ddl button').forEach(function(b){ b.classList.toggle('on',+b.getAttribute('data-j')===S[k].pi); });
   if(n) n.textContent=p.alias||p.name; if(sb) sb.textContent=p.code+' · '+(p.sector||""); if(c) c.textContent=ar(k+1)+' / '+ar(S.length);
   var strip=document.getElementById('hmgStrip'); if(strip){ strip.querySelectorAll('.hmg-c').forEach(function(b){ b.classList.toggle('on',+b.getAttribute('data-j')===S[k].pi); });
-    var a=strip.querySelector('.hmg-c.on'); if(a){ var ar_=a.getBoundingClientRect(), sr=strip.getBoundingClientRect(), dx=(ar_.left+ar_.width/2)-(sr.left+sr.width/2), zf=(sr.width/(strip.offsetWidth||sr.width))||1; dx=dx/zf; if(Math.abs(dx)>2){ var tg=strip.scrollLeft+dx; try{ strip.scrollTo({left:tg,behavior:'smooth'}); }catch(e){ strip.scrollLeft=tg; } } } }
+    var a=strip.querySelector('.hmg-c.on'); if(a){ var ar_=a.getBoundingClientRect(), sr=strip.getBoundingClientRect(), dx=(ar_.right-(sr.right-4)), zf=(sr.width/(strip.offsetWidth||sr.width))||1; dx=dx/zf; if(Math.abs(dx)>2){ var tg=strip.scrollLeft+dx; try{ strip.scrollTo({left:tg,behavior:'smooth'}); }catch(e){ strip.scrollLeft=tg; } } } }
   var pb=document.getElementById('hmgPb'); if(pb){ pb.classList.remove('run'); void pb.offsetWidth; pb.classList.add('run'); } }
 function hmgStep(d){ hmgShow(HMG.i+d); hmgStart(); }
 function hmgGoProj(j){ var k=HMG.slides.findIndex(function(s){ return s.pi===j; }); if(k>-1){ hmgShow(k); hmgStart(); } }
