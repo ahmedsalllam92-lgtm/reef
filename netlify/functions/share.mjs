@@ -21,6 +21,8 @@ function cleanScope(s) { if (!s || typeof s !== "object") return null; const v =
   if (v === "dash" && s.f && typeof s.f === "object") { o.f = {}; ["region", "sector", "ptype", "cat"].forEach(k => { const x = s.f[k]; if (Array.isArray(x)) o.f[k] = x.slice(0, 20).map(y => clean(y, 60)).filter(Boolean); else if (x) o.f[k] = clean(x, 60); }); }
   return o; }
 function view(r) { const now = Date.now(); return { token: r.token, label: r.label, created: r.created, exp: r.exp, revoked: !!r.revoked, views: r.views || 0, lastView: r.lastView || null, scope: r.scope || null,
+  devices: r.devs ? Object.keys(r.devs).length : null, devList: r.devs ? Object.values(r.devs).sort((a, b) => b.last - a.last).slice(0, 12).map(x => ({ ua: x.ua, last: x.last, n: x.n })) : [],
+  lastSess: r.sess ? { start: r.sess.start, last: r.sess.last, ua: r.sess.ua || "" } : null,
   status: r.revoked ? "revoked" : (r.exp < now ? "expired" : "active") }; }
 
 export default async (req) => {
@@ -36,8 +38,21 @@ export default async (req) => {
       if (!r) return J(200, { ok: false, why: "notfound" });
       if (r.revoked) return J(200, { ok: false, why: "revoked" });
       if (r.exp < Date.now()) return J(200, { ok: false, why: "expired", exp: r.exp });
-      if (d.count) { r.views = (r.views || 0) + 1; r.lastView = Date.now(); await S.setJSON(tok, r); }
+      if (d.count) { const now = Date.now(); r.views = (r.views || 0) + 1; r.lastView = now;
+        const dev = clean(d.dev, 40), ua = clean(d.ua, 60), sid = clean(d.sid, 40);
+        if (/^[A-Za-z0-9_-]{8,40}$/.test(dev)) { r.devs = r.devs || {}; const o = r.devs[dev] || { first: now, n: 0 }; o.ua = ua || o.ua || ""; o.last = now; o.n = (o.n || 0) + 1; r.devs[dev] = o;
+          const ks = Object.keys(r.devs); if (ks.length > 60) { ks.sort((a, b) => r.devs[a].last - r.devs[b].last).slice(0, ks.length - 60).forEach(k => delete r.devs[k]); } }
+        if (/^[A-Za-z0-9_-]{8,40}$/.test(sid)) r.sess = { sid, start: now, last: now, ua: ua || "" };
+        await S.setJSON(tok, r); }
       return J(200, { ok: true, exp: r.exp, label: r.label, scope: r.scope || null });
+    }
+    // ===== نبض الجلسة: يحدّث مدة آخر فتح للرابط =====
+    if (d.action === "beat") {
+      if (!/^[A-Za-z0-9_-]{16,64}$/.test(tok)) return J(200, { ok: false });
+      const r = await S.get(tok, { type: "json" }); if (!r || r.revoked || r.exp < Date.now()) return J(200, { ok: false });
+      const sid = clean(d.sid, 40), dev = clean(d.dev, 40), now = Date.now();
+      if (r.sess && r.sess.sid === sid) { r.sess.last = now; if (r.devs && r.devs[dev]) r.devs[dev].last = now; await S.setJSON(tok, r); }
+      return J(200, { ok: true });
     }
     // ===== آخر نسخة من المحفظة المرفوعة: يقرؤها الزائر برابط صالح (أو المسؤول بالمفتاح) =====
     if (d.action === "pf_get") {
