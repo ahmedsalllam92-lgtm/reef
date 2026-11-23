@@ -8350,6 +8350,13 @@ body[data-theme="dark"] .sh-t .sh-dl{background:#16252C;border-color:rgba(205,22
 .mgf-nav button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:16px;cursor:pointer;font-family:inherit}.mgf-nav button:hover{background:rgba(255,255,255,.22)}
 .mgf-nav span{color:#E9E4D6;font-size:13px;font-weight:700;min-width:54px;text-align:center}
 .m4-ar{align-self:center}
+
+/* لوحة المشروع: العرض التلقائي بانتقال سلس */
+.pd-veil{position:absolute;inset:0;z-index:50;pointer-events:none;background:var(--paper,#F4F2EC);opacity:0;transition:opacity .42s ease}.pd-veil.on{opacity:1}
+body[data-theme="dark"] .pd-veil{background:#0B1316}
+:fullscreen{position:relative}
+.pd-autobar{animation-duration:5s!important}
+.dx-btn.pd-playb{background:linear-gradient(135deg,#DDC28C,#B8955A)!important;color:#05271A!important;border-color:transparent!important;font-weight:900}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15182,8 +15189,17 @@ function projDashOpen(){ var p=null;
 function pdSetSector(v){ PD.sector=v; var list=DATA.filter(function(p){return !v||p.sector===v;}); if(list.length) projDashSel(list[0].code); }
 var PD_AUTO=null;
 function _pdIsFs(){ return !!(document.fullscreenElement||document.webkitFullscreenElement||document.querySelector('.acard.wkfs-fallback')); }
-function pdAutoStop(){ if(PD_AUTO){ clearInterval(PD_AUTO); PD_AUTO=null; } document.querySelectorAll('.pd-play').forEach(function(b){ b.classList.remove('on'); b.textContent='▶'; b.title='عرض تلقائي للمشاريع · كل 3 ثوانٍ'; }); document.querySelectorAll('.pd-autobar').forEach(function(x){ x.remove(); }); }
-function pdAuto(){ if(PD_AUTO){ pdAutoStop(); return; } PD_AUTO=setInterval(function(){ if(!_pdIsFs()||!document.querySelector('.pd-fsnav')){ pdAutoStop(); return; } pdStep(1); },3000);
+function pdAutoStop(){ if(PD_AUTO){ clearInterval(PD_AUTO); PD_AUTO=null; } document.querySelectorAll('.pd-play').forEach(function(b){ b.classList.remove('on'); b.textContent='▶'; b.title='عرض تلقائي للمشاريع · كل 5 ثوانٍ'; }); document.querySelectorAll('.pd-autobar').forEach(function(x){ x.remove(); }); }
+var PD_MS=5000;
+/* انتقال سلس: تلاشٍ للوحة الحالية ثم ظهور اللوحة التالية */
+function _pdSmoothNext(){ var host=document.fullscreenElement||document.querySelector('#answer .acard'); if(!host){ pdStep(1); return; }
+  var v=host.querySelector(':scope > .pd-veil'); if(!v){ v=document.createElement('div'); v.className='pd-veil'; host.appendChild(v); }
+  requestAnimationFrame(function(){ v.classList.add('on'); });
+  setTimeout(function(){ pdStep(1); var h2=document.fullscreenElement||document.querySelector('#answer .acard'), v2=h2&&h2.querySelector(':scope > .pd-veil'); if(!v2&&h2){ v2=document.createElement('div'); v2.className='pd-veil on'; h2.appendChild(v2); } setTimeout(function(){ if(v2) v2.classList.remove('on'); },60); try{ _pdRestartBar(); }catch(e){} },430); }
+function _pdRestartBar(){ document.querySelectorAll('.pd-autobar').forEach(function(x){ x.style.animation='none'; void x.offsetWidth; x.style.animation=''; }); if(PD_AUTO) document.querySelectorAll('.pd-play').forEach(function(b){ b.classList.add('on'); b.textContent='❚❚'; var nn=b.parentNode; if(nn&&!nn.querySelector('.pd-autobar')){ var i=document.createElement('i'); i.className='pd-autobar'; nn.appendChild(i); } }); }
+function pdPlay(){ if(PD_AUTO){ pdAutoStop(); return; } var go=function(){ if(!PD_AUTO) pdAuto(); }; if(!_pdIsFs()){ try{ wkFullscreen(); }catch(e){} setTimeout(go,700); } else go(); }
+try{ window.pdPlay=pdPlay; }catch(e){}
+function pdAuto(){ if(PD_AUTO){ pdAutoStop(); return; } PD_AUTO=setInterval(function(){ if(!_pdIsFs()){ pdAutoStop(); return; } _pdSmoothNext(); },PD_MS);
   document.querySelectorAll('.pd-play').forEach(function(b){ b.classList.add('on'); b.textContent='❚❚'; b.title='إيقاف العرض'; var n=b.parentNode; if(n&&!n.querySelector('.pd-autobar')){ var i=document.createElement('i'); i.className='pd-autobar'; n.appendChild(i); } }); }
 try{ document.addEventListener("fullscreenchange",function(){ if(!_pdIsFs()) pdAutoStop(); }); document.addEventListener("webkitfullscreenchange",function(){ if(!_pdIsFs()) pdAutoStop(); }); window.pdAuto=pdAuto; }catch(e){}
 function pdStep(d){ var list=DATA.filter(function(p){return !PD.sector||p.sector===PD.sector;}); var i=list.findIndex(function(p){return String(p.code)===String(PD.code);});
@@ -15225,7 +15241,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var chips='<span class="pd-chip st '+_stc+'">'+(_stc==="s-stop"?'<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>':'')+esc(p.status||"—")+'</span>'+(_stc==="s-stop"?'':'<span class="pd-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+'</span>')+'';
   var head='<div class="pd-head"><span class="pd-fx" aria-hidden="true"><i></i><i></i><i></i></span><div class="pd-ht"><div class="dx-kick">لوحة المشروع'+(p.code?' · <span class="ltr">'+esc(p.code)+'</span>':'')+'</div><h1>'+esc(p.name)+'</h1>'
     +'<div class="pd-meta">'+[p.sector,p.region,p.ptype].filter(Boolean).map(esc).join(" · ")+'</div><div class="pd-chips">'+chips+'</div></div>'
-    +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxBtns('<button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn ic" onclick="pdPrintMenu(event)" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
+    +'<div class="pd-hr">'+_dxRing(a,128,"#D9B166","الإنجاز الفعلي")+'<div class="pd-hbtn">'+_dxBtns('<button class="dx-btn pd-playb" onclick="pdPlay()" title="عرض تلقائي بملء الشاشة — مشروع كل 5 ثوانٍ"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg> تشغيل</button><button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button><button class="dx-btn" onclick="projectCard(DATA.find(function(x){return String(x.code)===\''+esc(p.code)+'\';}),false)">التقرير التفصيلي</button><button class="dx-btn ic" onclick="pdPrintMenu(event)" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button><button class="dx-btn gold" onclick="execDashboard()">→ اللوحة العامة</button>')+'</div></div></div>'
     +(function(){ var ps=_pdPos(); return '<div class="pd-fsnav noprint"><button onclick="pdStep(-1)" title="المشروع السابق (→)">→</button><span>'+ar(ps.i+1)+' / '+ar(ps.n)+'</span><button onclick="pdStep(1)" title="المشروع التالي (←)">←</button><button class="pd-play'+(PD_AUTO?' on':'')+'" onclick="pdAuto()" title="'+(PD_AUTO?'إيقاف العرض':'عرض تلقائي للمشاريع · كل 3 ثوانٍ')+'">'+(PD_AUTO?'❚❚':'▶')+'</button>'+(PD_AUTO?'<i class="pd-autobar"></i>':'')+'</div>'; })();
   /* --- KPI --- */
   var _dv=_dxDev(p), _pst={ok:'منتظم مع الخطة',watch:'يحتاج متابعة',late:'متأخر',stumb:'متعثّر — يحتاج خطة تعويض',ns:'لم يبدأ'}[cat]||DX_CAT[cat].l, _ptn={ok:"good",watch:"warn",late:"bad",stumb:"bad",ns:""}[cat]||"";
