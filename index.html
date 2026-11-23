@@ -8126,6 +8126,36 @@ body[data-theme="dark"] .mgs{box-shadow:0 22px 50px -26px rgba(0,0,0,.9),0 0 0 1
 .mg-wd:is(.n1,.n2,.n3) .mg-wdc .tl{padding:11px 12px;gap:7px}.mg-wd:is(.n1,.n2,.n3) .mg-wdc .tl .tm b{font-size:14px}
 .mg-wd:is(.n1,.n2,.n3) .mg-wdc .ln{margin-top:auto;font-size:13px;padding:10px 12px}
 .mg-wd:is(.n1,.n2,.n3) .mg-wdc .ct{font-size:13px}
+
+/* التقرير العام v2 */
+.gx-2{flex:1;min-height:0;display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}
+.mg-tb.gx td.c{text-align:center;font-weight:900;color:#0B3A24}.mg-tb.gx td .z{color:#B9C2BC}
+.mg-tb td.vb{min-width:150px}.mg-tb td.vb b{font-weight:900;color:#0B3A24}.mg-tb td.vb u{display:block;height:6px;border-radius:99px;background:#EFEBE0;margin-top:4px;overflow:hidden;text-decoration:none}.mg-tb td.vb u i{display:block;height:100%;background:linear-gradient(90deg,#C9A961,#9A7A3E);border-radius:99px}
+.mg-tb td.c{text-align:center}.mg-tb td.vv{font-weight:900;color:#0B3A24;white-space:nowrap}.mg-tb td.dt{white-space:nowrap;font-size:11.5px}
+.mg-tb td.tg{white-space:nowrap}
+.gx-cats{background:#fff;border:1px solid #E4DECD;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:9px;box-shadow:0 10px 24px -20px rgba(8,45,26,.5)}
+.gx-ct{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #EFEBE0;padding-bottom:7px}.gx-ct b{font-size:14px;color:#0B3A24;font-weight:900}.gx-ct span{font-size:12.5px;font-weight:900;color:#9A7A3E}
+.gx-c{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"ic em b" "u u u";align-items:center;column-gap:9px;row-gap:5px}
+.gx-c .ic{grid-area:ic;width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)}
+.gx-c em{grid-area:em;font-style:normal;font-size:13.5px;font-weight:900;color:#14241B}.gx-c b{grid-area:b;font-size:24px;font-weight:900;color:var(--c)}
+.gx-c u{grid-area:u;display:block;height:6px;border-radius:99px;background:#EFEBE0;overflow:hidden;text-decoration:none}.gx-c u i{display:block;height:100%;background:var(--c);border-radius:99px}
+.gx-ns{font-size:11.5px;color:#6B7568;font-weight:800;background:#F4F5F3;border-radius:8px;padding:6px 9px}
+.gx-rule{font-size:11px;line-height:1.7;color:#7A5E28;font-weight:800;background:#FBF6E8;border:1px solid #EADFC3;border-radius:9px;padding:7px 10px}
+.gx-t{font-style:normal;display:inline-block;font-size:10.5px;font-weight:900;border-radius:6px;padding:2px 7px;margin-inline-end:4px}.gx-t.s{background:#F9E0DE;color:#B3261E}.gx-t.o{background:#FBEFD9;color:#946A12}.gx-t.w{background:#EAEAEA;color:#3F3F3F}
+.gx-s{font-style:normal;display:inline-block;font-size:11px;font-weight:900;border-radius:99px;padding:2px 9px;margin-inline-end:4px;white-space:nowrap}.gx-s.ok{background:#E3F2E9;color:#1E7A4D}.gx-s.run{background:#E1EEE7;color:#0E5A3A}.gx-s.tn{background:#F6EEDC;color:#8A6A2C}.gx-s.aw{background:#E4EDF2;color:#3F6478}
+/* أزرار الرئيسية أصغر */
+.hm-hr .hm-brf{height:34px!important;padding:0 12px 0 14px!important;font-size:12px!important;gap:7px!important}
+.hm-hr .hm-brf i{width:20px!important;height:20px!important}
+.hm-hr .hm-ask{height:34px!important;padding:0 14px!important;font-size:12px!important;gap:6px!important}
+
+.gx-l{display:flex;flex-direction:column;gap:12px;min-width:0}
+.gx-top{background:#fff;border:1px solid #E4DECD;border-radius:14px;padding:10px 14px 4px;box-shadow:0 10px 24px -20px rgba(8,45,26,.5)}
+.gx-top .mg-tb{border:0;border-radius:0}.gx-top .mg-tb td{padding:6px 8px}
+
+.mg-tb td.ct{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
+.mg-tb td{white-space:nowrap}.mg-tb td.nm{white-space:normal;max-width:430px}
+.mg-tb td .gx-s+.mg-pill{margin-top:0}
+.mg-tb td.nm b{overflow:hidden;text-overflow:ellipsis}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -12935,7 +12965,7 @@ function rpGo(type){ try{ mselFlushRP(); }catch(e){} var L=_rpList(); if(!L.leng
     ["region","sector","ptype","cat"].forEach(function(k){ if(!DASH_FILTER[k].length) DASH_FILTER[k]=""; });
     if(!simple) DASH_FILTER.codes=codes; execDashboard(); return; }
   if(type==="pd"){ rpPdView(L,ttl); return; }
-  if(type==="general"){ var _F=RP.f||{}, _dim=((_F.sector||[]).length===1&&!(_F.region||[]).length)?"region":"sector"; var _gt=((_F.sector||[]).length===1&&!(_F.region||[]).length&&ttl.indexOf("قطاع")<0)?"قطاع "+ttl:(((_F.region||[]).length===1&&!(_F.sector||[]).length&&ttl.indexOf("منطقة")<0)?"منطقة "+ttl:ttl); renderReportFrom(L,_gt,{dim:_dim,cols:DEFAULT_COLS,isCustom:true}); RERENDER=function(){ rpGo("general"); }; _rpAfter(); return; }
+  if(type==="general"){ var _F=RP.f||{}, _dim=((_F.sector||[]).length===1&&!(_F.region||[]).length)?"region":"sector"; var _gt=((_F.sector||[]).length===1&&!(_F.region||[]).length&&ttl.indexOf("قطاع")<0)?"قطاع "+ttl:(((_F.region||[]).length===1&&!(_F.sector||[]).length&&ttl.indexOf("منطقة")<0)?"منطقة "+ttl:ttl); genReportOpen(L,_gt,_dim); RERENDER=function(){ rpGo("general"); }; RERENDER._inplace=true; return; }
   if(type==="portfolio"){ programReport(); _rpAfter(); return; }
   if(type==="cards"){ cardsBuilder(); setTimeout(function(){ _rpCheck(".pcchk",codes); try{ pcCount(); }catch(e){} try{ pcBuild(); }catch(e){} _rpAfter(); },80); return; }
   if(type==="weekly"){ weeklyBuilder(); setTimeout(function(){ _rpCheck(".wkchk",codes); try{ wkCount(); }catch(e){} try{ wkBuild(); }catch(e){} _rpAfter(); },80); return; }
@@ -13680,7 +13710,7 @@ try{ window.addEventListener("beforeprint",function(){ if(GEO.t!=null) GEO._pt=G
 /* ---------------- عدّاد الأرقام عند فتح اللوحات ---------------- */
 var CU={on:true,dur:1000,run:[],raf:0};
 var CU_RE=/^(\s*[−\-+]?\s*)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(\s*[%٪+]?\s*)$/;
-var CU_SKIP='#lw,.drreport,.drcv,.rb-kp,.rb-ag,.geo,.pd-fsnav,input,textarea,select,[contenteditable],.ask-panel,.rb-panel,.noanim,script,style,.cw2,.cw-modal,.gd-doc,.gd-toc,.pmm-steps,.pmm-rib,.pmm-ch,.pmsx,.pmt,.pmn,.pmp,.mt-minprev,.pmm-th';
+var CU_SKIP='#lw,.mgr,.drreport,.drcv,.rb-kp,.rb-ag,.geo,.pd-fsnav,input,textarea,select,[contenteditable],.ask-panel,.rb-panel,.noanim,script,style,.cw2,.cw-modal,.gd-doc,.gd-toc,.pmm-steps,.pmm-rib,.pmm-ch,.pmsx,.pmt,.pmn,.pmp,.mt-minprev,.pmm-th';
 function _cuFmt(v,dec,comma){ var s=v.toFixed(dec); if(comma){ var pr=s.split("."); pr[0]=pr[0].replace(/\B(?=(\d{3})+(?!\d))/g,","); s=pr.join("."); } return s; }
 function _cuTick(ts){ CU.raf=0; var keep=[];
   CU.run.forEach(function(a){ if(!a.t0) a.t0=ts; var k=Math.min(1,(ts-a.t0)/CU.dur), e=1-Math.pow(1-k,3);
@@ -13709,6 +13739,43 @@ try{
 /* ---------------- رحلة المحفظة: عرض سينمائي يُبنى من البيانات لحظة الفتح ---------------- */
 var BRF={i:0,sc:[],t:null,map:null,paused:false,el:null,keys:null};
 /* ===================== تقرير مدير الإدارة: 5 شرائح رسمية ===================== */
+/* ===================== التقرير العام بالمؤشرات v2 (لأي مجموعة مشاريع: منطقة/قطاع/مقاول...) ===================== */
+var MGR_LBL="تقرير مدير الإدارة";
+function _genSlides(L,title,dim){ var X=_mgrData(L), M=_dxM, pages=[], N=X.n;
+  /* 1) الملخص */
+  pages.push(["ملخص "+title,ar(N)+" مشروع · القيمة والمنصرف والإنجاز وتوزيع الحالات",_mgrP1(X)]);
+  /* 2) التوزيع والأداء */
+  var dimLbl=dim==="region"?"المنطقة":"القطاع", G={}; X.rows.forEach(function(x){ var k=(dim==="region"?x.p.region:x.p.sector)||"—"; G[k]=G[k]||[]; G[k].push(x); });
+  var K=Object.keys(G).sort(function(a,b){ return G[b].reduce(function(s,x){ return s+x.v; },0)-G[a].reduce(function(s,x){ return s+x.v; },0); });
+  var vmax=Math.max.apply(null,K.map(function(k){ return G[k].reduce(function(s,x){ return s+x.v; },0); }).concat([1]));
+  var trs=K.slice(0,11).map(function(k){ var R=G[k], v=R.reduce(function(s,x){ return s+x.v; },0), d=R.reduce(function(s,x){ return s+x.d; },0), w=_wProg(R.map(function(x){ return {p:x.p,a:x.a,pl:x.pl}; }),false), bad=R.filter(function(x){ return x.st==="run"&&(x.cat==="late"||x.cat==="stumb"); }).length, run=R.filter(function(x){ return x.st==="run"; }).length, done=R.filter(function(x){ return x.st==="done"; }).length;
+    return '<tr><td class="nm"><b>'+esc(k)+'</b></td><td class="c">'+ar(R.length)+'</td><td class="c">'+ar(done)+'</td><td class="c">'+ar(run)+'</td><td class="vb"><b>'+M(v)+'</b><u><i style="width:'+(v/vmax*100).toFixed(1)+'%"></i></u></td><td class="c">'+_mgrPct(d,v)+'</td><td class="pg"><b>'+_dxPct(w.a)+'</b> / '+_dxPct(w.p)+'<u><i style="width:'+(w.a*100).toFixed(0)+'%"></i><s style="right:'+(w.p*100).toFixed(0)+'%"></s></u></td><td class="c">'+(bad?'<i class="mg-pill stumb">'+ar(bad)+'</i>':'<span class="z">—</span>')+'</td></tr>'; }).join("");
+  var tb2='<table class="mg-tb gx"><thead><tr><th>'+dimLbl+'</th><th>المشاريع</th><th>منتهية</th><th>قيد التنفيذ</th><th>القيمة</th><th>الصرف</th><th>الإنجاز<small>الفعلي / المخطط</small></th><th>متعثر/متأخر</th></tr></thead><tbody>'+trs+'</tbody></table>';
+  var CS=[["ok","منتظم","#1E7A4D"],["watch","يحتاج متابعة","#C99A2E"],["late","متأخر","#D0703C"],["stumb","متعثّر","#B3261E"]], rn=X.g.run.n;
+  var cats='<div class="gx-cats"><div class="gx-ct"><b>المشاريع قيد التنفيذ</b><span>'+ar(rn)+' مشروع</span></div>'+CS.map(function(c){ var o=X.c[c[0]]; return '<div class="gx-c" style="--c:'+c[2]+'"><span class="ic">'+_mgrIc(c[0],18)+'</span><em>'+c[1]+'</em><b>'+ar(o.n)+'</b><u><i style="width:'+(rn?o.n/rn*100:0).toFixed(1)+'%"></i></u></div>'; }).join("")+(X.c.ns.n?'<div class="gx-ns">'+ar(X.c.ns.n)+' مشروع لم يبدأ فعلياً</div>':'')+'<div class="gx-rule">منتظم ≤ 15% · متابعة 15–25% · متأخر 25–35% · متعثّر &gt; 35% (الحيود عن الخطة)</div></div>';
+  var nTop=Math.min(7,12-Math.min(K.length,11)), TOP=X.rows.slice().sort(function(a,b){ return b.v-a.v; }).slice(0,nTop);
+  var top='<div class="gx-top"><div class="gx-ct"><b>أعلى المشاريع قيمة</b><span>'+ar(TOP.length)+' مشاريع · '+_mgrPct(TOP.reduce(function(s,x){ return s+x.v; },0),X.val)+' من القيمة</span></div><table class="mg-tb gx"><tbody>'+TOP.map(function(x,i){ var s={done:"منتهٍ",run:"قيد التنفيذ",tender:"في الطرح",award:"ترسية وتعاقد"}[x.st]||""; return '<tr><td class="n">'+ar(i+1)+'</td><td class="nm"><b>'+esc(x.p.name||"")+'</b></td><td>'+esc((dim==="region"?x.p.region:x.p.sector)||"—")+'</td><td class="vv">'+M(x.v)+'</td><td class="pg"><b>'+_dxPct(x.a)+'</b><u><i style="width:'+(x.a*100).toFixed(0)+'%"></i><s style="right:'+((x.pl||0)*100).toFixed(0)+'%"></s></u></td><td><i class="gx-s '+({done:"ok",run:"run",tender:"tn",award:"aw"}[x.st]||"")+'">'+s+'</i></td></tr>'; }).join("")+'</tbody></table></div>';
+  if(nTop<3) top="";
+  pages.push(["التوزيع والأداء حسب "+dimLbl,"عدد المشاريع وقيمتها ونسبة الصرف والإنجاز لكل "+dimLbl,'<div class="gx-2"><div class="gx-l">'+tb2+top+'</div>'+cats+'</div>']);
+  /* 3) المشاريع التي تتطلب متابعة */
+  var F=X.rows.filter(function(x){ return x.st==="run"&&(x.cat==="watch"||x.cat==="late"||x.cat==="stumb"||_isStopped(x.p)||_overdue(x.p)); }).sort(function(a,b){ var r={stumb:0,late:1,watch:2,ok:3,ns:4}; return (r[a.cat]-r[b.cat])||((b.dev||0)-(a.dev||0)); });
+  var tag=function(x){ var t=[]; if(_isStopped(x.p)) t.push('<i class="gx-t s">متوقف</i>'); if(_overdue(x.p)) t.push('<i class="gx-t o">متجاوز النهاية</i>'); if(_mgrWD(x.p)) t.push('<i class="gx-t w">إجراءات سحب</i>'); return t.join(""); };
+  var head3='<tr><th class="n">#</th><th>المشروع</th><th>'+(dim==="region"?"المنطقة":"القطاع")+'</th><th>المقاول</th><th>الإنجاز<small>الفعلي / المخطط</small></th><th>الحيود</th><th>التصنيف</th><th>ملاحظات</th></tr>';
+  var row3=function(x,i){ return '<tr><td class="n">'+ar(i+1)+'</td><td class="nm"><b>'+esc(x.p.name||"")+'</b><small>'+esc(x.p.code)+'</small></td><td>'+esc((dim==="region"?x.p.region:x.p.sector)||"—")+'</td><td class="ct">'+esc(clean(x.p.contractor))+'</td><td class="pg"><b>'+_dxPct(x.a)+'</b> / '+(x.pl!=null?_dxPct(x.pl):"—")+'<u><i style="width:'+(x.a*100).toFixed(0)+'%"></i><s style="right:'+((x.pl||0)*100).toFixed(0)+'%"></s></u></td><td class="dv">'+(x.dev!=null?ar(Math.round(x.dev*100))+'%':'—')+'</td><td>'+_mgrPill(x.cat)+'</td><td class="tg">'+tag(x)+'</td></tr>'; };
+  var PER=11; if(!F.length) pages.push(["المشاريع التي تتطلب متابعة","",'<div class="mg-empty">لا توجد مشاريع تتطلب متابعة ضمن هذا الاختيار ✓</div>']);
+  for(var i=0;i<F.length;i+=PER){ var ch=F.slice(i,i+PER), np=Math.ceil(F.length/PER); pages.push(["المشاريع التي تتطلب متابعة"+(np>1?' <em>('+ar(i/PER+1)+' من '+ar(np)+')</em>':''),ar(F.length)+" مشروع: حيود يتجاوز 15%، أو متوقف، أو متجاوز تاريخ النهاية",'<table class="mg-tb">'+'<thead>'+head3+'</thead><tbody>'+ch.map(function(x,j){ return row3(x,i+j); }).join("")+'</tbody></table>']); }
+  /* 4) قائمة المشاريع */
+  var SL={done:["منتهٍ","ok"],run:["قيد التنفيذ","run"],tender:["في الطرح","tn"],award:["ترسية وتعاقد","aw"]};
+  var A=X.rows.slice().sort(function(a,b){ var r={run:0,award:1,tender:2,done:3}; return (r[a.st]-r[b.st])||(b.v-a.v); });
+  var head4='<tr><th class="n">#</th><th>المشروع</th><th>القطاع · المنطقة</th><th>المقاول</th><th>القيمة</th><th>الإنجاز<small>الفعلي / المخطط</small></th><th>الصرف</th><th>النهاية</th><th>الحالة</th></tr>';
+  var row4=function(x,i){ var s=SL[x.st]||["—",""]; return '<tr><td class="n">'+ar(i+1)+'</td><td class="nm"><b>'+esc(x.p.name||"")+'</b><small>'+esc(x.p.code)+'</small></td><td>'+esc(x.p.sector||"—")+'<small>'+esc(x.p.region||"")+'</small></td><td class="ct">'+esc(clean(x.p.contractor))+'</td><td class="vv">'+M(x.v)+'</td><td class="pg"><b>'+_dxPct(x.a)+'</b> / '+(x.pl!=null?_dxPct(x.pl):"—")+'<u><i style="width:'+(x.a*100).toFixed(0)+'%"></i><s style="right:'+((x.pl||0)*100).toFixed(0)+'%"></s></u></td><td class="c">'+_mgrPct(x.d,x.v)+'</td><td class="c dt">'+esc(fmtDateTxt(endDateOf(x.p))||"—")+'</td><td><i class="gx-s '+s[1]+'">'+s[0]+'</i>'+(x.st==="run"&&x.cat!=="ok"&&x.cat!=="ns"?_mgrPill(x.cat):'')+'</td></tr>'; };
+  var P4=11; for(var j=0;j<A.length;j+=P4){ var c4=A.slice(j,j+P4), n4=Math.ceil(A.length/P4); pages.push(["قائمة المشاريع"+(n4>1?' <em>('+ar(j/P4+1)+' من '+ar(n4)+')</em>':''),ar(A.length)+" مشروع مرتبة حسب الحالة ثم القيمة",'<table class="mg-tb">'+'<thead>'+head4+'</thead><tbody>'+c4.map(function(x,k){ return row4(x,j+k); }).join("")+'</tbody></table>']); }
+  return pages.map(function(pg,i){ return _mgrShell(i+1,pg[0],pg[1],pg[2],pages.length); }).join(""); }
+function genReportOpen(L,title,dim){ MGR_LBL="التقرير العام · "+title; IS_REPORT=true; WEEKLY_MODE=false; REPORT_CTX=null; ANSWER_TITLE="تقرير عام — "+title; PRINT_NAME="تقرير عام - "+title+" - "+MONTHLBL;
+  var bar='<div class="rp-ready noprint mg-bar"><button onclick="_rpBack()">→ تعديل الاختيار</button><span>التقرير العام بالمؤشرات — '+esc(title)+' · '+ar(L.length)+' مشروع</span><button class="ic" onclick="wkFullscreen()">⛶ ملء الشاشة</button><button class="ok" onclick="mgrPrint()">⬇ تنزيل PDF</button></div>';
+  show(bar+'<div class="report mgr" id="wkReport"><button class="wkfs-exit noprint" onclick="wkFullscreen()">✕ خروج من ملء الشاشة</button>'+_genSlides(L,title,dim)+'</div>'); MGR_LBL="تقرير مدير الإدارة"; setTimeout(_mgrFit,30); }
+try{ window.genReportOpen=genReportOpen; }catch(e){}
+
 var MGR_SNAP_WD={"CT-02":1,"CT-05":1,"CT-06":1};
 function _mgrWD(p){ if(p.withdraw!=null&&p.withdraw!=="") return p.withdraw==="1"; var any=DATA.some(function(x){ return x.withdraw==="1"; }); return !any&&!!MGR_SNAP_WD[p.code]; }
 function _mgrIc(k,s){ var P={proj:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',val:'<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/>',dis:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/>',rem:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
@@ -13716,7 +13783,7 @@ function _mgrIc(k,s){ var P={proj:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1
   ok:'<circle cx="12" cy="12" r="8.5"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',watch:'<circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/>',late:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/>',stumb:'<path d="M12 3 2.5 20h19z"/><path d="M12 10v4M12 17h.01"/>',
   stop:'<circle cx="12" cy="12" r="8.5"/><path d="M10 9v6M14 9v6"/>',wd:'<path d="M4 12h12M12 7l-5 5 5 5"/><path d="M16 5h3v14h-3"/>'};
   return '<svg viewBox="0 0 24 24" width="'+(s||22)+'" height="'+(s||22)+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(P[k]||"")+'</svg>'; }
-function _mgrData(){ var D=DATA.slice(), N=_dxN, rows=D.map(function(p){ var r=analyzeProject(p); return {p:p,r:r,st:_geoNowSt(p),cat:_dxCatOf(r),v:_dxBase(p),d:N(p.disbursed),u:N(p.under_proc),a:r.a||0,pl:r.pl,dev:_dxDev(p)}; });
+function _mgrData(L0){ var D=(L0||DATA).slice(), N=_dxN, rows=D.map(function(p){ var r=analyzeProject(p); return {p:p,r:r,st:_geoNowSt(p),cat:_dxCatOf(r),v:_dxBase(p),d:N(p.disbursed),u:N(p.under_proc),a:r.a||0,pl:r.pl,dev:_dxDev(p)}; });
   var S=function(L,f){ return L.reduce(function(a,x){ return a+(f?f(x):x.v); },0); };
   var X={rows:rows,n:rows.length,val:S(rows),orig:D.reduce(function(a,p){ return a+(_dxOrig(p)||0); },0),dis:S(rows,function(x){ return x.d; }),und:S(rows,function(x){ return x.u; }),cl:D.reduce(function(a,p){ return a+N(p.claims_count); },0)};
   X.rem=Math.max(0,X.val-X.dis-X.und); X.w=_wProg(rows.map(function(x){ return {p:x.p,a:x.a,v:x.v,pl:x.pl}; }),false);
@@ -13726,7 +13793,7 @@ function _mgrData(){ var D=DATA.slice(), N=_dxN, rows=D.map(function(p){ var r=a
   var now=new Date(); X.stop=rows.filter(function(x){ return _isStopped(x.p); }).map(function(x){ var sd=_dxDt(x.p.stop_date); x.sd=sd; x.days=sd?Math.max(0,Math.round((now-sd)/864e5)):null; return x; }).sort(function(a,b){ return (b.days||0)-(a.days||0); });
   X.wd=rows.filter(function(x){ return _mgrWD(x.p); }).sort(function(a,b){ return b.v-a.v; });
   return X; }
-function _mgrShell(no,title,sub,body,tot){ return '<section class="mgs"><div class="mgs-h"><div class="mgs-t"><span class="mgs-no">'+String(no).padStart(2,"0")+'</span><div><h2>'+title+'</h2>'+(sub?'<p>'+sub+'</p>':'')+'</div></div><img src="'+LOGO+'" alt="ريف"></div><div class="mgs-b">'+body+'</div><div class="mgs-f"><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span><span>تقرير مدير الإدارة · '+esc(MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
+function _mgrShell(no,title,sub,body,tot){ return '<section class="mgs"><div class="mgs-h"><div class="mgs-t"><span class="mgs-no">'+String(no).padStart(2,"0")+'</span><div><h2>'+title+'</h2>'+(sub?'<p>'+sub+'</p>':'')+'</div></div><img src="'+LOGO+'" alt="ريف"></div><div class="mgs-b">'+body+'</div><div class="mgs-f"><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span><span>'+esc(MGR_LBL)+' · '+esc(MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
 function _mgrPct(a,b){ return b?ar(Math.round(a/b*100))+"%":"—"; }
 function _mgrDays(d){ if(d==null) return "—"; var m=Math.floor(d/30.4); return ar(d)+' يوم'+(m>=1?'<small> ≈ '+ar(m)+' شهر</small>':''); }
 function _mgrPill(k){ var L={ok:"منتظم",watch:"يحتاج متابعة",late:"متأخر",stumb:"متعثّر",ns:"لم يبدأ"}; return '<i class="mg-pill '+k+'">'+L[k]+'</i>'; }
@@ -13736,8 +13803,7 @@ function _mgrSub(k,o,X){ var L=o.L, rows=[];
   else if(k==="done"){ var d=L.reduce(function(a,x){ return a+x.d; },0), v=o.v; rows=[["المنصرف عليها",_dxM(d)],["نسبة الصرف",_mgrPct(d,v)]]; var c={}; L.forEach(function(x){ var s=x.p.sector||"—"; c[s]=(c[s]||0)+1; }); Object.keys(c).sort(function(a,b){ return c[b]-c[a]; }).slice(0,2).forEach(function(s){ rows.push([s,ar(c[s])+" مشروع"]); }); }
   else { var c={}; L.forEach(function(x){ var s=String(x.p.status||"—").trim(); c[s]=(c[s]||0)+1; }); rows=Object.keys(c).sort(function(a,b){ return c[b]-c[a]; }).slice(0,4).map(function(s){ return [s,ar(c[s])+" مشروع"]; }); }
   return '<ul class="mg-sub">'+rows.map(function(r){ return '<li><span>'+esc(r[0])+'</span><b>'+r[1]+'</b></li>'; }).join("")+'</ul>'; }
-function _mgrSlides(){ var X=_mgrData(), out=[], M=_dxM;
-  var pages=[]; /* [title,sub,body] */
+function _mgrP1(X){ var M=_dxM;
   /* 1) المحفظة والوضع المالي والحالات العامة */
   var chg=X.val-X.orig, fp=function(v){ return X.val?Math.max(0,v/X.val*100).toFixed(2):0; };
   var k1='<div class="mg-band">'
@@ -13748,8 +13814,12 @@ function _mgrSlides(){ var X=_mgrData(), out=[], M=_dxM;
   var fin='<div class="mg-fin"><div class="mg-ft"><b>التوزيع المالي للقيمة التعاقدية</b><span>'+M(X.val)+'</span></div><div class="mg-fbar"><i class="d" style="width:'+fp(X.dis)+'%"></i><i class="u" style="width:'+fp(X.und)+'%"></i><i class="r" style="width:'+fp(X.rem)+'%"></i></div>'
     +'<div class="mg-fl"><div><i class="d"></i><span>المنصرف</span><b>'+M(X.dis)+'</b><em>'+_mgrPct(X.dis,X.val)+'</em></div><div><i class="u"></i><span>تحت إجراءات الصرف</span><b>'+M(X.und)+'</b><em>'+_mgrPct(X.und,X.val)+'</em></div><div><i class="r"></i><span>المتبقي من العقود</span><b>'+M(X.rem)+'</b><em>'+_mgrPct(X.rem,X.val)+'</em></div><div><i class="o"></i><span>القيمة الأصلية للعقود</span><b>'+M(X.orig)+'</b><em>قبل التعديل</em></div></div></div>';
   var GS=[["done","المشاريع المنتهية","#1E7A4D"],["run","قيد التنفيذ","#0E5A3A"],["tender","في إجراءات الطرح","#B8954F"],["award","في إجراءات الترسية","#5B7F95"]];
-  var gs='<div class="mg-st">'+GS.map(function(g){ var o=X.g[g[0]]; return '<div class="mg-sc" style="--c:'+g[2]+'"><div class="top"><span class="ic">'+_mgrIc(g[0],20)+'</span><em>'+g[1]+'</em></div><b>'+ar(o.n)+'<small>مشروع</small></b><div class="mg-sbar"><i style="width:'+(X.n?o.n/X.n*100:0).toFixed(1)+'%"></i></div>'+_mgrSub(g[0],o,X)+'<p><span>'+_mgrPct(o.n,X.n)+' من المشاريع</span><span>'+M(o.v)+'</span></p></div>'; }).join("")+'</div>';
-  pages.push(["المحفظة والوضع المالي العام","إجمالي المشاريع وقيمتها والمنصرف، وتوزيعها على الحالات العامة",k1+fin+gs]);
+  var GS2=GS.filter(function(g){ return X.g[g[0]].n>0; }); if(GS2.length) GS=GS2;
+  var gs='<div class="mg-st" style="grid-template-columns:repeat('+GS.length+',1fr)">'+GS.map(function(g){ var o=X.g[g[0]]; return '<div class="mg-sc" style="--c:'+g[2]+'"><div class="top"><span class="ic">'+_mgrIc(g[0],20)+'</span><em>'+g[1]+'</em></div><b>'+ar(o.n)+'<small>مشروع</small></b><div class="mg-sbar"><i style="width:'+(X.n?o.n/X.n*100:0).toFixed(1)+'%"></i></div>'+_mgrSub(g[0],o,X)+'<p><span>'+_mgrPct(o.n,X.n)+' من المشاريع</span><span>'+M(o.v)+'</span></p></div>'; }).join("")+'</div>';
+  return k1+fin+gs; }
+function _mgrSlides(){ var X=_mgrData(), out=[], M=_dxM;
+  var pages=[]; /* [title,sub,body] */
+  pages.push(["المحفظة والوضع المالي العام","إجمالي المشاريع وقيمتها والمنصرف، وتوزيعها على الحالات العامة",_mgrP1(X)]);
   /* 2) تصنيف المشاريع قيد التنفيذ */
   var CS=[["ok","منتظم","#1E7A4D","الحيود عن الخطة 15% أو أقل","يسير وفق الخطة أو بفارق محدود"],["watch","يحتاج متابعة","#C99A2E","الحيود من 15% إلى 25%","تأخر بدأ بالظهور ويتطلب متابعة دورية"],["late","متأخر","#D0703C","الحيود من 25% إلى 35%","تأخر واضح يتطلب خطة تعويض"],["stumb","متعثّر","#B3261E","الحيود أكبر من 35%","تأخر كبير يتطلب تدخلاً وقرارات إدارية"]];
   var run=X.g.run, rn=run.n||1;
