@@ -15755,7 +15755,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +'</div>';
   /* الإنجاز حسب القطاع */
   var _svT=secs.reduce(function(a,s){ return a+s.v; },0)||1, _svM=Math.max.apply(null,secs.map(function(s){ return s.v; }).concat([1]));
-  var secF='<div class="dxf-sh sv"><span>القطاع</span><span>القيمة بعد التعديل</span><span>المشاريع</span><span>القيمة</span></div><div class="dxf-sec">'+secs.map(function(s){
+  var secF='<div class="dxf-sh sv"><span>القطاع</span><span title="قيمة مشاريع القطاع بعد الزيادة/التخفيض كنسبة من قيمة المحفظة كلها">الحصة من قيمة المحفظة</span><span>المشاريع</span><span>القيمة</span></div><div class="dxf-sec">'+secs.map(function(s){
       return '<div class="dxf-sr dxf-row sv" role="button" onclick="dashSetFilter(\'sector\',\''+esc(s.l).replace(/'/g,"\\'")+'\')">'
         +'<span class="dxf-sn"><i class="dxf-sd" style="background:'+((typeof SEC_PASTEL!=="undefined"&&SEC_PASTEL[s.l])||"#C9CFCB")+'"></i>'+esc(s.l)+'</span>'
         +'<span class="dxf-sb sv"><i style="width:'+(s.v/_svM*100).toFixed(1)+'%"></i><em>'+ar(Math.round(s.v/_svT*100))+'%</em></span>'
@@ -15771,16 +15771,17 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   /* الوضع المالي */
   /* الميزانية الرأسمالية: كل مشاريع المحفظة (القيمة بعد الزيادة/التخفيض) مقارنة بإجمالي الميزانية، مع قيمة مشاريع البند 449 */
   var finF=(function(){ var BUD=(typeof PF!=="undefined"&&PF&&PF.capBudget)||1500000000, C=D.filter(function(p){ return /^449/.test(String(p.budget_item||"").trim()); }), cv=C.reduce(function(a,p){ return a+_dxBase(p); },0);
-    var g={run:0,done:0,tender:0,award:0}, cd=0, cu=0; D.forEach(function(p){ var st=_geoNowSt(p), v=_dxBase(p); if(st==="done"||st==="run"){ cd+=_dxN(p.disbursed); cu+=_dxN(p.under_proc); } g[st]=(g[st]||0)+v; });
-    var act=g.run+g.done, rest=Math.max(0,act-cd-cu), all=act+g.tender+g.award, filt=D.length!==DATA.length, base=filt?(all||1):BUD, left=Math.max(0,BUD-all);
-    var segs=[{l:"المنصرف",v:cd,c:DX.g},{l:"تحت الإجراء",v:cu,c:DX.blue},{l:"المتبقي من عقود المشاريع القائمة",v:rest,c:"#B9CDBF"},{l:"في إجراءات الترسية",v:g.award,c:"#8E7CC3"},{l:"في إجراءات الطرح",v:g.tender,c:"#C9A54E"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:left,c:"#E4DFD3"}]);
+    var g={run:0,done:0,tender:0,award:0}, cd=0, cu=0, ca=0, oth=0; D.forEach(function(p){ var st=_geoNowSt(p), v=_dxBase(p), cap=/^449/.test(String(p.budget_item||"").trim()); if(st==="done"||st==="run"){ if(cap){ ca+=v; cd+=_dxN(p.disbursed); cu+=_dxN(p.under_proc); } else oth+=v; } g[st]=(g[st]||0)+v; });
+    /* الصرف من المشاريع الرأسمالية (البند 449) فقط؛ المشاريع القائمة على بنود أخرى في سطر مستقل */
+    var act=g.run+g.done, rest=Math.max(0,ca-cd-cu), all=act+g.tender+g.award, filt=D.length!==DATA.length, base=filt?(all||1):BUD, left=Math.max(0,BUD-all);
+    var segs=[{l:"المنصرف",v:cd,c:DX.g},{l:"تحت الإجراء",v:cu,c:DX.blue},{l:"المتبقي من عقود المشاريع القائمة",v:rest,c:"#B9CDBF"},{l:"مشاريع قائمة على بنود أخرى",v:oth,c:"#D9CBA8"},{l:"في إجراءات الترسية",v:g.award,c:"#8E7CC3"},{l:"في إجراءات الطرح",v:g.tender,c:"#C9A54E"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:left,c:"#E4DFD3"}]);
     var P=function(v){ return _dxPct(base?v/base:0); };
     return '<div class="dxf-fin cap">'
       +'<div class="dxf-fr big"><span>'+(filt?'قيمة المشاريع ضمن التصفية':'إجمالي الميزانية')+'</span><b>'+_dxM(base)+'</b></div>'
       +'<div class="dxf-capq"><span>المشاريع القائمة والمنتهية</span><b>'+_dxM(act)+'</b><em>'+P(act)+(filt?'':' من الميزانية')+'</em></div>'
       +'<div class="dxf-stk">'+segs.map(function(x){ return x.v>0?'<i style="flex:'+x.v+';background:'+x.c+'" title="'+esc(x.l)+'"></i>':''; }).join("")+'</div>'
-      +segs.map(function(x,i){ return '<div class="dxf-fr'+(i<3?' sub':'')+'"><span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span><b>'+_dxM(x.v)+'</b><em>'+P(x.v)+'</em></div>'; }).join("")
-      +'<div class="dxf-cmp"><div><span>نسبة الصرف من المشاريع القائمة</span><b>'+_dxPct(act?cd/act:0)+'</b></div><div><span>منها مشاريع البند 449</span><b>'+_dxM(cv)+' <small>· '+ar(C.length)+' مشروع</small></b></div></div>'
+      +segs.map(function(x,i){ return '<div class="dxf-fr'+(i<4?' sub':'')+'"><span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span><b>'+_dxM(x.v)+'</b><em>'+P(x.v)+'</em></div>'; }).join("")
+      +'<div class="dxf-cmp"><div><span>نسبة الصرف · المشاريع الرأسمالية القائمة</span><b>'+_dxPct(ca?cd/ca:0)+'</b></div><div><span>منها مشاريع البند 449</span><b>'+_dxM(cv)+' <small>· '+ar(C.length)+' مشروع</small></b></div></div>'
       +'</div>'; })();
   /* المشاريع التي تتطلب متابعة */
   var lvCls={"عالي":"bad","متوسط":"warn","منخفض":"low","سليم":"ok"};
