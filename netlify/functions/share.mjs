@@ -89,6 +89,8 @@ export default async (req) => {
       const P = pfStore(); const meta = await P.get("meta", { type: "json" });
       if (meta && !d.force && Date.parse(meta.at) >= Date.parse(pf.at)) return J(200, { ok: true, kept: true, at: meta.at });
       const rec = { name: clean(pf.name, 160), sheet: clean(pf.sheet, 80), at: String(pf.at || new Date().toISOString()), data: pf.data, cancelled: Array.isArray(pf.cancelled) ? pf.cancelled.slice(0, 2000) : [] };
+      if (pf.stg && Array.isArray(pf.stg.rows) && pf.stg.rows.length <= 3000) rec.stg = pf.stg;
+      if (pf.pay && Array.isArray(pf.pay.rows) && pf.pay.rows.length <= 10000) rec.pay = pf.pay;
       await P.setJSON("pf", rec); await P.setJSON("meta", { at: rec.at, name: rec.name, n: rec.data.length }); return J(200, { ok: true, at: rec.at });
     }
     if (d.action === "pe_put") {

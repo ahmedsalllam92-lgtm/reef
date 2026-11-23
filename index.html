@@ -7872,7 +7872,7 @@ try{ window.refreshNow=refreshNow; }catch(e){}
 function _pfSrvPull(){ try{ var k=_shKey(); if(!k||location.protocol==="file:"||typeof _shareApi!=="function") return;
   _shareApi({action:"pf_get",key:k,since:(typeof PF!=="undefined"&&PF&&PF.at)||""}).then(function(j){ if(!j||!j.ok||j.none||j.same||!j.pf||!j.pf.data||!j.pf.data.length) return;
     if(typeof PF!=="undefined"&&PF&&PF.at&&Date.parse(PF.at)>=Date.parse(j.pf.at)) return;
-    PF={name:j.pf.name,sheet:j.pf.sheet,at:j.pf.at,data:j.pf.data,cancelled:j.pf.cancelled||[]}; try{ localStorage.setItem(PF_KEY,JSON.stringify(PF)); }catch(e){}
+    PF={name:j.pf.name,sheet:j.pf.sheet,at:j.pf.at,data:j.pf.data,cancelled:j.pf.cancelled||[]}; try{ localStorage.setItem(PF_KEY,JSON.stringify(PF)); }catch(e){} _pfExtras(j.pf);
     DATA=capPlannedData(j.pf.data.map(function(x){ return Object.assign({},x); })); try{ _chgRun(); }catch(e){}
     try{ if(typeof RERENDER==="function"){ SILENT_RENDER=true; RERENDER(); SILENT_RENDER=false; } }catch(e){ SILENT_RENDER=false; } try{ renderFooter(true); _dxBadge(); }catch(e){} }).catch(function(){}); }catch(e){} }
 async function boot(){ renderFooter(false); if(!SHEET_CSV_URL){ _pfSrvPull(); window.addEventListener("focus",function(){ if(Date.now()-(window._pfSrvT||0)>60000){ window._pfSrvT=Date.now(); _pfSrvPull(); } }); return; }
@@ -17148,10 +17148,12 @@ function dxShareCreate(){ var g=function(id){ return ((document.getElementById(i
 /* ---------- الزائر: وضع العرض المقيّد ---------- */
 var _KO={};
 /* مزامنة المحفظة المرفوعة مع روابط العرض: المسؤول يرفع النسخة للخادم، والرابط يقرأ آخر نسخة كل دقيقة */
-function _pfPush(){ try{ var k=_shKey(); if(!k||typeof PF==="undefined"||!PF||!PF.data||!PF.data.length||location.protocol==="file:") return; _shareApi({action:"pf_put",key:k,pf:PF}).catch(function(){}); }catch(e){} }
+function _pfPush(){ try{ var k=_shKey(); if(!k||typeof PF==="undefined"||!PF||!PF.data||!PF.data.length||location.protocol==="file:") return; var X=Object.assign({},PF); try{ var s=JSON.parse(localStorage.getItem("reef_stg_v1")||"null"); if(s&&s.rows&&s.rows.length) X.stg=s; }catch(e){} try{ var y=JSON.parse(localStorage.getItem("reef_pay_v1")||"null"); if(y&&y.rows&&y.rows.length) X.pay=y; }catch(e){} _shareApi({action:"pf_put",key:k,pf:X}).catch(function(){}); }catch(e){} }
+/* سجل المستخلصات وتتبع المراحل يصلان مع المحفظة لكل الأجهزة وروابط العرض */
+function _pfExtras(pf){ try{ if(pf&&pf.stg&&pf.stg.rows&&pf.stg.rows.length) _stgSave(pf.stg); }catch(e){} try{ if(pf&&pf.pay&&pf.pay.rows&&pf.pay.rows.length) _paySave(pf.pay); }catch(e){} }
 function _pfPull(){ try{ if(typeof SHARE==="undefined"||!SHARE.token||location.protocol==="file:") return;
   _shareApi({action:"pf_get",token:SHARE.token,since:(typeof PF!=="undefined"&&PF&&PF.at)||""}).then(function(j){ if(!j||!j.ok||j.none||j.same||!j.pf||!j.pf.data) return;
-    PF={name:j.pf.name,sheet:j.pf.sheet,at:j.pf.at,data:j.pf.data,cancelled:j.pf.cancelled||[]}; DATA=capPlannedData(j.pf.data.map(function(x){ return Object.assign({},x); }));
+    PF={name:j.pf.name,sheet:j.pf.sheet,at:j.pf.at,data:j.pf.data,cancelled:j.pf.cancelled||[]}; DATA=capPlannedData(j.pf.data.map(function(x){ return Object.assign({},x); })); _pfExtras(j.pf);
     try{ _chgRun(); }catch(e){} try{ if(typeof RERENDER==="function"){ SILENT_RENDER=true; RERENDER(); SILENT_RENDER=false; } }catch(e){ SILENT_RENDER=false; } }).catch(function(){}); }catch(e){} }
 function _roKiosk(S){ if(!S||SHARE._kiosk) return; SHARE._kiosk=true; try{ _pfPull(); if(!SHARE._pft) SHARE._pft=setInterval(function(){ _pfPull(); try{ _pePull(); }catch(e){} },60000); }catch(e){} SHARE.scope=S; document.documentElement.classList.add("kiosk");
   _KO.projDash=window.projDash; _KO.execDashboard=window.execDashboard;
