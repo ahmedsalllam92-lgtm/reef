@@ -9047,7 +9047,19 @@ html body #lw.v4 .lw-c>.lw-body{grid-row:2!important;min-height:0!important;over
 html body:not([data-theme=dark]) #lw.v4 svg .lw-rg{fill:#E6ECE6!important;stroke:#FFFFFF!important;stroke-width:1.6!important}
 html body:not([data-theme=dark]) #lw.v4 svg .lw-rg.on{fill:rgba(30,122,77,var(--a))!important}
 /* بطاقات المؤشرات: بلا لمعة رمادية — خط ذهبي علوي ولمسة خضراء هادئة */
-html body:not([data-theme=dark]) #lw.v4 .lw-rail .lw-k,html body:not([data-theme=dark]) #lw.v4 .lw-k{background:#FFFFFF!important;border:1px solid rgba(14,59,39,.07)!important;box-shadow:0 1px 2px rgba(14,59,39,.04),0 14px 34px -26px rgba(14,59,39,.35)!important}
+/* لوحة المؤشرات الجانبية: لوحة واحدة بصفوف مفصولة */
+html body #lw.v4 .lw-rail{gap:0!important;padding:8px 30px!important;border-radius:20px!important;background:rgba(255,255,255,.03)!important;border:1px solid rgba(255,255,255,.08)!important}
+html body #lw.v4 .lw-rail .lw-k{background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:14px 0!important;gap:2px!important}
+html body #lw.v4 .lw-rail .lw-k+.lw-k{border-top:1px solid rgba(255,255,255,.08)!important}
+html body #lw.v4 .lw-rail .lw-k i{display:none!important}
+html body #lw.v4 .lw-rail .lw-k:after{display:none!important}
+html body #lw.v4 .lw-rail .lw-k b{font-size:50px!important}
+html body #lw.v4 .lw-rail .lw-k span{font-size:16px!important}
+html body:not([data-theme=dark]) #lw.v4 .lw-rail{background:#FFFFFF!important;border-color:rgba(14,59,39,.07)!important;box-shadow:0 1px 2px rgba(14,59,39,.04),0 14px 34px -26px rgba(14,59,39,.35)!important}
+html body:not([data-theme=dark]) #lw.v4 .lw-rail .lw-k{background:none!important;border:0!important;box-shadow:none!important}
+html body:not([data-theme=dark]) #lw.v4 .lw-rail .lw-k+.lw-k{border-top:1px solid rgba(14,59,39,.09)!important}
+html body:not([data-theme=dark]) #lw.v4 .lw-rail .lw-k span{color:#56675D!important}
+html body:not([data-theme=dark]) #lw.v4 .lw-rail .lw-k em{color:#6E7D74!important}
 html body:not([data-theme=dark]) #lw.v4 .lw-k:after{animation:none!important;background:none!important;display:none!important}
 /* مسار المشاريع — الوضع الفاتح */
 html body:not([data-theme=dark]) #lw.v4 .l4-sp .nd{background:#FFFFFF!important;box-shadow:0 0 0 9px rgba(14,59,39,.04),0 8px 18px -10px rgba(14,59,39,.35)!important}
