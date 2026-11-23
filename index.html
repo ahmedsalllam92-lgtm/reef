@@ -8627,6 +8627,16 @@ body[data-theme="dark"] .dx-tipr span,body[data-theme="dark"] .dx-tipr b{color:#
 #wkReport.mgr.mg-fs{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;zoom:1!important;transform:none!important}
 #wkReport.mgr.mg-fs .mgf-nav{position:absolute!important;bottom:14px!important}
 #wkReport.mgr.mg-fs .wkfs-exit{position:absolute!important;bottom:14px!important;top:auto!important;left:14px!important}
+
+/* تقرير المدير: عرض مثل لوحة الأداء */
+#answer:has(#wkReport.mgr) .rtools{display:none!important}
+#wkReport.mgr:not(.mg-fs){gap:24px;padding:8px 0 24px}
+#wkReport.mgr.mg-fs{padding:0!important;background:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#wkReport.mgr.mg-fs .mgs.m5,#wkReport.mgr.mg-fs .mgs{border-radius:0!important;box-shadow:none!important}
+#wkReport.mgr.mg-fs .mgf-nav,#wkReport.mgr.mg-fs .wkfs-exit{opacity:0;transition:opacity .3s;pointer-events:none}
+#wkReport.mgr.mg-fs.ui .mgf-nav,#wkReport.mgr.mg-fs.ui .wkfs-exit{opacity:1;pointer-events:auto}
+#wkReport.mgr.mg-fs .mgf-nav{background:rgba(14,59,39,.88)!important;bottom:52px!important}
+#wkReport.mgr.mg-fs .wkfs-exit{bottom:52px!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -14472,6 +14482,18 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
   pages.push(["المشاريع في إجراءات السحب",k5+_m5Card("قائمة المشاريع","محددة في ملف المحفظة",W.length?_m5Rows(["#","المشروع / المقاول","الإنجاز الفعلي / المخطط","قيمة العقد","المنصرف","المدة"],r5):'<div class="m5-empty">لا توجد مشاريع في إجراءات السحب ✓</div>',"f")]);
   return pages.map(function(pg,i){ return _mgrShell(i+1,pg[0],"",pg[1],pages.length); }).join(""); }
 try{ window.addEventListener("beforeprint",function(){ if(document.querySelector("#wkReport.mgr")) document.body.classList.add("mgr-print"); }); window.addEventListener("afterprint",function(){ document.body.classList.remove("mgr-print"); }); }catch(e){}
+
+/* تقرير المدير/العام: العرض العادي يُظهر الشريحة كاملة داخل الصفحة، وملء الشاشة يملأ الشاشة كلها بلا هوامش */
+function _mgrFit(){ try{ var r=document.querySelector(".mgr"); if(!r) return; var S=r.querySelectorAll(".mgs"); var fs=(document.fullscreenElement||document.webkitFullscreenElement)===r||r.classList.contains("wkfs-fallback");
+    if(fs){ if(!r.classList.contains("mg-fs")){ r.classList.add("mg-fs"); MGF.i=0; } _mgfNav(r);
+      var W=r.clientWidth||window.innerWidth, H=r.clientHeight||window.innerHeight, k=Math.min(W/1280,H/720); r.style.setProperty("--mgz",k.toFixed(4));
+      S.forEach(function(s){ s.style.margin="0"; s.style.width=(W/k).toFixed(1)+"px"; s.style.height=(H/k).toFixed(1)+"px"; }); _mgfShow(r); return; }
+    r.classList.remove("mg-fs","ui"); var nv=r.querySelector(".mgf-nav"); if(nv) nv.remove();
+    S.forEach(function(s){ s.style.margin=""; s.style.width=""; s.style.height=""; s.classList.remove("on"); });
+    var cs=getComputedStyle(r), w=r.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0);
+    var top=Math.max(0,(S[0]?S[0].getBoundingClientRect().top:0)-(r.getBoundingClientRect().top)), h=window.innerHeight-Math.max(90,r.getBoundingClientRect().top+window.scrollY>0?110:90);
+    var k2=Math.min(1.25,w/1280,Math.max(0.45,(window.innerHeight-150)/720)); r.style.setProperty("--mgz",k2.toFixed(4)); }catch(e){} }
+(function(){ var tm=null; document.addEventListener("mousemove",function(){ var r=document.querySelector(".mgr.mg-fs"); if(!r) return; r.classList.add("ui"); clearTimeout(tm); tm=setTimeout(function(){ r.classList.remove("ui"); },2200); }); })();
 
 function _brfData(){ var D=(!BRF.all&&typeof _dashFilt==="function")?_dashFilt():DATA.slice(); D=D||[];
   var rows=D.map(analyzeProject); rows.forEach(function(r){ r.cat=_dxCatOf(r); });
