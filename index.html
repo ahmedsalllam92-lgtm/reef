@@ -5005,6 +5005,10 @@ body[data-theme="dark"] .hb-card:hover .hb-cb2 h4{color:#F0D9A8}
 .pd-durbox{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:var(--dx-soft,#F4F7F4);border:1px solid var(--dx-line,#E6ECE7)}
 .pd-durbox{flex:none!important}.pd-durbox .pd-dur{margin-top:0}.pd-durbox .pd-dur>div{min-width:0}.pd-durbox .pd-dur span,.pd-durbox .pd-dur b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .dx-land.pdl .fit .pd-durbox{padding:6px 8px;margin-bottom:6px}.dx-land.pdl .fit .pd-durh{display:none}.dx-land.pdl .fit .pd-durbox .pd-dur{gap:5px}.dx-land.pdl .fit .pd-durbox .pd-dur>div{padding:4px 6px}.dx-land.pdl .fit .pd-durbox .pd-dur span{font-size:9.5px}.dx-land.pdl .fit .pd-durbox .pd-dur b{font-size:11.5px}
+.dx.pdl .pd-rows.pt2,.dx .pd-rows.pt2{display:grid!important;grid-template-columns:max-content minmax(0,1fr) max-content max-content!important;column-gap:10px!important;overflow:visible!important;margin-top:4px}
+.dx .pd-rows.pt2 .pd-r{display:contents!important}
+.dx .pd-rows.pt2 .pd-r>span,.dx .pd-rows.pt2 .pd-r>b{font-size:10.5px!important;padding:3px 0!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dx .g-pt .pd-rows.pt2 .pd-r:first-child>b{grid-column:span 3}.dx.pdl .pd-rows.pt2.fn2,.dx .pd-rows.pt2.fn2{grid-template-columns:minmax(0,1fr) max-content minmax(0,1fr) max-content!important;column-gap:8px!important}.dx .pd-rows.fn2 .pd-r>b{overflow:visible!important;text-overflow:clip!important}
 .pd-durh{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:#1E5B3A;margin-bottom:6px}.pd-durh svg{width:15px;height:15px}
 .pd-durbox .pd-dur{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .pd-durbox .pd-dur>div{background:#fff;border-radius:9px;padding:6px 8px;border:1px solid var(--dx-line,#E6ECE7)}
@@ -8528,6 +8532,18 @@ html body #lw.v4 .l4-fs div{grid-template-columns:150px 1fr 60px 104px;gap:14px}
 html body #lw.v4 .l4-leg{min-width:300px;gap:14px}html body #lw.v4 .l4-leg div{padding:14px 18px}html body #lw.v4 .l4-leg span{font-size:20px}html body #lw.v4 .l4-leg b{font-size:34px}
 .pd-topacts{display:inline-flex;gap:8px;align-items:center;margin-inline-start:8px}
 .pd-topacts .dx-btn{height:40px}
+/* شريط لوحة المشروع: صف واحد مضغوط */
+#answer .pd-tools.dxbar{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;padding:5px 8px!important;margin:0 0 8px!important;gap:6px!important;min-height:0!important}
+#answer .pd-tools .dx-fl{width:auto!important;flex:1 1 auto!important;display:flex!important;flex-wrap:nowrap!important;gap:6px!important;min-width:0}
+#answer .pd-tools select,#answer .pd-tools input{height:30px!important;min-height:30px!important;font-size:12px!important;padding:0 10px!important;border-radius:8px!important;line-height:28px}
+#answer .pd-tools .df-sel:first-child{min-width:104px!important;flex:none!important}
+#answer .pd-tools .pd-sel{min-width:200px!important;max-width:380px!important;flex:1 1 auto!important}
+#answer .pd-tools .pd-q{min-width:150px!important;width:190px!important;flex:0 1 190px!important}
+#answer .pd-tools .dx-btn{height:30px!important;min-height:30px!important;padding:0 10px!important;font-size:12px!important;border-radius:8px!important;gap:5px}
+#answer .pd-tools .pd-nav{display:inline-flex;gap:4px}#answer .pd-tools .pd-nav .dx-btn{width:30px;padding:0!important;justify-content:center}
+#answer .pd-tools .pd-topacts{margin-inline-start:2px;gap:6px}
+#answer .pd-tools .df-count{margin-inline-start:4px!important;white-space:nowrap;flex:none;padding:3px 8px!important}
+#answer .acard:fullscreen .pd-tools.dxbar,#answer .acard.wkfs-fallback .pd-tools.dxbar,html.kiosk #answer .pd-tools.dxbar{display:none!important}
 
 .iah{margin-top:22px;border:1px solid #E3E8E3;border-radius:14px;background:#fff;padding:16px 18px}
 .iah-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid #EEF1EE;margin-bottom:10px}.iah-h b{font-size:15.5px;font-weight:900;color:#0B3D27}.iah-h span{font-size:12px;color:#7D8A82;font-weight:600}
@@ -8896,7 +8912,6 @@ html body:not([data-theme=dark]) #lw .lw-c,html body:not([data-theme=dark]) #lw.
 html body:not([data-theme=dark]) #lw.v4 .lw-bg b{background-image:linear-gradient(rgba(14,59,39,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(14,59,39,.035) 1px,transparent 1px)!important}
 html body:not([data-theme=dark]) #lw.v4 .lw-h{background:#FFFFFF!important;border-bottom:1px solid rgba(14,59,39,.12)!important;box-shadow:0 6px 20px -16px rgba(14,59,39,.35)!important}
 html body:not([data-theme=dark]) #lw.v4 .lw-k{background:#FFFFFF!important;box-shadow:0 10px 24px -20px rgba(14,59,39,.35)!important}
-html body:not([data-theme=dark]) #lw.v4 .lw-id img{filter:brightness(0) saturate(100%) invert(17%) sepia(40%) saturate(1100%) hue-rotate(112deg) brightness(.9)!important}
 /* الشريط السفلي داخل الشاشة دائماً (الوضعان) */
 html body #lw.v4 .lw-c{grid-template-rows:118px minmax(0,1fr) 66px!important}
 html body #lw.v4 .lw-c>.lw-f{grid-row:3!important;align-self:stretch!important;margin:0!important;top:0!important}
@@ -8912,6 +8927,10 @@ html body:not([data-theme=dark]) #lw.v4 .l4-sp .nd{background:#FFFFFF!important;
 html body:not([data-theme=dark]) #lw.v4 .l4-sp.s-done .ct{color:#1E7A4D!important}
 html body:not([data-theme=dark]) #lw.v4 .l4-sp u{color:#7B6127!important;background:rgba(201,169,97,.14)!important}
 html body:not([data-theme=dark]) #lw.v4 .l4-vb{background:#F7F9F6!important;border-color:rgba(14,59,39,.10)!important}
+/* اللوجو: الملوّن في الوضع الفاتح والأبيض في الداكن */
+html body #lw .lw-id img.lg-c{display:none!important}
+html body:not([data-theme=dark]) #lw .lw-id img.lg-w{display:none!important}
+html body:not([data-theme=dark]) #lw .lw-id img.lg-c{display:block!important;filter:none!important}
 </style>
 </head>
 <body>
@@ -15193,7 +15212,7 @@ function _lwArm(){ clearTimeout(LW.t); if(LW.paused) return; var sp=LW_SC[LW.i][
 function liveWallOpen(){ liveWallClose(true); try{ setNavActive("live"); }catch(e){}
   var d=document.createElement("div"); d.id="lw"; d.className="v4"; d.setAttribute("dir","rtl");
   d.innerHTML='<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="l4g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2E9466"/><stop offset="1" stop-color="#9FDDBA"/></linearGradient></defs></svg><div class="lw-c" id="lwC"><div class="lw-bg"><i></i><i></i><i></i><b></b></div>'
-    +'<header class="lw-h"><div class="lw-id"><img src="'+LOGO_W+'" alt="ريف"><div><b>برنامج التنمية الريفية الزراعية المستدامة</b><span>لوحة المتابعة التنفيذية للمشاريع</span></div></div>'
+    +'<header class="lw-h"><div class="lw-id"><img class="lg-w" src="'+LOGO_W+'" alt="ريف"><img class="lg-c" src="'+LOGO+'" alt="ريف"><div><b>برنامج التنمية الريفية الزراعية المستدامة</b><span>لوحة المتابعة التنفيذية للمشاريع</span></div></div>'
     +'<div class="lw-mid"><div class="lw-tt" id="lwTitle"></div><div class="lw-dots" id="lwDots"></div></div>'
     +'<div class="lw-clk" id="lwClk"><div class="tm"><span class="lb"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>الوقت الآن</span><b>--:--:--</b></div><div><span class="h"></span><span class="g"></span></div></div></header>'
     +'<div class="lw-body"><aside class="lw-rail" id="lwRail"></aside><main class="lw-stage" id="lwStage"></main></div>'
@@ -15965,9 +15984,9 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   /* --- المالية --- */
   var fSegs=[{l:"المنصرف",v:dis,c:DX.g},{l:"تحت الإجراء",v:under,c:DX.blue},{l:"المتبقي",v:remain,c:"#D8D0BE"}];
   var finBody='<div class="dx-health sm">'+_dxDonut(fSegs,_dxPct(spend),"مصروف",150,18)+_dxLeg(fSegs,function(v){ return String(_dxM(v)).replace(/\s*(مليار|مليون|ألف)$/,' <small class="pd-u">$1 '+RYL+'</small>'); })+'</div>'
-    +'<div class="pd-rows">'+_pdRow("القيمة التعاقدية",fmtFull(orig||null),true)
-    +_pdRow("الزيادة / التخفيض",chg?('<span class="pd-chg '+(chg>0?"up":"dn")+'">'+(chg>0?"▲ +":"▼ −")+fmtFull(Math.abs(chg))+'</span>'):"لا يوجد",true)
-    +_pdRow("القيمة بعد التعديل",'<span class="hl">'+fmtFull(after||null)+'</span>',true)
+    +'<div class="pd-rows two pt2 fn2">'+_pdRow("القيمة التعاقدية",fmtFull(orig||null),true)
+    +_pdRow("الزيادة/التخفيض",chg?('<span class="pd-chg '+(chg>0?"up":"dn")+'">'+(chg>0?"▲ +":"▼ −")+fmtFull(Math.abs(chg))+'</span>'):"لا يوجد",true)
+    +_pdRow("بعد التعديل",'<span class="hl">'+fmtFull(after||null)+'</span>',true)
     +_pdRow("عدد المستخلصات",ar(_dxN(p.claims_count)))+'</div>';
   /* --- المطالبات والجودة --- */
   var app=_dxN(p.approved_claims), ret=_dxN(p.returned_claims), stu=_dxN(p.under_study), totC=_dxN(p.total_claims)||(app+ret+stu);
@@ -15994,10 +16013,9 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
     +(r.reasons.length?'<ul class="pd-why rk-pts">'+r.reasons.map(function(x,i){return '<li><b>+'+ar((r.pts||[])[i]||0)+'</b>'+esc(x)+'</li>';}).join("")+'</ul>':'<div class="dx-empty ok">✓ لا توجد مؤشرات خطر على المشروع</div>');
   /* --- الأطراف والمراجع --- */
   var pm=_dxTxt(p.pm);
-  var ptBody=durBox+'<div class="pd-rows">'+_pdRow("المقاول",_dxTxt(p.contractor)||"—")+_pdRow("الاستشاري",_dxTxt(p.consultant)||"—")
-    +_pdRow("مدير المشروع",pm?esc(pm).replace(/\n+/g,' · '):"—",true)+_pdRow("الإشراف",_dxTxt(p.supervision)||"—")
-    +_pdRow("رقم العقد",_dxTxt(p.contract_ref)||"—")+_pdRow("رقم التعميد",_dxTxt(p.mandate_no)||"—")
-    +_pdRow("رقم المنافسة",_dxTxt(p.competition_no)||"—")+_pdRow("البند",_dxTxt(p.budget_item)||"—")+'</div>'
+  var _sd0=_dxTxt(p.stop_duration), _ptR=[["المقاول",_dxTxt(p.contractor)],["مدة العقد",(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):_dxTxt(p.duration)],["المدة الكلية",t.ok?ar(t.total)+" يوم":""],["مدة التمديد",_dxExtTxt(p)],["مدة الإيقاف",_sd0?_sd0+" يوم":"لا يوجد"],["الاستشاري",_dxTxt(p.consultant)],["مدير المشروع",pm?esc(pm).replace(/\n+/g,' · '):"",true],["الإشراف",_dxTxt(p.supervision)],["رقم العقد",_dxTxt(p.contract_ref)],["رقم التعميد",_dxTxt(p.mandate_no)],["رقم المنافسة",_dxTxt(p.competition_no)],["البند",_dxTxt(p.budget_item)]].filter(function(x){ return x[1]&&x[1]!=="—"; });
+  /* صفّان متجاوران حتى تظهر كل البيانات داخل البطاقة دون تمرير */
+  var ptBody='<div class="pd-rows two pt2">'+_ptR.map(function(x){ return _pdRow(x[0],x[1],x[2]); }).join("")+'</div>'
     +(locValid(p.location)||_dxTxt(p.coords)?'<a class="dx-btn pd-map noprint" target="_blank" rel="noopener" href="'+mapsUrl(_dxTxt(p.coords)||p.location)+'">'+DX_ICO.pin+' الموقع على الخريطة</a>':'');
   /* --- آخر المستجدات --- */
   var notes=[["الموقف الحالي",_dxTxt(p.last_note)||_dxTxt(p.build_status)],["الملخص التنفيذي",(_dxTxt(p.exec_summary)&&!_dxSame(p.exec_summary,_dxTxt(p.last_note)||_dxTxt(p.build_status)))?_dxTxt(p.exec_summary):""],
