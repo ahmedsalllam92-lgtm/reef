@@ -8615,6 +8615,18 @@ body[data-theme="dark"] .dxf-li .dx-tip{background:#16252C;border-color:rgba(205
 body[data-theme="dark"] .dx-tipr span,body[data-theme="dark"] .dx-tipr b{color:#EFF4F1}body[data-theme="dark"] .dx-tiph,body[data-theme="dark"] .dx-tipr{border-color:rgba(205,228,217,.1)}
 
 :is(.dxf-p,.dx-card,.dx-canvas,.dxf-sch,.dxf-sl,.dx-gr):has(.dxf-li.has-tip:hover){overflow:visible!important;z-index:40;position:relative}
+
+/* تقرير المدير: الجداول تملأ ارتفاع البطاقة بدل ترك فراغ */
+.m5-card.c7 .m5-tb,.m5-card.c5 .m5-fin .m5-tb{flex:1}
+.m5-card.c7 .m5-tb{height:100%}
+.m5-card.c7 .m5-tb td{font-size:15px;padding:0 12px}
+.m5-card.c7 .m5-tb td.n{font-size:18px}
+.m5-card.c7 .m5-tb thead th{height:30px}
+.m5-card.c7 .m5-stack{height:22px}
+/* ملء الشاشة: الأزرار داخل حدود الشاشة دائماً */
+#wkReport.mgr.mg-fs{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;zoom:1!important;transform:none!important}
+#wkReport.mgr.mg-fs .mgf-nav{position:absolute!important;bottom:14px!important}
+#wkReport.mgr.mg-fs .wkfs-exit{position:absolute!important;bottom:14px!important;top:auto!important;left:14px!important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -14368,7 +14380,7 @@ function _genDist(X,dim){ var M=_dxM, G={}; X.rows.forEach(function(x){ var k=(d
 /* ===== تقرير مدير الإدارة v4: مبسّط وهادئ — نصوص أقل، ألوان أقل، عناوين أوضح ===== */
 var MG_CC={ok:"#2F6B4E",watch:"#B08A3E",late:"#B5703F",stumb:"#9E3A33",ns:"#A9B2AC"};
 function _mgrP1(X){ var M=_dxM, chg=X.val-X.orig;
-  var k='<div class="m4-kpi">'+[["إجمالي المشاريع",ar(X.n),"مشروع"],["القيمة التعاقدية",M(X.val),Math.abs(chg)>1?(chg>0?"+":"−")+M(Math.abs(chg))+" عن الأصلية":""],["المنصرف",M(X.dis),_mgrPct(X.dis,X.val)+" من القيمة"],["متوسط الإنجاز",_dxPct(X.w.a),"المخطط "+_dxPct(X.w.p)]].map(function(r){ return '<div><span>'+r[0]+'</span><b>'+r[1]+'</b><em>'+r[2]+'</em></div>'; }).join("")+'</div>';
+  var k='<div class="m4-kpi">'+[["إجمالي المشاريع",ar(X.n),"مشروع"],["القيمة التعاقدية",M(X.val),Math.abs(chg)>1?(chg>0?"+":"−")+M(Math.abs(chg))+" عن القيمة التعاقدية":""],["المنصرف",M(X.dis),_mgrPct(X.dis,X.val)+" من القيمة"],["متوسط الإنجاز",_dxPct(X.w.a),"المخطط "+_dxPct(X.w.p)]].map(function(r){ return '<div><span>'+r[0]+'</span><b>'+r[1]+'</b><em>'+r[2]+'</em></div>'; }).join("")+'</div>';
   var GS=[["tender","الطرح"],["award","الترسية"],["run","قيد التنفيذ"],["done","منتهية"]];
   var pipe='<div class="m4-box"><h3>حالة المشاريع</h3><div class="m4-pipe">'+GS.map(function(g,i){ var o=X.g[g[0]]; return (i?'<i class="m4-ar"></i>':'')+'<div class="m4-st"><span>'+g[1]+'</span><b>'+ar(o.n)+'</b><em>'+_mgrPct(o.n,X.n)+' · '+M(o.v)+'</em></div>'; }).join("")+'</div></div>';
   var segs=[{l:"المنصرف",v:X.dis,c:"#2F6B4E"},{l:"تحت إجراءات الصرف",v:X.und,c:"#9DB4C0"},{l:"المتبقي",v:X.rem,c:"#E2DCCB"}];
@@ -14405,7 +14417,7 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
 /* ملء الشاشة: شريحة واحدة تملأ الشاشة، والتنقل بالأسهم */
 function _mgrFit(){ try{ var r=document.querySelector(".mgr"); if(!r) return; var fs=(document.fullscreenElement||document.webkitFullscreenElement)===r||r.classList.contains("wkfs-fallback");
     var S=r.querySelectorAll(".mgs");
-    if(fs){ if(!r.classList.contains("mg-fs")){ r.classList.add("mg-fs"); MGF.i=0; } _mgfNav(r); var k=Math.min((innerWidth-40)/1280,(innerHeight-96)/720); r.style.setProperty("--mgz",k.toFixed(4)); S.forEach(function(s){ s.style.margin=""; }); _mgfShow(r); }
+    if(fs){ if(!r.classList.contains("mg-fs")){ r.classList.add("mg-fs"); MGF.i=0; } _mgfNav(r); var k=Math.min((innerWidth-48)/1280,(innerHeight-120)/720); r.style.setProperty("--mgz",k.toFixed(4)); S.forEach(function(s){ s.style.margin=""; }); _mgfShow(r); }
     else { r.classList.remove("mg-fs"); S.forEach(function(s){ s.style.margin=""; s.classList.remove("on"); }); var nv=r.querySelector(".mgf-nav"); if(nv) nv.remove(); var w=r.clientWidth-(parseFloat(getComputedStyle(r).paddingLeft)||0)*2; r.style.setProperty("--mgz",Math.min(1,w/1280).toFixed(4)); } }catch(e){} }
 /* وضع العرض: شريحة واحدة في المنتصف + أزرار وأسهم */
 var MGF={i:0};
@@ -14424,7 +14436,7 @@ function _m5Card(title,aside,body,cls){ return '<div class="m5-card '+(cls||'')+
 function _m5Stack(segs){ var tot=segs.reduce(function(a,s){ return a+Math.max(0,s.v); },0)||1; return '<div class="m5-stack">'+segs.map(function(s){ return s.v>0?'<i style="flex:'+s.v+';background:'+s.c+'" title="'+esc(s.l||"")+'"></i>':''; }).join("")+'</div>'; }
 function _m5Rows(head,rows,cls){ return '<table class="m5-tb '+(cls||'')+'"><thead><tr>'+head.map(function(h){ return '<th>'+h+'</th>'; }).join("")+'</tr></thead><tbody>'+rows.join("")+'</tbody></table>'; }
 function _mgrP1(X){ var M=_dxM, chg=X.val-X.orig;
-  var k=_m5Kpis([["إجمالي المشاريع",ar(X.n),ar(X.cl)+" مستخلصاً معتمداً"],["القيمة التعاقدية",M(X.val),Math.abs(chg)>1?(chg>0?"زيادة ":"تخفيض ")+M(Math.abs(chg))+" عن الأصلية":"بدون تعديل"],["المنصرف",M(X.dis),_mgrPct(X.dis,X.val)+" من القيمة التعاقدية"],["متوسط الإنجاز الفعلي",_dxPct(X.w.a),"من المشاريع القائمة · المخطط "+_dxPct(X.w.p)]]);
+  var k=_m5Kpis([["إجمالي المشاريع",ar(X.n),ar(X.cl)+" مستخلصاً معتمداً"],["القيمة التعاقدية",M(X.val),Math.abs(chg)>1?(chg>0?"زيادة ":"تخفيض ")+M(Math.abs(chg))+" عن القيمة التعاقدية":"بدون تعديل"],["المنصرف",M(X.dis),_mgrPct(X.dis,X.val)+" من القيمة التعاقدية"],["متوسط الإنجاز الفعلي",_dxPct(X.w.a),"من المشاريع القائمة · المخطط "+_dxPct(X.w.p)]]);
   var st=_m5Card("حالة المشاريع",ar(X.n)+" مشروع",_m5Stack(M5_ST.map(function(s){ return {v:X.g[s[0]].n,c:s[2],l:s[1]}; }))
     +_m5Rows(["الحالة","عدد المشاريع","النسبة","القيمة"],M5_ST.map(function(s){ var o=X.g[s[0]]; return '<tr><td><i class="m5-dot" style="background:'+s[2]+'"></i>'+s[1]+'</td><td class="n">'+ar(o.n)+'</td><td class="p">'+_mgrPct(o.n,X.n)+'</td><td class="v">'+M(o.v)+'</td></tr>'; })),"c7");
   /* التوزيع المالي: من قيمة المشاريع القائمة فقط (قيد التنفيذ + المنتهية) */
@@ -20308,7 +20320,7 @@ function _rbAns(p,f){ var r=analyzeProject(p), cat=_dxCatOf(r), C=DX_CAT[cat], d
    case "ext": lbl="مدة التمديد"; big=_dxExtTxt(p); sub="النهاية بعد التمديد "+fmtDateTxt(endDateOf(p)); break;
    case "stop": lbl="الإيقاف"; big=r.stopped?"⏸ موقوف":(calParts(p.stop_date)?"استُؤنف":"لا يوجد"); sub=calParts(p.stop_date)?(fmtDateTxt(p.stop_date)+(calParts(p.resume_date)?" ← "+fmtDateTxt(p.resume_date):"")+(_dxTxt(p.stop_duration)?" · "+_dxTxt(p.stop_duration)+" يوم":"")):""; break;
    case "dur": lbl="مدة العقد"; big=_dxTxt(p.duration)?_dxTxt(p.duration)+" شهر":"—"; sub="التمديد "+_dxExtTxt(p)+(t.ok?" · المدة الكلية "+ar(t.total)+" يوم":""); break;
-   case "value": lbl="القيمة بعد التعديل"; big=fmtFull(after); var ch=after-_dxOrig(p); sub=ch?((ch>0?"▲ زيادة ":"▼ تخفيض ")+_dxM(Math.abs(ch))+" عن الأصلية"):"دون تعديل على القيمة"; break;
+   case "value": lbl="القيمة بعد التعديل"; big=fmtFull(after); var ch=after-_dxOrig(p); sub=ch?((ch>0?"▲ زيادة ":"▼ تخفيض ")+_dxM(Math.abs(ch))+" عن القيمة التعاقدية"):"دون تعديل على القيمة"; break;
    case "dis": lbl="المنصرف"; big=fmtFull(dis); sub=_dxPct(after?dis/after:0)+" من القيمة · تحت الإجراء "+_dxM(_dxN(p.under_proc)); break;
    case "contractor": lbl="المقاول"; big=esc(_dxTxt(p.contractor)||"—"); sub="الاستشاري: "+esc(_dxTxt(p.consultant)||"—"); break;
    case "consultant": lbl="الاستشاري"; big=esc(_dxTxt(p.consultant)||"—"); sub="المقاول: "+esc(_dxTxt(p.contractor)||"—"); break;
