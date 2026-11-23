@@ -7395,6 +7395,28 @@ body[data-theme="dark"] .gd-ctl,body[data-theme="dark"] .gd-tocp{background:#fff
   body.gd-print .gd-h2 span{font-size:10.5pt!important;padding:1px 8px!important;background:#0E5A3A!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.gd-print .gd-h3{font-size:12.5pt!important;margin:12px 0 6px!important}body.gd-print .gd-h3 span{font-size:10pt!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* بطاقة المشروع: رأس مميز بصورة المشروع */
+.pc4-hero.pc5{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:16px!important;padding:22px 26px 18px!important;min-height:250px;background:#0B2A1B!important;border-radius:20px}
+.pc4-hero.pc5:after{display:none}
+.pc5-bg{position:absolute;inset:0;z-index:-3;background-size:cover;background-position:center;filter:saturate(1.05);transform:scale(1.04);transition:background-image .6s}
+.pc5-ov{position:absolute;inset:0;z-index:-2;background:linear-gradient(270deg,rgba(6,30,19,.96) 0%,rgba(8,40,25,.88) 42%,rgba(8,40,25,.62) 75%,rgba(8,40,25,.5) 100%),linear-gradient(0deg,rgba(4,20,12,.85),transparent 55%)}
+.pc5-pat{position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:16px 16px;mask-image:linear-gradient(270deg,#000 30%,transparent 80%);-webkit-mask-image:linear-gradient(270deg,#000 30%,transparent 80%)}
+.pc5-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pc5-kick{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:800;color:#CFE0D5}.pc5-kick .cd{direction:ltr;color:#14201A;background:linear-gradient(135deg,#F0D9A0,#C9A961);border-radius:7px;padding:2px 10px;font-weight:900}.pc5-kick .mut{color:#A9C4B4;font-weight:700}
+.pc5-logo{height:40px;opacity:.95}
+.pc5-main{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.pc5-t{min-width:0;flex:1}.pc5-loc{font-size:13px;font-weight:800;color:#E9D29A;margin-bottom:4px}
+.pc4-hero.pc5 h1{margin:0 0 12px!important;font-size:26px!important;line-height:1.45!important;color:#fff!important;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.pc5-rg{position:relative;flex:none;width:124px;height:124px;border-radius:50%;background:rgba(6,25,16,.55);border:1px solid rgba(233,210,154,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 18px 30px -18px rgba(0,0,0,.7)}
+.pc5-ring{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);transform:rotate(-90deg)}.pc5-ring circle{fill:none;stroke-width:8}.pc5-ring .bg{stroke:rgba(255,255,255,.13)}.pc5-ring .fg{stroke:url(#pc5g);stroke-linecap:round;animation:pdRing 1.4s cubic-bezier(.2,.8,.2,1) both}
+.pc5-rv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}.pc5-rv b{font-size:30px;font-weight:900;color:#fff;line-height:1}.pc5-rv b small{font-size:13px;color:#E9D29A}.pc5-rv span{font-size:10.5px;font-weight:800;color:#CFE0D5}.pc5-rv em{font-style:normal;font-size:10px;color:#E9D29A}
+.pc5-facts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pc5-facts div{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-inline-start:1px solid rgba(255,255,255,.1)}.pc5-facts div:first-child{border-inline-start:0}
+.pc5-facts span{font-size:11px;font-weight:800;color:#A9C4B4}.pc5-facts b{font-size:16px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pc5-facts em{font-style:normal;font-size:10.5px;color:#E9D29A}
+.pc-backbar{position:sticky;top:6px;z-index:6}
+@media (max-width:760px){.pc5-main{flex-direction:column-reverse;align-items:flex-start}.pc5-facts{grid-template-columns:1fr 1fr}.pc4-hero.pc5 h1{font-size:19px!important}.pc5-rg{width:100px;height:100px}.pc5-rv b{font-size:24px}}
+@media print{.pc5-bg,.pc5-ov,.pc5-facts,.pc4-hero.pc5{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pc5-facts{-webkit-backdrop-filter:none;backdrop-filter:none}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -8440,8 +8462,11 @@ function projectCard(p,gallery){ IS_REPORT=true; CUR_PROJECT=p; ANSWER_TITLE=p.n
   const _fsBtn=`<button class="rbedit wkfs" onclick="wkFullscreen()" title="عرض ملء الشاشة"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg> ملء الشاشة</button>`;
   const _exitBtn=`<button class="wkfs-exit noprint" onclick="wkFullscreen()" title="خروج"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> خروج من ملء الشاشة</button>`;
   const _pmtoggle=`<div class="rfilter noprint"><span class="rfl">نوع التقرير:</span><button class="rfb ${PROJ_MODE==='general'?'on':''}" onclick="setProjMode('general')">عام</button><button class="rfb ${PROJ_MODE==='detailed'?'on':''}" onclick="setProjMode('detailed')">مفصل</button><span class="rfl spacer"></span>`+_fsBtn+`</div>`;
+  const _lock=(typeof PC_LOCK!=="undefined"&&PC_LOCK&&PC_LOCK.code===String(p.code)&&RP.back===String(p.code));
+  const _bar=_lock?`<div class="rp-ready noprint pc-backbar"><button onclick="PC_LOCK=null;_rpBack()">→ العودة لبطاقة المشروع</button><span>التقرير التفصيلي${PC_LOCK.gal?' مع الصور':''} — ${esc(p.alias||p.name)}</span><button class="ic" onclick="wkFullscreen()" title="ملء الشاشة">⛶ ملء الشاشة</button><button class="ok" onclick="printAnswer()">⬇ تنزيل PDF</button></div>`:_pmtoggle;
+  if(_lock) PROJ_MODE='detailed';
   if(PROJ_MODE==='detailed'){ REPORT_CTX=ctxFromProjects([p],p.name,{detailed:true,componentsMode:true});
-    show(_pmtoggle+`<div class="report wkreport projreport" id="wkReport">`+_exitBtn+cover+weeklyPages(p,{full:MONTHLBL,month:MONTHLBL},true)+projScopeImpactHTML(p,MONTHLBL)+`</div>`); }
+    show(_bar+`<div class="report wkreport projreport" id="wkReport">`+_exitBtn+cover+weeklyPages(p,{full:MONTHLBL,month:MONTHLBL},true)+projScopeImpactHTML(p,MONTHLBL)+(_lock&&PC_LOCK.gal?`<div class="pcard">`+label("صور المشروع")+cardHTML(p,true)+`</div>`:``)+`</div>`); }
   else { REPORT_CTX=ctxFromProjects([p],p.name,{detailed:true});
     show(_pmtoggle+`<div class="report wkreport projreport" id="wkReport">`+_exitBtn+cover+`<div class="pcard">`+label(gallery?"صور المشروع":"بطاقة المشروع")+cardHTML(p,gallery)+`</div></div>`); } }
 
@@ -11808,9 +11833,13 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var pmName=(String(p.pm||"").split(/\n|\|/).map(function(s){ return s.trim(); }).filter(function(s){ return /[؀-ۿA-Za-z]/.test(s); })[0])||"";
   var ringC=2*Math.PI*34, ring='<svg class="pc4-ring" viewBox="0 0 84 84"><circle cx="42" cy="42" r="34" class="bg"/><circle cx="42" cy="42" r="34" class="fg" style="stroke-dasharray:'+(ringC*Math.min(1,a)).toFixed(1)+' '+ringC.toFixed(1)+'"/></svg><div class="pc4-rv"><b>'+Math.round(a*100)+'<small>%</small></b><span>الإنجاز</span></div>';
   var chips='<span class="pc4-chip st">'+esc(_hbStatus(p))+'</span>'+(_isStopped(p)?'<span class="pc4-chip stp">⏸ موقوف</span>':'')+'<span class="pc4-chip c-'+cat+'"><i style="background:'+DX_CAT[cat].c+'"></i>'+DX_CAT[cat].l+(dev!=null?' · الحيود '+_dxPct(dev):'')+'</span><span class="pc4-chip rk-'+(r.score>=4?"hi":r.score>=2?"md":"lo")+'">المخاطر: '+esc(r.level)+'</span>'+(p._edited?'<span class="pc4-chip ed">✎ معدّل يدوياً</span>':'');
-  var hero='<div class="pc4-hero"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
-    +'<div class="pc4-ht"><div class="pc4-kick">بطاقة مشروع · <b>'+esc(p.code)+'</b>'+(_dxTxt(p.competition_no)?' · منافسة '+esc(_dxTxt(p.competition_no)):'')+'</div><h1>'+esc(p.name||"")+'</h1><div class="pc4-chips">'+chips+'</div></div>'
-    +'<div class="pc4-hr"><div class="pc4-rg">'+ring+'</div><img class="pc4-logo" src="'+LOGO_W+'" alt="ريف"></div></div>';
+  var _endD=endDateOf(p), _fact=function(l,v,s){ return '<div><span>'+l+'</span><b>'+v+'</b>'+(s?'<em>'+s+'</em>':'')+'</div>'; };
+  var ringC2=2*Math.PI*44, ring2='<svg class="pc5-ring" viewBox="0 0 104 104"><defs><linearGradient id="pc5g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F0D9A0"/><stop offset="1" stop-color="#B8954F"/></linearGradient></defs><circle cx="52" cy="52" r="44" class="bg"/><circle cx="52" cy="52" r="44" class="fg" style="stroke-dasharray:'+(ringC2*Math.min(1,a)).toFixed(1)+' '+ringC2.toFixed(1)+'"/></svg><div class="pc5-rv"><b>'+Math.round(a*100)+'<small>%</small></b><span>الإنجاز الفعلي</span>'+(pl!=null?'<em>المخطط '+_dxPct(pl)+'</em>':'')+'</div>';
+  var hero='<div class="pc4-hero pc5"><div class="pc5-bg" id="pc5Bg"'+(imgs[0]?' style="background-image:url(\''+esc(imgs[0])+'\')"':'')+'></div><i class="pc5-ov"></i><i class="pc5-pat"></i>'
+    +'<div class="pc5-top"><div class="pc5-kick"><span class="cd">'+esc(p.code)+'</span><span>بطاقة مشروع</span>'+(_dxTxt(p.competition_no)?'<span class="mut">منافسة '+esc(_dxTxt(p.competition_no))+'</span>':'')+'</div><img class="pc5-logo" src="'+LOGO_W+'" alt="ريف"></div>'
+    +'<div class="pc5-main"><div class="pc5-t"><div class="pc5-loc">'+esc([p.sector,p.region,p.ptype].filter(Boolean).join(" · "))+'</div><h1>'+esc(p.name||"")+'</h1><div class="pc4-chips">'+chips+'</div></div><div class="pc5-rg">'+ring2+'</div></div>'
+    +'<div class="pc5-facts">'+_fact("القيمة بعد التعديل",_dxM(v),"")+_fact("المنصرف",_dxPct(sp),_dxM(dis))+_fact("الزمن المنقضي",t.ok?_dxPct(Math.min(1,t.frac)):'—',"")+_fact(t.ok&&t.left<0?"متجاوز النهاية":"المتبقي",t.ok?ar(Math.abs(t.left))+' يوم':'—',"")+_fact("تاريخ النهاية",_endD?fmtDateTxt(_endD):'—',"")+'</div></div>';
+  setTimeout(function(){ try{ if(typeof cldProjectImages==="function") cldProjectImages(p.name).then(function(u){ var bg=document.getElementById("pc5Bg"); if(bg&&u&&u.length) bg.style.backgroundImage="url('"+(typeof _cldThumb==="function"?_cldThumb(u[0],1400):u[0])+"')"; }).catch(function(){}); }catch(e){} },40);
   var acts='<div class="pc4-bar noprint"><button class="pc3-back" onclick="projRegOpen(true)">'+_pcIco("back")+' سجل المشاريع</button><div class="pc3-acts"><button class="pc3-b pri" onclick="pmOpen(\''+q+'\',true)">'+_pcIco("edit")+' تعديل البيانات</button><button class="pc3-b go2" onclick="projDash(\''+q+'\')">'+_pcIco("dash")+' لوحة المشروع</button><button class="pc3-b rpb" onclick="pcReport(\''+q+'\')">'+_pcIco("print")+' تقرير المشروع</button></div></div>';
   var info='<div class="pc4-info">'+[["sec","القطاع",p.sector],["reg","المنطقة",p.region],["typ","النوع",p.ptype],["ctr","المقاول",p.contractor],["cns","الاستشاري",p.consultant],["pm","مدير المشروع",pmName]].map(function(x){ return '<div><i>'+ico(x[0])+'</i><span>'+x[1]+'</span><b title="'+esc(_dxTxt(x[2])||"")+'">'+_pcV(x[2])+'</b></div>'; }).join("")+'</div>';
   var chg=v-orig, cl=_dxN(p.claims_count), ap=_dxN(p.approved);
@@ -12140,7 +12169,7 @@ function rpOneOpen(code){ RP.mode="p"; if(code!=null) RP.one=String(code); try{ 
   show(html); try{ if(p){ var o=document.querySelector("#rp1L .rp1-it.on"); if(o) o.scrollIntoView({block:"nearest"}); } else { var q=document.getElementById("rp1Q"); if(q) q.focus(); } }catch(e){} }
 function rpOneFilter(v){ var q=_normAr(v||"").toLowerCase().trim(), n=0; document.querySelectorAll("#rp1L .rp1-it").forEach(function(b){ var ok=!q||b.getAttribute("data-q").indexOf(q)>=0; b.style.display=ok?"":"none"; if(ok) n++; }); var e=document.getElementById("rp1N"); if(e) e.textContent=ar(n)+" مشروع"; }
 function rpOneGo(type){ var p=DATA.find(function(x){ return String(x.code)===RP.one; }); if(!p) return; var codes=[p.code]; PRINT_NAME=""; ANSWER_TITLE="";
-  if(type==="detail"||type==="gal"){ projectCard(p,type==="gal"); _rpAfter(); return; }
+  if(type==="detail"||type==="gal"){ PROJ_MODE="detailed"; PC_LOCK={code:String(p.code),gal:type==="gal"}; projectCard(p,false); if(!RP.back) _rpAfter(); return; }
   if(type==="pd"){ rpPdView([p],p.name||p.code); return; }
   if(type==="cards"){ cardsBuilder(); setTimeout(function(){ _rpCheck(".pcchk",codes); try{ pcCount(); }catch(e){} try{ pcBuild(); }catch(e){} _rpAfter(); },80); return; }
   if(type==="weekly"){ weeklyBuilder(); setTimeout(function(){ _rpCheck(".wkchk",codes); try{ wkCount(); }catch(e){} try{ wkBuild(); }catch(e){} _rpAfter(); },80); return; } }
@@ -12194,6 +12223,7 @@ function reportPrepOpen(keep){ RP.mode="f"; RP.back=null; try{ setNavActive("rep
 function rp2Go(){ var t=RP2.type; if(!t) return; if(RP2.scope==="p"){ RP.mode="p"; rpOneGo(t); return; } if(RP2.scope==="all") RP.f={}; RP.mode="f"; rpGo(t); }
 function rpOneOpen(code){ RP2.scope="p"; if(code!=null) RP.one=String(code); reportPrepOpen(true); }
 /* الرجوع من التقرير: للبطاقة إن فُتح منها، وإلا لصفحة التقارير بنفس الاختيار */
+var PC_LOCK=null;
 function _rpBack(){ if(RP.back){ var c=RP.back; RP.back=null; projCard(c); return; } reportPrepOpen(true); }
 function _rpBackLbl(){ return RP.back?"→ العودة لبطاقة المشروع":"→ تعديل الاختيار"; }
 /* من بطاقة المشروع: كل أنواع تقرير المشروع */
