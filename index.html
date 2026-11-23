@@ -2438,6 +2438,7 @@ body[data-theme="dark"] .cph-sel{background:#1B2428;border-color:#2B363B;color:#
 .dxf .dxf-head h1{margin:0;font-size:22px;font-weight:900;color:var(--f-g);letter-spacing:-.2px}
 .dxf .dxf-sub{margin-top:3px;font-size:12px;color:var(--f-mut);font-weight:700}
 .dxf .dxf-sub b{color:var(--f-ink2)}
+.dxf .dxf-sub:empty{display:none}.dxf .dxf-head{padding-bottom:10px!important}
 .dxf .dxf-hl{display:flex;align-items:center;gap:12px}
 .dxf .dxf-logo{height:38px;width:auto;display:block;padding-inline-start:14px;border-inline-start:1px solid var(--f-line)}
 .dxf .dx-src{background:var(--f-soft);color:var(--f-ink2);border:1px solid var(--f-line)}
@@ -8646,6 +8647,30 @@ body[data-theme="dark"] .dx-tipr span,body[data-theme="dark"] .dx-tipr b{color:#
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'"/>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style id="lwPipe">
+#lw .l4-flow .s-tender{--sc:#C9A54E}#lw .l4-flow .s-award{--sc:#8FA9B5}#lw .l4-flow .s-run{--sc:#3FAE7A}#lw .l4-flow .s-done{--sc:#2E9466}
+html body #lw.v4 .l4-flow{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:40px;padding:6px 4px 10px}
+html body #lw.v4 .l4-steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+html body #lw.v4 .l4-steps:before{content:"";position:absolute;top:37px;left:12.5%;right:12.5%;height:3px;border-radius:3px;background:linear-gradient(90deg,#2E9466,#3FAE7A 34%,#8FA9B5 66%,#C9A54E);opacity:.6}
+html body #lw.v4 .l4-sp{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;animation:lwIn .8s ease both}
+html body #lw.v4 .l4-sp .nd{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-style:normal;margin-bottom:12px;background:#0A1E15;border:3px solid var(--sc);box-shadow:0 0 0 9px rgba(255,255,255,.035)}
+html body #lw.v4 .l4-sp .nd b{font-size:26px;font-weight:800;color:var(--sc)}
+html body #lw.v4 .l4-sp .lb{font-size:19px;font-weight:700;color:#A9C2B5;white-space:nowrap}html body #lw.v4 .l4-sp{min-width:0}
+html body #lw.v4 .l4-sp .ct{font-size:62px;font-weight:800;line-height:1.05;color:#FFFFFF}
+html body #lw.v4 .l4-sp.s-done .ct{color:#8ED2AE}
+html body #lw.v4 .l4-sp em{font-style:normal;white-space:nowrap;font-size:14px;font-weight:600;color:#8FA99C}
+html body #lw.v4 .l4-sp u{text-decoration:none;margin-top:6px;padding:5px 10px;border-radius:9px;white-space:nowrap;font-size:16px;font-weight:800;color:#E9C977;background:rgba(214,178,94,.12)}
+html body #lw.v4 .l4-vb{padding:18px 22px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+html body #lw.v4 .l4-vb .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+html body #lw.v4 .l4-vb .hd span{font-size:17px;font-weight:700;color:#A9C2B5}
+html body #lw.v4 .l4-vb .hd b{font-size:20px;font-weight:800;color:#FFFFFF}
+html body #lw.v4 .l4-vb .bar{display:flex;gap:3px;height:16px;border-radius:8px;overflow:hidden}
+html body #lw.v4 .l4-vb .bar i{display:block;height:100%;background:var(--sc);animation:lwGrow 1.4s ease both}
+html body #lw.v4 .l4-vb .lg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 34px;margin-top:14px}
+html body #lw.v4 .l4-vb .lg span{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#A9C2B5;white-space:nowrap}
+html body #lw.v4 .l4-vb .lg span i{width:10px;height:10px;border-radius:3px;background:var(--sc);flex:none}
+html body #lw.v4 .l4-vb .lg span b{margin-inline-start:auto;font-size:16px;font-weight:800;color:#FFFFFF}
+</style>
 <style id="lwLight">/* العرض المباشر — الوضع الفاتح (مولّد من قواعد الوضع الداكن) */
 body:not([data-theme=dark]) #lw{background:#FFFFFF!important}
 body:not([data-theme=dark]) #lw .lw-c{color:#10261B!important;background:linear-gradient(160deg,#FFFFFF 0%,#FFFFFF 55%,#FFFFFF 100%)!important}
@@ -8852,6 +8877,17 @@ html body:not([data-theme=dark]) #lw.v4 .l4-sc.v .hd span{color:#56675D!importan
 html body:not([data-theme=dark]) #lw.v4 .l4-sc.v .rl{color:#56675D!important}
 html body:not([data-theme=dark]) #lw.v4 .l4-sc.v .kv{border-top:1px solid rgba(14,59,39,0.150)!important}
 html body:not([data-theme=dark]) #lw.v4 .l4-sc.v .kv div+div{border-inline-start:1px solid rgba(14,59,39,0.150)!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp .nd{background:#FFFFFF!important;box-shadow:0 0 0 9px rgba(255,255,255,0)!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp .lb{color:#56675D!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp .ct{color:#10261B!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp.s-done .ct{color:#296F4A!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp em{color:#56675D!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp u{color:#8F6C13!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-vb{background:#FFFFFF!important;border:1px solid rgba(14,59,39,0.150)!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-vb .hd span{color:#56675D!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-vb .hd b{color:#10261B!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-vb .lg span{color:#56675D!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-vb .lg span b{color:#10261B!important}
 body:not([data-theme=dark]) #lw circle[stroke^="rgba(255,255,255"]{stroke:rgba(14,59,39,.10)!important}
 body:not([data-theme=dark]) #lw i[style*="rgba(255,255,255"]{background:rgba(14,59,39,.12)!important}
 /* أسطح أساسية للوضع الفاتح */
@@ -8861,6 +8897,21 @@ html body:not([data-theme=dark]) #lw.v4 .lw-bg b{background-image:linear-gradien
 html body:not([data-theme=dark]) #lw.v4 .lw-h{background:#FFFFFF!important;border-bottom:1px solid rgba(14,59,39,.12)!important;box-shadow:0 6px 20px -16px rgba(14,59,39,.35)!important}
 html body:not([data-theme=dark]) #lw.v4 .lw-k{background:#FFFFFF!important;box-shadow:0 10px 24px -20px rgba(14,59,39,.35)!important}
 html body:not([data-theme=dark]) #lw.v4 .lw-id img{filter:brightness(0) saturate(100%) invert(17%) sepia(40%) saturate(1100%) hue-rotate(112deg) brightness(.9)!important}
+/* الشريط السفلي داخل الشاشة دائماً (الوضعان) */
+html body #lw.v4 .lw-c{grid-template-rows:118px minmax(0,1fr) 66px!important}
+html body #lw.v4 .lw-c>.lw-f{grid-row:3!important;align-self:stretch!important;margin:0!important;top:0!important}
+html body #lw.v4 .lw-c>.lw-body{grid-row:2!important;min-height:0!important;overflow:hidden}
+/* الخريطة: تدرّج اللون حسب عدد المشاريع في المنطقة */
+html body:not([data-theme=dark]) #lw.v4 svg .lw-rg{fill:#E6ECE6!important;stroke:#FFFFFF!important;stroke-width:1.6!important}
+html body:not([data-theme=dark]) #lw.v4 svg .lw-rg.on{fill:rgba(30,122,77,var(--a))!important}
+/* بطاقات المؤشرات: بلا لمعة رمادية — خط ذهبي علوي ولمسة خضراء هادئة */
+html body:not([data-theme=dark]) #lw.v4 .lw-rail .lw-k,html body:not([data-theme=dark]) #lw.v4 .lw-k{background:linear-gradient(90deg,rgba(201,169,97,0),rgba(201,169,97,.85) 50%,rgba(201,169,97,0)) top center/62% 2px no-repeat,radial-gradient(260px 150px at 0% 100%,rgba(63,174,122,.09),transparent 70%),#FFFFFF!important}
+html body:not([data-theme=dark]) #lw.v4 .lw-k:after{animation:none!important;background:none!important;display:none!important}
+/* مسار المشاريع — الوضع الفاتح */
+html body:not([data-theme=dark]) #lw.v4 .l4-sp .nd{background:#FFFFFF!important;box-shadow:0 0 0 9px rgba(14,59,39,.04),0 8px 18px -10px rgba(14,59,39,.35)!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp.s-done .ct{color:#1E7A4D!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-sp u{color:#7B6127!important;background:rgba(201,169,97,.14)!important}
+html body:not([data-theme=dark]) #lw.v4 .l4-vb{background:#F7F9F6!important;border-color:rgba(14,59,39,.10)!important}
 </style>
 </head>
 <body>
@@ -15177,7 +15228,11 @@ function _lwKpis(R){ var tv=R.reduce(function(a,x){return a+x.v;},0), td=R.reduc
 function _lwScene(k,R){
   if(k==="ov"){ var st={tender:[],award:[],run:[],done:[]}; R.forEach(function(x){ (st[_geoNowSt(x.p)]||st.tender).push(x); });
     var S=[["tender","في إجراءات الطرح"],["award","في إجراءات الترسية"],["run","قيد التنفيذ"],["done","منتهية"]], N=R.length||1;
-    var pipe='<div class="l4-pipe">'+S.map(function(s,i){ var L=st[s[0]], v=L.reduce(function(a,x){ return a+x.v; },0); return (i?'<i class="l4-ar"></i>':'')+'<div class="l4-st s-'+s[0]+'" style="animation-delay:'+(i*0.1).toFixed(2)+'s"><span>'+s[1]+'</span><b>'+ar(L.length)+'</b><em>'+_lwP(L.length/N)+' من المشاريع</em><u>'+_dxM(v)+'</u></div>'; }).join("")+'</div>';
+    /* مسار المشاريع: خطوات أفقية على خط زمني + توزيع القيمة حسب المرحلة */
+    var SL={tender:"في الطرح",award:"في الترسية",run:"قيد التنفيذ",done:"منتهية"}, SV=S.map(function(s){ var L=st[s[0]]; return {k:s[0],l:SL[s[0]]||s[1],n:L.length,v:L.reduce(function(a,x){ return a+x.v; },0)}; }), TV=SV.reduce(function(a,x){ return a+x.v; },0)||1;
+    var pipe='<div class="l4-flow"><div class="l4-steps">'+SV.map(function(x,i){ return '<div class="l4-sp s-'+x.k+'" style="animation-delay:'+(i*0.12).toFixed(2)+'s"><i class="nd"><b>'+ar(i+1)+'</b></i><span class="lb">'+x.l+'</span><b class="ct">'+ar(x.n)+'</b><em>'+_lwP(x.n/N)+' من المشاريع</em><u>'+_dxM(x.v)+'</u></div>'; }).join("")+'</div>'
+      +'<div class="l4-vb"><div class="hd"><span>توزيع القيمة حسب المرحلة</span><b>'+_dxM(TV)+'</b></div><div class="bar">'+SV.map(function(x){ return x.v>0?'<i class="s-'+x.k+'" style="flex:'+x.v+'"></i>':''; }).join("")+'</div>'
+      +'<div class="lg">'+SV.map(function(x){ return '<span class="s-'+x.k+'"><i></i>'+x.l+'<b>'+_lwP(x.v/TV)+'</b></span>'; }).join("")+'</div></div></div>';
     var run=st.run, rn=run.length||1, cats={ok:0,watch:0,late:0,stumb:0,ns:0}; run.forEach(function(x){ cats[x.cat]=(cats[x.cat]||0)+1; });
     var CS=[["ok","منتظم","≤ 15%"],["watch","يحتاج متابعة","15 – 25%"],["late","متأخر","25 – 35%"],["stumb","متعثّر","> 35%"]];
     var dn=_lw4Donut(CS.map(function(c){ return {v:cats[c[0]],c:L4_CC[c[0]]}; }),300,30,'<b>'+ar(run.length)+'</b><span>مشروع قيد التنفيذ</span>');
@@ -15802,7 +15857,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var subT2=["region","sector","ptype","cat"].map(_dfLabel).filter(Boolean).join(" · ");
   _dxShow('<div class="dash dash3 dx dx-land dxf dxf2">'
     +'<div class="dx-canvas">'
-      +'<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء العامة</h1>'+_dashFilterBar(total,true)+'</div><div class="dxf-sub">محفظة مشاريع برنامج ريف · '+esc(MONTHLBL)+(subT2?'<span class="onlyprint"> · <b>'+esc(subT2)+'</b></span>':'')+_dxActChips()+'</div></div>'
+      +'<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء العامة</h1>'+_dashFilterBar(total,true)+'</div><div class="dxf-sub">'+(subT2?'<span class="onlyprint"><b>'+esc(subT2)+'</b></span>':'')+_dxActChips()+'</div></div>'
         +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="projDashOpen()" title="لوحة المشروع" aria-label="لوحة المشروع"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
         +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'
       +kpiF
