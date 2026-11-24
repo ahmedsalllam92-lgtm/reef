@@ -5742,7 +5742,7 @@ body[data-theme="dark"] .hb-cards.v3 .hb-card:hover .hb-cgo{background:#B89968;c
 .pc6-cat{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px;border-radius:99px;font-size:12px;font-weight:800;color:var(--c6);background:color-mix(in srgb,var(--c6) 10%,#fff);border:1px solid color-mix(in srgb,var(--c6) 25%,#fff)}
 .pc6-cat i{width:8px;height:8px;border-radius:50%;background:var(--c6)}
 .pc6-upd{font-size:11.5px;font-weight:700;color:#7D8A82}
-.pc6-top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+.pc6-top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}.pc6-top.nr{grid-template-columns:minmax(0,1fr)}.pc6-cur{margin-top:12px;padding:12px 14px;border-radius:12px;background:#F6F8F6;border:1px solid #EAEFEB}.pc6-cur span{display:block;font-size:11.5px;font-weight:800;color:#8A6A22;margin-bottom:4px}.pc6-cur p{margin:0;font-size:13.5px;line-height:1.75;color:#24342B}body[data-theme="dark"] .pc6-cur{background:rgba(255,255,255,.03);border-color:#2B363B}body[data-theme="dark"] .pc6-cur span{color:#E3C77F}body[data-theme="dark"] .pc6-cur p{color:#D7E2DB}
 .pc6-a{display:flex;flex-direction:column;align-items:center;justify-content:center;width:132px;height:132px;border-radius:50%;
   background:radial-gradient(circle at 50% 45%,#fff 58%,transparent 59%),conic-gradient(var(--c6) calc(var(--pa,0)*1%),#E8EDE9 0);box-shadow:inset 0 0 0 1px #E3E8E3}
 .pc6-a b{font-size:36px;font-weight:900;color:var(--c6);line-height:1}
@@ -13935,7 +13935,7 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var hero='<div class="pc4-hero pc5"><div class="pc5-bg" id="pc5Bg"'+(imgs[0]?' style="background-image:url(\''+esc(imgs[0])+'\')"':'')+'></div><i class="pc5-ov"></i><i class="pc5-pat"></i>'
     +'<div class="pc5-top"><div class="pc5-kick"><span class="cd">'+esc(p.code)+'</span><span>بطاقة مشروع</span>'+(_dxTxt(p.competition_no)?'<span class="mut">منافسة '+esc(_dxTxt(p.competition_no))+'</span>':'')+'</div><img class="pc5-logo" src="'+LOGO_W+'" alt="ريف"></div>'
     +'<div class="pc5-main"><div class="pc5-t"><div class="pc5-loc">'+esc([p.sector,p.region,p.ptype].filter(Boolean).join(" · "))+'</div><h1>'+esc(p.name||"")+'</h1><div class="pc4-chips">'+chips+'</div></div><div class="pc5-rg">'+ring2+'</div></div>'
-    +'<div class="pc5-facts">'+_fact("القيمة بعد التعديل",_dxM(v),"")+_fact("المنصرف",_dxPct(sp),_dxM(dis))+_fact("الزمن المنقضي",t.ok?_dxPct(Math.min(1,t.frac)):'—',"")+_fact(t.ok&&t.left<0?"متجاوز النهاية":"المتبقي",t.ok?ar(Math.abs(t.left))+' يوم':'—',"")+_fact("تاريخ النهاية",_endD?fmtDateTxt(_endD):'—',"")+'</div></div>';
+    +'</div>';
   setTimeout(function(){ try{ if(typeof cldProjectImages==="function") cldProjectImages(p.name).then(function(u){ var bg=document.getElementById("pc5Bg"); if(bg&&u&&u.length) bg.style.backgroundImage="url('"+(typeof _cldThumb==="function"?_cldThumb(u[0],1400):u[0])+"')"; }).catch(function(){}); }catch(e){} },40);
   var acts='<div class="pc4-bar noprint"><button class="pc3-back" onclick="projRegOpen(true)">'+_pcIco("back")+' سجل المشاريع</button><div class="pc3-acts"><button class="pc3-b pri ic" onclick="pmOpen(\''+q+'\',true)" title="تعديل البيانات" aria-label="تعديل البيانات">'+_pcIco("edit")+'</button><button class="pc3-b go2" onclick="projDash(\''+q+'\')">'+_pcIco("dash")+' لوحة المشروع</button><button class="pc3-b rpb" onclick="pcReport(\''+q+'\')"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 17v-3M12 17v-6M15 17v-2"/></svg> تقرير المشروع</button></div></div>';
   var info='<div class="pc4-info">'+[["sec","القطاع",p.sector],["reg","المنطقة",p.region],["typ","النوع",p.ptype],["ctr","المقاول",p.contractor],["cns","الاستشاري",p.consultant],["pm","مدير المشروع",pmName]].map(function(x){ return '<div><i>'+ico(x[0])+'</i><span>'+x[1]+'</span><b title="'+esc(_dxTxt(x[2])||"")+'">'+_pcV(x[2])+'</b></div>'; }).join("")+'</div>';
@@ -14000,16 +14000,11 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
   var col6=(DX_CAT[cat]||{}).c||"#1E5B3A", tf=t.ok?Math.max(0,Math.min(1,t.frac)):null, g6=(pl==null)?null:a-pl, P6=function(x){ return (Math.max(0,Math.min(1,x))*100).toFixed(1)+"%"; };
   var gapT=(tf==null)?null:a-tf, done6=_isDone(p);
   var story=done6?'المشروع منتهٍ — الإنجاز '+_dxPct(a):(tf==null?'لا تتوفر تواريخ كافية لمقارنة الزمن بالإنجاز':('مضى <b>'+_dxPct(tf)+'</b> من مدة المشروع وأُنجز <b>'+_dxPct(a)+'</b> — '
-      +(t.left<0?'<span class="dn">تجاوز تاريخ النهاية بـ '+ar(-t.left)+' يوم</span>':(Math.abs(gapT)<0.03?'الإنجاز يسير مع الزمن':(gapT>0?'<span class="up">الإنجاز يسبق الزمن بـ '+ar(Math.round(gapT*100))+' نقطة</span>':'<span class="dn">الإنجاز متأخر عن الزمن بـ '+ar(Math.round(-gapT*100))+' نقطة</span>')))));
-  var perf6='<section class="pc6-perf" style="--c6:'+col6+'"><div class="pc6-h"><h3>الأداء</h3><span class="pc6-cat"><i></i>'+esc(DX_CAT[cat].l)+'</span></div>'
-    +'<div class="pc6-top"><div class="pc6-a" style="--pa:'+(Math.min(1,a)*100).toFixed(1)+'"><b>'+Math.round(a*100)+'<small>%</small></b><span>الإنجاز الفعلي</span></div>'
-      +'<div class="pc6-sm"><div><span>المخطط</span><b>'+(pl==null?'—':_dxPct(pl))+'</b></div>'
-      +'<div><span>الحيود عن الخطة</span><b class="'+(g6==null?'':(g6<-0.005?'dn':'up'))+'"><bdi dir="ltr">'+(g6==null?'—':((g6<0?'−':'+')+ar(Math.abs(Math.round(g6*100)))))+'</bdi>'+(g6==null?'':' <small>نقطة</small>')+'</b></div>'
-      +'<div><span>الزمن المنقضي</span><b>'+(tf==null?'—':_dxPct(tf))+'</b></div>'
-      +'<div><span>'+(t.ok&&t.left<0?'تجاوز النهاية':'المتبقي')+'</span><b class="'+(t.ok&&t.left<0&&!done6?'dn':'')+'">'+(t.ok?ar(Math.abs(t.left))+' <small>يوم</small>':'—')+'</b></div></div></div>'
+      +(t.left<0?'<span class="dn">تجاوز تاريخ النهاية بـ '+ar(-t.left)+' يوم</span>':(Math.abs(gapT)<0.03?'الإنجاز يسير مع الزمن':(gapT>0?'<span class="up">الإنجاز يسبق الزمن بـ '+ar(Math.round(gapT*100))+' نقطة</span>':'<span class="dn">الإنجاز متأخر عن الزمن بـ '+ar(Math.round(-gapT*100))+' نقطة</span>')))+(t.left>=0?' · المتبقي على النهاية <b>'+ar(t.left)+' يوم</b>':'')));
+  var perf6='<section class="pc6-perf" style="--c6:'+col6+'"><div class="pc6-h"><h3>الأداء</h3></div>'
     +'<div class="pc6-bars"><div class="pc6-r"><span>الزمن المنقضي</span><div class="pc6-b tm"><u style="width:'+(tf==null?0:P6(tf))+'"></u></div><b>'+(tf==null?'—':_dxPct(tf))+'</b></div>'
       +'<div class="pc6-r"><span>الإنجاز الفعلي</span><div class="pc6-b ac"><u style="width:'+P6(a)+'"></u>'+(pl!=null?'<s style="inset-inline-start:'+P6(pl)+'" title="المخطط '+_dxPct(pl)+'"></s>':'')+'</div><b>'+_dxPct(a)+'</b></div></div>'
-    +'<div class="pc6-story">'+story+'</div></section>';
+    +'<div class="pc6-story">'+story+'</div>'+(nCur?'<div class="pc6-cur"><span>الموقف الحالي</span><p>'+_pcV(nCur)+'</p></div>':'')+'</section>';
   var und6=Math.max(0,v-dis-und);
   var fin6='<section class="pc6-fin">'
     +'<div class="pc6-f dark"><span>القيمة بعد التعديل</span><b>'+_pcMoney(v)+'<small>'+RYL+'</small></b><em>'+(orig&&Math.abs(chg)>1?(chg>0?'▲ +':'▼ −')+_dxM(Math.abs(chg))+' عن القيمة التعاقدية':'بدون تعديل على القيمة')+'</em></div>'
