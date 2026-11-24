@@ -15514,7 +15514,7 @@ function _lwScene0(k,R){
     var G={}; R.forEach(function(x){ var s=x.p.sector||"غير محدد"; G[s]=G[s]||{v:0,d:0}; G[s].v+=x.v; G[s].d+=x.d; });
     var SL=Object.keys(G).map(function(s){ return {s:s,r:G[s].v?G[s].d/G[s].v:0}; }).sort(function(a,b){ return b.r-a.r; });
     var big=function(l,v,s,c){ return '<div class="lw-fb" style="--c:'+c+'"><span>'+l+'</span><b>'+_lwB(v)+'</b><em>'+s+'</em></div>'; };
-    return '<div class="lw-fin"><div class="lw-fbs">'+big("القيمة التعاقدية بعد التعديل",tv,(orig&&Math.abs(tv-orig)>1?((tv>orig?"+":"−")+_dxM(Math.abs(tv-orig))+" عن القيمة التعاقدية"):"بدون تعديل"),"#C9A961")+big("المنصرف",td,_lwP(_actV(R)?td/_actV(R):0)+" من المشاريع القائمة","#3FB27A")+big("تحت إجراءات الصرف",tu,_lwP(tv?tu/tv:0)+" من القيمة","#5B9BD5")+big("المتبقي من العقود",rem,_lwP(tv?rem/tv:0)+" من القيمة","#9AA9A1")+'</div>'
+    return '<div class="lw-fin"><div class="lw-fbs">'+big("قيمة المشاريع",tv,(orig&&Math.abs(tv-orig)>1?((tv>orig?"+":"−")+_dxM(Math.abs(tv-orig))+" عن القيمة التعاقدية"):"بدون تعديل"),"#C9A961")+big("المنصرف",td,_lwP(_actV(R)?td/_actV(R):0)+" من المشاريع القائمة","#3FB27A")+big("تحت إجراءات الصرف",tu,_lwP(tv?tu/tv:0)+" من القيمة","#5B9BD5")+big("المتبقي من العقود",rem,_lwP(tv?rem/tv:0)+" من القيمة","#9AA9A1")+'</div>'
       +'<div class="lw-fbar"><i style="flex:'+td+';background:#3FB27A"><b>'+_lwP((_actV(R)?td/_actV(R):0))+'</b></i><i style="flex:'+tu+';background:#5B9BD5"><b>'+_lwP(tv?tu/tv:0)+'</b></i><i style="flex:'+rem+';background:rgba(255,255,255,.14)"><b>'+_lwP(tv?rem/tv:0)+'</b></i></div>'
       +'<div class="lw-box"><h4>نسبة الصرف حسب القطاع <em>· '+ar(cl)+' مستخلصاً معتمداً</em></h4><div class="lw-fsec">'+SL.map(function(x){ return '<div><span>'+esc(x.s)+'</span><i><u style="--w:'+_lwP(Math.min(1,x.r))+'"></u></i><b>'+_lwP(x.r)+'</b></div>'; }).join("")+'</div></div></div>'; }
   if(k==="spot"){ var C=_lwSpotList(R); if(!C.length) return ""; var n=C.length, j=LW.spotI%n, x=C[j], p=x.p, t=x.t;
@@ -16231,7 +16231,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var sumBody='<ul class="dx-ins">'+ins.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul>';
   /* ---- سياق PowerPoint ---- */
   try{ DASH_CTX={ v:2, monthLbl:MONTHLBL, total:total, cnt:cnt, onTrack:onT, offTrack:offT,
-      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" · من المشاريع القائمة"},{l:"مشاريع تتطلب متابعة",n:ar(offT+cnt.watch),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
+      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"قيمة المشاريع",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" · من المشاريع القائمة"},{l:"مشاريع تتطلب متابعة",n:ar(offT+cnt.watch),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
       kpis:[{l:"إجمالي المشاريع",n:ar(total),s:ar(cnt.done)+" مكتمل"},{l:"القيمة بعد التعديل",n:_dxM(awarded),s:"ريال"},
             {l:"متوسط الإنجاز",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)+" · المشاريع القائمة"},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" · من المشاريع القائمة"},
             {l:"مشاريع متعثّرة",n:ar(cnt.stumb),s:ar(stopped.length)+" متوقف",warn:cnt.stumb>0},{l:"متجاوزة النهاية",n:ar(overdue.length),s:"مشروع",warn:overdue.length>0}],
@@ -16249,7 +16249,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var awM=_dxMs(awarded);
   var kpiF='<div class="dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +fK("إجمالي المشاريع",ar(total),"مشروع",ar(cnt.done)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف")
-    +fK("القيمة التعاقدية بعد التعديل",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة التعاقدية"):"دون تغيير عن القيمة التعاقدية")
+    +fK("قيمة المشاريع",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة التعاقدية"):"دون تغيير عن القيمة التعاقدية")
     +fK("متوسط الإنجاز الفعلي",_dxPct(avgA),"","المخطط "+_dxPct(avgP)+" · الفارق "+(gap>=0?"+":"−")+ar(Math.abs(Math.round(gap*100)))+" نقطة · المشاريع القائمة",gap<-0.05?"warn":"")
     +fK("نسبة الصرف",_dxPct(spend),"","المنصرف "+_dxM(dis)+" · من المشاريع القائمة")
     +fK("مشاريع تتطلب متابعة",ar(offT+cnt.watch),"مشروع",ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة · "+ar(overdue.length)+" تجاوز تاريخ النهاية",offT?"bad":"")
