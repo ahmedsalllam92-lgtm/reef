@@ -8830,6 +8830,10 @@ html body[data-theme="dark"] .pmm-rib div:before,html body[data-theme="dark"] .p
   html body #answer,html body #answer.show{margin-top:6px!important}
 }
 </style>
+<style id="noSign">.m3-sign,.mn-sign{display:none!important}
+
+.cw2 .cw-tdh b{font-size:36px!important}
+</style>
 <style id="mobFs">
 @media print{
   .pr-anc{display:block!important;overflow:visible!important;height:auto!important;max-height:none!important;min-height:0!important;transform:none!important;zoom:1!important;position:static!important;contain:none!important;columns:auto!important}
@@ -18982,7 +18986,6 @@ function _meetMinutesHTML(meta,M,full){ var e=esc, row=function(k,v){ return v?'
     +'<h2>رابعاً: المهام والتكليفات</h2>'+((M.actions||[]).length?'<table class="mn-t"><thead><tr><th>#</th><th>المهمة</th><th>المسؤول</th><th>الموعد</th></tr></thead><tbody>'+M.actions.map(function(a,i){ return '<tr><td class="c">'+(i+1)+'</td><td>'+e(a.task)+'</td><td class="c">'+e(a.owner)+'</td><td class="c">'+e(a.due)+'</td></tr>'; }).join("")+'</tbody></table>':'<p class="mn-mut">لا توجد مهام محددة.</p>')
     +((M.open||[]).length?'<h2>خامساً: نقاط معلّقة للمتابعة</h2><ul>'+M.open.map(function(x){ return '<li>'+e(x)+'</li>'; }).join("")+'</ul>':'')
     +(M.next?'<p><b>الاجتماع القادم:</b> '+e(M.next)+'</p>':'')
-    +'<div class="mn-sign"><div><span>أمين الاجتماع</span><i></i></div><div><span>رئيس الاجتماع</span><i></i></div><div><span>الاعتماد</span><i></i></div></div>'
     +'<div class="mn-note">أُعدّ هذا المحضر آلياً من تسجيل الاجتماع وتمت مراجعته — يُرجى التحقق من دقة القرارات والمهام قبل الاعتماد.</div>';
   return h; }
 var MN_CSS='.mn-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid #0B3D27;padding-bottom:12px;margin-bottom:12px}.mn-head img{height:58px}.mn-org{font-size:12px;color:#5a6b60}.mn-head h1{margin:2px 0;font-size:24px;color:#0B3D27}.mn-ttl{font-size:15px;font-weight:700;color:#1E5B3A}'
@@ -19051,11 +19054,12 @@ function meetMode(m){ MEET_MODE=m; var a=document.getElementById("mtAudio"), b=d
   var x=document.getElementById("mtModeA"), y=document.getElementById("mtModeM"); if(x) x.className=m==="audio"?"on":""; if(y) y.className=m==="manual"?"on":"";
   if(m==="manual"&&MIN&&!MIN.disc.length&&!MIN.dec.length){ MIN.disc=[""]; MIN.dec=[{task:"",owner:"",due:""}]; meetMinEdRender(); } }
 /* الحضور */
-function meetAttRender(){ var h=document.getElementById("mtChips"); if(!h) return; var A=MIN.att;
+function meetAttRender(){ var A=MIN.att, h2=document.getElementById("mtChips2"), chips=A.length?A.map(function(n,i){ return '<span class="mt-chip"><em>'+ar(i+1)+'</em>'+esc(n)+'<button onclick="meetAttDel('+i+')" title="حذف">✕</button></span>'; }).join(""):'<span class="mt-chip0">لم تُضف أسماء بعد — اكتبها يدوياً أو خذها من التسجيل</span>'; if(h2) h2.innerHTML=chips;
+  var h=document.getElementById("mtChips"); if(!h) return;
   h.innerHTML=A.length?A.map(function(n,i){ return '<span class="mt-chip"><em>'+ar(i+1)+'</em>'+esc(n)+'<button onclick="meetAttDel('+i+')" title="حذف">✕</button></span>'; }).join(""):'<span class="mt-chip0">لم تُضف أسماء بعد</span>';
   var c=document.getElementById("mtAttN"); if(c) c.textContent=A.length?("("+ar(A.length)+")"):"";
   var dl=document.getElementById("mtAttDL"); if(dl) dl.innerHTML=A.map(function(n){ return '<option value="'+esc(n)+'">'; }).join(""); }
-function meetAttAdd(){ var inp=document.getElementById("mtAttIn"); if(!inp) return; var v=inp.value; inp.value="";
+function meetAttAdd(id){ var inp=document.getElementById(id||"mtAttIn"); if(!inp) return; var v=inp.value; inp.value="";
   v.split(/[\n,،؛;]+|\t|\s+(?=(?:م|أ|د|ا)\s*\.\s*\S)/).map(function(x){ return x.replace(/^\s*\d+[\.\-\)]?\s*/,"").replace(/\s+/g," ").trim(); }).filter(function(x){ return x.length>1; })
     .forEach(function(n){ if(MIN.att.indexOf(n)<0) MIN.att.push(n); });
   meetAttRender(); meetMinPreview(); inp.focus(); }
@@ -19069,7 +19073,9 @@ function _ta(cls,v,ph){ return '<textarea class="'+cls+'" rows="1" placeholder="
 function _in(cls,v,ph,dl){ return '<input class="'+cls+'" value="'+esc(v||"")+'" placeholder="'+esc(ph)+'"'+(dl?' list="mtAttDL"':'')+' oninput="meetMinSync()">'; }
 function meetMinEdRender(){ var h=document.getElementById("mtEd"); if(!h) return; var M=MIN;
   var stOpt=function(v){ return ["مستمر","قيد التنفيذ","تم"].map(function(s){ return '<option'+(s===(v||"مستمر")?' selected':'')+'>'+s+'</option>'; }).join(""); };
-  h.innerHTML='<div class="mt-es"><div class="mt-esh"><b>متابعة ما تم إنجازه من الاجتماع السابق</b><span><button class="mt-lnk" onclick="meetPrevImport()">⤓ استيراد قرارات آخر اجتماع محفوظ</button><button class="mt-lnk" onclick="meetMinAdd(\'prev\')">+ مهمة</button></span></div>'
+  h.innerHTML='<div class="mt-es"><div class="mt-esh"><b>الحضور</b><span><button class="mt-lnk" onclick="meetAttImport()">⤓ نفس حضور آخر اجتماع</button></span></div>'
+      +'<div class="mt-chips" id="mtChips2"></div><div class="mt-attin"><textarea id="mtAttIn2" rows="1" placeholder="اكتب اسم الحاضر مع اللقب (م. / أ.) واضغط Enter — أو الصق قائمة أسماء" onkeydown="if(event.key===\'Enter\'){event.preventDefault();meetAttAdd(\'mtAttIn2\');}" onpaste="setTimeout(function(){meetAttAdd(\'mtAttIn2\')},0)"></textarea><button class="mt-btn sm" onclick="meetAttAdd(\'mtAttIn2\')">+ إضافة</button></div></div>'
+    +'<div class="mt-es"><div class="mt-esh"><b>متابعة ما تم إنجازه من الاجتماع السابق</b><span><button class="mt-lnk" onclick="meetPrevImport()">⤓ استيراد قرارات آخر اجتماع محفوظ</button><button class="mt-lnk" onclick="meetMinAdd(\'prev\')">+ مهمة</button></span></div>'
       +(M.prev.length?M.prev.map(function(x,i){ return _edRow("prev",i,_ta("e-t",x.task,"المهمة / التكليف")+_in("e-o",x.owner,"المسؤول",1)+'<select class="e-s" onchange="meetMinSync()">'+stOpt(x.status)+'</select>'); }).join(""):'<div class="mt-e0">اختياري — استورد قرارات الاجتماع السابق وحدّث حالة كل منها.</div>')+'</div>'
     +'<div class="mt-es"><div class="mt-esh"><b>ملخص النقاشات</b><span><button class="mt-lnk" onclick="meetMinAdd(\'disc\')">+ بند</button></span></div>'
       +(M.disc.length?M.disc.map(function(x,i){ return _edRow("disc",i,_ta("e-t w",x,"تمت مناقشة…")); }).join(""):'<div class="mt-e0">لا توجد بنود بعد.</div>')+'</div>'
@@ -19112,8 +19118,8 @@ function _meetMinutesHTML2(M){ var e=esc, n=0, H=function(t){ n++; return '<div 
     +C.map(function(x,i){ return '<tr><td class="c n">'+ar(i+1)+'</td><td>'+e(x.task)+'</td><td class="c">'+e(x.owner||"غير محدد")+'</td>'+(due?'<td class="c">'+e(x.due||"—")+'</td>':'')+'</tr>'; }).join("")+'</tbody></table>'
     +'<p class="mn-commit">يتولى كل مسؤول تنفيذ المهام والتكليفات المسندة إليه وفق المدد الزمنية المحددة، مع الالتزام بإحاطة سعادة مدير الإدارة بمستجدات التنفيذ وأي معوقات قد تؤثر على الإنجاز.</p>':'<p class="mn-mut">لم تُتخذ قرارات.</p>');
   h+=H("الاجتماع القادم")+'<table class="mn-meta"><tr><th>التاريخ المقترح</th><td>'+e(M.next||"يوم —— الموافق ——")+'</td></tr></table>';
-  h+='<div class="mn-sign"><div><span>أمين الاجتماع</span><i></i></div><div><span>رئيس الاجتماع</span><i></i></div><div><span>الاعتماد</span><i></i></div></div>';
   return h; }
+try{ (function(){ var _mmer=meetMinEdRender; window.meetMinEdRender=meetMinEdRender=function(){ var r=_mmer.apply(this,arguments); try{ meetAttRender(); }catch(e){} return r; }; })(); }catch(e){}
 function meetMinPreview(){ var d=document.getElementById("mtMinDoc"); if(d&&MIN) d.innerHTML=_meetMinutesHTML2(MIN); }
 var MN2_CSS='.mn-head{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #1E6B4A;padding-bottom:10px;margin-bottom:10px}.mn-head img{height:56px}.mn-hk{font-size:17px;font-weight:800;color:#1E6B4A}'
   +'.mn-title{text-align:center;font-size:21px;color:#0B3D27;margin:10px 0 14px}'
@@ -19322,6 +19328,9 @@ var EN_MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","D
 var DOW_EN=["Su","Mo","Tu","We","Th","Fr","Sa"];
 var G0=7, G1=21; // time grid 7am..9pm
 
+/* محاذاة رأس الأسبوع مع الأعمدة: إزاحة بعرض شريط التمرير الفعلي */
+function _cwAlign(){ try{ document.querySelectorAll(".cw2").forEach(function(w){ var h=w.querySelector(".cw-head"), b=w.querySelector(".cw-body"); if(!h||!b) return; h.style.paddingInlineEnd=(b.offsetWidth-b.clientWidth)+"px"; h.style.boxSizing="border-box"; }); }catch(e){} }
+try{ window.addEventListener("resize",_cwAlign); new MutationObserver(function(){ if(document.querySelector(".cw2 .cw-head")) requestAnimationFrame(_cwAlign); }).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
 function meetCalRender(){ if(EVENTS===null){ calLoad().then(meetCalRender); return; }
   var host=document.getElementById("mtCal"); if(!host)return;
   var main='<div class="cw-main">'+_calToolbar()+(CAL.view==="month"?_calMonth():(CAL.view==="day"?_calDay():_calWeek()))+'</div>';
@@ -19482,13 +19491,12 @@ function _meetMinutesHTML3(M){ var e=esc, n=0, H=function(t,extra){ n++; return 
     +'<div class="m3-bar"></div><h1 class="m3-title">'+e(M.title||"محضر اجتماع")+'</h1>';
   h+=H("بيانات الاجتماع")+'<table class="m3-info"><tr><th>موضوع الاجتماع</th><td colspan="3">'+e(M.title||"—")+'</td></tr><tr><th>مكان الانعقاد</th><td>'+e(M.place||"—")+'</td><th>رئيس الاجتماع</th><td>'+e(M.chair||"—")+'</td></tr>'
     +'<tr><th>التاريخ</th><td>'+e(_meetDateTxt(M.date)||"—")+'</td><th>الوقت</th><td>'+e(_meetTimeTxt(M.time)||"—")+(MREC&&MREC.dur?' · '+Math.max(1,Math.round(MREC.dur/60))+' دقيقة':'')+'</td></tr><tr><th>عدد الحضور</th><td>'+ar(A.length)+'</td><th>عدد القرارات</th><td>'+ar(C.length)+'</td></tr></table>';
-  h+=H("الحضور")+(A.length?'<table class="m3-t"><thead><tr><th class="n">م</th><th>الاسم</th><th class="w">الصفة / الجهة</th><th class="w">التوقيع</th></tr></thead><tbody>'+A.map(function(a,i){ var m=String(a).split(/\s*[-–—|]\s*/); return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(m[0])+'</td><td>'+e(m.slice(1).join(" — "))+'</td><td></td></tr>'; }).join("")+'</tbody></table>':'<p class="m3-mut">لم تُسجَّل أسماء الحضور.</p>');
+  h+=H("الحضور")+(A.length?'<table class="m3-t"><thead><tr><th class="n">م</th><th>الاسم</th><th class="w">الصفة / الجهة</th></tr></thead><tbody>'+A.map(function(a,i){ var m=String(a).split(/\s*[-–—|]\s*/); return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(m[0])+'</td><td>'+e(m.slice(1).join(" — "))+'</td></tr>'; }).join("")+'</tbody></table>':'<p class="m3-mut">لم تُسجَّل أسماء الحضور.</p>');
   if(P.length) h+=H("متابعة توصيات الاجتماع السابق")+'<table class="m3-t"><thead><tr><th class="n">م</th><th>المهمة / التكليف</th><th class="w">المسؤول</th><th class="s">الحالة</th></tr></thead><tbody>'+P.map(function(x,i){ var st=x.status||"مستمر"; return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(x.task)+'</td><td>'+e(x.owner||"—")+'</td><td class="c"><span class="m3-st '+(st==="تم"?"ok":(st==="متأخر"?"late":"on"))+'">'+e(st==="تم"?"منجز":st)+'</span></td></tr>'; }).join("")+'</tbody></table>';
   h+=H("محاور النقاش")+(D.length?'<ol class="m3-ol">'+D.map(function(x){ return '<li>'+e(x)+'</li>'; }).join("")+'</ol>':'<p class="m3-mut">لا توجد بنود.</p>');
   h+=H("القرارات والتوصيات")+(C.length?'<table class="m3-t"><thead><tr><th class="n">م</th><th>القرار / التكليف</th><th class="w">المسؤول عن التنفيذ</th>'+(due?'<th class="s">الموعد</th>':'')+'</tr></thead><tbody>'+C.map(function(x,i){ return '<tr><td class="n">'+ar(i+1)+'</td><td>'+e(x.task)+'</td><td>'+e(x.owner||"غير محدد")+'</td>'+(due?'<td class="c">'+e(x.due||"—")+'</td>':'')+'</tr>'; }).join("")+'</tbody></table>'
     +'<p class="m3-note">يلتزم كل مسؤول بتنفيذ ما أُسند إليه في الموعد المحدد، وإحاطة رئيس الاجتماع بمستجدات التنفيذ وأي معوقات.</p>':'<p class="m3-mut">لم تُتخذ قرارات.</p>');
   h+=H("الاجتماع القادم")+'<table class="m3-info"><tr><th>الموعد المقترح</th><td>'+e(M.next||"يُحدَّد لاحقاً")+'</td></tr></table>';
-  h+='<table class="m3-sign"><tr><td><b>أمين الاجتماع</b><span>الاسم: ............................</span><span>التوقيع: ..........................</span></td><td><b>رئيس الاجتماع</b><span>الاسم: ............................</span><span>التوقيع: ..........................</span></td><td><b>الاعتماد</b><span>الاسم: ............................</span><span>التوقيع: ..........................</span></td></tr></table>'
     +'<div class="m3-foot">'+e(_m3Ref(M))+' · محضر اجتماع — برنامج ريف</div>';
   return '<div class="m3">'+h+'</div>'; }
 var MN3_CSS='.m3{color:#1c2b22;font-size:13px;line-height:1.85}.m3 table{border-collapse:collapse}'
