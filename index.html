@@ -22617,6 +22617,19 @@ html.kiosk .v2ctl [data-a="link"],html.kiosk .v2ctl [data-a="x"]{display:none}
 .spc-m .mm .v2map{max-height:300px}
 .tlw .today span{top:6px!important;right:8px!important}
 .tlw .tlo .zone.sn em{right:auto;left:10px}
+
+/* دوائر الترسية والطرح كانت تختفي لأن قاعدة .od circle تلوّن حدّها بلون الخلفية */
+.v2orbw .od circle.od-award{fill:rgba(127,168,217,.28)!important;stroke:#5E8FCB!important;stroke-width:2.6!important}
+.v2orbw .od circle.od-tender{fill:rgba(214,178,94,.25)!important;stroke:#B8913F!important;stroke-width:2.4!important;stroke-dasharray:3.2 2.2!important}
+.v2orbw .od circle.od-done{fill:var(--hi)!important;stroke:var(--bgB)!important}
+.v2orbw .od{cursor:pointer}.v2orbw .od:hover circle:first-child{stroke:var(--gd)!important;stroke-width:3.5!important}
+.v2olk i.sh.award{background:rgba(127,168,217,.28);border-color:#5E8FCB!important}.v2olk i.sh.tender{background:rgba(214,178,94,.25);border-color:#B8913F!important}
+.v2tip{position:fixed;z-index:6;min-width:200px;max-width:320px;padding:10px 13px;border-radius:12px;background:var(--bgB);border:1px solid var(--gdB);box-shadow:0 14px 34px rgba(0,0,0,.28);color:var(--tx);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;direction:rtl}
+.v2tip.on{opacity:1;transform:none}
+.v2tip b{display:block;font-size:14px;font-weight:700;line-height:1.45;color:var(--hi)}
+.v2tip span{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gr);margin-top:3px}.v2tip span em{font-style:normal;font-size:11.5px;color:var(--mu);direction:ltr}
+.v2tip .pg{display:flex;align-items:center;gap:8px;margin-top:7px}.v2tip .pg i{flex:1;height:6px;border-radius:9px;background:var(--trk);overflow:hidden}.v2tip .pg u{display:block;height:100%;border-radius:9px;background:linear-gradient(270deg,var(--gr2),var(--gd2))}
+.v2tip .pg strong{font-size:15px;font-weight:700;color:var(--hi)}.v2tip small{display:block;margin-top:5px;font-size:12px;color:var(--mu)}
 </style>
 <script id="lv2Js">/* ===================== شاشة العرض المباشر «غرفة المتابعة الحية» =====================
    مسرح 1920×1080 يتكيّف مع أي شاشة، بستة مشاهد تتبدّل تلقائياً، بعدّادات متدحرجة وخريطة حيّة ورادار وأقواس تنطلق من الرياض،
@@ -22681,9 +22694,11 @@ function _v2Orbit(D){ var C=360, ST=[["done","منتهية",118,"done"],["run","
   var col=function(x){ if(String(x.p.handover||"")==="1"&&!x.fin) return "#2FA84F"; if(x.r&&x.r.stopped) return "#8A8F8C"; return ({ok:"#3FB27A",watch:"#E2B23A",late:"#E7853F",stumb:"#C27A6C"})[x.cat]||"#7FBFA0"; };
   var rings=ST.map(function(s,k){ var Lx=D.R.filter(function(x){ return x.st===s[0]; }), r=s[2], n=Lx.length||1;
     var dots=Lx.map(function(x,i){ var a=(i/n)*Math.PI*2+k*0.7, cx=C+Math.cos(a)*r, cy=C+Math.sin(a)*r, ho=String(x.p.handover||"")==="1"&&!x.fin, st=x.r&&x.r.stopped;
-      var dot=s[3]?'<circle class="od-'+s[3]+'" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+(s[3]==="done"?7.5:7)+'"><title>'+esc(x.p.alias||x.p.name)+'</title></circle>'
-        :'<circle class="od-run'+(st?' st':'')+'" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="10" fill="'+col(x)+'"><title>'+esc(x.p.alias||x.p.name)+' — '+esc(ho?'قيد التسليم':(st?'متوقف':((DX_CAT[x.cat]||{}).l||'')))+'</title></circle>';
-      return '<g class="od'+(ho?' ho':'')+'" style="--dl:'+(0.4+k*0.25+i*0.012).toFixed(2)+'s">'+dot+(ho?'<circle class="hr" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="15"/>':'')+'</g>'; }).join("");
+      var dot=s[3]?'<circle class="od-'+s[3]+'" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+(s[3]==="done"?7.5:7)+'"></circle>'
+        :'<circle class="od-run'+(st?' st':'')+'" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="10" fill="'+col(x)+'"></circle>';
+      var stt=s[3]==="done"?"منتهية":(s[3]==="award"?"في إجراءات الترسية":(s[3]==="tender"?"في إجراءات الطرح":(ho?"قيد التسليم":(st?"متوقف":((DX_CAT[x.cat]||{}).l||"قيد التنفيذ")))));
+      var prg=(s[0]==="run"||s[0]==="done")?Math.round((x.a||0)*100):null;
+      return '<g class="od'+(ho?' ho':'')+'" data-n="'+esc(x.p.alias||x.p.name||"")+'" data-c="'+esc(x.p.code||"")+'" data-s="'+esc(stt)+'"'+(prg!=null?' data-a="'+prg+'"':'')+' style="--dl:'+(0.4+k*0.25+i*0.012).toFixed(2)+'s">'+dot+(ho?'<circle class="hr" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="15"/>':'')+'</g>'; }).join("");
     return '<circle class="ot t'+k+'" cx="'+C+'" cy="'+C+'" r="'+r+'"/><g class="orb o'+k+'" style="transform-origin:'+C+'px '+C+'px">'+dots+'</g>'; }).join("");
   /* أسماء المدارات وأعدادها مكتوبة على المدار نفسه */
   var tags=ST.map(function(s,k){ var n=D.R.filter(function(x){ return x.st===s[0]; }).length, y=C-s[2]; return '<g class="otag k'+k+'" transform="translate('+C+' '+y+')"><rect x="-58" y="-13" width="116" height="26" rx="13"/><text y="5">'+s[1]+' · '+_v2N(n)+'</text></g>'; }).join("");
@@ -22865,6 +22880,10 @@ function liveWallOpen(){ liveWallClose(true); try{ setNavActive("live"); }catch(
   document.body.appendChild(el); document.body.classList.add("lw-on","v2-on"); _v2Fit(); window.addEventListener("resize",_v2Fit); window.addEventListener("orientationchange",_v2Fit); document.addEventListener("keydown",_v2Key);
   el.querySelector(".v2ctl").onclick=function(e){ var b=e.target.closest("button"); if(!b) return; var a=b.dataset.a; if(a==="x") liveWallClose(); else if(a==="next") _v2Show(LV2.i+1); else if(a==="prev") _v2Show(LV2.i-1); else if(a==="pause") liveWallPause(); else if(a==="link"){ try{ dxCopyLink(); }catch(er){} }
     else if(a==="fs"){ if(document.fullscreenElement||document.webkitFullscreenElement){ try{ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }catch(er){} } else { var rq=el.requestFullscreen||el.webkitRequestFullscreen; if(rq) try{ var pr=rq.call(el); if(pr&&pr.catch) pr.catch(function(){}); }catch(er){} } setTimeout(_v2Fit,300); } };
+  var tip=document.createElement("div"); tip.className="v2tip"; el.appendChild(tip);
+  el.addEventListener("mousemove",function(e){ var g=e.target&&e.target.closest&&e.target.closest(".v2orbw .od"); if(!g){ tip.classList.remove("on"); return; }
+    var a=g.getAttribute("data-a"); tip.innerHTML='<b>'+g.getAttribute("data-n")+'</b><span><em>'+g.getAttribute("data-c")+'</em>'+g.getAttribute("data-s")+'</span>'+(a!=null?'<div class="pg"><i><u style="width:'+Math.min(100,+a)+'%"></u></i><strong>'+a+'%</strong></div>':'<small>لم يبدأ التنفيذ بعد</small>');
+    tip.classList.add("on"); var w=tip.offsetWidth, h=tip.offsetHeight, x=e.clientX-w/2, y=e.clientY-h-16; if(y<8) y=e.clientY+18; tip.style.left=Math.max(8,Math.min(window.innerWidth-w-8,x))+"px"; tip.style.top=y+"px"; });
   el.querySelector(".v2rail .scn").onclick=function(e){ var s=e.target.closest("span[data-k]"); if(s) _v2Show(Number(s.dataset.k)); };
   var idle; var mv=function(){ el.classList.add("mv"); clearTimeout(idle); idle=setTimeout(function(){ el.classList.remove("mv"); },2600); }; el.addEventListener("mousemove",mv); el.addEventListener("touchstart",mv,{passive:true});
   LV2.prevRR=(typeof RERENDER!=="undefined")?RERENDER:null; RERENDER=function(){ if(LV2.el) _v2Refresh(); else if(LV2.prevRR) LV2.prevRR(); };
