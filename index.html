@@ -22427,6 +22427,26 @@ html.kiosk .v2ctl [data-a="link"],html.kiosk .v2ctl [data-a="x"]{display:none}
 .v2hi.on .pos{background:#548235;color:#fff}
 .v2hos{display:flex;flex-direction:column;min-height:0}
 .v2regs path.on{fill:rgba(111,174,74,.55)!important;stroke:#9BD27A!important;stroke-width:2.6}
+
+/* مدارات المشاريع (المشهد الأول) */
+.v2orb{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;padding:0 10px}
+.v2orbw{position:relative;width:640px;height:640px}
+.v2orbw svg{width:100%;height:100%;overflow:visible}
+.v2orbw .ot{fill:none;stroke:var(--trk);stroke-width:1.5;stroke-dasharray:2 6}
+.v2orbw .orb{animation:v2Orb 140s linear infinite;will-change:transform}
+.v2orbw .orb.o1{animation-duration:110s;animation-direction:reverse}.v2orbw .orb.o2{animation-duration:170s}.v2orbw .orb.o3{animation-duration:210s;animation-direction:reverse}
+@keyframes v2Orb{to{transform:rotate(360deg)}}
+.v2orbw .od{opacity:0;animation:v2Pin .5s ease forwards;animation-delay:var(--dl)}
+.v2orbw .od circle{stroke:var(--bgB);stroke-width:2}
+.v2orbw .od .hr{fill:none;stroke:#6FAE4A;stroke-width:2;transform-box:fill-box;transform-origin:center;animation:v2Ho 2.4s ease-out infinite}
+@keyframes v2Ho{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+.v2orbw .oc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.v2orbw .oc > b{font-size:92px;font-weight:800;line-height:1;color:var(--hi);text-shadow:0 0 30px rgba(240,216,148,calc(.35 * var(--glow)))}
+.v2orbw .oc span{font-size:17px;color:var(--gr);margin-top:6px}
+.v2olg{display:flex;gap:12px;margin-top:6px}
+.v2olg .ol{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:8px 14px;border-radius:12px;background:var(--pn);border:1px solid var(--pb)}
+.v2olg .ol i{width:12px;height:12px;border-radius:50%}.v2olg .ol b{font-size:22px;font-weight:700;color:var(--hi)}.v2olg .ol span{font-size:13.5px;color:var(--mu)}
+.v2olk{display:flex;gap:18px;margin-top:10px;font-size:13px;color:var(--mu)}.v2olk i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:6px;vertical-align:-1px}
 </style>
 <script id="lv2Js">/* ===================== شاشة العرض المباشر «غرفة المتابعة الحية» =====================
    مسرح 1920×1080 يتكيّف مع أي شاشة، بستة مشاهد تتبدّل تلقائياً، بعدّادات متدحرجة وخريطة حيّة ورادار وأقواس تنطلق من الرياض،
@@ -22474,6 +22494,17 @@ function _v2Map(D,o){ o=o||{}; var vb=KSA_REG.vb.split(" ").map(Number), mx=Math
   return '<svg class="v2map" viewBox="'+(vb[0]-20)+' '+(vb[1]-10)+' '+(vb[2]+40)+' '+(vb[3]+20)+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr"><defs><radialGradient id="v2Rg"><stop offset="0" stop-color="var(--gd2)" stop-opacity=".9"/><stop offset="1" stop-color="var(--gd2)" stop-opacity="0"/></radialGradient><linearGradient id="v2Arc" x1="0" x2="1"><stop offset="0" stop-color="var(--gr2)" stop-opacity="0"/><stop offset=".5" stop-color="var(--gr2)"/><stop offset="1" stop-color="var(--gd2)"/></linearGradient></defs>'
     +'<g class="v2regs">'+regs+'</g>'+arcs+'<g class="v2pins">'+pins+'</g><g transform="translate('+riy.x+' '+riy.y+')"><circle r="34" fill="url(#v2Rg)" opacity=".55"/><circle r="6" class="v2hq"/></g>'+lbl+'</svg>'; }
 function _v2MapLeg(){ return '<div class="v2mlg"><span><i class="a"></i>منطقة بها مشاريع</span><span><i class="b"></i>مشروع</span><span><i class="c"></i>المقر · الرياض</span></div>'; }
+/* مدارات المشاريع: كل مشروع نقطة على مدار مرحلته، والمدارات تدور ببطء */
+function _v2Orbit(D){ var C=360, ST=[["done","منتهية",120,"#3FA06E"],["run","تنفيذ",190,null],["award","ترسية",255,"#6E9FC4"],["tender","طرح",315,"#D9B866"]];
+  var col=function(x){ if(String(x.p.handover||"")==="1"&&!x.fin) return "#6FAE4A"; if(x.r&&x.r.stopped) return "#8A8F8C"; return ({ok:"#3FB27A",watch:"#D6B25E",late:"#E08A4E",stumb:"#D25B4F"})[x.cat]||"#7FBFA0"; };
+  var rings=ST.map(function(s,k){ var L=D.R.filter(function(x){ return x.st===s[0]; }), r=s[2], n=L.length||1;
+    var dots=L.map(function(x,i){ var a=(i/n)*Math.PI*2+k*0.7, cx=C+Math.cos(a)*r, cy=C+Math.sin(a)*r, c=s[3]||col(x), ho=String(x.p.handover||"")==="1"&&!x.fin;
+      return '<g class="od'+(ho?' ho':'')+'" style="--dl:'+(0.4+k*0.25+i*0.012).toFixed(2)+'s"><circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+(s[0]==="run"?9:7.5)+'" fill="'+c+'"><title>'+esc(x.p.alias||x.p.name)+'</title></circle>'+(ho?'<circle class="hr" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="14"/>':'')+'</g>'; }).join("");
+    return '<circle class="ot" cx="'+C+'" cy="'+C+'" r="'+r+'"/><g class="orb o'+k+'" style="transform-origin:'+C+'px '+C+'px">'+dots+'</g>'; }).join("");
+  var lab=ST.map(function(s,k){ var n=D.R.filter(function(x){ return x.st===s[0]; }).length; return '<div class="ol l'+k+'"><i style="background:'+(s[3]||'linear-gradient(90deg,#3FB27A,#D6B25E,#D25B4F)')+'"></i><b>'+_v2N(n)+'</b><span>'+s[1]+'</span></div>'; }).join("");
+  return '<div class="v2orbw"><svg viewBox="0 0 720 720"><defs><radialGradient id="v2Core"><stop offset="0" stop-color="var(--gd2)" stop-opacity=".35"/><stop offset="1" stop-color="var(--gd2)" stop-opacity="0"/></radialGradient></defs><circle cx="360" cy="360" r="95" fill="url(#v2Core)"/>'+rings+'</svg>'
+    +'<div class="oc">'+_v2Cnt('orbn',D.R.length)+'<span>'+_v2Prj(D.R.length)+' في المحفظة</span></div></div>'
+    +'<div class="v2olg">'+lab+'</div><div class="v2olk"><span><i style="background:#3FB27A"></i>منتظم</span><span><i style="background:#D6B25E"></i>يحتاج متابعة</span><span><i style="background:#E08A4E"></i>متأخر</span><span><i style="background:#D25B4F"></i>متعثّر</span><span><i style="background:#6FAE4A;box-shadow:0 0 0 3px rgba(111,174,74,.35)"></i>قيد التسليم</span><span><i style="background:#8A8F8C"></i>متوقف</span></div>'; }
 /* المشهد 1: نظرة عامة */
 function _v2S1(D){ var nReg=Object.keys(D.RG).length, totV=D.tot||1;
   return '<main class="v2s v2s1"><section class="v2imp">'+_v2Eye('الأثر المالي · تراكمي')
@@ -22483,8 +22514,7 @@ function _v2S1(D){ var nReg=Object.keys(D.RG).length, totV=D.tot||1;
       +'<div class="v2k">'+_v2Ic('flag')+'<div><label>'+_v2Pl(D.done,'مشروع منتهٍ','مشاريع منتهية','مشروعاً منتهياً')+'</label><b>'+_v2Cnt('done',D.done)+'</b><i><u style="--w:'+(D.R.length?D.done/D.R.length*100:0).toFixed(1)+'%"></u></i><em>'+_v2N(D.ho)+' قيد التسليم · '+_v2N(D.R.length)+' مشروعاً في المحفظة</em></div></div>'
       +'<div class="v2k">'+_v2Ic('gauge')+'<div><label>متوسط الإنجاز الفعلي</label><b>'+_v2Cnt('avg',D.avgA)+'<small>%</small></b><i><u style="--w:'+Math.min(100,D.avgA).toFixed(1)+'%"></u></i><em>المخطط '+_v2N(D.avgP)+'% · للمشاريع القائمة</em></div></div>'
       +'<div class="v2k">'+_v2Ic('pin')+'<div><label>'+_v2Pl(nReg,'منطقة','مناطق','منطقة')+' تحتضن المشاريع</label><b>'+_v2Cnt('nreg',nReg)+'</b><em>'+(nReg>=13?'كل مناطق المملكة الـ13':'من مناطق المملكة الـ13')+(D.nat?' · '+_v2N(D.nat)+' '+_v2Prj(D.nat)+' على مستوى المملكة':'')+'</em></div></div></div></section>'
-    +'<section class="v2mapw">'+_v2Map(D,{labels:true})+'<div class="v2radar"></div>'+_v2MapLeg()
-      +'<div class="v2mcap">'+_v2Cnt('live',D.act.length)+'<span>'+_v2Pl(D.act.length,'مشروع قائم ومنتهٍ','مشاريع قائمة ومنتهية','مشروعاً قائماً ومنتهياً')+'<br>في '+_v2N(nReg)+' '+_v2Pl(nReg,'منطقة','مناطق','منطقة')+'</span></div></section>'
+    +'<section class="v2orb">'+_v2Orbit(D)+'</section>'
     +'<section class="v2port">'+_v2Eye('المحفظة الآن')
       +'<div class="v2pv"><label>قيمة المشاريع</label><b>'+_v2Cnt('totv',totV/1e6,1)+'<small>مليون ﷼</small></b></div>'
       +'<div class="v2pipe">'+D.ST.map(function(s){ return '<div class="v2ps '+(s.k==='run'?'hot':'')+'"><span class="n">'+_v2N(s.n)+'</span><div><b>'+s.l+'</b><i><u style="--w:'+(s.v/totV*100).toFixed(1)+'%"></u></i></div><em>'+_v2N(s.v/1e6,1)+' م</em></div>'; }).join("")+'</div>'
