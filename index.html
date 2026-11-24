@@ -19526,7 +19526,7 @@ var IMGA={items:[], focus:"all", running:0, MAXC:2, verify:true};
 var IA_DISC="نتائج الفحص مؤشرات أولية مساندة ولا تُعد اعتمادًا هندسيًا أو بديلًا عن المعاينة الميدانية ومراجعة المهندس المختص.";
 function imgAuditOpen(){ try{setNavActive("imgaudit");}catch(e){} RERENDER=""; PRINT_NAME=""; IS_REPORT=false; IMGA={items:[],focus:"all",running:0,MAXC:2};
   show(label("فحص صور المشاريع")
-    +'<div class="ia-wrap"><div class="ia-intro">ارفع صورة أو أكثر من الموقع. تُفحص كل صورة كاملةً ومعها أربع قصاصات مكبّرة بواسطة ثلاثة فاحصين متخصصين يعملون معاً: <b>الإنشائي وحديد التسليح والشدات</b>، و<b>التشطيبات (مباني، لياسة، دهانات، بلاط، عزل، تمديدات)</b>، و<b>السلامة وتنظيم الموقع</b> — ثم يُعاد التحقق من الملاحظات غير المؤكدة على قصاصة مكبّرة. لكل ملاحظة: الموضع والدليل والقياس التقديري والأثر والمعالجة والمسؤول والمهلة.</div>'
+    +'<div class="ia-wrap">'
     +'<div class="ia-disc">⚠ '+IA_DISC+'</div>'
     +'<div class="ia-focus"><span>نوع الفحص:</span>'
       +'<label><input type="radio" name="iaf" value="all" checked onchange="_iaSetFocus(this.value)"> شامل (3 فاحصين متخصصين)</label>'
