@@ -13961,7 +13961,7 @@ function projCard(code,tab){ var p=(DATA||[]).find(function(x){ return String(x.
           +'<div class="pv-bar"><u style="width:'+(Math.max(0,Math.min(1,A))*100).toFixed(1)+'%;background:'+col+'"></u>'+(Pl!=null?'<s style="inset-inline-start:'+(Math.max(0,Math.min(1,Pl))*100).toFixed(1)+'%"></s>':'')+'</div>'
           +'<div class="pv-leg"><span><i style="background:'+col+'"></i>الفعلي <b>'+_dxPct(A)+'</b></span><span><i class="pl"></i>المخطط <b>'+(Pl==null?'—':_dxPct(Pl))+'</b></span><span class="'+(g==null?'':(g<0?'dn':'up'))+'">الحيود <b><bdi dir="ltr">'+(g==null?'—':((g<0?'−':'+')+ar(Math.abs(Math.round(g*100)))))+'</bdi></b> نقطة</span></div></div>'; })()
     +kp("","الإنجاز الفعلي",_dxPct(a),'المخطط '+(pl==null?'—':_dxPct(pl)),a,pl)+'</div>';
-  var photos='<div class="pc4-ph"><div class="pc4-sh"><h3>صور التقارير</h3><button class="pc3-b sm noprint" onclick="pcTab(\'ph\')">إدارة الصور ←</button></div><div class="pc4-rep" id="pc4Rep">'+_pc4RepHTML(imgs)+'</div></div>';
+  var photos='<div class="pc4-ph"><div class="pc4-sh"><h3>صور التقارير</h3><span class="pc4-shb"><button class="pc3-b sm noprint" onclick="lvPhOpen(\''+esc(String(p.code)).replace(/'/g,"")+'\')" title="اختيار صورة المشروع في شاشة العرض المباشر (1800×1200)">صورة شاشة العرض</button><button class="pc3-b sm noprint" onclick="pcTab(\'ph\')">إدارة الصور ←</button></span></div><div class="pc4-rep" id="pc4Rep">'+_pc4RepHTML(imgs)+'</div></div>';
   var TABS=[["ov","نظرة عامة"],["data","البيانات والتعاقد"],["fin","المالية والمستخلصات"],["tl","الجدول الزمني"],["nt","المستجدات"],["rk","المخاطر"],["ph","إدارة الصور"]];
   var tabs='<div class="pc3-tabs noprint">'+TABS.map(function(x){ return '<button class="'+(PCARD.tab===x[0]?"on":"")+'" onclick="pcTab(\''+x[0]+'\')">'+x[1]+'</button>'; }).join("")+'</div>';
   var tlBox='<div class="pc3-tl"><div class="pc3-tlg">'
@@ -22199,6 +22199,80 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
     +'<div class="fd-rb">'+tbl+geo+'</div>'
     +'</div></div>'); }
 </script>
+<style id="lvphCss">.lvph-mod{position:fixed;inset:0;z-index:100003;background:rgba(10,20,15,.5);display:flex;align-items:center;justify-content:center;padding:20px}
+.lvph-box{background:#fff;border-radius:16px;width:min(860px,100%);max-height:92vh;overflow:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
+.lvph-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.lvph-h b{display:block;font-size:17px;color:#0E3B27}.lvph-h span{font-size:12.5px;color:#7D8A82}.lvph-h button{border:0;background:none;font-size:18px;cursor:pointer;color:#7D8A82}
+.lvph-rule{font-size:12.5px;line-height:1.7;color:#46574D;background:#F4F7F5;border:1px solid #E1E8E3;border-radius:10px;padding:9px 12px}.lvph-rule b{color:#0E4A2F}
+.lvph-cur,.lvph-prev{display:flex;flex-direction:column;gap:6px}.lvph-cur > span,.lvph-prev > span{font-size:12.5px;font-weight:700;color:#46574D}
+.lvph-cur .fr,.lvph-prev .fr{aspect-ratio:3/2;width:100%;max-width:360px;border-radius:12px;overflow:hidden;background:#EEF2EF;border:1px solid #DDE5DF;display:grid;place-items:center}
+.lvph-cur .fr img,.lvph-prev canvas{width:100%;height:100%;object-fit:cover;display:block}
+.lvph-cur .fr em{font-style:normal;font-size:12.5px;color:#86918A;padding:10px;text-align:center}
+.lvph-ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.lvph-ph b{font-size:13px;color:#1B2A21}
+.lvph-th{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.lvph-th button{border:1px solid #DDE5DF;border-radius:10px;overflow:hidden;padding:0;cursor:pointer;aspect-ratio:3/2;background:#F4F7F5}.lvph-th button:hover{border-color:#0E4A2F;box-shadow:0 0 0 2px rgba(14,74,47,.2)}
+.lvph-th img{width:100%;height:100%;object-fit:cover;display:block}.lvph-th em{font-style:normal;font-size:12.5px;color:#86918A}
+.lvph-sl{display:flex;align-items:center;gap:10px;font-size:12.5px;color:#46574D;max-width:520px}.lvph-sl input{flex:1}
+.lvph-act{display:flex;gap:8px}
+.lvph-msg{font-size:13px;line-height:1.7;min-height:1px}.lvph-msg.bad{color:#9A4E42;background:#F8ECE9;border:1px solid #EBCFC8;border-radius:10px;padding:9px 12px}.lvph-msg.ok{color:#1E6B45}
+body[data-theme="dark"] .lvph-box{background:#14222A;color:#E4ECE7}body[data-theme="dark"] .lvph-h b{color:#8ED2AE}body[data-theme="dark"] .lvph-rule{background:#182A33;border-color:rgba(205,228,217,.1);color:#A3B5AC}body[data-theme="dark"] .lvph-rule b{color:#8ED2AE}
+body[data-theme="dark"] .lvph-cur .fr,body[data-theme="dark"] .lvph-prev .fr,body[data-theme="dark"] .lvph-th button{background:#182A33;border-color:rgba(205,228,217,.12)}body[data-theme="dark"] .lvph-ph b,body[data-theme="dark"] .lvph-cur > span,body[data-theme="dark"] .lvph-prev > span,body[data-theme="dark"] .lvph-sl{color:#C9D6D0}
+body[data-theme="dark"] .lvph-msg.bad{background:rgba(185,106,91,.14);border-color:rgba(185,106,91,.35);color:#E7B7AD}body[data-theme="dark"] .lvph-msg.ok{color:#8ED2AE}
+/* مساحة الصورة في شاشة العرض = نفس النسبة 3:2 بالضبط */
+.v2gal{aspect-ratio:3/2;align-self:center;width:100%;height:auto!important}
+.v2gal .ph{background-size:cover;background-position:center}
+.pc4-shb{display:inline-flex;gap:6px}</style>
+<script id="lvphJs">/* ===================== صورة شاشة العرض المباشر لكل مشروع =====================
+   مقاس ثابت 1800×1200 (نسبة 3:2) = مساحة الصورة في «تحت المجهر». تُختار من صور المشروع أو تُرفع من الجهاز،
+   وتُفحص قبل القبول: تُرفض الصورة الصغيرة أو التي لا يمكن ضبطها على النسبة دون قص كبير. تُحفظ على Cloudinary بوسم <مشروع>_live. */
+var LVPH={W:1800,H:1200,minW:1200,minH:800,minR:1.2,maxR:1.95,code:null,img:null,src:null,off:0.5,cache:{}};
+function _lvTag(p){ return _cldTag(p.name)+"_live"; }
+function lvPhList(p){ var t=_lvTag(p); if(LVPH.cache[t]) return Promise.resolve(LVPH.cache[t]);
+  return _cldList(t,0).then(function(it){ var u=(it||[]).sort(function(a,b){ return (b.at||"").localeCompare(a.at||""); }).map(function(x){ return x.url; }); LVPH.cache[t]=u; return u; }).catch(function(){ return []; }); }
+function _lvPhMsg(t,bad){ var m=document.getElementById("lvphMsg"); if(m){ m.className="lvph-msg"+(bad?" bad":" ok"); m.innerHTML=t; } }
+function lvPhOpen(code){ var p=(DATA||[]).find(function(x){ return String(x.code)===String(code); }); if(!p) return; LVPH.code=p.code; LVPH.img=null;
+  var old=document.getElementById("lvphM"); if(old) old.remove();
+  var m=document.createElement("div"); m.id="lvphM"; m.className="lvph-mod noprint"; m.setAttribute("dir","rtl");
+  m.innerHTML='<div class="lvph-box"><div class="lvph-h"><div><b>صورة شاشة العرض المباشر</b><span>'+esc(p.code)+' · '+esc(p.alias||p.name)+'</span></div><button onclick="document.getElementById(\'lvphM\').remove()">✕</button></div>'
+    +'<div class="lvph-rule">المقاس المعتمد للشاشة <b>1800 × 1200 بكسل (نسبة 3:2 أفقية)</b> · أقل مقاس مقبول 1200 × 800 · تُرفض الصور الطولية أو العريضة جداً لأنها لا تُضبط على المقاس دون قص كبير.</div>'
+    +'<div class="lvph-cur" id="lvphCur"><span>الصورة الحالية على الشاشة</span><div class="fr"><em>جارٍ التحقق…</em></div></div>'
+    +'<div class="lvph-pick"><div class="lvph-ph"><b>اختر من صور المشروع</b><label class="pc3-b sm">رفع صورة من الجهاز<input type="file" accept="image/*" hidden onchange="lvPhFile(this)"></label></div><div class="lvph-th" id="lvphTh"><em>جارٍ تحميل صور المشروع…</em></div></div>'
+    +'<div class="lvph-prev" id="lvphPrev" hidden><span>المعاينة بنفس مقاس الشاشة</span><div class="fr"><canvas id="lvphCv" width="900" height="600"></canvas></div><label class="lvph-sl" id="lvphSl"><span id="lvphSlL">موضع الصورة داخل الإطار</span><input type="range" min="0" max="100" value="50" oninput="LVPH.off=this.value/100;_lvPhDraw()"></label>'
+      +'<div class="lvph-act"><button class="pc3-b pri" onclick="lvPhSave()">اعتماد الصورة للشاشة</button><button class="pc3-b" onclick="document.getElementById(\'lvphPrev\').hidden=true">إلغاء</button></div></div>'
+    +'<div class="lvph-msg" id="lvphMsg"></div></div>';
+  m.addEventListener("click",function(e){ if(e.target===m) m.remove(); }); document.body.appendChild(m);
+  lvPhList(p).then(function(u){ var c=document.querySelector("#lvphCur .fr"); if(c) c.innerHTML=u.length?'<img src="'+esc(u[0])+'" alt="">':'<em>لم تُحدَّد صورة بعد — تُعرض صور المشروع العامة</em>'; });
+  var urls=[]; try{ (PCG&&PCG.code===p.code?PCG.list:[]).forEach(function(x){ if(x&&x.url) urls.push(x.url); }); }catch(e){}
+  var fill=function(){ var th=document.getElementById("lvphTh"); if(!th) return; var U=urls.filter(function(x,i,a){ return a.indexOf(x)===i; }).slice(0,24);
+    th.innerHTML=U.length?U.map(function(u){ return '<button onclick="lvPhUrl(\''+esc(u).replace(/'/g,"%27")+'\')"><img src="'+esc(typeof _cldThumb==="function"?_cldThumb(u,320):u)+'" alt="" loading="lazy"></button>'; }).join(""):'<em>لا توجد صور للمشروع — ارفع صورة من جهازك.</em>'; };
+  try{ _cldList(_cldTag(p.name),0).then(function(it){ (it||[]).forEach(function(x){ urls.push(x.url); }); fill(); }).catch(fill); }catch(e){ fill(); } }
+function lvPhUrl(u){ _lvPhLoad(u,true); }
+function lvPhFile(inp){ var f=inp&&inp.files&&inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ _lvPhLoad(r.result,false); }; r.readAsDataURL(f); try{ inp.value=""; }catch(e){} }
+function _lvPhLoad(src,remote){ _lvPhMsg("● جارٍ فحص الصورة…"); var im=new Image(); if(remote) im.crossOrigin="anonymous";
+  im.onload=function(){ var w=im.naturalWidth, h=im.naturalHeight, r=w/h; document.getElementById("lvphPrev").hidden=true; LVPH.img=null;
+    if(w<LVPH.minW||h<LVPH.minH){ _lvPhMsg("✕ <b>تم رفض الصورة:</b> مقاسها "+w+" × "+h+" بكسل أصغر من الحد الأدنى 1200 × 800 — ستظهر مشوشة على الشاشة.",true); return; }
+    if(r<LVPH.minR){ _lvPhMsg("✕ <b>تم رفض الصورة:</b> الصورة "+(r<1?"طولية":"شبه مربعة")+" ("+w+" × "+h+") ولا يمكن ضبطها على مقاس الشاشة الأفقي 3:2 إلا بقص أكثر من ربعها. اختر صورة أفقية.",true); return; }
+    if(r>LVPH.maxR){ _lvPhMsg("✕ <b>تم رفض الصورة:</b> الصورة عريضة جداً ("+w+" × "+h+") ولا يمكن ضبطها على مقاس الشاشة 3:2 دون قص كبير من جانبيها.",true); return; }
+    LVPH.img=im; LVPH.src=src; LVPH.off=0.5; var sl=document.querySelector("#lvphSl input"); if(sl) sl.value=50;
+    var lab=document.getElementById("lvphSlL"); if(lab) lab.textContent=Math.abs(r-1.5)<0.01?"الصورة بالمقاس تماماً":(r>1.5?"حرّك لاختيار الجزء الظاهر أفقياً":"حرّك لاختيار الجزء الظاهر رأسياً");
+    document.getElementById("lvphSl").hidden=Math.abs(r-1.5)<0.01; document.getElementById("lvphPrev").hidden=false; _lvPhDraw();
+    _lvPhMsg("✓ الصورة مناسبة ("+w+" × "+h+") — ستُضبط على 1800 × 1200. راجع المعاينة ثم اعتمد."); };
+  im.onerror=function(){ _lvPhMsg("✕ تعذّر فتح الصورة. جرّب صورة أخرى أو ارفعها من جهازك.",true); };
+  im.src=src; }
+function _lvPhCrop(){ var im=LVPH.img, w=im.naturalWidth, h=im.naturalHeight, R=LVPH.W/LVPH.H, sx=0, sy=0, sw=w, sh=h;
+  if(w/h>R){ sw=h*R; sx=(w-sw)*LVPH.off; } else { sh=w/R; sy=(h-sh)*LVPH.off; } return [sx,sy,sw,sh]; }
+function _lvPhDraw(){ var cv=document.getElementById("lvphCv"); if(!cv||!LVPH.img) return; var c=cv.getContext("2d"), k=_lvPhCrop(); c.drawImage(LVPH.img,k[0],k[1],k[2],k[3],0,0,cv.width,cv.height); }
+function lvPhSave(){ var p=(DATA||[]).find(function(x){ return String(x.code)===String(LVPH.code); }); if(!p||!LVPH.img) return;
+  var cv=document.createElement("canvas"); cv.width=LVPH.W; cv.height=LVPH.H; var c=cv.getContext("2d"), k=_lvPhCrop(); c.drawImage(LVPH.img,k[0],k[1],k[2],k[3],0,0,LVPH.W,LVPH.H);
+  var fail=function(){ _lvPhMsg("✕ تعذّر تجهيز هذه الصورة من السحابة (قيود المتصفح). نزّلها وارفعها من جهازك.",true); };
+  try{ cv.toBlob(function(b){ if(!b){ fail(); return; } _lvPhMsg("● جارٍ الرفع…");
+      var fd=new FormData(); fd.append("file",b,"live_"+p.code+".jpg"); fd.append("upload_preset",CLOUD.preset); fd.append("tags",_lvTag(p)+",reef_live");
+      fetch("https://api.cloudinary.com/v1_1/"+CLOUD.name+"/image/upload",{method:"POST",body:fd}).then(function(r){ return r.json(); }).then(function(j){
+        if(!j||!j.secure_url){ _lvPhMsg("✕ فشل الرفع"+(j&&j.error&&j.error.message?": "+esc(j.error.message):""),true); return; }
+        LVPH.cache[_lvTag(p)]=[j.secure_url]; var cur=document.querySelector("#lvphCur .fr"); if(cur) cur.innerHTML='<img src="'+esc(j.secure_url)+'" alt="">';
+        document.getElementById("lvphPrev").hidden=true; _lvPhMsg("✓ تم اعتماد الصورة لشاشة العرض المباشر ("+LVPH.W+" × "+LVPH.H+").");
+      }).catch(function(){ _lvPhMsg("✕ تعذّر الاتصال بالسحابة. حاول مرة أخرى.",true); }); },"image/jpeg",0.9); }catch(e){ fail(); } }
+try{ window.lvPhOpen=lvPhOpen; window.lvPhFile=lvPhFile; window.lvPhUrl=lvPhUrl; window.lvPhSave=lvPhSave; window.lvPhList=lvPhList; }catch(e){}
+</script>
 <style id="lv2Css">/* ===== شاشة العرض المباشر «غرفة المتابعة الحية» ===== */
 body.v2-on{overflow:hidden}
 .v2{--bgA:#1B343D;--bgB:#0F1D24;--bgC:#081116;--tx:#F1F5F3;--hi:#FFF6DE;--mu:#A3B5AC;--mu2:#7F938A;--gd:#D6B25E;--gd2:#F0D894;--gr:#5CC08D;--gr2:#9AE3C0;--pn:rgba(255,255,255,.035);--pn2:rgba(255,255,255,.06);--pb:rgba(255,255,255,.08);--gdA:rgba(214,178,94,.14);--gdB:rgba(214,178,94,.32);--grA:rgba(92,192,141,.08);--grB:rgba(92,192,141,.35);--dk:#231805;--trk:rgba(255,255,255,.08);--glow:1;--rg:46,170,122;--topoA:rgba(154,227,192,.25);--topoB:rgba(240,216,148,.35);--shade:rgba(8,17,22,.7)}
@@ -22700,7 +22774,9 @@ function _v2SpotRun(s){ var L=LV2.spL||[], D=LV2.D, idx=0, phT=null, phI=0, laye
     s.querySelectorAll(".gdots i").forEach(function(d,k){ d.classList.toggle("on",k===i); d.classList.toggle("pa",k<i); var u=d.querySelector("u"); if(k===i&&u){ u.style.animation="none"; void u.offsetWidth; u.style.animation=""; u.style.animationDuration=V2_SPOT_MS+"ms"; } });
     var urls=[]; phI=0; s.querySelector(".v2gal").classList.remove("has");
     var start=function(){ if(!urls.length) return; setPh(urls[0]); phT=setInterval(function(){ if(!s.isConnected){ clearInterval(phT); return; } phI=(phI+1)%urls.length; setPh(urls[phI]); },V2_PH_MS); LV2.sc.push(phT); };
-    try{ if(typeof cldProjectImages==="function") cldProjectImages(sp.p.name).then(function(u){ if(L[idx]!==sp) return; urls=(u||[]).slice(0,6).map(function(x){ return typeof _cldThumb==="function"?_cldThumb(x,1600):x; }); if(urls.length) start(); else fb(); }).catch(function(){ fb(); }); else fb(); }catch(e){ fb(); }
+    var gen=function(){ try{ if(typeof cldProjectImages==="function") cldProjectImages(sp.p.name).then(function(u){ if(L[idx]!==sp) return; urls=(u||[]).slice(0,6).map(function(x){ return typeof _cldThumb==="function"?_cldThumb(x,1600):x; }); if(urls.length) start(); else fb(); }).catch(function(){ fb(); }); else fb(); }catch(e){ fb(); } };
+    /* الصورة المعتمدة لشاشة العرض (1800×1200) أولاً، وإن لم توجد فصور المشروع العامة */
+    try{ if(typeof lvPhList==="function") lvPhList(sp.p).then(function(u){ if(L[idx]!==sp) return; if(u&&u.length){ urls=u.slice(0,4); start(); } else gen(); }).catch(gen); else gen(); }catch(e){ gen(); }
     function fb(){ try{ _lwImgFor(sp.p).then(function(v){ if(L[idx]!==sp) return; var src=v&&(typeof v==="string"?v:v.u); if(src){ urls=[src]; start(); } }); }catch(e){} } };
   show(0); LV2.sc.push(setInterval(function(){ if(!s.isConnected) return; idx=(idx+1)%L.length; show(idx); },V2_SPOT_MS)); }
 /* المشهد 7: المواعيد القادمة — خط زمني لنهايات المشاريع قيد التنفيذ حسب القطاع */
