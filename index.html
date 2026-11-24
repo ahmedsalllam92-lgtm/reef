@@ -22921,8 +22921,9 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var BUDBAR=''; var gK=function(l,x,s,tone){ var m=_dxMs(x); return '<div class="dxf-k'+(tone?' '+tone:'')+'" title="'+_fdNum(x)+' ريال"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span><span class="dxf-ks">'+s+'</span></div>'; };
   var kpis='<div class="fd-kpis dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +gK("إجمالي العقود",contracts,pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length))
-    +gK("المبالغ المنصرفة",dis,pc(dis,contracts)+" من قيمة المشاريع القائمة")
-    +gK("مبالغ تحت الإجراء",und,pc(und,contracts)+" من قيمة المشاريع القائمة")
+    +(function(){ var C=D.filter(function(p){ var t=st(p); return _fdIsCap(p)&&(t==="run"||t==="done"); }), cdd=C.reduce(function(a,p){ return a+_dxN(p.disbursed); },0), cuu=C.reduce(function(a,p){ return a+_dxN(p.under_proc); },0);
+      return gK("المبالغ المنصرفة · جميع المشاريع",dis,pc(dis,contracts)+" من القائمة · منها "+_dxM(cdd)+" رأسمالية")
+        +gK("تحت الإجراء · جميع المشاريع",und,pc(und,contracts)+" من القائمة · منها "+_dxM(cuu)+" رأسمالية"); })()
     +gK("الميزانية المتبقية",left,pc(left,BUD)+" من الميزانية بعد المنصرف")
     +'<div class="dxf-k"><span class="dxf-kl">عدد المستخلصات</span><span class="dxf-kv">'+ar(cN)+'<small>مستخلص</small></span><span class="dxf-ks">لـ '+_arPrj(cP)+'</span></div></div>';
   /* ---- إحصائيات الميزانية الرأسمالية ---- */
