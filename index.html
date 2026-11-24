@@ -8830,7 +8830,8 @@ html body[data-theme="dark"] .pmm-rib div:before,html body[data-theme="dark"] .p
   html body #answer,html body #answer.show{margin-top:6px!important}
 }
 </style>
-<style id="noSign">.ia-mk.nopos .ia-num{outline:2px dashed rgba(255,255,255,.95);outline-offset:2px}
+<style id="noSign">html body .dx-tiles{grid-template-columns:none!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important}
+.ia-mk.nopos .ia-num{outline:2px dashed rgba(255,255,255,.95);outline-offset:2px}
 .m3-sign,.mn-sign{display:none!important}
 
 .cw2 .cw-tdh b{font-size:36px!important}
@@ -15352,7 +15353,7 @@ function _brfBody(s,X){ var pc=function(x){ return _dxPct(x); };
   if(s.k==="att0") return '<div class="brf-ok"><div>✓</div><h2>كل المشاريع ضمن المسار</h2></div>';
   if(s.k==="q"){ var Q=X.q;
     return '<div class="brf-q"><div class="brf-qr">'+_brfRing(Q.rate||0,"q")+'<b>'+(Q.rate==null?'—':_dxPct(Q.rate))+'</b><span>نسبة الاعتماد</span></div><div class="brf-qg">'
-      +[["معتمد",Q.app,"g"],["تحت الدراسة",Q.stu,""],["زيارات ميدانية",Q.site,""],["إجمالي الاعتمادات",Q.tot,""]].map(function(z,i){ return '<div class="'+z[2]+'" style="--d:'+(0.2+i*0.1)+'s"><b>'+ar(z[1])+'</b><span>'+z[0]+'</span></div>'; }).join("")+'</div></div>'; }
+      +[["معتمد",Q.app,"g"],["تحت الدراسة",Q.stu,""],["إجمالي الاعتمادات",Q.tot,""]].map(function(z,i){ return '<div class="'+z[2]+'" style="--d:'+(0.2+i*0.1)+'s"><b>'+ar(z[1])+'</b><span>'+z[0]+'</span></div>'; }).join("")+'</div></div>'; }
   if(s.k==="done"){ var v3=_brfNum(X.doneV), bs={}; X.doneL.forEach(function(r){ var k=r.p.sector||"أخرى"; bs[k]=(bs[k]||0)+1; });
     return '<div class="brf-soon brf-done"><div class="brf-sk">'+_brfKpi(ar(X.doneL.length),"مشروع","منتهية فعلياً")+_brfKpi(v3.n,v3.u+" "+RYL,"قيمتها")
       +'<div class="brf-dsec">'+Object.keys(bs).sort(function(a,b){ return bs[b]-bs[a]; }).map(function(k){ var c=(typeof SEC_PASTEL!=="undefined"&&SEC_PASTEL[k])||"#C9A96E"; return '<span><i style="background:'+c+'"></i>'+esc(k)+' <b>'+ar(bs[k])+'</b></span>'; }).join("")+'</div></div><div class="brf-sl">'
@@ -16199,7 +16200,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var qr=(totC-stu)>0?Math.min(1,app/(totC-stu)):null;
   var cSegs=[{l:"معتمد",v:app,c:DX.g},{l:"يُعاد التسليم",v:ret,c:DX.amber},{l:"تحت الدراسة",v:stu,c:"#D8D0BE"}];
   var clBody='<div class="dx-health sm">'+_dxDonut(cSegs,ar(totC),"اعتماد",150,18)+_dxLeg(cSegs)+'</div>'
-    +'<div class="dx-tiles"><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>نسبة الاعتماد</span></div><div><b>'+ar(site)+'</b><span>زيارات ميدانية</span></div>'
+    +'<div class="dx-tiles"><div><b>'+(qr==null?"—":_dxPct(qr))+'</b><span>نسبة الاعتماد</span></div>'
     +'<div class="'+(ncr?"warn":"")+'"><b>'+ar(ncr)+'</b><span>عدم مطابقة</span></div><div class="'+(warns?"bad":"")+'"><b>'+ar(warns)+'</b><span>إنذارات</span></div></div>';
   /* ---- المشاريع الأعلى مخاطرة ---- */
   var risk=rows.filter(function(r){return !r.done&&(r.score>=2||r.cat==="late");}).sort(function(a,b){ return b.score-a.score||(a.sv||0)-(b.sv||0); }).slice(0,7);
