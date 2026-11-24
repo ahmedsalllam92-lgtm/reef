@@ -22053,5 +22053,103 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
     +'</div></div></div>');
   [0,60,250].forEach(function(ms){ setTimeout(fdFit,ms); }); }
 </script>
+<style id="rp3Css">/* التقارير: لوحة جانبية + التقرير بجانبها */
+.acard.rp-split{display:grid!important;grid-template-columns:320px minmax(0,1fr);column-gap:18px;align-items:start}
+.acard.rp-split>*:not(.rp3-side){grid-column:2;min-width:0}
+.acard.rp-split>.rp3-side{grid-column:1;grid-row:1 / span 60;position:sticky;top:64px;margin-top:0;max-height:calc(100vh - 80px);overflow:auto;align-self:start}
+.acard.rp-split .rp-ready>button:first-child{display:none}
+.rp3-side{background:#fff;border:1px solid #E2E8E3;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
+.rp3-h b{display:block;font-size:17px;font-weight:900;color:#0E3B27}
+.rp3-h span{font-size:12px;color:#7D8A82;font-weight:600}
+.rp3-g{display:flex;flex-direction:column;gap:8px}
+.rp3-l{font-size:12px;font-weight:800;color:#6B7A71}
+.rp3-seg{display:flex;flex-direction:column;gap:4px}
+.rp3-seg button{display:flex;align-items:center;gap:8px;font:inherit;font-size:13.5px;font-weight:800;text-align:start;padding:8px 10px;border-radius:10px;border:1px solid #E2E8E3;background:#F7F9F6;color:#1B2A21;cursor:pointer}
+.rp3-seg button .ic{display:inline-flex;color:#6B7A71}
+.rp3-seg button.on{background:#0E4A2F;border-color:#0E4A2F;color:#fff}.rp3-seg button.on .ic{color:#E9D29A}
+.rp3-note{font-size:12px;color:#6B7A71;font-weight:600;padding:0 2px}.rp3-note.warn{color:#A5631A}
+.rp3-fs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 8px}
+.rp3-fs .rp-f{display:flex;flex-direction:column;gap:3px}
+.rp3-fs .rp-f>span{font-size:11.5px;font-weight:700;color:#6B7A71}
+.rp3-fs .msel{width:100%;min-width:0!important}.rp3-fs .msel>button,.rp3-fs .msel-b{width:100%!important;min-width:0!important;height:32px!important;min-height:32px!important;font-size:12px!important;padding:0 8px!important}
+.rp3-cnt{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#F2F7F3;border-radius:10px;padding:8px 10px;font-size:12px}
+.rp3-cnt b{color:#0E4A2F;font-size:13.5px}.rp3-cnt span{color:#46574D;font-weight:600;min-width:0;flex:1}
+.rp3-cnt button,.rp3-pp button{font:inherit;font-size:11.5px;font-weight:800;border:1px solid #DDE3DE;background:#fff;border-radius:8px;padding:3px 8px;cursor:pointer}
+.rp3-pp{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#F2F7F3;border-radius:10px;padding:8px 10px;font-size:12.5px}
+.rp3-pp em{font-style:normal;font-weight:900;color:#0E4A2F;font-size:11.5px;background:#fff;border-radius:6px;padding:1px 6px}
+.rp3-pp b{line-height:1.4}
+.rp3-ps{display:flex;align-items:center;gap:6px}.rp3-ps input{flex:1;min-width:0;font:inherit;font-size:12.5px;border:1px solid #DDE3DE;border-radius:9px;padding:7px 10px}
+.rp3-ps span{font-size:11px;color:#7D8A82;white-space:nowrap}
+.rp3-pl{max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:3px}
+.rp3-pl .rp1-it{font-size:12px}
+.rp3-types{display:flex;flex-direction:column;gap:5px}
+.rp3-types button{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;text-align:start;font:inherit;padding:8px 10px;border-radius:11px;border:1px solid #E2E8E3;background:#fff;cursor:pointer;color:#1B2A21}
+.rp3-types button .ic{width:34px;height:34px;border-radius:9px;background:#F4EFE2;color:#8A6A22;display:flex;align-items:center;justify-content:center}
+.rp3-types button b{display:block;font-size:13.5px;font-weight:800}
+.rp3-types button em{display:block;font-style:normal;font-size:11.5px;color:#7D8A82;line-height:1.45}
+.rp3-types button:hover:not(:disabled){border-color:#9CC5AD}
+.rp3-types button.on{border-color:#0E4A2F;background:#F2F7F3;box-shadow:inset 0 0 0 1px #0E4A2F}
+.rp3-types button.on .ic{background:#0E4A2F;color:#fff}
+.rp3-types button:disabled{opacity:.45;cursor:not-allowed}
+.rp3-adv{font:inherit;font-size:12.5px;font-weight:800;color:#0E4A2F;background:none;border:1px dashed #CFE0D5;border-radius:10px;padding:8px;cursor:pointer}
+.rp3-main{min-height:60vh;display:flex}
+.rp3-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;border:1px dashed #D8E1DA;border-radius:16px;background:#FAFBF9;padding:40px 20px;color:#46574D}
+.rp3-empty .ic{width:68px;height:68px;border-radius:18px;background:#F4EFE2;color:#8A6A22;display:flex;align-items:center;justify-content:center}
+.rp3-empty b{font-size:18px;color:#0E3B27}.rp3-empty>span:last-child{font-size:13px;color:#7D8A82;max-width:420px;line-height:1.7}
+.acard:fullscreen.rp-split,.acard.wkfs-fallback.rp-split{display:block!important}
+.acard:fullscreen>.rp3-side,.acard.wkfs-fallback>.rp3-side{display:none!important}
+@media print{ .acard.rp-split{display:block!important} .rp3-side{display:none!important} }
+@media screen and (max-width:900px){ .acard.rp-split{grid-template-columns:minmax(0,1fr)} .acard.rp-split>*:not(.rp3-side){grid-column:1} .acard.rp-split>.rp3-side{grid-row:auto;position:static;max-height:none;margin-bottom:14px} .acard.rp-split>.rp3-side ~ *{grid-row:auto} }
+body[data-theme="dark"] .rp3-side,body[data-theme="dark"] .rp3-types button{background:#14222A;border-color:rgba(205,228,217,.10);color:#E4ECE7}
+body[data-theme="dark"] .rp3-h b,body[data-theme="dark"] .rp3-empty b{color:#E8EFEB}
+body[data-theme="dark"] .rp3-seg button{background:#182A33;border-color:rgba(205,228,217,.12);color:#E4ECE7}
+body[data-theme="dark"] .rp3-seg button.on{background:#22343D;border-color:#D6B25E}
+body[data-theme="dark"] .rp3-types button.on{background:#1B2E38;border-color:#D6B25E;box-shadow:inset 0 0 0 1px #D6B25E}
+body[data-theme="dark"] .rp3-types button .ic,body[data-theme="dark"] .rp3-empty .ic{background:rgba(214,178,94,.13);color:#E3C77F}
+body[data-theme="dark"] .rp3-types button.on .ic{background:#D6B25E;color:#14222A}
+body[data-theme="dark"] .rp3-cnt,body[data-theme="dark"] .rp3-pp{background:#182A33}body[data-theme="dark"] .rp3-cnt b,body[data-theme="dark"] .rp3-pp em{color:#8ED2AE}
+body[data-theme="dark"] .rp3-cnt span{color:#A3B5AC}
+body[data-theme="dark"] .rp3-cnt button,body[data-theme="dark"] .rp3-pp button,body[data-theme="dark"] .rp3-ps input,body[data-theme="dark"] .rp3-pp em{background:#14222A;border-color:rgba(205,228,217,.14);color:#E4ECE7}
+body[data-theme="dark"] .rp3-empty{background:#14222A;border-color:rgba(205,228,217,.12);color:#A3B5AC}
+body[data-theme="dark"] .rp3-adv{color:#8ED2AE;border-color:rgba(142,210,174,.3)}
+</style>
+<script id="rp3Js">/* ================= التقارير: لوحة جانبية ثابتة + عرض التقرير فوراً بجانبها ================= */
+var RP3={on:false,until:0,nav:""};
+function _rp3Ready(){ return RP2.scope==="p"?!!RP.one:_rpList().length>0; }
+function _rp3Side(){ var sc=RP2.scope, L=_rpList(), any=Object.keys(RP.f).some(function(k){ return (RP.f[k]||[]).length; }), ready=_rp3Ready(), T=RP2_TYPES[sc]||[];
+  var S=[["all","المحفظة كاملة"],["f","مجموعة مشاريع"],["p","مشروع واحد"]];
+  var h='<aside class="rp3-side noprint"><div class="rp3-h"><b>التقارير</b><span>اختر النطاق ونوع التقرير ويظهر فوراً</span></div>'
+    +'<div class="rp3-g"><span class="rp3-l">التقرير عن</span><div class="rp3-seg">'+S.map(function(x){ return '<button class="'+(sc===x[0]?'on':'')+'" onclick="rp3Scope(\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0],16)+'</span>'+x[1]+'</button>'; }).join("")+'</div>';
+  if(sc==="all") h+='<div class="rp3-note">كل مشاريع البرنامج ('+_arPrj(DATA.length)+')</div>';
+  if(sc==="f") h+='<div class="rp3-fs">'+RP_FIELDS.map(function(x){ return '<div class="rp-f"><span>'+x[1]+'</span>'+_mselHTML("rp",x[0],x[2],_rpOpts(x[0]),RP.f[x[0]]||[],x[0]==="cat"?(RP.f.cat||[]).map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "):"")+'</div>'; }).join("")+'</div>'
+      +'<div class="rp3-cnt"><b>'+_arPrj(L.length)+'</b><span>'+esc(_rpTitle())+'</span>'+(any?'<button onclick="RP.f={};rp3Refresh()">✕ مسح</button>':'')+'</div>';
+  if(sc==="p"){ var p=RP.one?DATA.find(function(x){ return String(x.code)===RP.one; }):null;
+    if(p) h+='<div class="rp3-pp"><em>'+esc(p.code)+'</em><b>'+esc(p.alias||p.name||"")+'</b><button onclick="RP.one=null;rp3Refresh()">تغيير</button></div>';
+    else h+='<div class="rp3-ps"><input id="rp1Q" type="search" placeholder="ابحث بالاسم أو الكود…" oninput="rpOneFilter(this.value)" autocomplete="off"><span id="rp1N">'+_arPrj(DATA.length)+'</span></div><div class="rp1-l rp3-pl" id="rp1L">'
+      +DATA.slice().sort(function(a,b){ return String(a.code).localeCompare(String(b.code),"en",{numeric:true}); }).map(function(x){ return '<button class="rp1-it" data-q="'+esc(_normAr([x.code,x.name,x.sector,x.region,x.contractor].join(" ")).toLowerCase())+'" onclick="RP.one=\''+esc(String(x.code)).replace(/'/g,"\\'")+'\';rp3Refresh()"><em>'+esc(x.code)+'</em><span><b>'+esc(x.name||"")+'</b><small>'+esc(x.sector||"")+' · '+esc(x.region||"")+'</small></span></button>'; }).join("")+'</div>'; }
+  h+='</div><div class="rp3-g"><span class="rp3-l">نوع التقرير</span>'+(ready?'':'<div class="rp3-note warn">'+(sc==="p"?'اختر المشروع أولاً':'لا توجد مشاريع مطابقة للفلاتر')+'</div>')+'<div class="rp3-types">'
+    +T.map(function(x){ return '<button class="'+(RP2.type===x[0]?'on':'')+'" '+(ready?'':'disabled ')+'onclick="rp3Type(\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0],18)+'</span><span class="tx"><b>'+x[1]+'</b><em>'+x[2]+'</em></span></button>'; }).join("")+'</div></div>'
+    +'<button class="rp3-adv" onclick="RP3.on=false;reportBuilder()">تقرير مخصّص متقدم ←</button></aside>';
+  return h; }
+function _rp3Mount(){ try{ if(!RP3.on) return; if(!(Date.now()<RP3.until||RP3.nav==="report")) { RP3.on=false; return; }
+  var c=A&&A.querySelector(".acard"); if(!c||c.querySelector(".rp3-side")) return;
+  var d=document.createElement("div"); d.innerHTML=_rp3Side(); c.classList.add("rp-split"); c.insertBefore(d.firstChild,c.firstChild); }catch(e){} }
+function reportPrepOpen(keep){ RP.mode="f"; RP.back=null; try{ setNavActive("report"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=false; ANSWER_TITLE=""; if(!keep){ RP.f={}; RP2.type=""; }
+  RP3.on=true; RP3.until=Date.now()+3000;
+  if(RP2.type&&_rp3Ready()){ _rp3Go(); return; }
+  show('<div class="hb-page rp"><div class="rp3-main"><div class="rp3-empty"><span class="ic">'+_rp2Ic("general",34)+'</span><b>اختر نوع التقرير من القائمة</b><span>يظهر التقرير هنا مباشرة، وتقدر تغيّر النطاق أو الفلاتر من الجنب ويتحدّث التقرير فوراً</span></div></div></div>'); }
+function _rp3Go(){ if(!RP2.type||!_rp3Ready()){ reportPrepOpen(true); return; } RP3.on=true; RP3.until=Date.now()+6000; RP.back=null;
+  try{ rp2Go(); }catch(e){ console.error(e); } setTimeout(function(){ try{ setNavActive("report"); }catch(e){} _rp3Mount(); try{ window.scrollTo(0,0); }catch(e){} },30); }
+function rp3Type(t){ RP2.type=t; _rp3Go(); }
+function rp3Scope(s){ RP2.scope=s; var T=RP2_TYPES[s]||[]; if(!T.some(function(x){ return x[0]===RP2.type; })) RP2.type=""; rp3Refresh(); }
+function rp3Refresh(){ if(RP2.type&&_rp3Ready()) _rp3Go(); else reportPrepOpen(true); }
+function rpMSet(k,val,w){ RP.f[k]=Array.isArray(val)?val:(val?[val]:[]); rp3Refresh(); }
+/* ربط: كل عرض جديد أثناء جلسة التقارير يُضاف له الشريط الجانبي */
+(function(){ if(window._rp3Hooked) return; window._rp3Hooked=true;
+  var s0=window.show; if(typeof s0==="function"){ var s1=function(html){ var r=s0.apply(this,arguments); _rp3Mount(); return r; }; window.show=s1; try{ show=s1; }catch(e){} }
+  var n0=window.setNavActive; if(typeof n0==="function"){ var n1=function(k){ RP3.nav=k; return n0.apply(this,arguments); }; window.setNavActive=n1; try{ setNavActive=n1; }catch(e){} }
+  var p0=window.navPick; if(typeof p0==="function"){ var p1=function(el){ try{ if(!el||el.getAttribute("data-nav")!=="report") RP3.on=false; }catch(e){} return p0.apply(this,arguments); }; window.navPick=p1; try{ navPick=p1; }catch(e){} }
+  try{ window.reportPrepOpen=reportPrepOpen; window.rpMSet=rpMSet; }catch(e){} })();
+</script>
 </body>
 </html>
