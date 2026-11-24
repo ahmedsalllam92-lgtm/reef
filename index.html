@@ -22890,6 +22890,16 @@ body[data-theme="dark"] .fdx{--c-dis:#2E7D52;--c-und:#4F86A6;--c-rem:#B9CDBF;--c
 .fdx .fd-svl .r{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) 64px!important;padding:2px 6px!important}
 .fdx .fd-svl strong{display:flex;flex-direction:column;line-height:1.2}.fdx .fd-svl strong small{font-size:9.5px!important}
 .fdx .fd-sva .fd-lgd{flex-wrap:wrap;row-gap:2px}
+/* الدارك: أعمدة القطاعات بلون أشرطة اللوحة العامة (الذهبي) بدل اللبني */
+body[data-theme="dark"] .fdx{--h-a:#BFA068}
+body[data-theme="dark"] .fdx .fd-b.g,body[data-theme="dark"] .fdx .fd-svl i u{background:linear-gradient(0deg,#A68A55,#C9A96E)!important}
+body[data-theme="dark"] .fdx .fd-svl i u{background:linear-gradient(270deg,#C9A96E,#A68A55)!important}
+/* الخريطة بنفس ألوان اللوحة العامة */
+.fdx{--m0:#EEF2EF;--m1:#D9E7DC;--m2:#B5D1BC;--m3:#86B593;--m4:#5A9269;--m5:#3E7A52}
+body[data-theme="dark"] .fdx{--m0:#18292F;--m1:#1F3A2E;--m2:#27503D;--m3:#2F6A4E;--m4:#3A8661;--m5:#4C9E74}
+body[data-theme="dark"] .fdx .fd-mr{stroke:rgba(255,255,255,.18)!important}
+body[data-theme="dark"] .fdx .fd-ml text,body[data-theme="dark"] .fdx .fd-ml.t0 text{fill:#E4EFE8!important;stroke:rgba(0,0,0,.35)!important}
+.fdx .fd-ml.t4 text,.fdx .fd-ml.t5 text{fill:#fff!important;stroke:rgba(0,0,0,.25)!important}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
