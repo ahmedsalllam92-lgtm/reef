@@ -9380,6 +9380,8 @@ var CANCELLED_BASE=[{"src": "portfolio", "code": "RO-18", "sector": "الورد"
 function _cancelCodeSet(){ var s={}; try{ var L=(typeof CANCELLED_BASE!=="undefined"?CANCELLED_BASE:[]).concat((typeof PF!=="undefined"&&PF&&PF.cancelled)||[]);
   L.forEach(function(c){ if(c&&c.code&&c.src==="portfolio") s[c.code]=1; });
   if(typeof PF!=="undefined"&&PF&&PF.data) PF.data.forEach(function(p){ delete s[p.code]; }); }catch(e){} return s; }
+/* المشاريع قيد التسليم: خلية الكود ملوّنة #548235 في المحفظة ولم تنتهِ */
+function _hoN(L){ try{ return (L||[]).filter(function(x){ var p=x&&x.p?x.p:x; return String(p.handover||"")==="1"&&!isFinishedP(p); }).length; }catch(e){ return 0; } }
 function capPlannedData(arr){ /* نسبة الإنجاز في كل المنصة = عمود «الجاهزية للتسليم» (الفعلية الأصلية محفوظة في actual_raw) */
   try{ (arr||[]).forEach(function(p){ if(!p) return; if(p.actual_raw==null) p.actual_raw=p.actual; var rv=pct(p.ready); if(rv!=null&&!isNaN(rv)) p.actual=p.ready; }); }catch(e){}
   try{ var _cc=_cancelCodeSet(); if(Object.keys(_cc).length) arr=(arr||[]).filter(function(p){ return !(p&&_cc[p.code]); }); }catch(e){}
@@ -13440,7 +13442,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
     +(bar!=null?'<div class="hm-kb"><u style="width:'+(Math.max(0,Math.min(1,bar))*100).toFixed(1)+'%"></u>'+(mk!=null?'<s style="inset-inline-start:'+(Math.max(0,Math.min(1,mk))*100).toFixed(1)+'%"></s>':'')+'</div>':'<div class="hm-kb nob"></div>')+'</div>'; };
   var tvm=_dxMs(tv);
   var kpis='<div class="hm-kpis">'
-    +k("المشاريع النشطة",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
+    +k("المشاريع النشطة",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
     +k("قيمة المشاريع",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" ("+_dxPct(tv?td/tv:0)+")","","execDashboard()","mo",tv?td/tv:0)
     +k("متوسط الإنجاز",_dxPct(avgA),"","من المشاريع القائمة · المخطط "+_dxPct(avgP),"","execDashboard()","pg",avgA)
     +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['watch','late','stumb'])","al",D.length?off.length/D.length:0)
@@ -16009,7 +16011,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var kpis='<div class="dx-kpis">'
     +_dxKpi({ico:DX_ICO.proj,l:"إجمالي المشاريع",v:ar(total),u:"مشروع",
         viz:_dxStack(["ok","watch","late","stumb","ns"].map(function(k){ return {l:DX_CAT[k].l,v:cnt[k],c:DX_CAT[k].c,t:false}; }),7),
-        s:ar(cnt.done)+' مكتمل · '+ar(cnt.run)+' قيد التنفيذ · '+ar(cnt.stp)+' متوقف'})
+        s:ar(cnt.done)+' مكتمل · '+ar(_hoN(D))+' قيد التسليم · '+ar(cnt.run)+' قيد التنفيذ · '+ar(cnt.stp)+' متوقف'})
     +_dxKpi({ico:DX_ICO.money,l:"القيمة بعد التعديل",v:_dxMs(awarded)[0],u:_dxMs(awarded)[1],
         viz:_dxBar(budget?Math.min(1,awarded/budget):0,null,DX.gold),
         s:(chg?('<span class="'+(chg>0?"up":"dn")+'">'+(chg>0?"▲ +":"▼ −")+_dxM(Math.abs(chg))+'</span> تغيير على الأصل'):'بدون تغيير على القيم الأصلية')})
@@ -16102,7 +16104,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var sumBody='<ul class="dx-ins">'+ins.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul>';
   /* ---- سياق PowerPoint ---- */
   try{ DASH_CTX={ v:2, monthLbl:MONTHLBL, total:total, cnt:cnt, onTrack:onT, offTrack:offT,
-      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" ريال"},{l:"مشاريع تتطلب متابعة",n:ar(offT+cnt.watch),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
+      kpis5:[{l:"إجمالي المشاريع",n:ar(total),u:"مشروع",s:ar(cnt.done)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف"},{l:"القيمة التعاقدية بعد التعديل",n:_dxMs(awarded)[0],u:_dxMs(awarded)[1],s:(chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))):"دون تغيير")},{l:"متوسط الإنجاز الفعلي",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)+" ريال"},{l:"مشاريع تتطلب متابعة",n:ar(offT+cnt.watch),u:"مشروع",s:ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة",bad:offT>0}],
       kpis:[{l:"إجمالي المشاريع",n:ar(total),s:ar(cnt.done)+" مكتمل"},{l:"القيمة بعد التعديل",n:_dxM(awarded),s:"ريال"},
             {l:"متوسط الإنجاز",n:_dxPct(avgA),s:"المخطط "+_dxPct(avgP)+" · المشاريع القائمة"},{l:"نسبة الصرف",n:_dxPct(spend),s:"المنصرف "+_dxM(dis)},
             {l:"مشاريع متعثّرة",n:ar(cnt.stumb),s:ar(stopped.length)+" متوقف",warn:cnt.stumb>0},{l:"متجاوزة النهاية",n:ar(overdue.length),s:"مشروع",warn:overdue.length>0}],
@@ -16119,7 +16121,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   var fBox=function(cls,title,note,body){ return '<section class="dxf-p '+cls+'"><header><h3>'+esc(title)+'</h3>'+(note?'<span>'+note+'</span>':'')+'</header><div class="dxf-pb">'+body+'</div></section>'; };
   var awM=_dxMs(awarded);
   var kpiF='<div class="dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
-    +fK("إجمالي المشاريع",ar(total),"مشروع",ar(cnt.done)+" مكتمل · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف")
+    +fK("إجمالي المشاريع",ar(total),"مشروع",ar(cnt.done)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(cnt.run)+" قيد التنفيذ · "+ar(cnt.stp)+" متوقف")
     +fK("القيمة التعاقدية بعد التعديل",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة التعاقدية"):"دون تغيير عن القيمة التعاقدية")
     +fK("متوسط الإنجاز الفعلي",_dxPct(avgA),"","المخطط "+_dxPct(avgP)+" · الفارق "+(gap>=0?"+":"−")+ar(Math.abs(Math.round(gap*100)))+" نقطة · المشاريع القائمة",gap<-0.05?"warn":"")
     +fK("نسبة الصرف",_dxPct(spend),"","المنصرف "+_dxM(dis)+" "+RYL)
