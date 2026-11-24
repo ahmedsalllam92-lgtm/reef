@@ -13617,7 +13617,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
   var D=DATA, rows=D.map(analyzeProject); rows.forEach(function(r){ r.cat=_dxCatOf(r); r.t=_dxTime(r.p); });
   var tv=D.reduce(function(a,p){ return a+_dxBase(p); },0), td=D.reduce(function(a,p){ return a+_dxN(p.disbursed); },0);
   var _wh=_wProg(rows,false), avgA=_wh.a, avgP=_wh.p;
-  var off=rows.filter(function(r){ return r.cat==="stumb"||r.cat==="late"||r.cat==="watch"; }), stopped=rows.filter(function(r){ return r.stopped; }), overdue=rows.filter(function(r){ return r.overdue; });
+  var off=rows.filter(function(r){ return r.cat==="stumb"||r.cat==="late"; }), stopped=rows.filter(function(r){ return r.stopped; }), overdue=rows.filter(function(r){ return r.overdue; });
   var soon=rows.filter(function(r){ return !r.done&&r.t.ok&&r.t.left>=0&&r.t.left<=60; }).sort(function(a,b){ return a.t.left-b.t.left; });
   var varPend=D.filter(function(p){ return /إجراء|اجراء/.test(p.variations||"")||/إجراء|اجراء/.test(p.new_items||""); });
   var recent=D.filter(function(p){ return _dxDt(p.last_update); }).sort(function(a,b){ return _dxDt(b.last_update)-_dxDt(a.last_update); }).slice(0,7);
@@ -13631,7 +13631,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
     +k("عدد المشاريع",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
     +k("قيمة المشاريع",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" · "+_dxPct(_actV(D)?td/_actV(D):0)+" من المشاريع القائمة","","execDashboard()","mo",_actV(D)?td/_actV(D):0)
     +k("متوسط الإنجاز",_dxPct(avgA),"","من المشاريع القائمة · المخطط "+_dxPct(avgP),"","execDashboard()","pg",avgA)
-    +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['watch','late','stumb'])","al",D.length?off.length/D.length:0)
+    +k("تتطلب إجراء",ar(off.length),(off.length>=3&&off.length<=10)?"مشاريع":off.length===2?"مشروعان":"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['late','stumb'])","al",D.length?off.length/D.length:0)
     +'</div>';
   var rec='<section class="hm-card"><header><h3>آخر المشاريع تحديثاً</h3><button onclick="PR.sort=\'upd\';PR.dir=-1;projRegOpen(true)">عرض الكل ←</button></header>'
     +(recent.length?'<div class="hm-list">'+recent.map(function(p){ return '<div class="hm-li" role="button" onclick="projDash(\''+esc(p.code)+'\')"><div class="hm-lt"><b>'+esc(p.alias||p.name)+'</b><span>'+esc(p.code)+' · '+esc(p.sector||"")+' · '+fmtDateTxt(p.last_update)+'</span></div>'+_hbBadge(_hbStatus(p))+_hbProg(p)+'</div>'; }).join("")+'</div>'
@@ -15258,7 +15258,7 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
   var r6=WD.map(function(c,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(String(c.name||"").trim())+'<small>'+esc(c.sector||"—")+(c.code?' · '+esc(c.code):'')+'</small></td><td class="v">'+(toNum(c.value)?M(toNum(c.value)):'—')+'</td><td class="r">'+(c.date?esc(c.date):(c.duration?ar(c.duration)+' شهر':'—'))+'</td></tr>'; });
   var c5a=_m5Card("في إجراءات السحب",_arPrj(W.length)+" · محددة في ملف المحفظة",W.length?_m5Rows(["#","المشروع / المقاول","الإنجاز","قيمة العقد","المدة"],r5.slice(0,7),"sm"):'<div class="m5-empty">لا توجد مشاريع في إجراءات السحب ✓</div>');
   var c5b=_m5Card("تم سحبها",_arPrj(WD.length)+" · من سجل المشاريع الملغاة",WD.length?_m5Rows(["#","المشروع / القطاع","القيمة",WD.some(function(c){ return c.date; })?"تاريخ السحب":"مدة المشروع"],r6.slice(0,7),"sm"):'<div class="m5-empty">لا توجد مشاريع مسحوبة</div>');
-  pages.push(["المشاريع في إجراءات السحب والمسحوبة",k5+'<div class="m5-grid h">'+c5a+c5b+'</div>']);
+  pages.push(["في إجراءات السحب",k5+'<div class="m5-grid h">'+c5a+c5b+'</div>']);
   return pages.map(function(pg,i){ return _mgrShell(i+1,pg[0],"",pg[1],pages.length); }).join(""); }
 try{ window.addEventListener("beforeprint",function(){ if(document.querySelector("#wkReport.mgr")) document.body.classList.add("mgr-print"); }); window.addEventListener("afterprint",function(){ document.body.classList.remove("mgr-print"); }); }catch(e){}
 
