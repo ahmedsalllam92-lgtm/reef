@@ -21891,282 +21891,6 @@ function rpMSet(k,val,w){ RP.f[k]=Array.isArray(val)?val:(val?[val]:[]); rp3Refr
   var p0=window.navPick; if(typeof p0==="function"){ var p1=function(el){ try{ if(!el||el.getAttribute("data-nav")!=="report") RP3.on=false; }catch(e){} return p0.apply(this,arguments); }; window.navPick=p1; try{ navPick=p1; }catch(e){} }
   try{ window.reportPrepOpen=reportPrepOpen; window.rpMSet=rpMSet; }catch(e){} })();
 </script>
-<style id="finCss">/* اللوحة المالية — لوحة تنفيذية بشاشة واحدة (بنفس لغة لوحة الأداء العامة) */
-.fdx{--pg:#FFFFFF;--bg:#FFFFFF;--bd:#D2DCD5;--hl:#E6EBE7;--tx:#1B2A21;--mu:#6B7A71;--mu2:#86918A;--soft:#F5F7F4;--ttl:#1E5B3A;
-  --c-dis:#1E6B45;--c-und:#5B86A6;--c-rem:#A9CDB7;--c-awd:#EDB3AA;--c-tnd:#C9A54E;--c-left:#E4DFD3;--trk:#ECF0ED;
-  --band:linear-gradient(135deg,#0E3B27 0%,#145236 60%,#18603F 100%);--bl:#D8BC85;--bv:#FFFFFF;--bs:#A9C2B3;--bsep:rgba(255,255,255,.13);
-  --m0:#EEF1EE;--m1:#E1ECE5;--m2:#B5D3C0;--m3:#7DB394;--m4:#3F8A63;--m5:#174F34;
-  --th:#F2F5F2;--shadow:0 1px 2px rgba(8,45,26,.06),0 10px 24px -16px rgba(8,45,26,.28)}
-body[data-theme="dark"] .fdx{--pg:#1E2530;--bg:#283140;--bd:rgba(255,255,255,.08);--hl:rgba(255,255,255,.08);--tx:#F2F4F7;--mu:#AEB8C6;--mu2:#8E99A8;--soft:#303A4A;--ttl:#FFFFFF;
-  --c-dis:#5B9BD5;--c-und:#D9DEE5;--c-rem:#34527A;--c-yr:#5B9BD5;--c-awd:#E39C93;--c-tnd:#C9A97A;--c-left:#3B4658;--trk:rgba(255,255,255,.08);
-  --band:#283140;--bl:#C9D3E0;--bv:#FFFFFF;--bs:#9AA6B5;--bsep:rgba(255,255,255,.18);
-  --m0:#3B4658;--m1:#DCE6F2;--m2:#B4C7E7;--m3:#8EA9DB;--m4:#6A8BC6;--m5:#4A6BAF;--th:#303A4A;--shadow:none}
-body[data-theme="dark"] .fdx .fd-kpis{border:1px solid var(--bd)}
-body[data-theme="dark"] .fdx .fd-k .bar{background:rgba(255,255,255,.1)}
-body[data-theme="dark"] .fdx .fd-k .bar u,body[data-theme="dark"] .fdx .fd-k.g .bar u{background:#5B9BD5}body[data-theme="dark"] .fdx .fd-k.a .bar u{background:#D9DEE5}
-body[data-theme="dark"] .fdx .fd-k .l{text-decoration:underline;text-underline-offset:5px;text-decoration-color:rgba(255,255,255,.25)}
-body[data-theme="dark"] .fdx .fd-yl{stroke:#AEB8C6}body[data-theme="dark"] .fdx .fd-ydot{border-color:#C9A97A}body[data-theme="dark"] .fdx .fd-lgd i.ln{background:#AEB8C6}
-body[data-theme="dark"] .fdx .fd-ml text{fill:#1E2530;stroke:rgba(255,255,255,.55)}
-body[data-theme="dark"] .fdx .fd-ml.t0 text{fill:#F2F4F7;stroke:rgba(0,0,0,.3)}
-.fdx{padding:0;color:var(--tx)}
-.fdx-wrap{position:relative;width:100%;overflow:hidden;border-radius:10px;background:var(--pg);border:1px solid var(--bd)}
-.fdx-wrap.fs{border-radius:0;border:0}
-.fdx-wrap.fsfb{position:fixed;inset:0;z-index:100000;width:100vw!important;height:100vh!important}
-body.fd-noscroll{overflow:hidden}
-.fdx-wrap:fullscreen,.fdx-wrap:-webkit-full-screen{width:100vw!important;height:100vh!important;background:var(--pg)}
-.fdx-c{position:absolute;top:0;left:0;width:1600px;height:1045px;transform-origin:top left;box-sizing:border-box;padding:20px 26px 24px;display:grid;grid-template-rows:56px 124px 344px minmax(0,1fr);gap:16px;direction:rtl;font-weight:500}
-.fdx *{box-sizing:border-box}
-.fdx b,.fdx strong{font-variant-numeric:tabular-nums}
-/* الرأس — مثل لوحة الأداء العامة */
-.fdx .fd-head{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--hl);padding-bottom:12px}
-.fdx .fd-ttl{display:flex;align-items:baseline;gap:12px}
-.fdx .fd-ttl h1{margin:0;font-size:28px;font-weight:800;color:var(--ttl);line-height:1.2}
-.fdx .fd-mo{font-size:14px;color:var(--mu);font-weight:500}
-.fdx .fd-chip{font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--bd);background:var(--soft);color:var(--tx);border-radius:99px;padding:2px 12px;cursor:pointer;align-self:center}
-.fdx .fd-hl{display:flex;align-items:center;gap:8px}
-.fdx .fd-btn{width:38px;height:38px;display:inline-grid;place-items:center;border-radius:9px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer;padding:0}
-.fdx .fd-btn:hover{border-color:var(--c-dis);color:var(--c-dis)}
-.fdx .fd-btn svg{width:18px;height:18px}
-.fdx .fd-sp{width:1px;height:34px;background:var(--hl);margin:0 8px}
-.fdx .fd-logo{height:46px}
-body[data-theme="dark"] .fdx .fd-logo{filter:brightness(0) invert(1)}
-/* شريط المؤشرات */
-.fdx .fd-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-radius:10px;background:var(--band);overflow:hidden;box-shadow:var(--shadow)}
-.fdx .fd-k{position:relative;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:14px 22px;min-width:0}
-.fdx .fd-k+.fd-k::before{content:"";position:absolute;right:0;top:18%;bottom:18%;width:1px;background:var(--bsep)}
-.fdx .fd-k .l{font-size:14px;font-weight:600;color:var(--bl)}
-.fdx .fd-k .v{display:flex;align-items:baseline;gap:6px;color:var(--bv);white-space:nowrap}
-.fdx .fd-k .v b{font-size:30px;font-weight:800;line-height:1.1;letter-spacing:-.2px}
-.fdx .fd-k .v small{font-size:14px;font-weight:600;color:var(--bs)}
-.fdx .fd-k .cur{font-style:normal;font-size:20px;color:var(--bs);line-height:1}
-.fdx .fd-k .cur .ryl{height:.85em;margin:0}
-.fdx .fd-k .s{font-size:12px;color:var(--bs);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fdx .fd-k .bar{display:block;height:4px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden}
-.fdx .fd-k .bar u{display:block;height:100%;border-radius:9px;background:var(--bl)}
-.fdx .fd-k.g .bar u{background:#7FD3A4}.fdx .fd-k.a .bar u{background:#9EC3E8}
-/* اللوحات */
-.fdx .fd-ra{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(0,1.4fr) minmax(0,.95fr);gap:16px;min-height:0}
-.fdx .fd-rb{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(0,1fr);gap:16px;min-height:0}
-.fdx .fd-p{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:14px 18px 16px;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--shadow)}
-.fdx .fd-p > header{flex:none;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--hl)}
-.fdx .fd-p > header h3{margin:0;font-size:17px;font-weight:800;color:var(--tx)}
-.fdx .fd-p > header span{font-size:12.5px;font-weight:500;color:var(--mu2);white-space:nowrap}
-.fdx .fd-pb{flex:1;min-height:0;display:flex;flex-direction:column}
-.fdx .fd-empty{margin:auto;color:var(--mu);font-size:14px}
-.fdx .fd-lgd{flex:none;display:flex;align-items:center;gap:18px;font-size:13px;color:var(--mu);margin-bottom:6px}
-.fdx .fd-lgd span{display:inline-flex;align-items:center;gap:7px}
-.fdx .fd-lgd i{width:11px;height:11px;border-radius:3px;display:inline-block}
-.fdx .fd-lgd i.ln{width:18px;height:3px;border-radius:2px;background:var(--c-tnd)}
-/* الميزانية الرأسمالية: دونات نظيفة + جدول مفتاح */
-.fdx .fd-cb{flex-direction:row!important;align-items:center;gap:20px}
-.fdx .fd-dw{position:relative;flex:none;width:176px;height:176px}
-.fdx .fd-dw > svg{width:100%;height:100%}
-.fdx .fd-dtr{fill:none;stroke:var(--trk)}
-.fdx .fd-dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.fdx .fd-dc b{font-size:34px;font-weight:800;color:var(--tx);line-height:1}
-.fdx .fd-dc span{font-size:13px;color:var(--mu);margin-top:4px}
-.fdx .fd-lg{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.fdx .fd-lh,.fdx .fd-li{display:grid;grid-template-columns:12px minmax(0,1fr) auto 42px;gap:9px;align-items:center;padding:5px 0}
-.fdx .fd-lh{grid-template-columns:minmax(0,1fr) auto 42px;font-size:13.5px;font-weight:700;color:var(--tx);border-bottom:1px solid var(--hl);padding-bottom:7px;margin-bottom:2px}
-.fdx .fd-lh b{font-size:15px;font-weight:800}
-.fdx .fd-li{font-size:13.5px;color:var(--tx)}
-.fdx .fd-li + .fd-li{border-top:1px dashed var(--hl)}
-.fdx .fd-li i{width:12px;height:12px;border-radius:3px}
-.fdx .fd-li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fdx .fd-li b{font-size:14px;font-weight:700;direction:ltr;text-align:left}
-.fdx .fd-lh em,.fdx .fd-li em{font-style:normal;font-size:12.5px;color:var(--mu);text-align:left}
-.fdx .fd-lnote{margin-top:6px;font-size:11.5px;color:var(--mu2)}
-/* القطاعات */
-.fdx .fd-bars{flex:1;min-height:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;border-bottom:1px solid var(--hl);background:repeating-linear-gradient(0deg,transparent 0 calc(25% - 1px),var(--hl) calc(25% - 1px) 25%);background-position:bottom;background-size:100% calc(100% - 40px);background-repeat:no-repeat}
-.fdx .fd-bc{display:flex;flex-direction:column;min-width:0;min-height:0;cursor:pointer;border-radius:6px;transition:background .2s,opacity .2s}
-.fdx .fd-bc:hover,.fdx .fd-bc.on{background:var(--soft)}
-.fdx .fd-bc.dim{opacity:.38}
-.fdx .fd-bp{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;gap:5px;padding-top:24px}
-.fdx .fd-b{position:relative;width:26px;border-radius:4px 4px 0 0;min-height:2px}
-.fdx .fd-b.g{background:var(--c-dis)}.fdx .fd-b.a{background:var(--c-und)}
-.fdx .fd-b b{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:4px;font-size:12px;font-weight:700;color:var(--tx);white-space:nowrap}
-.fdx .fd-b.a b{color:var(--mu)}
-.fdx .fd-bc > span{flex:none;height:40px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12.5px;font-weight:600;color:var(--tx);line-height:1.25;padding:0 2px}
-/* السنوات */
-.fdx .fd-yc{flex:1;min-height:0;display:flex;flex-direction:column}
-.fdx .fd-yplot{position:relative;flex:1;min-height:0;margin-top:28px;border-bottom:1px solid var(--hl);direction:ltr}
-.fdx .fd-yplot > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.fdx .fd-ybar{position:absolute;bottom:0;width:34px;border-radius:4px 4px 0 0;background:var(--c-yr,var(--c-rem))}
-.fdx .fd-ybar em{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-style:normal;font-size:10.5px;color:var(--tx);opacity:.8}
-.fdx .fd-yl{fill:none;stroke:var(--c-tnd);stroke-width:2.4;stroke-linejoin:round}
-.fdx .fd-ydot{position:absolute;width:11px;height:11px;margin:0 0 -5.5px -5.5px;border-radius:50%;background:var(--bg);border:2.4px solid var(--c-tnd)}
-.fdx .fd-ylab{position:absolute;transform:translateX(-50%);font-size:12.5px;font-weight:700;color:var(--tx);white-space:nowrap}
-.fdx .fd-yaxis{flex:none;display:flex;direction:ltr}
-.fdx .fd-yaxis span{flex:1;text-align:center;padding-top:6px;display:flex;flex-direction:column;line-height:1.3}.fdx .fd-yaxis b{font-size:13px;font-weight:700;color:var(--tx)}.fdx .fd-yaxis em{font-style:normal;font-size:11.5px;color:var(--mu)}
-.fdx .fd-lgd .nt{margin-inline-start:auto;font-size:11.5px;color:var(--mu2)}
-/* الجدول */
-.fdx .fd-tw{flex:1;min-height:0;overflow:auto;border:1px solid var(--hl);border-radius:8px;scrollbar-width:thin}
-.fdx .fd-t{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13.5px}
-.fdx .fd-t col.c1{width:132px}.fdx .fd-t col.c3{width:108px}.fdx .fd-t col.c4{width:124px}.fdx .fd-t col.c5{width:150px}.fdx .fd-t col.c6{width:128px}
-.fdx .fd-t th{position:sticky;top:0;z-index:1;background:var(--th);color:var(--mu);font-size:12.5px;font-weight:700;padding:10px 12px;text-align:center;border-bottom:1px solid var(--bd);white-space:nowrap}
-.fdx .fd-t th:nth-child(1),.fdx .fd-t th:nth-child(2){text-align:right}
-.fdx .fd-t td{padding:9px 12px;border-bottom:1px solid var(--hl);color:var(--tx);vertical-align:middle}
-.fdx .fd-t tbody tr{cursor:pointer;transition:background .15s}.fdx .fd-t tbody tr:hover td{background:var(--soft)}
-.fdx .fd-t td.nm b{display:block;font-weight:600;line-height:1.45}
-.fdx .fd-t td.nm em{display:block;font-style:normal;font-size:11.5px;color:var(--mu2);direction:ltr;text-align:right}
-.fdx .fd-t td.c{text-align:center;white-space:nowrap}
-.fdx .fd-t td.v{text-align:center;font-weight:700;direction:ltr;white-space:nowrap}
-.fdx .fd-sc{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-weight:600}.fdx .fd-sc i{width:9px;height:9px;border-radius:3px}
-.fdx .fd-st{display:inline-block;font-size:12px;font-weight:700;padding:3px 11px;border-radius:99px;white-space:nowrap}
-.fdx .fd-st.ok{background:rgba(30,107,69,.12);color:#1E6B45}.fdx .fd-st.pr{background:rgba(91,134,166,.14);color:#3D6A8C}.fdx .fd-st.na{background:var(--soft);color:var(--mu)}
-body[data-theme="dark"] .fdx .fd-st.ok{background:rgba(79,181,131,.16);color:#8ED2AE}body[data-theme="dark"] .fdx .fd-st.pr{background:rgba(127,168,201,.16);color:#A9C8E4}
-/* الخريطة */
-.fdx .fd-map{position:relative;flex-direction:row!important;align-items:stretch;gap:10px}
-.fdx .fd-map > svg{flex:1;min-width:0;height:100%}
-.fdx .fd-mr{stroke:var(--bg);stroke-width:1.8}
-.fdx .fd-mr.m0{fill:var(--m0)}.fdx .fd-mr.m1{fill:var(--m1)}.fdx .fd-mr.m2{fill:var(--m2)}.fdx .fd-mr.m3{fill:var(--m3)}.fdx .fd-mr.m4{fill:var(--m4)}.fdx .fd-mr.m5{fill:var(--m5)}
-.fdx .fd-ml text{text-anchor:middle;fill:var(--tx);paint-order:stroke;stroke:var(--bg);stroke-width:3.5px;stroke-linejoin:round}
-.fdx .fd-ml .a{font-size:17px;font-weight:600}.fdx .fd-ml .v{font-size:20px;font-weight:800}
-.fdx .fd-ml.sm .a{font-size:12px}.fdx .fd-ml.sm .v{font-size:14px}
-.fdx .fd-ml.t4 text,.fdx .fd-ml.t5 text{fill:#fff;stroke:rgba(0,0,0,.22)}
-body[data-theme="dark"] .fdx .fd-ml.t4 text,body[data-theme="dark"] .fdx .fd-ml.t5 text{fill:#FFFFFF;stroke:rgba(0,0,0,.3)}
-.fdx .fd-mside{flex:none;width:118px;display:flex;flex-direction:column;justify-content:space-between;gap:12px}
-.fdx .fd-nat{background:var(--soft);border:1px solid var(--hl);border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;text-align:center}
-.fdx .fd-nat span{font-size:12px;color:var(--mu)}.fdx .fd-nat b{font-size:24px;font-weight:800;color:var(--tx);line-height:1.2}.fdx .fd-nat em{font-style:normal;font-size:11.5px;color:var(--mu2)}
-.fdx .fd-mlg{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--mu)}
-.fdx .fd-mlg i{width:34px;height:12px;border-radius:2px}
-.fdx .fd-mlg i.m1{background:var(--m1)}.fdx .fd-mlg i.m2{background:var(--m2)}.fdx .fd-mlg i.m3{background:var(--m3)}.fdx .fd-mlg i.m4{background:var(--m4)}.fdx .fd-mlg i.m5{background:var(--m5)}
-/* الموبايل: عرض متتابع */
-.fdx-wrap.flow{height:auto!important;overflow:visible;border:0;background:none}
-.fdx-wrap.flow .fdx-c{position:static;width:auto;height:auto;transform:none!important;display:flex;flex-direction:column;padding:0;gap:12px}
-.fdx-wrap.flow .fd-head{flex-wrap:wrap}
-.fdx-wrap.flow .fd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-.fdx-wrap.flow .fd-k .v b{font-size:19px}.fdx-wrap.flow .fd-k .s{white-space:normal}
-.fdx-wrap.flow .fd-k+.fd-k::before{display:none}
-.fdx-wrap.flow .fd-ra,.fdx-wrap.flow .fd-rb{grid-template-columns:minmax(0,1fr)}
-.fdx-wrap.flow .fd-cb{flex-direction:column!important}
-.fdx-wrap.flow .fd-bars{height:240px;overflow-x:auto;grid-auto-columns:minmax(66px,1fr)}
-.fdx-wrap.flow .fd-yc{height:240px}
-.fdx-wrap.flow .fd-tw{max-height:420px}.fdx-wrap.flow .fd-t{table-layout:auto}
-.fdx-wrap.flow .fd-map{height:320px}
-</style>
-<script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
-var FD={sec:""};
-var FD_W=1600, FD_H=1045;
-function _fdIsCap(p){ return /^449/.test(String(p.budget_item||"").trim()); }
-function _fdSecOrder(a,b){ var o=(typeof PF_SEC_ORDER!=="undefined")?PF_SEC_ORDER:[], x=o.indexOf(a), y=o.indexOf(b); return (x<0?99:x)-(y<0?99:y); }
-function _fdMn(x){ x=(+x||0)/1e6; return x.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function _fdNum(x){ return Math.round(+x||0).toLocaleString("en-US"); }
-function fdSet(k,v){ FD[k]=(FD[k]===v?"":v); finDashOpen(true); }
-/* تحجيم اللوحة: تملأ عرض الصفحة، وفي ملء الشاشة تملأ الشاشة كلها */
-function _fdFsOn(){ var w=document.querySelector(".fdx-wrap"); return !!(w&&((document.fullscreenElement||document.webkitFullscreenElement)===w||w.classList.contains("fsfb"))); }
-function fdFit(){ var w=document.querySelector(".fdx-wrap"); if(!w) return; var c=w.querySelector(".fdx-c"); if(!c) return;
-  var fs=_fdFsOn(), s, cw=FD_W;
-  if(fs){ w.style.height=""; w.classList.add("fs"); w.classList.remove("flow"); var VW=w.clientWidth||window.innerWidth, VH=w.clientHeight||window.innerHeight;
-    if(VW/VH>=FD_W/FD_H){ s=VH/FD_H; cw=Math.round(VW/s); } else { s=VW/FD_W; }
-    c.style.width=cw+"px"; c.style.transform="scale("+s.toFixed(4)+")"; c.style.left="0px"; c.style.top=Math.max(0,(VH-FD_H*s)/2)+"px"; return; }
-  w.classList.remove("fs"); c.style.width=""; c.style.left="0px"; c.style.top="0px";
-  var W=w.clientWidth||w.parentElement.clientWidth;
-  if(W<700){ w.classList.add("flow"); w.style.height=""; c.style.transform=""; return; }
-  w.classList.remove("flow"); s=W/FD_W; w.style.height=Math.round(FD_H*s)+"px"; c.style.transform="scale("+s.toFixed(4)+")"; }
-if(!window._fdBound){ window._fdBound=true; window.addEventListener("resize",function(){ clearTimeout(window._fdT); window._fdT=setTimeout(fdFit,60); });
-  ["fullscreenchange","webkitfullscreenchange"].forEach(function(ev){ document.addEventListener(ev,function(){ var w=document.querySelector(".fdx-wrap"); if(w&&!(document.fullscreenElement||document.webkitFullscreenElement)) w.classList.remove("fsfb"); setTimeout(fdFit,60); setTimeout(fdFit,350); }); });
-  document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ var w=document.querySelector(".fdx-wrap.fsfb"); if(w){ w.classList.remove("fsfb"); document.body.classList.remove("fd-noscroll"); fdFit(); } } }); }
-function fdFull(){ var w=document.querySelector(".fdx-wrap"); if(!w) return;
-  if(_fdFsOn()){ if(document.fullscreenElement||document.webkitFullscreenElement){ try{ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }catch(e){} } w.classList.remove("fsfb"); document.body.classList.remove("fd-noscroll"); setTimeout(fdFit,60); return; }
-  var req=w.requestFullscreen||w.webkitRequestFullscreen, ok=false;
-  if(req){ try{ var pr=req.call(w); ok=true; if(pr&&pr.catch) pr.catch(function(){ w.classList.add("fsfb"); document.body.classList.add("fd-noscroll"); fdFit(); }); }catch(e){ ok=false; } }
-  if(!ok){ w.classList.add("fsfb"); document.body.classList.add("fd-noscroll"); }
-  try{ if(screen.orientation&&screen.orientation.lock) screen.orientation.lock("landscape").catch(function(){}); }catch(e){}
-  [60,300,700].forEach(function(ms){ setTimeout(fdFit,ms); }); }
-function fdPrint(){ var w=document.querySelector(".fdx-wrap"); if(!w) return;
-  var cl=w.cloneNode(true); cl.className="fdx-wrap"; cl.removeAttribute("style"); var c=cl.querySelector(".fdx-c"); if(c) c.removeAttribute("style");
-  var ff=""; try{ [].forEach.call(document.styleSheets,function(sh){ try{ [].forEach.call(sh.cssRules||[],function(r){ if(r.type===5) ff+=r.cssText+"\n"; }); }catch(e){} }); }catch(e){}
-  var css=(document.getElementById("finCss")||{}).textContent||"";
-  var bf=getComputedStyle(document.body).fontFamily;
-  var html='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>'+esc(PRINT_NAME||"اللوحة المالية")+'</title><style>'+ff+css
-    +'@page{size:A4 landscape;margin:0}html,body{margin:0;padding:0;background:#fff}body{font-family:'+bf+';-webkit-print-color-adjust:exact;print-color-adjust:exact}'
-    +'.ryl{height:.9em;width:auto;vertical-align:-.08em;margin-inline-start:4px;font-family:SaudiRiyal,inherit;font-style:normal}'
-    +'.pg{width:297mm;height:209mm;overflow:hidden;display:flex;align-items:center;justify-content:center}'
-    +'.fdx-wrap{position:relative;width:1070px;height:699px;overflow:hidden;border-radius:0}.fdx-c{position:absolute;left:0;top:0;transform:scale(.66875)}.fd-btn{display:none!important}.fd-tw{overflow:hidden!important}'
-    +'</style></head><body><div class="pg"><div class="dash dx fdx">'+cl.outerHTML+'</div></div><script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){ window.print(); },250); });<\/script></body></html>';
-  var win=window.open("","_blank"); if(!win){ alert("اسمح بالنوافذ المنبثقة للطباعة"); return; }
-  win.document.open(); win.document.write(html); win.document.close(); }
-function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _initDashGroup(); }catch(e){}
-  if(!keep){ FD.sec=""; }
-  RERENDER=function(){ finDashOpen(true); }; ANSWER_TITLE=""; IS_REPORT=false; PRINT_NAME="لوحة الأداء المالية — "+MONTHLBL; _dxSetHash("finance");
-  var ALL=(DATA||[]), D=ALL.filter(function(p){ return !FD.sec||String(p.sector||"").trim()===FD.sec; });
-  var BUD=(typeof PF!=="undefined"&&PF&&PF.capBudget)||1500000000;
-  var st=function(p){ try{ return _geoNowSt(p); }catch(e){ return "run"; } };
-  var ACT=D.filter(function(p){ var s=st(p); return s==="run"||s==="done"; });
-  var contracts=ACT.reduce(function(a,p){ return a+_dxBase(p); },0);
-  var dis=D.reduce(function(a,p){ return a+_dxN(p.disbursed); },0), und=D.reduce(function(a,p){ return a+_dxN(p.under_proc); },0);
-  var cN=D.reduce(function(a,p){ return a+_dxN(p.claims_count); },0), cP=D.filter(function(p){ return _dxN(p.claims_count)>0; }).length;
-  var left=Math.max(0,BUD-dis), R='<i class="cur">'+RYL+'</i>';
-  var I=function(d){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg>'; };
-  var pc=function(v,b){ return _dxPct(b?v/b:0); };
-  /* ---- شريط المؤشرات المالية (6 مؤشرات بالقيمة الكاملة) ---- */
-  var k=function(l,v,s,cls,bar){ return '<div class="fd-k'+(cls?' '+cls:'')+'"><span class="l">'+l+'</span><span class="v">'+v+'</span>'+(bar!=null?'<i class="bar"><u style="width:'+Math.min(100,bar*100).toFixed(1)+'%"></u></i>':'')+'<span class="s">'+s+'</span></div>'; };
-  var kpis='<section class="fd-kpis">'
-    +k("إجمالي الميزانية",'<b>'+_fdNum(BUD)+'</b>'+R,"الميزانية الرأسمالية للبرنامج")
-    +k("إجمالي العقود",'<b>'+_fdNum(contracts)+'</b>'+R,pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length),null,BUD?contracts/BUD:0)
-    +k("المبالغ المنصرفة",'<b>'+_fdNum(dis)+'</b>'+R,pc(dis,contracts)+" من قيمة المشاريع القائمة","g",contracts?dis/contracts:0)
-    +k("مبالغ تحت الإجراء",'<b>'+_fdNum(und)+'</b>'+R,pc(und,contracts)+" من قيمة المشاريع القائمة","a",contracts?und/contracts:0)
-    +k("الميزانية المتبقية",'<b>'+_fdNum(left)+'</b>'+R,pc(left,BUD)+" من الميزانية بعد المنصرف",null,BUD?left/BUD:0)
-    +k("عدد المستخلصات",'<b>'+ar(cN)+'</b><small>مستخلص</small>',"لـ "+_arPrj(cP))+'</section>';
-  /* ---- إحصائيات الميزانية الرأسمالية ---- */
-  var g={run:0,done:0,tender:0,award:0}, cd=0, cu=0, capN=0, capV=0;
-  D.forEach(function(p){ var s=st(p), v=_dxBase(p), cap=_fdIsCap(p); if(cap){ capN++; capV+=v; } if((s==="done"||s==="run")&&cap){ cd+=_dxN(p.disbursed); cu+=_dxN(p.under_proc); } g[s]=(g[s]||0)+v; });
-  var act=g.run+g.done, rem=Math.max(0,act-cd-cu), all=act+g.tender+g.award, filt=!!FD.sec, base=filt?(all||1):BUD, bleft=Math.max(0,BUD-all);
-  var segs=[{l:"المنصرف",v:cd,c:"var(--c-dis)"},{l:"تحت الإجراء",v:cu,c:"var(--c-und)"},{l:"المتبقي من العقود القائمة",v:rem,c:"var(--c-rem)"},{l:"في إجراءات الترسية",v:g.award,c:"var(--c-awd)"},{l:"في إجراءات الطرح",v:g.tender,c:"var(--c-tnd)"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:bleft,c:"var(--c-left)"}]);
-  var tot=segs.reduce(function(a,x){ return a+x.v; },0)||1, r=78, sw=24, Cc=2*Math.PI*r, off=0;
-  var donut='<div class="fd-dw"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="'+r+'" class="fd-dtr" style="stroke-width:'+sw+'"/>'+segs.map(function(x){ if(!(x.v>0)) return ""; var L=Cc*x.v/tot, gp=Math.min(2,L*0.3), o='<circle cx="100" cy="100" r="'+r+'" fill="none" stroke="'+x.c+'" stroke-width="'+sw+'" stroke-dasharray="'+Math.max(0,L-gp).toFixed(2)+' '+Cc.toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 100 100)"><title>'+esc(x.l)+': '+_fdNum(x.v)+' ريال</title></circle>'; off+=L; return o; }).join("")
-    +'</svg><div class="fd-dc"><b>'+_dxMs(base)[0]+'</b><span>'+(_dxMs(base)[1].indexOf("مليار")>-1?"مليار ريال":"مليون ريال")+'</span></div></div>';
-  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+'</span></header><div class="fd-pb fd-cb">'+donut
-    +'<div class="fd-lg"><div class="fd-lh"><span>المشاريع القائمة والمنتهية</span><b>'+_fdNum(act)+'</b><em>'+pc(act,base)+'</em></div>'
-    +segs.map(function(x){ return '<div class="fd-li"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><b>'+_fdNum(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; }).join("")
-    +'<div class="fd-lnote">المبالغ بالريال السعودي · النسب من '+(filt?'إجمالي مشاريع التصفية':'إجمالي الميزانية')+'</div></div></div></section>';
-  /* ---- إحصائيات القطاعات ---- */
-  var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
-  var SK=Object.keys(S).sort(_fdSecOrder), smx=Math.max.apply(null,SK.map(function(x){ return Math.max(S[x].d,S[x].u); }).concat([1]));
-  var legend='<div class="fd-lgd"><span><i style="background:var(--c-dis)"></i>المنصرف</span><span><i style="background:var(--c-und)"></i>تحت الإجراء</span></div>';
-  var secs='<section class="fd-p fd-sec"><header><h3>إحصائيات القطاعات</h3><span>مليون ريال · اضغط قطاعاً للتصفية</span></header><div class="fd-pb">'+legend+'<div class="fd-bars">'+SK.map(function(x){ var on=FD.sec===x, dim=FD.sec&&!on;
-      return '<div class="fd-bc'+(on?' on':'')+(dim?' dim':'')+'" role="button" title="'+esc(x)+' — المنصرف '+_fdNum(S[x].d)+' · تحت الإجراء '+_fdNum(S[x].u)+' ريال" onclick="fdSet(\'sec\',\''+esc(x).replace(/'/g,"\\'")+'\')"><div class="fd-bp"><div class="fd-b g" style="height:'+(S[x].d/smx*100).toFixed(1)+'%"><b>'+_fdMn(S[x].d)+'</b></div><div class="fd-b a" style="height:'+(S[x].u/smx*100).toFixed(1)+'%"><b>'+_fdMn(S[x].u)+'</b></div></div><span>'+esc(x)+'</span></div>'; }).join("")+'</div></div></section>';
-  /* ---- المستخلصات المنفذة حسب السنة ---- */
-  var PR=[]; try{ PR=_payLoad().rows||[]; }catch(e){}
-  if(FD.sec) PR=PR.filter(function(o){ return String(o.s||"").trim()===FD.sec; });
-  var Y={}; PR.forEach(function(o){ var y=/^(\d{4})/.test(o.m||"")?o.m.slice(0,4):null; if(!y) return; Y[y]=Y[y]||{v:0,n:0}; Y[y].v+=_payN(o.v); Y[y].n++; });
-  var YK=Object.keys(Y).sort(), cum=0, YC=YK.map(function(y){ cum+=Y[y].v; return {y:y,v:Y[y].v,n:Y[y].n,c:cum}; });
-  var yrs;
-  if(!YC.length) yrs='<div class="fd-empty">لا توجد مستخلصات في السجل.</div>';
-  else { var cmx=Math.max(1,YC[YC.length-1].c)*1.1, n=YC.length, XP=function(i){ return ((i+0.5)/n*100).toFixed(2); }, YP=function(v){ return (v/cmx*100).toFixed(2); };
-    yrs='<div class="fd-yc"><div class="fd-yplot">'
-      +YC.map(function(d,i){ return '<div class="fd-ybar" style="left:calc('+XP(i)+'% - 17px);height:'+YP(d.v)+'%" title="'+d.y+': '+_fdNum(d.v)+' ريال · '+ar(d.n)+' مستخلص"></div>'; }).join("")
-      +'<svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline class="fd-yl" vector-effect="non-scaling-stroke" points="'+YC.map(function(d,i){ return XP(i)+','+(100-YP(d.c)); }).join(" ")+'"/></svg>'
-      +YC.map(function(d,i){ return '<i class="fd-ydot" style="left:'+XP(i)+'%;bottom:'+YP(d.c)+'%"></i><b class="fd-ylab" style="left:'+XP(i)+'%;bottom:calc('+YP(d.c)+'% + 9px)">'+_fdMn(d.c)+'</b>'; }).join("")
-      +'</div><div class="fd-yaxis">'+YC.map(function(d){ return '<span><b>'+d.y+'</b><em>'+_fdMn(d.v)+'</em></span>'; }).join("")+'</div></div>'; }
-  var yr='<section class="fd-p fd-yr"><header><h3>المستخلصات المنفذة</h3><span>مليون ريال · سجل المستخلصات</span></header><div class="fd-pb"><div class="fd-lgd"><span><i style="background:var(--c-yr,var(--c-rem))"></i>قيمة السنة</span><span><i class="ln"></i>التراكمي</span><span class="nt">الرقم أسفل السنة = قيمة السنة</span></div>'+yrs+'</div></section>';
-  /* ---- التوزيع الجغرافي ---- */
-  var RV={}, nat=0; KSA_REG.r.forEach(function(rr){ RV[rr.ar]=0; });
-  D.forEach(function(p){ var v=_dxN(p.disbursed); if(!v) return; var hit=KSA_REG.r.filter(function(rr){ return _regionHas(p.region,rr.ar); }); if(hit.length) hit.forEach(function(rr){ RV[rr.ar]+=v/hit.length; }); else nat+=v; });
-  var vals=KSA_REG.r.map(function(rr){ return RV[rr.ar]; }).filter(function(v){ return v>0; }).sort(function(a,b){ return a-b; });
-  var cls=function(v){ if(!(v>0)) return 0; var k4=0; while(k4<vals.length&&vals[k4]<v) k4++; return Math.min(5,1+Math.floor(k4/Math.max(1,vals.length)*5)); };
-  var paths="", labs=""; KSA_REG.r.forEach(function(rr){ var v=RV[rr.ar], c=cls(v), sm=/الباحة|جازان/.test(rr.ar);
-    paths+='<path class="fd-mr m'+c+'" d="'+rr.d+'"><title>'+esc(rr.ar)+': '+_fdNum(v)+' ريال</title></path>';
-    labs+='<g class="fd-ml t'+c+(sm?' sm':'')+'"><text x="'+rr.x+'" y="'+(rr.y-4)+'" class="a">'+esc(rr.ar)+'</text>'+(v?'<text x="'+rr.x+'" y="'+(rr.y+(sm?13:20))+'" class="v">'+(+(v/1e6).toFixed(1)).toLocaleString("en-US")+'</text>':'')+'</g>'; });
-  var geo='<section class="fd-p fd-geo"><header><h3>التوزيع الجغرافي للمنصرف</h3><span>مليون ريال</span></header><div class="fd-pb fd-map"><svg viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr">'+paths+labs+'</svg>'
-    +'<div class="fd-mside">'+(nat?'<div class="fd-nat"><span>على مستوى المملكة</span><b>'+(+(nat/1e6).toFixed(1)).toLocaleString("en-US")+'</b><em>مليون ريال</em></div>':'')
-    +'<div class="fd-mlg"><span>الأعلى</span><i class="m5"></i><i class="m4"></i><i class="m3"></i><i class="m2"></i><i class="m1"></i><span>الأقل</span></div></div></div></section>';
-  /* ---- سجل المستخلصات ---- */
-  var TR=PR.slice().sort(function(a,b){ var x=String(b.m||""), y=String(a.m||""); if(x!==y) return x<y?-1:1; return _payN(b.no)-_payN(a.no); });
-  var stc=function(s){ s=String(s||""); return /منصرف/.test(s)?"ok":(/إجراء/.test(s)?"pr":"na"); };
-  var tbl='<section class="fd-p fd-tb"><header><h3>سجل المستخلصات</h3><span>'+ar(TR.length)+' مستخلص · الأحدث أولاً · القيم بالريال</span></header><div class="fd-pb">'+(TR.length?'<div class="fd-tw"><table class="fd-t"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup><thead><tr><th>القطاع</th><th>المشروع</th><th>رقم المستخلص</th><th>الشهر</th><th>قيمة المستخلص</th><th>الحالة</th></tr></thead><tbody>'
-    +TR.map(function(o){ var sc=(window.SEC_PASTEL||{})[String(o.s||"").trim()]||"#DDE3DE"; return '<tr role="button" onclick="pyOpen(\''+esc(o.c)+'\')"><td><span class="fd-sc"><i style="background:'+sc+'"></i>'+esc(o.s||"—")+'</span></td><td class="nm" title="'+esc(o.n||"")+'"><b>'+esc(o.n||o.c)+'</b><em>'+esc(o.c)+'</em></td><td class="c">'+ar(_payN(o.no)||0)+'</td><td class="c">'+_payMo(o.m)+'</td><td class="v">'+_fdNum(o.v)+'</td><td class="c"><span class="fd-st '+stc(o.st)+'">'+esc(o.st||"—")+'</span></td></tr>'; }).join("")
-    +'</tbody></table></div>':'<div class="fd-empty">لا توجد مستخلصات.</div>')+'</div></section>';
-  var bI=function(t,fn,d){ return '<button class="fd-btn noprint" onclick="'+fn+'" title="'+t+'" aria-label="'+t+'">'+I(d)+'</button>'; };
-  var head='<header class="fd-head"><div class="fd-ttl"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div>'
-    +'<div class="fd-hl">'+bI("ملء الشاشة","fdFull()",'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>')+bI("طباعة","fdPrint()",'<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/>')+'<span class="fd-sp"></span><img class="fd-logo" src="'+LOGO+'" alt="ريف"></div></header>';
-  _dxShow('<div class="dash dx fdx"><div class="fdx-wrap"><div class="fdx-c">'+head+kpis
-    +'<div class="fd-ra">'+cap+secs+yr+'</div>'
-    +'<div class="fd-rb">'+tbl+geo+'</div>'
-    +'</div></div></div>');
-  [0,60,250].forEach(function(ms){ setTimeout(fdFit,ms); }); }
-</script>
 <style id="lv2Css">/* ===== شاشة العرض المباشر «غرفة المتابعة الحية» ===== */
 body.v2-on{overflow:hidden}
 .v2{--bgA:#1B343D;--bgB:#0F1D24;--bgC:#081116;--tx:#F1F5F3;--hi:#FFF6DE;--mu:#A3B5AC;--mu2:#7F938A;--gd:#D6B25E;--gd2:#F0D894;--gr:#5CC08D;--gr2:#9AE3C0;--pn:rgba(255,255,255,.035);--pn2:rgba(255,255,255,.06);--pb:rgba(255,255,255,.08);--gdA:rgba(214,178,94,.14);--gdB:rgba(214,178,94,.32);--grA:rgba(92,192,141,.08);--grB:rgba(92,192,141,.35);--dk:#231805;--trk:rgba(255,255,255,.08);--glow:1;--rg:46,170,122;--topoA:rgba(154,227,192,.25);--topoB:rgba(240,216,148,.35);--shade:rgba(8,17,22,.7)}
@@ -22630,6 +22354,283 @@ function liveWallOpen(){ liveWallClose(true); try{ setNavActive("live"); }catch(
   try{ if(typeof AUTO_REFRESH!=="undefined"&&AUTO_REFRESH===false) AUTO_REFRESH=true; }catch(e){}
   setTimeout(function(){ try{ _lwSpotList(LV2.D.R); }catch(e){} },1200); }
 try{ window.liveWallOpen=liveWallOpen; window.liveWallClose=liveWallClose; window.liveWallPause=liveWallPause; window._lwNext=_lwNext; }catch(e){}
+</script>
+<style id="finCss">/* اللوحة المالية — لوحة تنفيذية بشاشة واحدة (بنفس لغة لوحة الأداء العامة) */
+.fdx{--pg:#FFFFFF;--bg:#FFFFFF;--bd:#D2DCD5;--hl:#E6EBE7;--tx:#1B2A21;--mu:#6B7A71;--mu2:#86918A;--soft:#F5F7F4;--ttl:#1E5B3A;
+  --c-dis:#1E6B45;--c-und:#5B86A6;--c-rem:#A9CDB7;--c-awd:#EDB3AA;--c-tnd:#C9A54E;--c-left:#E4DFD3;--trk:#ECF0ED;
+  --band:linear-gradient(135deg,#0E3B27 0%,#145236 60%,#18603F 100%);--bl:#D8BC85;--bv:#FFFFFF;--bs:#A9C2B3;--bsep:rgba(255,255,255,.13);
+  --m0:#EEF1EE;--m1:#E1ECE5;--m2:#B5D3C0;--m3:#7DB394;--m4:#3F8A63;--m5:#174F34;
+  --th:#F2F5F2;--shadow:0 1px 2px rgba(8,45,26,.06),0 10px 24px -16px rgba(8,45,26,.28)}
+body[data-theme="dark"] .fdx{--pg:#1E2530;--bg:#283140;--bd:rgba(255,255,255,.08);--hl:rgba(255,255,255,.08);--tx:#F2F4F7;--mu:#AEB8C6;--mu2:#8E99A8;--soft:#303A4A;--ttl:#FFFFFF;
+  --c-dis:#5B9BD5;--c-und:#D9DEE5;--c-rem:#34527A;--c-yr:#5B9BD5;--c-awd:#E39C93;--c-tnd:#C9A97A;--c-left:#3B4658;--trk:rgba(255,255,255,.08);
+  --band:#283140;--bl:#C9D3E0;--bv:#FFFFFF;--bs:#9AA6B5;--bsep:rgba(255,255,255,.18);
+  --m0:#3B4658;--m1:#DCE6F2;--m2:#B4C7E7;--m3:#8EA9DB;--m4:#6A8BC6;--m5:#4A6BAF;--th:#303A4A;--shadow:none}
+body[data-theme="dark"] .fdx .fd-kpis{border:1px solid var(--bd)}
+body[data-theme="dark"] .fdx .fd-k .bar{background:rgba(255,255,255,.1)}
+body[data-theme="dark"] .fdx .fd-k .bar u,body[data-theme="dark"] .fdx .fd-k.g .bar u{background:#5B9BD5}body[data-theme="dark"] .fdx .fd-k.a .bar u{background:#D9DEE5}
+body[data-theme="dark"] .fdx .fd-k .l{text-decoration:underline;text-underline-offset:5px;text-decoration-color:rgba(255,255,255,.25)}
+body[data-theme="dark"] .fdx .fd-yl{stroke:#AEB8C6}body[data-theme="dark"] .fdx .fd-ydot{border-color:#C9A97A}body[data-theme="dark"] .fdx .fd-lgd i.ln{background:#AEB8C6}
+body[data-theme="dark"] .fdx .fd-ml text{fill:#1E2530;stroke:rgba(255,255,255,.55)}
+body[data-theme="dark"] .fdx .fd-ml.t0 text{fill:#F2F4F7;stroke:rgba(0,0,0,.3)}
+.fdx{padding:0;color:var(--tx)}
+.fdx-wrap{position:relative;width:100%;overflow:hidden;border-radius:10px;background:var(--pg);border:1px solid var(--bd)}
+.fdx-wrap.fs{border-radius:0;border:0}
+.fdx-wrap.fsfb{position:fixed;inset:0;z-index:100000;width:100vw!important;height:100vh!important}
+body.fd-noscroll{overflow:hidden}
+.fdx-wrap:fullscreen,.fdx-wrap:-webkit-full-screen{width:100vw!important;height:100vh!important;background:var(--pg)}
+.fdx-c{position:absolute;top:0;left:0;width:1600px;height:1045px;transform-origin:top left;box-sizing:border-box;padding:20px 26px 24px;display:grid;grid-template-rows:56px 124px 344px minmax(0,1fr);gap:16px;direction:rtl;font-weight:500}
+.fdx *{box-sizing:border-box}
+.fdx b,.fdx strong{font-variant-numeric:tabular-nums}
+/* الرأس — مثل لوحة الأداء العامة */
+.fdx .fd-head{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--hl);padding-bottom:12px}
+.fdx .fd-ttl{display:flex;align-items:baseline;gap:12px}
+.fdx .fd-ttl h1{margin:0;font-size:28px;font-weight:800;color:var(--ttl);line-height:1.2}
+.fdx .fd-mo{font-size:14px;color:var(--mu);font-weight:500}
+.fdx .fd-chip{font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--bd);background:var(--soft);color:var(--tx);border-radius:99px;padding:2px 12px;cursor:pointer;align-self:center}
+.fdx .fd-hl{display:flex;align-items:center;gap:8px}
+.fdx .fd-btn{width:38px;height:38px;display:inline-grid;place-items:center;border-radius:9px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer;padding:0}
+.fdx .fd-btn:hover{border-color:var(--c-dis);color:var(--c-dis)}
+.fdx .fd-btn svg{width:18px;height:18px}
+.fdx .fd-sp{width:1px;height:34px;background:var(--hl);margin:0 8px}
+.fdx .fd-logo{height:46px}
+body[data-theme="dark"] .fdx .fd-logo{filter:brightness(0) invert(1)}
+/* شريط المؤشرات */
+.fdx .fd-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-radius:10px;background:var(--band);overflow:hidden;box-shadow:var(--shadow)}
+.fdx .fd-k{position:relative;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:14px 22px;min-width:0}
+.fdx .fd-k+.fd-k::before{content:"";position:absolute;right:0;top:18%;bottom:18%;width:1px;background:var(--bsep)}
+.fdx .fd-k .l{font-size:14px;font-weight:600;color:var(--bl)}
+.fdx .fd-k .v{display:flex;align-items:baseline;gap:6px;color:var(--bv);white-space:nowrap}
+.fdx .fd-k .v b{font-size:30px;font-weight:800;line-height:1.1;letter-spacing:-.2px}
+.fdx .fd-k .v small{font-size:14px;font-weight:600;color:var(--bs)}
+.fdx .fd-k .cur{font-style:normal;font-size:20px;color:var(--bs);line-height:1}
+.fdx .fd-k .cur .ryl{height:.85em;margin:0}
+.fdx .fd-k .s{font-size:12px;color:var(--bs);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fdx .fd-k .bar{display:block;height:4px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden}
+.fdx .fd-k .bar u{display:block;height:100%;border-radius:9px;background:var(--bl)}
+.fdx .fd-k.g .bar u{background:#7FD3A4}.fdx .fd-k.a .bar u{background:#9EC3E8}
+/* اللوحات */
+.fdx .fd-ra{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(0,1.4fr) minmax(0,.95fr);gap:16px;min-height:0}
+.fdx .fd-rb{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(0,1fr);gap:16px;min-height:0}
+.fdx .fd-p{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:14px 18px 16px;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--shadow)}
+.fdx .fd-p > header{flex:none;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--hl)}
+.fdx .fd-p > header h3{margin:0;font-size:17px;font-weight:800;color:var(--tx)}
+.fdx .fd-p > header span{font-size:12.5px;font-weight:500;color:var(--mu2);white-space:nowrap}
+.fdx .fd-pb{flex:1;min-height:0;display:flex;flex-direction:column}
+.fdx .fd-empty{margin:auto;color:var(--mu);font-size:14px}
+.fdx .fd-lgd{flex:none;display:flex;align-items:center;gap:18px;font-size:13px;color:var(--mu);margin-bottom:6px}
+.fdx .fd-lgd span{display:inline-flex;align-items:center;gap:7px}
+.fdx .fd-lgd i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.fdx .fd-lgd i.ln{width:18px;height:3px;border-radius:2px;background:var(--c-tnd)}
+/* الميزانية الرأسمالية: دونات نظيفة + جدول مفتاح */
+.fdx .fd-cb{flex-direction:row!important;align-items:center;gap:20px}
+.fdx .fd-dw{position:relative;flex:none;width:176px;height:176px}
+.fdx .fd-dw > svg{width:100%;height:100%}
+.fdx .fd-dtr{fill:none;stroke:var(--trk)}
+.fdx .fd-dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.fdx .fd-dc b{font-size:34px;font-weight:800;color:var(--tx);line-height:1}
+.fdx .fd-dc span{font-size:13px;color:var(--mu);margin-top:4px}
+.fdx .fd-lg{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.fdx .fd-lh,.fdx .fd-li{display:grid;grid-template-columns:12px minmax(0,1fr) auto 42px;gap:9px;align-items:center;padding:5px 0}
+.fdx .fd-lh{grid-template-columns:minmax(0,1fr) auto 42px;font-size:13.5px;font-weight:700;color:var(--tx);border-bottom:1px solid var(--hl);padding-bottom:7px;margin-bottom:2px}
+.fdx .fd-lh b{font-size:15px;font-weight:800}
+.fdx .fd-li{font-size:13.5px;color:var(--tx)}
+.fdx .fd-li + .fd-li{border-top:1px dashed var(--hl)}
+.fdx .fd-li i{width:12px;height:12px;border-radius:3px}
+.fdx .fd-li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fdx .fd-li b{font-size:14px;font-weight:700;direction:ltr;text-align:left}
+.fdx .fd-lh em,.fdx .fd-li em{font-style:normal;font-size:12.5px;color:var(--mu);text-align:left}
+.fdx .fd-lnote{margin-top:6px;font-size:11.5px;color:var(--mu2)}
+/* القطاعات */
+.fdx .fd-bars{flex:1;min-height:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;border-bottom:1px solid var(--hl);background:repeating-linear-gradient(0deg,transparent 0 calc(25% - 1px),var(--hl) calc(25% - 1px) 25%);background-position:bottom;background-size:100% calc(100% - 40px);background-repeat:no-repeat}
+.fdx .fd-bc{display:flex;flex-direction:column;min-width:0;min-height:0;cursor:pointer;border-radius:6px;transition:background .2s,opacity .2s}
+.fdx .fd-bc:hover,.fdx .fd-bc.on{background:var(--soft)}
+.fdx .fd-bc.dim{opacity:.38}
+.fdx .fd-bp{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;gap:5px;padding-top:24px}
+.fdx .fd-b{position:relative;width:26px;border-radius:4px 4px 0 0;min-height:2px}
+.fdx .fd-b.g{background:var(--c-dis)}.fdx .fd-b.a{background:var(--c-und)}
+.fdx .fd-b b{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:4px;font-size:12px;font-weight:700;color:var(--tx);white-space:nowrap}
+.fdx .fd-b.a b{color:var(--mu)}
+.fdx .fd-bc > span{flex:none;height:40px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12.5px;font-weight:600;color:var(--tx);line-height:1.25;padding:0 2px}
+/* السنوات */
+.fdx .fd-yc{flex:1;min-height:0;display:flex;flex-direction:column}
+.fdx .fd-yplot{position:relative;flex:1;min-height:0;margin-top:28px;border-bottom:1px solid var(--hl);direction:ltr}
+.fdx .fd-yplot > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fdx .fd-ybar{position:absolute;bottom:0;width:34px;border-radius:4px 4px 0 0;background:var(--c-yr,var(--c-rem))}
+.fdx .fd-ybar em{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-style:normal;font-size:10.5px;color:var(--tx);opacity:.8}
+.fdx .fd-yl{fill:none;stroke:var(--c-tnd);stroke-width:2.4;stroke-linejoin:round}
+.fdx .fd-ydot{position:absolute;width:11px;height:11px;margin:0 0 -5.5px -5.5px;border-radius:50%;background:var(--bg);border:2.4px solid var(--c-tnd)}
+.fdx .fd-ylab{position:absolute;transform:translateX(-50%);font-size:12.5px;font-weight:700;color:var(--tx);white-space:nowrap}
+.fdx .fd-yaxis{flex:none;display:flex;direction:ltr}
+.fdx .fd-yaxis span{flex:1;text-align:center;padding-top:6px;display:flex;flex-direction:column;line-height:1.3}.fdx .fd-yaxis b{font-size:13px;font-weight:700;color:var(--tx)}.fdx .fd-yaxis em{font-style:normal;font-size:11.5px;color:var(--mu)}
+.fdx .fd-lgd .nt{margin-inline-start:auto;font-size:11.5px;color:var(--mu2)}
+/* الجدول */
+.fdx .fd-tw{flex:1;min-height:0;overflow:auto;border:1px solid var(--hl);border-radius:8px;scrollbar-width:thin}
+.fdx .fd-t{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13.5px}
+.fdx .fd-t col.c1{width:132px}.fdx .fd-t col.c3{width:108px}.fdx .fd-t col.c4{width:124px}.fdx .fd-t col.c5{width:150px}.fdx .fd-t col.c6{width:128px}
+.fdx .fd-t th{position:sticky;top:0;z-index:1;background:var(--th);color:var(--mu);font-size:12.5px;font-weight:700;padding:10px 12px;text-align:center;border-bottom:1px solid var(--bd);white-space:nowrap}
+.fdx .fd-t th:nth-child(1),.fdx .fd-t th:nth-child(2){text-align:right}
+.fdx .fd-t td{padding:9px 12px;border-bottom:1px solid var(--hl);color:var(--tx);vertical-align:middle}
+.fdx .fd-t tbody tr{cursor:pointer;transition:background .15s}.fdx .fd-t tbody tr:hover td{background:var(--soft)}
+.fdx .fd-t td.nm b{display:block;font-weight:600;line-height:1.45}
+.fdx .fd-t td.nm em{display:block;font-style:normal;font-size:11.5px;color:var(--mu2);direction:ltr;text-align:right}
+.fdx .fd-t td.c{text-align:center;white-space:nowrap}
+.fdx .fd-t td.v{text-align:center;font-weight:700;direction:ltr;white-space:nowrap}
+.fdx .fd-sc{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-weight:600}.fdx .fd-sc i{width:9px;height:9px;border-radius:3px}
+.fdx .fd-st{display:inline-block;font-size:12px;font-weight:700;padding:3px 11px;border-radius:99px;white-space:nowrap}
+.fdx .fd-st.ok{background:rgba(30,107,69,.12);color:#1E6B45}.fdx .fd-st.pr{background:rgba(91,134,166,.14);color:#3D6A8C}.fdx .fd-st.na{background:var(--soft);color:var(--mu)}
+body[data-theme="dark"] .fdx .fd-st.ok{background:rgba(79,181,131,.16);color:#8ED2AE}body[data-theme="dark"] .fdx .fd-st.pr{background:rgba(127,168,201,.16);color:#A9C8E4}
+/* الخريطة */
+.fdx .fd-map{position:relative;flex-direction:row!important;align-items:stretch;gap:10px}
+.fdx .fd-map > svg{flex:1;min-width:0;height:100%}
+.fdx .fd-mr{stroke:var(--bg);stroke-width:1.8}
+.fdx .fd-mr.m0{fill:var(--m0)}.fdx .fd-mr.m1{fill:var(--m1)}.fdx .fd-mr.m2{fill:var(--m2)}.fdx .fd-mr.m3{fill:var(--m3)}.fdx .fd-mr.m4{fill:var(--m4)}.fdx .fd-mr.m5{fill:var(--m5)}
+.fdx .fd-ml text{text-anchor:middle;fill:var(--tx);paint-order:stroke;stroke:var(--bg);stroke-width:3.5px;stroke-linejoin:round}
+.fdx .fd-ml .a{font-size:17px;font-weight:600}.fdx .fd-ml .v{font-size:20px;font-weight:800}
+.fdx .fd-ml.sm .a{font-size:12px}.fdx .fd-ml.sm .v{font-size:14px}
+.fdx .fd-ml.t4 text,.fdx .fd-ml.t5 text{fill:#fff;stroke:rgba(0,0,0,.22)}
+body[data-theme="dark"] .fdx .fd-ml.t4 text,body[data-theme="dark"] .fdx .fd-ml.t5 text{fill:#FFFFFF;stroke:rgba(0,0,0,.3)}
+.fdx .fd-mside{flex:none;width:118px;display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.fdx .fd-nat{background:var(--soft);border:1px solid var(--hl);border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.fdx .fd-nat span{font-size:12px;color:var(--mu)}.fdx .fd-nat b{font-size:24px;font-weight:800;color:var(--tx);line-height:1.2}.fdx .fd-nat em{font-style:normal;font-size:11.5px;color:var(--mu2)}
+.fdx .fd-mlg{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--mu)}
+.fdx .fd-mlg i{width:34px;height:12px;border-radius:2px}
+.fdx .fd-mlg i.m1{background:var(--m1)}.fdx .fd-mlg i.m2{background:var(--m2)}.fdx .fd-mlg i.m3{background:var(--m3)}.fdx .fd-mlg i.m4{background:var(--m4)}.fdx .fd-mlg i.m5{background:var(--m5)}
+/* الموبايل: عرض متتابع */
+.fdx-wrap.flow{height:auto!important;overflow:visible;border:0;background:none}
+.fdx-wrap.flow .fdx-c{position:static;width:auto;height:auto;transform:none!important;display:flex;flex-direction:column;padding:0;gap:12px}
+.fdx-wrap.flow .fd-head{flex-wrap:wrap}
+.fdx-wrap.flow .fd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fdx-wrap.flow .fd-k .v b{font-size:19px}.fdx-wrap.flow .fd-k .s{white-space:normal}
+.fdx-wrap.flow .fd-k+.fd-k::before{display:none}
+.fdx-wrap.flow .fd-ra,.fdx-wrap.flow .fd-rb{grid-template-columns:minmax(0,1fr)}
+.fdx-wrap.flow .fd-cb{flex-direction:column!important}
+.fdx-wrap.flow .fd-bars{height:240px;overflow-x:auto;grid-auto-columns:minmax(66px,1fr)}
+.fdx-wrap.flow .fd-yc{height:240px}
+.fdx-wrap.flow .fd-tw{max-height:420px}.fdx-wrap.flow .fd-t{table-layout:auto}
+.fdx-wrap.flow .fd-map{height:320px}
+</style>
+<script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
+var FD={sec:""};
+var FD_W=1600, FD_H=1045;
+function _fdIsCap(p){ return /^449/.test(String(p.budget_item||"").trim()); }
+function _fdSecOrder(a,b){ var o=(typeof PF_SEC_ORDER!=="undefined")?PF_SEC_ORDER:[], x=o.indexOf(a), y=o.indexOf(b); return (x<0?99:x)-(y<0?99:y); }
+function _fdMn(x){ x=(+x||0)/1e6; return x.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function _fdNum(x){ return Math.round(+x||0).toLocaleString("en-US"); }
+function fdSet(k,v){ FD[k]=(FD[k]===v?"":v); finDashOpen(true); }
+/* تحجيم اللوحة: تملأ عرض الصفحة، وفي ملء الشاشة تملأ الشاشة كلها */
+function _fdFsOn(){ var w=document.querySelector(".fdx-wrap"); return !!(w&&((document.fullscreenElement||document.webkitFullscreenElement)===w||w.classList.contains("fsfb"))); }
+function fdFit(){ var w=document.querySelector(".fdx-wrap"); if(!w) return; var c=w.querySelector(".fdx-c"); if(!c) return;
+  var fs=_fdFsOn(), s, cw=FD_W;
+  if(fs){ w.style.height=""; w.classList.add("fs"); w.classList.remove("flow"); var VW=w.clientWidth||window.innerWidth, VH=w.clientHeight||window.innerHeight;
+    if(VW/VH>=FD_W/FD_H){ s=VH/FD_H; cw=Math.round(VW/s); } else { s=VW/FD_W; }
+    c.style.width=cw+"px"; c.style.transform="scale("+s.toFixed(4)+")"; c.style.left="0px"; c.style.top=Math.max(0,(VH-FD_H*s)/2)+"px"; return; }
+  w.classList.remove("fs"); c.style.width=""; c.style.left="0px"; c.style.top="0px";
+  var W=w.clientWidth||w.parentElement.clientWidth;
+  if(W<700){ w.classList.add("flow"); w.style.height=""; c.style.transform=""; return; }
+  w.classList.remove("flow"); s=W/FD_W; w.style.height=Math.round(FD_H*s)+"px"; c.style.transform="scale("+s.toFixed(4)+")"; }
+if(!window._fdBound){ window._fdBound=true; window.addEventListener("resize",function(){ clearTimeout(window._fdT); window._fdT=setTimeout(fdFit,60); });
+  ["fullscreenchange","webkitfullscreenchange"].forEach(function(ev){ document.addEventListener(ev,function(){ var w=document.querySelector(".fdx-wrap"); if(w&&!(document.fullscreenElement||document.webkitFullscreenElement)) w.classList.remove("fsfb"); setTimeout(fdFit,60); setTimeout(fdFit,350); }); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ var w=document.querySelector(".fdx-wrap.fsfb"); if(w){ w.classList.remove("fsfb"); document.body.classList.remove("fd-noscroll"); fdFit(); } } }); }
+function fdFull(){ var w=document.querySelector(".fdx-wrap"); if(!w) return;
+  if(_fdFsOn()){ if(document.fullscreenElement||document.webkitFullscreenElement){ try{ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }catch(e){} } w.classList.remove("fsfb"); document.body.classList.remove("fd-noscroll"); setTimeout(fdFit,60); return; }
+  var req=w.requestFullscreen||w.webkitRequestFullscreen, ok=false;
+  if(req){ try{ var pr=req.call(w); ok=true; if(pr&&pr.catch) pr.catch(function(){ w.classList.add("fsfb"); document.body.classList.add("fd-noscroll"); fdFit(); }); }catch(e){ ok=false; } }
+  if(!ok){ w.classList.add("fsfb"); document.body.classList.add("fd-noscroll"); }
+  try{ if(screen.orientation&&screen.orientation.lock) screen.orientation.lock("landscape").catch(function(){}); }catch(e){}
+  [60,300,700].forEach(function(ms){ setTimeout(fdFit,ms); }); }
+function fdPrint(){ var w=document.querySelector(".fdx-wrap"); if(!w) return;
+  var cl=w.cloneNode(true); cl.className="fdx-wrap"; cl.removeAttribute("style"); var c=cl.querySelector(".fdx-c"); if(c) c.removeAttribute("style");
+  var ff=""; try{ [].forEach.call(document.styleSheets,function(sh){ try{ [].forEach.call(sh.cssRules||[],function(r){ if(r.type===5) ff+=r.cssText+"\n"; }); }catch(e){} }); }catch(e){}
+  var css=(document.getElementById("finCss")||{}).textContent||"";
+  var bf=getComputedStyle(document.body).fontFamily;
+  var html='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>'+esc(PRINT_NAME||"اللوحة المالية")+'</title><style>'+ff+css
+    +'@page{size:A4 landscape;margin:0}html,body{margin:0;padding:0;background:#fff}body{font-family:'+bf+';-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    +'.ryl{height:.9em;width:auto;vertical-align:-.08em;margin-inline-start:4px;font-family:SaudiRiyal,inherit;font-style:normal}'
+    +'.pg{width:297mm;height:209mm;overflow:hidden;display:flex;align-items:center;justify-content:center}'
+    +'.fdx-wrap{position:relative;width:1070px;height:699px;overflow:hidden;border-radius:0}.fdx-c{position:absolute;left:0;top:0;transform:scale(.66875)}.fd-btn{display:none!important}.fd-tw{overflow:hidden!important}'
+    +'</style></head><body><div class="pg"><div class="dash dx fdx">'+cl.outerHTML+'</div></div><script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){ window.print(); },250); });<\/script></body></html>';
+  var win=window.open("","_blank"); if(!win){ alert("اسمح بالنوافذ المنبثقة للطباعة"); return; }
+  win.document.open(); win.document.write(html); win.document.close(); }
+function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _initDashGroup(); }catch(e){}
+  if(!keep){ FD.sec=""; }
+  RERENDER=function(){ finDashOpen(true); }; ANSWER_TITLE=""; IS_REPORT=false; PRINT_NAME="لوحة الأداء المالية — "+MONTHLBL; _dxSetHash("finance");
+  var ALL=(DATA||[]), D=ALL.filter(function(p){ return !FD.sec||String(p.sector||"").trim()===FD.sec; });
+  var BUD=(typeof PF!=="undefined"&&PF&&PF.capBudget)||1500000000;
+  var st=function(p){ try{ return _geoNowSt(p); }catch(e){ return "run"; } };
+  var ACT=D.filter(function(p){ var s=st(p); return s==="run"||s==="done"; });
+  var contracts=ACT.reduce(function(a,p){ return a+_dxBase(p); },0);
+  var dis=D.reduce(function(a,p){ return a+_dxN(p.disbursed); },0), und=D.reduce(function(a,p){ return a+_dxN(p.under_proc); },0);
+  var cN=D.reduce(function(a,p){ return a+_dxN(p.claims_count); },0), cP=D.filter(function(p){ return _dxN(p.claims_count)>0; }).length;
+  var left=Math.max(0,BUD-dis), R='<i class="cur">'+RYL+'</i>';
+  var I=function(d){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg>'; };
+  var AB=function(x){ var m=_dxMs(x); return '<b title="'+_fdNum(x)+' ريال">'+m[0]+'</b><small>'+String(m[1]).replace(/\s*ريال\s*/,'')+'</small>'+R; };
+  var pc=function(v,b){ return _dxPct(b?v/b:0); };
+  /* ---- شريط المؤشرات المالية (6 مؤشرات بالقيمة الكاملة) ---- */
+  var k=function(l,v,s,cls,bar){ return '<div class="fd-k'+(cls?' '+cls:'')+'"><span class="l">'+l+'</span><span class="v">'+v+'</span>'+(bar!=null?'<i class="bar"><u style="width:'+Math.min(100,bar*100).toFixed(1)+'%"></u></i>':'')+'<span class="s">'+s+'</span></div>'; };
+  var kpis='<section class="fd-kpis">'
+    +k("إجمالي الميزانية",AB(BUD),"الميزانية الرأسمالية للبرنامج")
+    +k("إجمالي العقود",AB(contracts),pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length),null,BUD?contracts/BUD:0)
+    +k("المبالغ المنصرفة",AB(dis),pc(dis,contracts)+" من قيمة المشاريع القائمة","g",contracts?dis/contracts:0)
+    +k("مبالغ تحت الإجراء",AB(und),pc(und,contracts)+" من قيمة المشاريع القائمة","a",contracts?und/contracts:0)
+    +k("الميزانية المتبقية",AB(left),pc(left,BUD)+" من الميزانية بعد المنصرف",null,BUD?left/BUD:0)
+    +k("عدد المستخلصات",'<b>'+ar(cN)+'</b><small>مستخلص</small>',"لـ "+_arPrj(cP))+'</section>';
+  /* ---- إحصائيات الميزانية الرأسمالية ---- */
+  var g={run:0,done:0,tender:0,award:0}, cd=0, cu=0, capN=0, capV=0;
+  D.forEach(function(p){ var s=st(p), v=_dxBase(p), cap=_fdIsCap(p); if(cap){ capN++; capV+=v; } if((s==="done"||s==="run")&&cap){ cd+=_dxN(p.disbursed); cu+=_dxN(p.under_proc); } g[s]=(g[s]||0)+v; });
+  var act=g.run+g.done, rem=Math.max(0,act-cd-cu), all=act+g.tender+g.award, filt=!!FD.sec, base=filt?(all||1):BUD, bleft=Math.max(0,BUD-all);
+  var segs=[{l:"المنصرف",v:cd,c:"var(--c-dis)"},{l:"تحت الإجراء",v:cu,c:"var(--c-und)"},{l:"المتبقي من العقود القائمة",v:rem,c:"var(--c-rem)"},{l:"في إجراءات الترسية",v:g.award,c:"var(--c-awd)"},{l:"في إجراءات الطرح",v:g.tender,c:"var(--c-tnd)"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:bleft,c:"var(--c-left)"}]);
+  var tot=segs.reduce(function(a,x){ return a+x.v; },0)||1, r=78, sw=24, Cc=2*Math.PI*r, off=0;
+  var donut='<div class="fd-dw"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="'+r+'" class="fd-dtr" style="stroke-width:'+sw+'"/>'+segs.map(function(x){ if(!(x.v>0)) return ""; var L=Cc*x.v/tot, gp=Math.min(2,L*0.3), o='<circle cx="100" cy="100" r="'+r+'" fill="none" stroke="'+x.c+'" stroke-width="'+sw+'" stroke-dasharray="'+Math.max(0,L-gp).toFixed(2)+' '+Cc.toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 100 100)"><title>'+esc(x.l)+': '+_fdNum(x.v)+' ريال</title></circle>'; off+=L; return o; }).join("")
+    +'</svg><div class="fd-dc"><b>'+_dxMs(base)[0]+'</b><span>'+(_dxMs(base)[1].indexOf("مليار")>-1?"مليار ريال":"مليون ريال")+'</span></div></div>';
+  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+'</span></header><div class="fd-pb fd-cb">'+donut
+    +'<div class="fd-lg"><div class="fd-lh"><span>المشاريع القائمة والمنتهية</span><b>'+_fdNum(act)+'</b><em>'+pc(act,base)+'</em></div>'
+    +segs.map(function(x){ return '<div class="fd-li"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><b>'+_fdNum(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; }).join("")
+    +'<div class="fd-lnote">المبالغ بالريال السعودي · النسب من '+(filt?'إجمالي مشاريع التصفية':'إجمالي الميزانية')+'</div></div></div></section>';
+  /* ---- إحصائيات القطاعات ---- */
+  var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
+  var SK=Object.keys(S).sort(_fdSecOrder), smx=Math.max.apply(null,SK.map(function(x){ return Math.max(S[x].d,S[x].u); }).concat([1]));
+  var legend='<div class="fd-lgd"><span><i style="background:var(--c-dis)"></i>المنصرف</span><span><i style="background:var(--c-und)"></i>تحت الإجراء</span></div>';
+  var secs='<section class="fd-p fd-sec"><header><h3>إحصائيات القطاعات</h3><span>مليون ريال · اضغط قطاعاً للتصفية</span></header><div class="fd-pb">'+legend+'<div class="fd-bars">'+SK.map(function(x){ var on=FD.sec===x, dim=FD.sec&&!on;
+      return '<div class="fd-bc'+(on?' on':'')+(dim?' dim':'')+'" role="button" title="'+esc(x)+' — المنصرف '+_fdNum(S[x].d)+' · تحت الإجراء '+_fdNum(S[x].u)+' ريال" onclick="fdSet(\'sec\',\''+esc(x).replace(/'/g,"\\'")+'\')"><div class="fd-bp"><div class="fd-b g" style="height:'+(S[x].d/smx*100).toFixed(1)+'%"><b>'+_fdMn(S[x].d)+'</b></div><div class="fd-b a" style="height:'+(S[x].u/smx*100).toFixed(1)+'%"><b>'+_fdMn(S[x].u)+'</b></div></div><span>'+esc(x)+'</span></div>'; }).join("")+'</div></div></section>';
+  /* ---- المستخلصات المنفذة حسب السنة ---- */
+  var PR=[]; try{ PR=_payLoad().rows||[]; }catch(e){}
+  if(FD.sec) PR=PR.filter(function(o){ return String(o.s||"").trim()===FD.sec; });
+  var Y={}; PR.forEach(function(o){ var y=/^(\d{4})/.test(o.m||"")?o.m.slice(0,4):null; if(!y) return; Y[y]=Y[y]||{v:0,n:0}; Y[y].v+=_payN(o.v); Y[y].n++; });
+  var YK=Object.keys(Y).sort(), cum=0, YC=YK.map(function(y){ cum+=Y[y].v; return {y:y,v:Y[y].v,n:Y[y].n,c:cum}; });
+  var yrs;
+  if(!YC.length) yrs='<div class="fd-empty">لا توجد مستخلصات في السجل.</div>';
+  else { var cmx=Math.max(1,YC[YC.length-1].c)*1.1, n=YC.length, XP=function(i){ return ((i+0.5)/n*100).toFixed(2); }, YP=function(v){ return (v/cmx*100).toFixed(2); };
+    yrs='<div class="fd-yc"><div class="fd-yplot">'
+      +YC.map(function(d,i){ return '<div class="fd-ybar" style="left:calc('+XP(i)+'% - 17px);height:'+YP(d.v)+'%" title="'+d.y+': '+_fdNum(d.v)+' ريال · '+ar(d.n)+' مستخلص"></div>'; }).join("")
+      +'<svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline class="fd-yl" vector-effect="non-scaling-stroke" points="'+YC.map(function(d,i){ return XP(i)+','+(100-YP(d.c)); }).join(" ")+'"/></svg>'
+      +YC.map(function(d,i){ return '<i class="fd-ydot" style="left:'+XP(i)+'%;bottom:'+YP(d.c)+'%"></i><b class="fd-ylab" style="left:'+XP(i)+'%;bottom:calc('+YP(d.c)+'% + 9px)">'+_fdMn(d.c)+'</b>'; }).join("")
+      +'</div><div class="fd-yaxis">'+YC.map(function(d){ return '<span><b>'+d.y+'</b><em>'+_fdMn(d.v)+'</em></span>'; }).join("")+'</div></div>'; }
+  var yr='<section class="fd-p fd-yr"><header><h3>المستخلصات المنفذة</h3><span>مليون ريال · سجل المستخلصات</span></header><div class="fd-pb"><div class="fd-lgd"><span><i style="background:var(--c-yr,var(--c-rem))"></i>قيمة السنة</span><span><i class="ln"></i>التراكمي</span><span class="nt">الرقم أسفل السنة = قيمة السنة</span></div>'+yrs+'</div></section>';
+  /* ---- التوزيع الجغرافي ---- */
+  var RV={}, nat=0; KSA_REG.r.forEach(function(rr){ RV[rr.ar]=0; });
+  D.forEach(function(p){ var v=_dxN(p.disbursed); if(!v) return; var hit=KSA_REG.r.filter(function(rr){ return _regionHas(p.region,rr.ar); }); if(hit.length) hit.forEach(function(rr){ RV[rr.ar]+=v/hit.length; }); else nat+=v; });
+  var vals=KSA_REG.r.map(function(rr){ return RV[rr.ar]; }).filter(function(v){ return v>0; }).sort(function(a,b){ return a-b; });
+  var cls=function(v){ if(!(v>0)) return 0; var k4=0; while(k4<vals.length&&vals[k4]<v) k4++; return Math.min(5,1+Math.floor(k4/Math.max(1,vals.length)*5)); };
+  var paths="", labs=""; KSA_REG.r.forEach(function(rr){ var v=RV[rr.ar], c=cls(v), sm=/الباحة|جازان/.test(rr.ar);
+    paths+='<path class="fd-mr m'+c+'" d="'+rr.d+'"><title>'+esc(rr.ar)+': '+_fdNum(v)+' ريال</title></path>';
+    labs+='<g class="fd-ml t'+c+(sm?' sm':'')+'"><text x="'+rr.x+'" y="'+(rr.y-4)+'" class="a">'+esc(rr.ar)+'</text>'+(v?'<text x="'+rr.x+'" y="'+(rr.y+(sm?13:20))+'" class="v">'+(+(v/1e6).toFixed(1)).toLocaleString("en-US")+'</text>':'')+'</g>'; });
+  var geo='<section class="fd-p fd-geo"><header><h3>التوزيع الجغرافي للمنصرف</h3><span>مليون ريال</span></header><div class="fd-pb fd-map"><svg viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr">'+paths+labs+'</svg>'
+    +'<div class="fd-mside">'+(nat?'<div class="fd-nat"><span>على مستوى المملكة</span><b>'+(+(nat/1e6).toFixed(1)).toLocaleString("en-US")+'</b><em>مليون ريال</em></div>':'')
+    +'<div class="fd-mlg"><span>الأعلى</span><i class="m5"></i><i class="m4"></i><i class="m3"></i><i class="m2"></i><i class="m1"></i><span>الأقل</span></div></div></div></section>';
+  /* ---- سجل المستخلصات ---- */
+  var TR=PR.slice().sort(function(a,b){ var x=String(b.m||""), y=String(a.m||""); if(x!==y) return x<y?-1:1; return _payN(b.no)-_payN(a.no); });
+  var stc=function(s){ s=String(s||""); return /منصرف/.test(s)?"ok":(/إجراء/.test(s)?"pr":"na"); };
+  var tbl='<section class="fd-p fd-tb"><header><h3>سجل المستخلصات</h3><span>'+ar(TR.length)+' مستخلص · الأحدث أولاً · القيم بالريال</span></header><div class="fd-pb">'+(TR.length?'<div class="fd-tw"><table class="fd-t"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup><thead><tr><th>القطاع</th><th>المشروع</th><th>رقم المستخلص</th><th>الشهر</th><th>قيمة المستخلص</th><th>الحالة</th></tr></thead><tbody>'
+    +TR.map(function(o){ var sc=(window.SEC_PASTEL||{})[String(o.s||"").trim()]||"#DDE3DE"; return '<tr role="button" onclick="pyOpen(\''+esc(o.c)+'\')"><td><span class="fd-sc"><i style="background:'+sc+'"></i>'+esc(o.s||"—")+'</span></td><td class="nm" title="'+esc(o.n||"")+'"><b>'+esc(o.n||o.c)+'</b><em>'+esc(o.c)+'</em></td><td class="c">'+ar(_payN(o.no)||0)+'</td><td class="c">'+_payMo(o.m)+'</td><td class="v">'+_fdNum(o.v)+'</td><td class="c"><span class="fd-st '+stc(o.st)+'">'+esc(o.st||"—")+'</span></td></tr>'; }).join("")
+    +'</tbody></table></div>':'<div class="fd-empty">لا توجد مستخلصات.</div>')+'</div></section>';
+  var bI=function(t,fn,d){ return '<button class="fd-btn noprint" onclick="'+fn+'" title="'+t+'" aria-label="'+t+'">'+I(d)+'</button>'; };
+  var head='<header class="fd-head"><div class="fd-ttl"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div>'
+    +'<div class="fd-hl">'+bI("ملء الشاشة","fdFull()",'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>')+bI("طباعة","fdPrint()",'<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/>')+'<span class="fd-sp"></span><img class="fd-logo" src="'+LOGO+'" alt="ريف"></div></header>';
+  _dxShow('<div class="dash dx fdx"><div class="fdx-wrap"><div class="fdx-c">'+head+kpis
+    +'<div class="fd-ra">'+cap+secs+yr+'</div>'
+    +'<div class="fd-rb">'+tbl+geo+'</div>'
+    +'</div></div></div>');
+  [0,60,250].forEach(function(ms){ setTimeout(fdFit,ms); }); }
 </script>
 </body>
 </html>
