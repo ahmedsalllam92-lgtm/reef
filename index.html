@@ -22872,6 +22872,24 @@ body[data-theme="dark"] .fdx .fd-p > header h3{color:#EFF4F1}
 .fdx .fd-fk span{display:block;font-size:11px;color:var(--mu)}.fdx .fd-fk b{display:block;font-size:17px;font-weight:700;color:var(--tx);line-height:1.3}.fdx .fd-fk b small{font-size:10.5px;color:var(--mu);margin-inline-start:4px}
 .fdx .fd-fk em{font-style:normal;font-size:10px;color:var(--mu2)}
 .fdx .fd-fk .w{border-color:rgba(201,165,78,.45);background:rgba(201,165,78,.07)}
+/* ألوان الدارك بنفس دلالة اللوحة العامة؛ الأعمدة فقط لبني/أبيض */
+.fdx .fd-b.g{background:var(--h-a,var(--c-dis))!important}.fdx .fd-b.a{background:var(--h-b,var(--c-und))!important}
+body[data-theme="dark"] .fdx{--c-dis:#2E7D52;--c-und:#4F86A6;--c-rem:#B9CDBF;--c-awd:#F3C4BE;--c-tnd:#C9A54E;--c-left:#3A4D55;--h-a:#5B9BD5;--h-b:#D9DEE5}
+/* الصرف مقابل الإنجاز */
+.fdx .fd-sva .fd-lgd .mk{width:3px!important;height:12px!important;border-radius:1px!important;background:var(--tx)!important}
+.fdx .fd-sva .fd-lgd .nt{margin-inline-start:auto;color:var(--mu2)}.fdx .fd-sva .fd-lgd .nt.w{color:#B96A5B;font-weight:600}
+.fdx .fd-svl{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:4px}
+.fdx .fd-svl .r{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) 72px;gap:10px;align-items:center;padding:3px 6px;border-radius:6px}
+.fdx .fd-svl .r.w{background:rgba(185,106,91,.08)}
+.fdx .fd-svl span{min-width:0}.fdx .fd-svl span b{display:block;font-size:11.5px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fdx .fd-svl span em{font-style:normal;font-size:10px;color:var(--mu2)}
+.fdx .fd-svl i{position:relative;display:block;height:8px;border-radius:9px;background:var(--trk)}
+.fdx .fd-svl i u{display:block;height:100%;border-radius:9px;background:var(--h-a,var(--c-dis))}
+.fdx .fd-svl .r.w i u{background:#B96A5B}
+.fdx .fd-svl i s{position:absolute;top:-4px;bottom:-4px;width:3px;margin-inline-start:-1.5px;border-radius:1px;background:var(--tx)}
+.fdx .fd-svl strong{font-size:12.5px;font-weight:700;color:var(--tx);text-align:left;white-space:nowrap}.fdx .fd-svl strong small{font-size:10px;font-weight:500;color:var(--mu)}
+.fdx .fd-svl .r{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) 64px!important;padding:2px 6px!important}
+.fdx .fd-svl strong{display:flex;flex-direction:column;line-height:1.2}.fdx .fd-svl strong small{font-size:9.5px!important}
+.fdx .fd-sva .fd-lgd{flex-wrap:wrap;row-gap:2px}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
@@ -22919,6 +22937,7 @@ function fdPrint(){ var c=document.querySelector("#answer .fdx .dx-canvas"); if(
   document.body.appendChild(fr); var d=fr.contentWindow.document; d.open(); d.write(html.replace(/window\.print\(\)/,"window.focus();window.print()")); d.close();
   fr.contentWindow.addEventListener("afterprint",function(){ setTimeout(function(){ try{ fr.remove(); }catch(e){} },500); }); }
 (function(){ var o=window.printAnswer; if(typeof o==="function"&&!o._fd){ var w=function(){ if(document.querySelector("#answer .fdx .dx-canvas")) return fdPrint(); return o.apply(this,arguments); }; w._fd=1; window.printAnswer=w; try{ printAnswer=w; }catch(e){} } })();
+function _v2PlFd(n){ return n===1?'مشروع':(n===2?'مشروعان':(n<11?'مشاريع':'مشروعاً')); }
 function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _initDashGroup(); }catch(e){}
   if(!keep){ FD.sec=""; }
   RERENDER=function(){ finDashOpen(true); }; ANSWER_TITLE=""; IS_REPORT=false; PRINT_NAME="لوحة الأداء المالية — "+MONTHLBL; _dxSetHash("finance");
@@ -22956,19 +22975,12 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var gRow=function(x){ return '<div class="fd-gr" title="'+_fdNum(x.v)+' ريال"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><u><s style="width:'+(base?Math.min(100,x.v/base*100):0).toFixed(1)+'%;background:'+x.c+'"></s></u><b>'+M2(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; };
   var G1=segs.slice(0,3), G2=segs.slice(3,5), G3=segs.slice(5), sum=function(A){ return A.reduce(function(a,x){ return a+x.v; },0); };
   var grp=function(t,A){ return A.length?'<div class="fd-gp"><div class="fd-gh"><b>'+t+'</b><em>'+pc(sum(A),base)+'</em></div>'+A.map(gRow).join("")+'</div>':''; };
-  /* مسار صرف المستخلصات (بدل توزيع الميزانية المكرر في الشريط) */
-  var cap=(function(){ var R0=[]; try{ R0=(_payLoad().rows||[]).filter(function(o){ return !FD.sec||String(o.s||"").trim()===FD.sec; }); }catch(e){}
-    var ST=[["جاري الرفع",/جاري/,"#C9A54E"],["تم الرفع للمالية",/تم الرفع/,"#5B86A6"],["صادر أمر صرف",/أمر صرف|امر صرف/,"#3F8A63"],["تم الصرف",/تم الصرف/,"#1E6B45"]];
-    var G=ST.map(function(s){ var L2=R0.filter(function(o){ return s[1].test(o.fn||""); }); return {l:s[0],c:s[2],n:L2.length,v:L2.reduce(function(a,o){ return a+_payN(o.v); },0)}; });
-    var hold=R0.filter(function(o){ return /معلق/.test(o.fn||""); }), none=R0.filter(function(o){ return !o.fn; });
-    var dl=R0.map(_payDur).filter(function(x){ return x>0; }), avg=dl.length?Math.round(dl.reduce(function(a,b){ return a+b; },0)/dl.length):null, mx=dl.length?Math.max.apply(null,dl):null;
-    var pend=G.slice(0,3).reduce(function(a,x){ return a+x.v; },0);
-    return '<section class="fd-p fd-cap fd-flow"><header><h3>مسار صرف المستخلصات</h3><span>حسب حالة المالية · '+ar(R0.length)+' مستخلص</span></header><div class="fd-pb fd-fw">'
-      +'<div class="fd-fs">'+G.map(function(x,k){ return '<div class="st" style="--c:'+x.c+'"><i>'+ar(k+1)+'</i><span>'+x.l+'</span><b>'+ar(x.n)+'</b><em>'+_dxM(x.v)+'</em></div>'+(k<G.length-1?'<s></s>':''); }).join("")+'</div>'
-      +'<div class="fd-fk"><div><span>متوسط مدة الصرف</span><b>'+(avg==null?'—':ar(avg)+'<small>يوم</small>')+'</b><em>من التسليم للمالية حتى الصرف</em></div>'
-        +'<div><span>أطول مدة صرف</span><b>'+(mx==null?'—':ar(mx)+'<small>يوم</small>')+'</b><em>'+ar(dl.length)+' مستخلص بتواريخ مكتملة</em></div>'
-        +'<div class="'+(hold.length?'w':'')+'"><span>في انتظار الصرف</span><b>'+_dxM(pend)+'</b><em>'+(hold.length?ar(hold.length)+' معلّق':'لا يوجد معلّق')+(none.length?' · '+ar(none.length)+' بلا حالة':'')+'</em></div></div>'
-      +'</div></section>'; })();
+  /* الصرف مقابل الإنجاز: أكبر المشاريع قيد التنفيذ قيمةً — هل يسبق الصرفُ الإنجاز؟ */
+  var cap=(function(){ var L0=D.filter(function(p){ return st(p)==="run"&&_dxBase(p)>0; }).map(function(p){ var v=_dxBase(p), sp=v?_dxN(p.disbursed)/v:0, a=0; try{ var r=analyzeProject(p); a=_lwReady(p,r)||0; }catch(e){ a=pct(p.actual)||0; } return {p:p,v:v,sp:Math.min(1,sp),a:Math.min(1,a),g:sp-a}; }).sort(function(x,y){ return y.v-x.v; });
+    var top=L0.slice(0,6), over=L0.filter(function(x){ return x.g>0.10; }).length;
+    return '<section class="fd-p fd-cap fd-sva"><header><h3>الصرف مقابل الإنجاز</h3><span>أكبر '+ar(top.length)+' مشاريع قيد التنفيذ قيمةً</span></header><div class="fd-pb">'
+      +'<div class="fd-lgd"><span><i style="background:var(--h-a,var(--c-dis))"></i>نسبة الصرف</span><span><i class="mk"></i>الجاهزية للتسليم</span><span class="nt'+(over?' w':'')+'">'+(over?ar(over)+' '+_v2PlFd(over)+' صرفها يسبق إنجازها بأكثر من 10 نقاط':'لا يوجد صرف يسبق الإنجاز')+'</span></div>'
+      +'<div class="fd-svl">'+top.map(function(x){ var w=x.g>0.10; return '<div class="r'+(w?' w':'')+'" title="'+esc(x.p.name||"")+' — الصرف '+_dxPct(x.sp)+' · الجاهزية '+_dxPct(x.a)+' · القيمة '+_fdNum(x.v)+' ريال"><span><b>'+esc(x.p.alias||x.p.name||"")+'</b><em>'+esc(x.p.code)+' · '+_dxM(x.v)+'</em></span><i><u style="width:'+(x.sp*100).toFixed(1)+'%"></u><s style="inset-inline-start:'+(x.a*100).toFixed(1)+'%"></s></i><strong>'+_dxPct(x.sp)+'<small>جاهزية '+_dxPct(x.a)+'</small></strong></div>'; }).join("")+'</div></div></section>'; })();
     +grp("المشاريع القائمة والمنتهية",G1)+grp("قيد الإجراءات",G2)+(G3.length?"<div class=\"fd-gp\">"+G3.map(gRow).join("")+"</div>":"")+'</div></section>';
   /* شريط الميزانية الكبير: كل جزء بقيمته تحته وخط خفيف يربطه بجزئه */
   var cum=0, segT=segs.reduce(function(a,x){ return a+x.v; },0)||1;
@@ -22979,7 +22991,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   /* ---- إحصائيات القطاعات ---- */
   var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
   var SK=Object.keys(S).sort(_fdSecOrder), smx=Math.max.apply(null,SK.map(function(x){ return Math.max(S[x].d,S[x].u); }).concat([1]));
-  var legend='<div class="fd-lgd"><span><i style="background:var(--c-dis)"></i>المنصرف</span><span><i style="background:var(--c-und)"></i>تحت الإجراء</span></div>';
+  var legend='<div class="fd-lgd"><span><i style="background:var(--h-a,var(--c-dis))"></i>المنصرف</span><span><i style="background:var(--h-b,var(--c-und))"></i>تحت الإجراء</span></div>';
   var secs='<section class="fd-p fd-sec"><header><h3>إحصائيات القطاعات</h3><span>مليون ريال · اضغط قطاعاً للتصفية</span></header><div class="fd-pb">'+legend+'<div class="fd-bars">'+SK.map(function(x){ var on=FD.sec===x, dim=FD.sec&&!on;
       return '<div class="fd-bc'+(on?' on':'')+(dim?' dim':'')+'" role="button" title="'+esc(x)+' — المنصرف '+_fdNum(S[x].d)+' · تحت الإجراء '+_fdNum(S[x].u)+' ريال" onclick="fdSet(\'sec\',\''+esc(x).replace(/'/g,"\\'")+'\')"><div class="fd-bp"><div class="fd-b g" style="height:'+(S[x].d/smx*100).toFixed(1)+'%"><b>'+_fdMn(S[x].d)+'</b></div><div class="fd-b a" style="height:'+(S[x].u/smx*100).toFixed(1)+'%"><b>'+_fdMn(S[x].u)+'</b></div></div><span>'+esc(x)+'</span></div>'; }).join("")+'</div></div></section>';
   /* ---- المستخلصات المنفذة حسب السنة ---- */
