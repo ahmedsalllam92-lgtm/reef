@@ -9040,6 +9040,7 @@ html body:not([data-theme=dark]) #lw.v4 .ov-st+.ov-st{border-inline-start-color:
 html body:not([data-theme=dark]) #lw.v4 .ov-al>div+div{border-top-color:rgba(14,59,39,.09)!important}
 html body:not([data-theme=dark]) #lw.v4 .ov-j,html body:not([data-theme=dark]) #lw.v4 .ov-p{border-color:rgba(14,59,39,.07)!important;box-shadow:0 1px 2px rgba(14,59,39,.04),0 14px 34px -26px rgba(14,59,39,.35)!important}
 </style>
+<style id="shDevPop">.sh-t .sh-dl{position:fixed!important;top:auto;inset-inline-start:auto;z-index:100002!important;max-height:min(320px,60vh);overflow:auto}</style>
 <style id="stopPrev">.pd-stp2{display:block;font-size:11.5px;font-weight:600;color:#7E8A82;line-height:1.6;margin-top:3px;white-space:normal}body[data-theme="dark"] .pd-stp2{color:#9DB0B8}</style>
 <style id="m5Kp2">
 .m5-kpis{gap:14px}
@@ -9585,6 +9586,11 @@ function _durMD(d){ d=Math.round(+d); if(d==null||isNaN(d)) return "—"; if(d<=
   return ms&&ds?ms+" و"+ds:(ms||ds); }
 function _durMDh(d){ return String(_durMD(d)).replace(/ و/g,"\u0001").replace(/(\d+)?\s*(شهران|شهر|أشهر|يومان|يوم|أيام)/g,function(m,n,u){ return (n?n:"")+'<small>'+u+'</small>'; }).replace(/\u0001/g,'<small> و</small>'); }
 function _stopDaysOf(p){ if(!p) return null; if(p._stopOvr) return toNum(p.stop_duration); var sd=_dxDt(p.stop_date); if(sd&&_isStopped(p)) return Math.max(0,Math.round((new Date()-sd)/864e5)); var v=toNum(p.stop_duration); return v!=null&&v>0?v:null; }
+/* قائمة الأجهزة في روابط المشاركة: تطفو فوق الجدول حتى لا يقصّها التمرير */
+if(!window._shDlBound){ window._shDlBound=true; document.addEventListener("mouseover",function(e){ var td=e.target&&e.target.closest&&e.target.closest("td.sh-dv"); if(!td) return; var dl=td.querySelector(".sh-dl"); if(!dl) return;
+  var r=td.getBoundingClientRect(); dl.style.left="0px"; dl.style.top="0px"; dl.style.display="flex"; var h=dl.offsetHeight, w=dl.offsetWidth; dl.style.display="";
+  var top=r.bottom+4; if(top+h>window.innerHeight-8&&r.top-h-4>8) top=r.top-h-4; top=Math.max(8,Math.min(top,window.innerHeight-h-8));
+  var left=r.right-w; left=Math.max(8,Math.min(left,window.innerWidth-w-8)); dl.style.top=top+"px"; dl.style.left=left+"px"; dl.style.right="auto"; },true); }
 function capPlannedData(arr){ /* نسبة الإنجاز في كل المنصة = عمود «الجاهزية للتسليم» (الفعلية الأصلية محفوظة في actual_raw) */
   try{ (arr||[]).forEach(function(p){ if(!p) return; if(p.actual_raw==null) p.actual_raw=p.actual; var rv=pct(p.ready); if(rv!=null&&!isNaN(rv)) p.actual=p.ready; }); }catch(e){}
   try{ var _cc=_cancelCodeSet(); if(Object.keys(_cc).length) arr=(arr||[]).filter(function(p){ return !(p&&_cc[p.code]); }); }catch(e){}
