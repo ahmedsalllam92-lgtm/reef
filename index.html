@@ -21798,6 +21798,104 @@ function _remFilesList(id){ _remFDB().then(function(db){ var out=[], c=db.transa
 try{ ["remLibOpen","remProdView","remProdEdit","remProdSave","remProdRevert","remCompatAdd","remLibExport","remLibImport","remToggle","remSet","remApprove","remComment"].forEach(function(k){ window[k]=eval(k); }); }catch(e){}
 
 </script>
+<style id="rp3Css">/* التقارير: لوحة جانبية + التقرير بجانبها */
+.acard.rp-split{display:grid!important;grid-template-columns:320px minmax(0,1fr);column-gap:18px;align-items:start}
+.acard.rp-split>*:not(.rp3-side){grid-column:2;min-width:0}
+.acard.rp-split>.rp3-side{grid-column:1;grid-row:1 / span 60;position:sticky;top:64px;margin-top:0;max-height:calc(100vh - 80px);overflow:auto;align-self:start}
+.acard.rp-split .rp-ready>button:first-child{display:none}
+.rp3-side{background:#fff;border:1px solid #E2E8E3;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
+.rp3-h b{display:block;font-size:17px;font-weight:900;color:#0E3B27}
+.rp3-h span{font-size:12px;color:#7D8A82;font-weight:600}
+.rp3-g{display:flex;flex-direction:column;gap:8px}
+.rp3-l{font-size:12px;font-weight:800;color:#6B7A71}
+.rp3-seg{display:flex;flex-direction:column;gap:4px}
+.rp3-seg button{display:flex;align-items:center;gap:8px;font:inherit;font-size:13.5px;font-weight:800;text-align:start;padding:8px 10px;border-radius:10px;border:1px solid #E2E8E3;background:#F7F9F6;color:#1B2A21;cursor:pointer}
+.rp3-seg button .ic{display:inline-flex;color:#6B7A71}
+.rp3-seg button.on{background:#0E4A2F;border-color:#0E4A2F;color:#fff}.rp3-seg button.on .ic{color:#E9D29A}
+.rp3-note{font-size:12px;color:#6B7A71;font-weight:600;padding:0 2px}.rp3-note.warn{color:#A5631A}
+.rp3-fs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 8px}
+.rp3-fs .rp-f{display:flex;flex-direction:column;gap:3px}
+.rp3-fs .rp-f>span{font-size:11.5px;font-weight:700;color:#6B7A71}
+.rp3-fs .msel{width:100%;min-width:0!important}.rp3-fs .msel>button,.rp3-fs .msel-b{width:100%!important;min-width:0!important;height:32px!important;min-height:32px!important;font-size:12px!important;padding:0 8px!important}
+.rp3-cnt{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#F2F7F3;border-radius:10px;padding:8px 10px;font-size:12px}
+.rp3-cnt b{color:#0E4A2F;font-size:13.5px}.rp3-cnt span{color:#46574D;font-weight:600;min-width:0;flex:1}
+.rp3-cnt button,.rp3-pp button{font:inherit;font-size:11.5px;font-weight:800;border:1px solid #DDE3DE;background:#fff;border-radius:8px;padding:3px 8px;cursor:pointer}
+.rp3-pp{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#F2F7F3;border-radius:10px;padding:8px 10px;font-size:12.5px}
+.rp3-pp em{font-style:normal;font-weight:900;color:#0E4A2F;font-size:11.5px;background:#fff;border-radius:6px;padding:1px 6px}
+.rp3-pp b{line-height:1.4}
+.rp3-ps{display:flex;align-items:center;gap:6px}.rp3-ps input{flex:1;min-width:0;font:inherit;font-size:12.5px;border:1px solid #DDE3DE;border-radius:9px;padding:7px 10px}
+.rp3-ps span{font-size:11px;color:#7D8A82;white-space:nowrap}
+.rp3-pl{max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:3px}
+.rp3-pl .rp1-it{font-size:12px}
+.rp3-types{display:flex;flex-direction:column;gap:5px}
+.rp3-types button{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;text-align:start;font:inherit;padding:8px 10px;border-radius:11px;border:1px solid #E2E8E3;background:#fff;cursor:pointer;color:#1B2A21}
+.rp3-types button .ic{width:34px;height:34px;border-radius:9px;background:#F4EFE2;color:#8A6A22;display:flex;align-items:center;justify-content:center}
+.rp3-types button b{display:block;font-size:13.5px;font-weight:800}
+.rp3-types button em{display:block;font-style:normal;font-size:11.5px;color:#7D8A82;line-height:1.45}
+.rp3-types button:hover:not(:disabled){border-color:#9CC5AD}
+.rp3-types button.on{border-color:#0E4A2F;background:#F2F7F3;box-shadow:inset 0 0 0 1px #0E4A2F}
+.rp3-types button.on .ic{background:#0E4A2F;color:#fff}
+.rp3-types button:disabled{opacity:.45;cursor:not-allowed}
+.rp3-adv{font:inherit;font-size:12.5px;font-weight:800;color:#0E4A2F;background:none;border:1px dashed #CFE0D5;border-radius:10px;padding:8px;cursor:pointer}
+.rp3-main{min-height:60vh;display:flex}
+.rp3-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;border:1px dashed #D8E1DA;border-radius:16px;background:#FAFBF9;padding:40px 20px;color:#46574D}
+.rp3-empty .ic{width:68px;height:68px;border-radius:18px;background:#F4EFE2;color:#8A6A22;display:flex;align-items:center;justify-content:center}
+.rp3-empty b{font-size:18px;color:#0E3B27}.rp3-empty>span:last-child{font-size:13px;color:#7D8A82;max-width:420px;line-height:1.7}
+.acard:fullscreen.rp-split,.acard.wkfs-fallback.rp-split{display:block!important}
+.acard:fullscreen>.rp3-side,.acard.wkfs-fallback>.rp3-side{display:none!important}
+@media print{ .acard.rp-split{display:block!important} .rp3-side{display:none!important} }
+@media screen and (max-width:900px){ .acard.rp-split{grid-template-columns:minmax(0,1fr)} .acard.rp-split>*:not(.rp3-side){grid-column:1} .acard.rp-split>.rp3-side{grid-row:auto;position:static;max-height:none;margin-bottom:14px} .acard.rp-split>.rp3-side ~ *{grid-row:auto} }
+body[data-theme="dark"] .rp3-side,body[data-theme="dark"] .rp3-types button{background:#14222A;border-color:rgba(205,228,217,.10);color:#E4ECE7}
+body[data-theme="dark"] .rp3-h b,body[data-theme="dark"] .rp3-empty b{color:#E8EFEB}
+body[data-theme="dark"] .rp3-seg button{background:#182A33;border-color:rgba(205,228,217,.12);color:#E4ECE7}
+body[data-theme="dark"] .rp3-seg button.on{background:#22343D;border-color:#D6B25E}
+body[data-theme="dark"] .rp3-types button.on{background:#1B2E38;border-color:#D6B25E;box-shadow:inset 0 0 0 1px #D6B25E}
+body[data-theme="dark"] .rp3-types button .ic,body[data-theme="dark"] .rp3-empty .ic{background:rgba(214,178,94,.13);color:#E3C77F}
+body[data-theme="dark"] .rp3-types button.on .ic{background:#D6B25E;color:#14222A}
+body[data-theme="dark"] .rp3-cnt,body[data-theme="dark"] .rp3-pp{background:#182A33}body[data-theme="dark"] .rp3-cnt b,body[data-theme="dark"] .rp3-pp em{color:#8ED2AE}
+body[data-theme="dark"] .rp3-cnt span{color:#A3B5AC}
+body[data-theme="dark"] .rp3-cnt button,body[data-theme="dark"] .rp3-pp button,body[data-theme="dark"] .rp3-ps input,body[data-theme="dark"] .rp3-pp em{background:#14222A;border-color:rgba(205,228,217,.14);color:#E4ECE7}
+body[data-theme="dark"] .rp3-empty{background:#14222A;border-color:rgba(205,228,217,.12);color:#A3B5AC}
+body[data-theme="dark"] .rp3-adv{color:#8ED2AE;border-color:rgba(142,210,174,.3)}
+</style>
+<script id="rp3Js">/* ================= التقارير: لوحة جانبية ثابتة + عرض التقرير فوراً بجانبها ================= */
+var RP3={on:false,until:0,nav:""};
+function _rp3Ready(){ return RP2.scope==="p"?!!RP.one:_rpList().length>0; }
+function _rp3Side(){ var sc=RP2.scope, L=_rpList(), any=Object.keys(RP.f).some(function(k){ return (RP.f[k]||[]).length; }), ready=_rp3Ready(), T=RP2_TYPES[sc]||[];
+  var S=[["all","المحفظة كاملة"],["f","مجموعة مشاريع"],["p","مشروع واحد"]];
+  var h='<aside class="rp3-side noprint"><div class="rp3-h"><b>التقارير</b><span>اختر النطاق ونوع التقرير ويظهر فوراً</span></div>'
+    +'<div class="rp3-g"><span class="rp3-l">التقرير عن</span><div class="rp3-seg">'+S.map(function(x){ return '<button class="'+(sc===x[0]?'on':'')+'" onclick="rp3Scope(\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0],16)+'</span>'+x[1]+'</button>'; }).join("")+'</div>';
+  if(sc==="all") h+='<div class="rp3-note">كل مشاريع البرنامج ('+_arPrj(DATA.length)+')</div>';
+  if(sc==="f") h+='<div class="rp3-fs">'+RP_FIELDS.map(function(x){ return '<div class="rp-f"><span>'+x[1]+'</span>'+_mselHTML("rp",x[0],x[2],_rpOpts(x[0]),RP.f[x[0]]||[],x[0]==="cat"?(RP.f.cat||[]).map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "):"")+'</div>'; }).join("")+'</div>'
+      +'<div class="rp3-cnt"><b>'+_arPrj(L.length)+'</b><span>'+esc(_rpTitle())+'</span>'+(any?'<button onclick="RP.f={};rp3Refresh()">✕ مسح</button>':'')+'</div>';
+  if(sc==="p"){ var p=RP.one?DATA.find(function(x){ return String(x.code)===RP.one; }):null;
+    if(p) h+='<div class="rp3-pp"><em>'+esc(p.code)+'</em><b>'+esc(p.alias||p.name||"")+'</b><button onclick="RP.one=null;rp3Refresh()">تغيير</button></div>';
+    else h+='<div class="rp3-ps"><input id="rp1Q" type="search" placeholder="ابحث بالاسم أو الكود…" oninput="rpOneFilter(this.value)" autocomplete="off"><span id="rp1N">'+_arPrj(DATA.length)+'</span></div><div class="rp1-l rp3-pl" id="rp1L">'
+      +DATA.slice().sort(function(a,b){ return String(a.code).localeCompare(String(b.code),"en",{numeric:true}); }).map(function(x){ return '<button class="rp1-it" data-q="'+esc(_normAr([x.code,x.name,x.sector,x.region,x.contractor].join(" ")).toLowerCase())+'" onclick="RP.one=\''+esc(String(x.code)).replace(/'/g,"\\'")+'\';rp3Refresh()"><em>'+esc(x.code)+'</em><span><b>'+esc(x.name||"")+'</b><small>'+esc(x.sector||"")+' · '+esc(x.region||"")+'</small></span></button>'; }).join("")+'</div>'; }
+  h+='</div><div class="rp3-g"><span class="rp3-l">نوع التقرير</span>'+(ready?'':'<div class="rp3-note warn">'+(sc==="p"?'اختر المشروع أولاً':'لا توجد مشاريع مطابقة للفلاتر')+'</div>')+'<div class="rp3-types">'
+    +T.map(function(x){ return '<button class="'+(RP2.type===x[0]?'on':'')+'" '+(ready?'':'disabled ')+'onclick="rp3Type(\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0],18)+'</span><span class="tx"><b>'+x[1]+'</b><em>'+x[2]+'</em></span></button>'; }).join("")+'</div></div>'
+    +'<button class="rp3-adv" onclick="RP3.on=false;reportBuilder()">تقرير مخصّص متقدم ←</button></aside>';
+  return h; }
+function _rp3Mount(){ try{ if(!RP3.on) return; if(!(Date.now()<RP3.until||RP3.nav==="report")) { RP3.on=false; return; }
+  var c=A&&A.querySelector(".acard"); if(!c||c.querySelector(".rp3-side")) return;
+  var d=document.createElement("div"); d.innerHTML=_rp3Side(); c.classList.add("rp-split"); c.insertBefore(d.firstChild,c.firstChild); }catch(e){} }
+function reportPrepOpen(keep){ RP.mode="f"; RP.back=null; try{ setNavActive("report"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=false; ANSWER_TITLE=""; if(!keep){ RP.f={}; RP2.type=""; }
+  RP3.on=true; RP3.until=Date.now()+3000;
+  if(RP2.type&&_rp3Ready()){ _rp3Go(); return; }
+  show('<div class="hb-page rp"><div class="rp3-main"><div class="rp3-empty"><span class="ic">'+_rp2Ic("general",34)+'</span><b>اختر نوع التقرير من القائمة</b><span>يظهر التقرير هنا مباشرة، وتقدر تغيّر النطاق أو الفلاتر من الجنب ويتحدّث التقرير فوراً</span></div></div></div>'); }
+function _rp3Go(){ if(!RP2.type||!_rp3Ready()){ reportPrepOpen(true); return; } RP3.on=true; RP3.until=Date.now()+6000; RP.back=null;
+  try{ rp2Go(); }catch(e){ console.error(e); } setTimeout(function(){ try{ setNavActive("report"); }catch(e){} _rp3Mount(); try{ window.scrollTo(0,0); }catch(e){} },30); }
+function rp3Type(t){ RP2.type=t; _rp3Go(); }
+function rp3Scope(s){ RP2.scope=s; var T=RP2_TYPES[s]||[]; if(!T.some(function(x){ return x[0]===RP2.type; })) RP2.type=""; rp3Refresh(); }
+function rp3Refresh(){ if(RP2.type&&_rp3Ready()) _rp3Go(); else reportPrepOpen(true); }
+function rpMSet(k,val,w){ RP.f[k]=Array.isArray(val)?val:(val?[val]:[]); rp3Refresh(); }
+/* ربط: كل عرض جديد أثناء جلسة التقارير يُضاف له الشريط الجانبي */
+(function(){ if(window._rp3Hooked) return; window._rp3Hooked=true;
+  var s0=window.show; if(typeof s0==="function"){ var s1=function(html){ var r=s0.apply(this,arguments); _rp3Mount(); return r; }; window.show=s1; try{ show=s1; }catch(e){} }
+  var n0=window.setNavActive; if(typeof n0==="function"){ var n1=function(k){ RP3.nav=k; return n0.apply(this,arguments); }; window.setNavActive=n1; try{ setNavActive=n1; }catch(e){} }
+  var p0=window.navPick; if(typeof p0==="function"){ var p1=function(el){ try{ if(!el||el.getAttribute("data-nav")!=="report") RP3.on=false; }catch(e){} return p0.apply(this,arguments); }; window.navPick=p1; try{ navPick=p1; }catch(e){} }
+  try{ window.reportPrepOpen=reportPrepOpen; window.rpMSet=rpMSet; }catch(e){} })();
+</script>
 <style id="finCss">/* اللوحة المالية — لوحة بشاشة واحدة */
 .fdx{--fd-pg:#F3F5F1;--fd-bg:#fff;--fd-bd:#E2E8E3;--fd-tx:#13261B;--fd-mu:#66766C;--fd-g:#1E6B45;--fd-g2:#A9CDB7;--fd-a:#C9A24E;--fd-r:#F3C4BE;--fd-t:#DCC690;--fd-e:#E8E4D8;--fd-m0:#EDF1EE;--fd-map:#1E6B45;--fd-soft:#F6F8F5;--fd-grid:#E6EBE7;--fd-th:#0E3B27;--fd-thx:#fff}
 body[data-theme="dark"] .fdx{--fd-pg:#0F1B22;--fd-bg:#162630;--fd-bd:rgba(205,228,217,.10);--fd-tx:#E8EFEB;--fd-mu:#9DB0B8;--fd-g:#5CC08D;--fd-g2:#3F6F5B;--fd-a:#D6B25E;--fd-r:#C98A82;--fd-t:#8E7A45;--fd-e:#2A3B44;--fd-m0:#1F313A;--fd-map:#5CC08D;--fd-soft:#1B2E38;--fd-grid:rgba(255,255,255,.07);--fd-th:#22343D;--fd-thx:#E8EFEB}
@@ -21933,10 +22031,56 @@ body[data-theme="dark"] .fdx .fd-ml.inv text{fill:#0E1A20;stroke:rgba(255,255,25
 .fdx-wrap.flow .fd-bars{height:240px;overflow-x:auto;grid-auto-columns:minmax(70px,1fr)}
 .fdx-wrap.flow .fd-tw{max-height:420px}.fdx-wrap.flow .fd-t{table-layout:auto}
 .fdx-wrap.flow .fd-map{height:340px}
+/* ===== مطابقة التصميم المرجعي ===== */
+.fdx-c{height:1045px;grid-template-rows:56px 248px 306px minmax(0,1fr)}
+.fdx .fd-head h1{font-weight:800}
+.fdx .fd-p>header,.fdx .fd-sec>header,.fdx .fd-yr>header{flex-direction:column;justify-content:center;align-items:center;gap:4px;text-align:center;margin-bottom:6px}
+.fdx h3{font-size:18px;font-weight:800;text-decoration:underline;text-underline-offset:7px;text-decoration-thickness:1px}
+.fdx .fd-p>header>span{font-weight:400;font-size:12px}
+.fdx b,.fdx em,.fdx span,.fdx td,.fdx small,.fdx .fd-ttl>span{font-weight:400!important}
+.fdx .fd-t th{font-weight:600}
+.fdx .fd-k .l{font-size:16px;font-weight:600!important;color:var(--fd-tx);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+.fdx .fd-k b{font-size:36px;font-weight:500!important;letter-spacing:0}
+.fdx .fd-k.g b,.fdx .fd-k.a b{color:var(--fd-tx)}
+.fdx .fd-k em{font-size:12px;opacity:.85}
+.fdx .fd-lgd span,.fdx .fd-lgd em{font-weight:400!important}
+.fdx .fd-b b,.fdx .fd-ylab,.fdx .fd-bc>span,.fdx .fd-yaxis span{font-weight:400!important}
+.fdx .fd-b b{font-size:13px}.fdx .fd-bc>span{font-size:13.5px}.fdx .fd-ylab{font-size:13.5px}.fdx .fd-yaxis span{font-size:14px}
+.fdx .fd-yr{flex:1.05}.fdx .fd-sec{flex:1.95}
+/* الدونات بأرقام خارجها */
+.fdx .fd-cap{padding:12px 16px}
+.fdx .fd-cb{grid-template-columns:210px minmax(0,1fr)!important;gap:6px!important;align-items:center}
+.fdx .fd-dw{width:100%!important;height:100%!important;min-height:0;display:flex;align-items:center;justify-content:center}
+.fdx .fd-dw>svg{width:100%;height:100%;max-height:214px}
+.fdx .fd-cl{fill:none;stroke:var(--fd-mu);stroke-width:1}
+.fdx .fd-ct{font-size:19px;fill:var(--fd-tx);font-weight:400}
+.fdx .fd-dcb{font-size:36px;fill:var(--fd-tx);font-weight:500}
+.fdx .fd-dcs{font-size:16px;fill:var(--fd-mu)}
+.fdx .fd-lg{gap:6px!important}
+.fdx .fd-li{grid-template-columns:12px minmax(0,1fr) auto!important;gap:8px!important;font-size:13.5px!important;line-height:1.35!important;font-weight:400!important}
+.fdx .fd-li span{white-space:normal!important}
+.fdx .fd-lnote{margin-top:4px;font-size:11.5px;color:var(--fd-mu)}
+/* الخريطة: خمس درجات واضحة */
+.fdx{--m1:#E3EEE7;--m2:#B5D3C0;--m3:#7DB394;--m4:#3F8A63;--m5:#174F34}
+body[data-theme="dark"] .fdx{--m1:#203A3A;--m2:#2B5A49;--m3:#3C7F5E;--m4:#5BAF82;--m5:#9BE0B8}
+.fdx .fd-mr{stroke:var(--fd-bg);stroke-width:1.8}
+.fdx .fd-mr.m0{fill:var(--fd-m0)}.fdx .fd-mr.m1{fill:var(--m1)}.fdx .fd-mr.m2{fill:var(--m2)}.fdx .fd-mr.m3{fill:var(--m3)}.fdx .fd-mr.m4{fill:var(--m4)}.fdx .fd-mr.m5{fill:var(--m5)}
+.fdx .fd-ml text{font-weight:400!important}.fdx .fd-ml .v{font-weight:600!important}
+.fdx .fd-ml.t4 text,.fdx .fd-ml.t5 text{fill:#fff;stroke:rgba(0,0,0,.25)}
+body[data-theme="dark"] .fdx .fd-ml.t4 text,body[data-theme="dark"] .fdx .fd-ml.t5 text{fill:#0E1A20;stroke:rgba(255,255,255,.25)}
+body[data-theme="dark"] .fdx .fd-ml.inv text{fill:inherit}
+.fdx .fd-mlg{position:absolute;bottom:4px;inset-inline-start:6px;display:flex;align-items:center;gap:3px;font-size:12px;color:var(--fd-mu)}
+.fdx .fd-mlg i{width:22px;height:10px;border-radius:2px}
+.fdx .fd-mlg i.m1{background:var(--m1)}.fdx .fd-mlg i.m2{background:var(--m2)}.fdx .fd-mlg i.m3{background:var(--m3)}.fdx .fd-mlg i.m4{background:var(--m4)}.fdx .fd-mlg i.m5{background:var(--m5)}
+.fdx .fd-mlg span{margin:0 4px}
+.fdx .fd-mnote{position:absolute;bottom:4px;inset-inline-end:6px;font-size:11.5px;color:var(--fd-mu)}
+.fdx .fd-nat b{font-weight:500!important}
+.fdx .fd-map>svg{max-height:calc(100% - 22px)}
+.fdx-wrap.flow .fd-cb{grid-template-columns:1fr!important}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
-var FD_W=1600, FD_H=1000;
+var FD_W=1600, FD_H=1045;
 function _fdIsCap(p){ return /^449/.test(String(p.budget_item||"").trim()); }
 function _fdSecOrder(a,b){ var o=(typeof PF_SEC_ORDER!=="undefined")?PF_SEC_ORDER:[], x=o.indexOf(a), y=o.indexOf(b); return (x<0?99:x)-(y<0?99:y); }
 function _fdMn(x){ x=(+x||0)/1e6; return x.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -21972,7 +22116,7 @@ function fdPrint(){ var w=document.querySelector(".fdx-wrap"); if(!w) return;
     +'@page{size:A4 landscape;margin:0}html,body{margin:0;padding:0;background:#fff}body{font-family:'+bf+';-webkit-print-color-adjust:exact;print-color-adjust:exact}'
     +'.ryl{height:.9em;width:auto;vertical-align:-.08em;margin-inline-start:4px;font-family:SaudiRiyal,inherit;font-style:normal}'
     +'.pg{width:297mm;height:209mm;overflow:hidden;display:flex;align-items:center;justify-content:center}'
-    +'.fdx-wrap{position:relative;width:1070px;height:669px;overflow:hidden;border-radius:0}.fdx-c{position:absolute;left:0;top:0;transform:scale(.66875)}.fd-btn{display:none!important}.fd-tw{overflow:hidden!important}'
+    +'.fdx-wrap{position:relative;width:1070px;height:699px;overflow:hidden;border-radius:0}.fdx-c{position:absolute;left:0;top:0;transform:scale(.66875)}.fd-btn{display:none!important}.fd-tw{overflow:hidden!important}'
     +'</style></head><body><div class="pg"><div class="dash dx fdx">'+cl.outerHTML+'</div></div><script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){ window.print(); },250); });<\/script></body></html>';
   var win=window.open("","_blank"); if(!win){ alert("اسمح بالنوافذ المنبثقة للطباعة"); return; }
   win.document.open(); win.document.write(html); win.document.close(); }
@@ -22002,14 +22146,21 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   D.forEach(function(p){ var s=st(p), v=_dxBase(p), cap=_fdIsCap(p); if(cap){ capN++; capV+=v; } if((s==="done"||s==="run")&&cap){ cd+=_dxN(p.disbursed); cu+=_dxN(p.under_proc); } g[s]=(g[s]||0)+v; });
   var act=g.run+g.done, rem=Math.max(0,act-cd-cu), all=act+g.tender+g.award, filt=!!FD.sec, base=filt?(all||1):BUD, bleft=Math.max(0,BUD-all);
   var segs=[{l:"المنصرف",v:cd,c:"var(--fd-g)"},{l:"تحت الإجراء",v:cu,c:"var(--fd-a)"},{l:"المتبقي من العقود القائمة",v:rem,c:"var(--fd-g2)"},{l:"في إجراءات الترسية",v:g.award,c:"var(--fd-r)"},{l:"في إجراءات الطرح",v:g.tender,c:"var(--fd-t)"}].concat(filt?[]:[{l:"المتبقي من الميزانية",v:bleft,c:"var(--fd-e)"}]);
-  var tot=segs.reduce(function(a,x){ return a+x.v; },0)||1, C=2*Math.PI*74, off=0;
-  var donut='<div class="fd-dw"><svg viewBox="0 0 190 190">'+'<circle cx="95" cy="95" r="74" class="fd-dtr"/>'+segs.map(function(x){ if(!(x.v>0)) return ""; var L=C*x.v/tot, gp=Math.min(2.5,L*0.3), s='<circle cx="95" cy="95" r="74" fill="none" stroke="'+x.c+'" stroke-width="26" stroke-dasharray="'+Math.max(0,L-gp).toFixed(2)+' '+C.toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 95 95)"><title>'+esc(x.l)+': '+_dxM(x.v)+'</title></circle>'; off+=L; return s; }).join("")
-    +'</svg><div class="fd-dc"><b>'+_dxMs(base)[0]+'</b><span>'+_rU(_dxMs(base)[1])+'</span></div></div>';
-  var P=function(v){ return _dxPct(base?v/base:0); };
-  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+' بقيمة '+_dxM(capV)+' · نسبة الصرف '+_dxPct(act?cd/act:0)+'</span></header><div class="fd-cb">'+donut
-      +'<div class="fd-lg"><div class="fd-lh"><span>المشاريع القائمة والمنتهية</span><b>'+_dxM(act)+'</b><em>'+P(act)+'</em></div>'
-      +segs.map(function(x){ return '<div class="fd-li"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><b>'+_dxM(x.v)+'</b><em>'+P(x.v)+'</em></div>'; }).join("")+'</div></div>'
-    +'</section>';
+  var tot=segs.reduce(function(a,x){ return a+x.v; },0)||1, P=function(v){ return _dxPct(base?v/base:0); };
+  var VW=600, VH=236, cx=VW/2, cy=VH/2, r=84, sw=30, C=2*Math.PI*r, off=0, a0=-Math.PI/2, arcs="", pts=[];
+  segs.forEach(function(x){ if(!(x.v>0)) return; var L=C*x.v/tot, gp=Math.min(2.5,L*0.3);
+    arcs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+x.c+'" stroke-width="'+sw+'" stroke-dasharray="'+Math.max(0,L-gp).toFixed(2)+' '+C.toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 '+cx+' '+cy+')"><title>'+esc(x.l)+': '+_dxM(x.v)+'</title></circle>';
+    var mid=a0+2*Math.PI*(off+L/2)/C; pts.push({x:x,ang:mid,sx:cx+Math.cos(mid)*(r+sw/2+2),sy:cy+Math.sin(mid)*(r+sw/2+2),side:Math.cos(mid)>=0?1:-1,ty:cy+Math.sin(mid)*(r+sw/2+22)}); off+=L; });
+  [1,-1].forEach(function(sd){ var Q=pts.filter(function(p){ return p.side===sd; }).sort(function(a,b){ return a.ty-b.ty; }), gap=27;
+    for(var k2=0;k2<Q.length;k2++){ Q[k2].ty=Math.max(14,Q[k2].ty); if(k2&&Q[k2].ty<Q[k2-1].ty+gap) Q[k2].ty=Q[k2-1].ty+gap; }
+    for(var k3=Q.length-1;k3>=0;k3--){ if(Q[k3].ty>VH-10) Q[k3].ty=VH-10; if(k3<Q.length-1&&Q[k3].ty>Q[k3+1].ty-gap) Q[k3].ty=Q[k3+1].ty-gap; } });
+  var calls=pts.map(function(p){ var ex=cx+p.side*(r+sw/2+34), tx=cx+p.side*(r+sw/2+40);
+    return '<polyline class="fd-cl" points="'+p.sx.toFixed(1)+','+p.sy.toFixed(1)+' '+ex.toFixed(1)+','+p.ty.toFixed(1)+' '+(ex+p.side*6).toFixed(1)+','+p.ty.toFixed(1)+'"/><text class="fd-ct" x="'+tx.toFixed(1)+'" y="'+(p.ty+4.5).toFixed(1)+'" text-anchor="'+(p.side>0?'start':'end')+'">'+_fdNum(p.x.v)+'</text>'; }).join("");
+  var donut='<div class="fd-dw"><svg viewBox="0 0 '+VW+' '+VH+'" style="direction:ltr"><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" class="fd-dtr" style="stroke-width:'+sw+'"/>'+arcs+calls
+    +'<text class="fd-dcb" x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle">'+_dxMs(base)[0]+'</text><text class="fd-dcs" x="'+cx+'" y="'+(cy+28)+'" text-anchor="middle">'+(_dxMs(base)[1].indexOf("مليار")>-1?"مليار ريال":"مليون ريال")+'</text></svg></div>';
+  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3></header><div class="fd-cb">'
+      +'<div class="fd-lg">'+segs.map(function(x){ return '<div class="fd-li"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><em>'+P(x.v)+'</em></div>'; }).join("")
+      +'<div class="fd-lnote">'+(filt?'ضمن التصفية · ':'')+'المشاريع الرأسمالية (البند 449): '+_arPrj(capN)+'</div></div>'+donut+'</div></section>';
   /* ---- إحصائيات القطاعات ---- */
   var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
   var SK=Object.keys(S).sort(_fdSecOrder), smx=Math.max.apply(null,SK.map(function(x){ return Math.max(S[x].d,S[x].u); }).concat([1]));
@@ -22032,12 +22183,13 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   /* ---- التوزيع الجغرافي ---- */
   var RV={}, nat=0; KSA_REG.r.forEach(function(r){ RV[r.ar]=0; });
   D.forEach(function(p){ var v=_dxN(p.disbursed); if(!v) return; var hit=KSA_REG.r.filter(function(r){ return _regionHas(p.region,r.ar); }); if(hit.length) hit.forEach(function(r){ RV[r.ar]+=v/hit.length; }); else nat+=v; });
-  var rmx=Math.max(1,Math.max.apply(null,KSA_REG.r.map(function(r){ return RV[r.ar]; })));
-  var paths="", labs=""; KSA_REG.r.forEach(function(r){ var v=RV[r.ar], f=v?0.16+0.8*Math.sqrt(v/rmx):0, sm=/الباحة|جازان/.test(r.ar);
-    paths+='<path class="fd-mr" d="'+r.d+'" style="'+(v?'fill-opacity:'+f.toFixed(2):'fill:var(--fd-m0)')+'"><title>'+esc(r.ar)+': '+_dxM(v)+'</title></path>';
-    labs+='<g class="fd-ml'+(f>0.62?' inv':'')+'"><text x="'+r.x+'" y="'+(r.y-3)+'" class="a'+(sm?' sm':'')+'">'+esc(r.ar)+'</text>'+(v?'<text x="'+r.x+'" y="'+(r.y+(sm?17:28))+'" class="v'+(sm?' sm':'')+'">'+(+(v/1e6).toFixed(1)).toLocaleString("en-US")+'</text>':'')+'</g>'; });
-  var geo='<section class="fd-p fd-geo"><header><h3>التوزيع الجغرافي</h3><span>المنصرف · مليون ريال</span></header><div class="fd-map"><svg viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr">'+paths+labs+'</svg>'
-    +(nat?'<div class="fd-nat"><span>مناطق المملكة</span><b>'+(+(nat/1e6).toFixed(1)).toLocaleString("en-US")+'</b><em>مليون ريال</em></div>':'')+'</div></section>';
+  var vals=KSA_REG.r.map(function(r){ return RV[r.ar]; }).filter(function(v){ return v>0; }).sort(function(a,b){ return a-b; });
+  var cls=function(v){ if(!(v>0)) return 0; var k4=0; while(k4<vals.length&&vals[k4]<v) k4++; return Math.min(5,1+Math.floor(k4/Math.max(1,vals.length)*5)); };
+  var paths="", labs=""; KSA_REG.r.forEach(function(r){ var v=RV[r.ar], c=cls(v), sm=/الباحة|جازان/.test(r.ar);
+    paths+='<path class="fd-mr m'+c+'" d="'+r.d+'"><title>'+esc(r.ar)+': '+_dxM(v)+'</title></path>';
+    labs+='<g class="fd-ml t'+c+'"><text x="'+r.x+'" y="'+(r.y-3)+'" class="a'+(sm?' sm':'')+'">'+esc(r.ar)+'</text>'+(v?'<text x="'+r.x+'" y="'+(r.y+(sm?17:27))+'" class="v'+(sm?' sm':'')+'">'+(+(v/1e6).toFixed(1)).toLocaleString("en-US")+'</text>':'')+'</g>'; });
+  var geo='<section class="fd-p fd-geo"><header><h3>التوزيع الجغرافي</h3><span>المنصرف حسب المنطقة</span></header><div class="fd-map"><svg viewBox="'+KSA_REG.vb+'" preserveAspectRatio="xMidYMid meet" style="direction:ltr">'+paths+labs+'</svg>'
+    +(nat?'<div class="fd-nat"><span>مناطق المملكة</span><b>'+(+(nat/1e6).toFixed(1)).toLocaleString("en-US")+'</b><em>مليون ريال</em></div>':'')+'<div class="fd-mlg"><span>الأقل</span><i class="m1"></i><i class="m2"></i><i class="m3"></i><i class="m4"></i><i class="m5"></i><span>الأكثر</span></div><div class="fd-mnote">المبالغ: مليون ريال سعودي</div></div></section>';
   /* ---- جدول المستخلصات ---- */
   var TR=PR.slice().sort(function(a,b){ var x=String(b.m||""), y=String(a.m||""); if(x!==y) return x<y?-1:1; return _payN(b.no)-_payN(a.no); });
   var tbl='<section class="fd-p fd-tb"><header><h3>سجل المستخلصات</h3><span>'+ar(TR.length)+' مستخلص · الأحدث أولاً</span></header>'+(TR.length?'<div class="fd-tw"><table class="fd-t"><thead><tr><th>القطاع</th><th>مسمى المشروع</th><th>رقم المستخلص</th><th>الشهر</th><th>قيمة المستخلص</th><th>حالة المستخلص</th></tr></thead><tbody>'
@@ -22048,108 +22200,10 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
     +'<div class="fd-acts">'+bI("ملء الشاشة","fdFull()",'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>')+bI("طباعة","fdPrint()",'<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/>')+'</div></div>';
   _dxShow('<div class="dash dx fdx"><div class="fdx-wrap"><div class="fdx-c">'+head
     +'<div class="fd-r1">'+kpis+cap+'</div>'
-    +'<div class="fd-r2"><section class="fd-p fd-mid">'+secs+'<i class="fd-vd"></i>'+yr+'</section></div>'
+    +'<div class="fd-r2"><section class="fd-p fd-mid">'+yr+'<i class="fd-vd"></i>'+secs+'</section></div>'
     +'<div class="fd-r3">'+tbl+geo+'</div>'
     +'</div></div></div>');
   [0,60,250].forEach(function(ms){ setTimeout(fdFit,ms); }); }
-</script>
-<style id="rp3Css">/* التقارير: لوحة جانبية + التقرير بجانبها */
-.acard.rp-split{display:grid!important;grid-template-columns:320px minmax(0,1fr);column-gap:18px;align-items:start}
-.acard.rp-split>*:not(.rp3-side){grid-column:2;min-width:0}
-.acard.rp-split>.rp3-side{grid-column:1;grid-row:1 / span 60;position:sticky;top:64px;margin-top:0;max-height:calc(100vh - 80px);overflow:auto;align-self:start}
-.acard.rp-split .rp-ready>button:first-child{display:none}
-.rp3-side{background:#fff;border:1px solid #E2E8E3;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
-.rp3-h b{display:block;font-size:17px;font-weight:900;color:#0E3B27}
-.rp3-h span{font-size:12px;color:#7D8A82;font-weight:600}
-.rp3-g{display:flex;flex-direction:column;gap:8px}
-.rp3-l{font-size:12px;font-weight:800;color:#6B7A71}
-.rp3-seg{display:flex;flex-direction:column;gap:4px}
-.rp3-seg button{display:flex;align-items:center;gap:8px;font:inherit;font-size:13.5px;font-weight:800;text-align:start;padding:8px 10px;border-radius:10px;border:1px solid #E2E8E3;background:#F7F9F6;color:#1B2A21;cursor:pointer}
-.rp3-seg button .ic{display:inline-flex;color:#6B7A71}
-.rp3-seg button.on{background:#0E4A2F;border-color:#0E4A2F;color:#fff}.rp3-seg button.on .ic{color:#E9D29A}
-.rp3-note{font-size:12px;color:#6B7A71;font-weight:600;padding:0 2px}.rp3-note.warn{color:#A5631A}
-.rp3-fs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 8px}
-.rp3-fs .rp-f{display:flex;flex-direction:column;gap:3px}
-.rp3-fs .rp-f>span{font-size:11.5px;font-weight:700;color:#6B7A71}
-.rp3-fs .msel{width:100%;min-width:0!important}.rp3-fs .msel>button,.rp3-fs .msel-b{width:100%!important;min-width:0!important;height:32px!important;min-height:32px!important;font-size:12px!important;padding:0 8px!important}
-.rp3-cnt{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#F2F7F3;border-radius:10px;padding:8px 10px;font-size:12px}
-.rp3-cnt b{color:#0E4A2F;font-size:13.5px}.rp3-cnt span{color:#46574D;font-weight:600;min-width:0;flex:1}
-.rp3-cnt button,.rp3-pp button{font:inherit;font-size:11.5px;font-weight:800;border:1px solid #DDE3DE;background:#fff;border-radius:8px;padding:3px 8px;cursor:pointer}
-.rp3-pp{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#F2F7F3;border-radius:10px;padding:8px 10px;font-size:12.5px}
-.rp3-pp em{font-style:normal;font-weight:900;color:#0E4A2F;font-size:11.5px;background:#fff;border-radius:6px;padding:1px 6px}
-.rp3-pp b{line-height:1.4}
-.rp3-ps{display:flex;align-items:center;gap:6px}.rp3-ps input{flex:1;min-width:0;font:inherit;font-size:12.5px;border:1px solid #DDE3DE;border-radius:9px;padding:7px 10px}
-.rp3-ps span{font-size:11px;color:#7D8A82;white-space:nowrap}
-.rp3-pl{max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:3px}
-.rp3-pl .rp1-it{font-size:12px}
-.rp3-types{display:flex;flex-direction:column;gap:5px}
-.rp3-types button{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;text-align:start;font:inherit;padding:8px 10px;border-radius:11px;border:1px solid #E2E8E3;background:#fff;cursor:pointer;color:#1B2A21}
-.rp3-types button .ic{width:34px;height:34px;border-radius:9px;background:#F4EFE2;color:#8A6A22;display:flex;align-items:center;justify-content:center}
-.rp3-types button b{display:block;font-size:13.5px;font-weight:800}
-.rp3-types button em{display:block;font-style:normal;font-size:11.5px;color:#7D8A82;line-height:1.45}
-.rp3-types button:hover:not(:disabled){border-color:#9CC5AD}
-.rp3-types button.on{border-color:#0E4A2F;background:#F2F7F3;box-shadow:inset 0 0 0 1px #0E4A2F}
-.rp3-types button.on .ic{background:#0E4A2F;color:#fff}
-.rp3-types button:disabled{opacity:.45;cursor:not-allowed}
-.rp3-adv{font:inherit;font-size:12.5px;font-weight:800;color:#0E4A2F;background:none;border:1px dashed #CFE0D5;border-radius:10px;padding:8px;cursor:pointer}
-.rp3-main{min-height:60vh;display:flex}
-.rp3-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;border:1px dashed #D8E1DA;border-radius:16px;background:#FAFBF9;padding:40px 20px;color:#46574D}
-.rp3-empty .ic{width:68px;height:68px;border-radius:18px;background:#F4EFE2;color:#8A6A22;display:flex;align-items:center;justify-content:center}
-.rp3-empty b{font-size:18px;color:#0E3B27}.rp3-empty>span:last-child{font-size:13px;color:#7D8A82;max-width:420px;line-height:1.7}
-.acard:fullscreen.rp-split,.acard.wkfs-fallback.rp-split{display:block!important}
-.acard:fullscreen>.rp3-side,.acard.wkfs-fallback>.rp3-side{display:none!important}
-@media print{ .acard.rp-split{display:block!important} .rp3-side{display:none!important} }
-@media screen and (max-width:900px){ .acard.rp-split{grid-template-columns:minmax(0,1fr)} .acard.rp-split>*:not(.rp3-side){grid-column:1} .acard.rp-split>.rp3-side{grid-row:auto;position:static;max-height:none;margin-bottom:14px} .acard.rp-split>.rp3-side ~ *{grid-row:auto} }
-body[data-theme="dark"] .rp3-side,body[data-theme="dark"] .rp3-types button{background:#14222A;border-color:rgba(205,228,217,.10);color:#E4ECE7}
-body[data-theme="dark"] .rp3-h b,body[data-theme="dark"] .rp3-empty b{color:#E8EFEB}
-body[data-theme="dark"] .rp3-seg button{background:#182A33;border-color:rgba(205,228,217,.12);color:#E4ECE7}
-body[data-theme="dark"] .rp3-seg button.on{background:#22343D;border-color:#D6B25E}
-body[data-theme="dark"] .rp3-types button.on{background:#1B2E38;border-color:#D6B25E;box-shadow:inset 0 0 0 1px #D6B25E}
-body[data-theme="dark"] .rp3-types button .ic,body[data-theme="dark"] .rp3-empty .ic{background:rgba(214,178,94,.13);color:#E3C77F}
-body[data-theme="dark"] .rp3-types button.on .ic{background:#D6B25E;color:#14222A}
-body[data-theme="dark"] .rp3-cnt,body[data-theme="dark"] .rp3-pp{background:#182A33}body[data-theme="dark"] .rp3-cnt b,body[data-theme="dark"] .rp3-pp em{color:#8ED2AE}
-body[data-theme="dark"] .rp3-cnt span{color:#A3B5AC}
-body[data-theme="dark"] .rp3-cnt button,body[data-theme="dark"] .rp3-pp button,body[data-theme="dark"] .rp3-ps input,body[data-theme="dark"] .rp3-pp em{background:#14222A;border-color:rgba(205,228,217,.14);color:#E4ECE7}
-body[data-theme="dark"] .rp3-empty{background:#14222A;border-color:rgba(205,228,217,.12);color:#A3B5AC}
-body[data-theme="dark"] .rp3-adv{color:#8ED2AE;border-color:rgba(142,210,174,.3)}
-</style>
-<script id="rp3Js">/* ================= التقارير: لوحة جانبية ثابتة + عرض التقرير فوراً بجانبها ================= */
-var RP3={on:false,until:0,nav:""};
-function _rp3Ready(){ return RP2.scope==="p"?!!RP.one:_rpList().length>0; }
-function _rp3Side(){ var sc=RP2.scope, L=_rpList(), any=Object.keys(RP.f).some(function(k){ return (RP.f[k]||[]).length; }), ready=_rp3Ready(), T=RP2_TYPES[sc]||[];
-  var S=[["all","المحفظة كاملة"],["f","مجموعة مشاريع"],["p","مشروع واحد"]];
-  var h='<aside class="rp3-side noprint"><div class="rp3-h"><b>التقارير</b><span>اختر النطاق ونوع التقرير ويظهر فوراً</span></div>'
-    +'<div class="rp3-g"><span class="rp3-l">التقرير عن</span><div class="rp3-seg">'+S.map(function(x){ return '<button class="'+(sc===x[0]?'on':'')+'" onclick="rp3Scope(\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0],16)+'</span>'+x[1]+'</button>'; }).join("")+'</div>';
-  if(sc==="all") h+='<div class="rp3-note">كل مشاريع البرنامج ('+_arPrj(DATA.length)+')</div>';
-  if(sc==="f") h+='<div class="rp3-fs">'+RP_FIELDS.map(function(x){ return '<div class="rp-f"><span>'+x[1]+'</span>'+_mselHTML("rp",x[0],x[2],_rpOpts(x[0]),RP.f[x[0]]||[],x[0]==="cat"?(RP.f.cat||[]).map(function(c){ return DX_CAT[c]?DX_CAT[c].l:c; }).join("، "):"")+'</div>'; }).join("")+'</div>'
-      +'<div class="rp3-cnt"><b>'+_arPrj(L.length)+'</b><span>'+esc(_rpTitle())+'</span>'+(any?'<button onclick="RP.f={};rp3Refresh()">✕ مسح</button>':'')+'</div>';
-  if(sc==="p"){ var p=RP.one?DATA.find(function(x){ return String(x.code)===RP.one; }):null;
-    if(p) h+='<div class="rp3-pp"><em>'+esc(p.code)+'</em><b>'+esc(p.alias||p.name||"")+'</b><button onclick="RP.one=null;rp3Refresh()">تغيير</button></div>';
-    else h+='<div class="rp3-ps"><input id="rp1Q" type="search" placeholder="ابحث بالاسم أو الكود…" oninput="rpOneFilter(this.value)" autocomplete="off"><span id="rp1N">'+_arPrj(DATA.length)+'</span></div><div class="rp1-l rp3-pl" id="rp1L">'
-      +DATA.slice().sort(function(a,b){ return String(a.code).localeCompare(String(b.code),"en",{numeric:true}); }).map(function(x){ return '<button class="rp1-it" data-q="'+esc(_normAr([x.code,x.name,x.sector,x.region,x.contractor].join(" ")).toLowerCase())+'" onclick="RP.one=\''+esc(String(x.code)).replace(/'/g,"\\'")+'\';rp3Refresh()"><em>'+esc(x.code)+'</em><span><b>'+esc(x.name||"")+'</b><small>'+esc(x.sector||"")+' · '+esc(x.region||"")+'</small></span></button>'; }).join("")+'</div>'; }
-  h+='</div><div class="rp3-g"><span class="rp3-l">نوع التقرير</span>'+(ready?'':'<div class="rp3-note warn">'+(sc==="p"?'اختر المشروع أولاً':'لا توجد مشاريع مطابقة للفلاتر')+'</div>')+'<div class="rp3-types">'
-    +T.map(function(x){ return '<button class="'+(RP2.type===x[0]?'on':'')+'" '+(ready?'':'disabled ')+'onclick="rp3Type(\''+x[0]+'\')"><span class="ic">'+_rp2Ic(x[0],18)+'</span><span class="tx"><b>'+x[1]+'</b><em>'+x[2]+'</em></span></button>'; }).join("")+'</div></div>'
-    +'<button class="rp3-adv" onclick="RP3.on=false;reportBuilder()">تقرير مخصّص متقدم ←</button></aside>';
-  return h; }
-function _rp3Mount(){ try{ if(!RP3.on) return; if(!(Date.now()<RP3.until||RP3.nav==="report")) { RP3.on=false; return; }
-  var c=A&&A.querySelector(".acard"); if(!c||c.querySelector(".rp3-side")) return;
-  var d=document.createElement("div"); d.innerHTML=_rp3Side(); c.classList.add("rp-split"); c.insertBefore(d.firstChild,c.firstChild); }catch(e){} }
-function reportPrepOpen(keep){ RP.mode="f"; RP.back=null; try{ setNavActive("report"); }catch(e){} RERENDER=null; PRINT_NAME=""; IS_REPORT=false; ANSWER_TITLE=""; if(!keep){ RP.f={}; RP2.type=""; }
-  RP3.on=true; RP3.until=Date.now()+3000;
-  if(RP2.type&&_rp3Ready()){ _rp3Go(); return; }
-  show('<div class="hb-page rp"><div class="rp3-main"><div class="rp3-empty"><span class="ic">'+_rp2Ic("general",34)+'</span><b>اختر نوع التقرير من القائمة</b><span>يظهر التقرير هنا مباشرة، وتقدر تغيّر النطاق أو الفلاتر من الجنب ويتحدّث التقرير فوراً</span></div></div></div>'); }
-function _rp3Go(){ if(!RP2.type||!_rp3Ready()){ reportPrepOpen(true); return; } RP3.on=true; RP3.until=Date.now()+6000; RP.back=null;
-  try{ rp2Go(); }catch(e){ console.error(e); } setTimeout(function(){ try{ setNavActive("report"); }catch(e){} _rp3Mount(); try{ window.scrollTo(0,0); }catch(e){} },30); }
-function rp3Type(t){ RP2.type=t; _rp3Go(); }
-function rp3Scope(s){ RP2.scope=s; var T=RP2_TYPES[s]||[]; if(!T.some(function(x){ return x[0]===RP2.type; })) RP2.type=""; rp3Refresh(); }
-function rp3Refresh(){ if(RP2.type&&_rp3Ready()) _rp3Go(); else reportPrepOpen(true); }
-function rpMSet(k,val,w){ RP.f[k]=Array.isArray(val)?val:(val?[val]:[]); rp3Refresh(); }
-/* ربط: كل عرض جديد أثناء جلسة التقارير يُضاف له الشريط الجانبي */
-(function(){ if(window._rp3Hooked) return; window._rp3Hooked=true;
-  var s0=window.show; if(typeof s0==="function"){ var s1=function(html){ var r=s0.apply(this,arguments); _rp3Mount(); return r; }; window.show=s1; try{ show=s1; }catch(e){} }
-  var n0=window.setNavActive; if(typeof n0==="function"){ var n1=function(k){ RP3.nav=k; return n0.apply(this,arguments); }; window.setNavActive=n1; try{ setNavActive=n1; }catch(e){} }
-  var p0=window.navPick; if(typeof p0==="function"){ var p1=function(el){ try{ if(!el||el.getAttribute("data-nav")!=="report") RP3.on=false; }catch(e){} return p0.apply(this,arguments); }; window.navPick=p1; try{ navPick=p1; }catch(e){} }
-  try{ window.reportPrepOpen=reportPrepOpen; window.rpMSet=rpMSet; }catch(e){} })();
 </script>
 </body>
 </html>
