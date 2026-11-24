@@ -9061,6 +9061,7 @@ html body[data-theme="dark"] #wkReport.mgr .m5-kp.t-g{--kt:rgba(92,212,154,.12);
 html body[data-theme="dark"] #wkReport.mgr .m5-kt span{color:#A3B6AB!important}html body[data-theme="dark"] #wkReport.mgr .m5-kt b{color:#F1F6F3!important}html body[data-theme="dark"] #wkReport.mgr .m5-ka{color:#A3B6AB!important;background:rgba(255,255,255,.05)}html body[data-theme="dark"] #wkReport.mgr .m5-kpis.n4 .m5-ka{background:none;color:#8EA196!important}
 @media print{.m5-kp{box-shadow:none}}
 </style>
+<script>document.addEventListener("fullscreenchange",function(){ if(document.fullscreenElement) return; var el=document.querySelector("#answer .acard.wkfs-fallback[data-docfs]"); if(el){ delete el.dataset.docfs; try{ wkFullscreen(); }catch(e){} } });</script>
 <style id="hmgRing">html body .hmg-c .hmg-rg{width:42px!important;height:42px!important}html body .hmg-c .hmg-rg b{font-size:12px!important;font-weight:800!important;margin-top:0!important}html body .hmg-c .hmg-rg b small{font-size:7px!important}html body .hmg-c .hmg-rg .bg,html body .hmg-c .hmg-rg .fg{stroke-width:4!important}</style>
 <style id="topUnify">
 /* رأس موحّد للوحات الثلاث: لوحة المشروع تستخدم نفس رأس لوحة الأداء العامة داخل اللوحة */
@@ -11809,9 +11810,10 @@ function wkFullscreen(){ const el=document.getElementById("wkReport")||document.
     if(inNative){ try{(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}catch(e){} }
     try{ if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock(); }catch(e){} return; }
   if(wkIsMobile()){ _rvSet(); el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); wkSyncLand(); _dashFitBurst(); [30,200,600].forEach(function(ms){ setTimeout(function(){ try{ _mgrFit(); }catch(e){} },ms); });
-    const req=el.requestFullscreen||el.webkitRequestFullscreen;
+    /* على الموبايل: ملء شاشة للصفحة كلها (لا للبطاقة) حتى لا يُلغي المتصفح تدوير البطاقة للوضع الأفقي */
+    const _de=document.documentElement, req=_de.requestFullscreen||_de.webkitRequestFullscreen;
     const after=()=>{ try{ if(screen.orientation&&screen.orientation.lock) screen.orientation.lock("landscape").then(function(){},function(){}); }catch(e){} setTimeout(wkSyncLand,80); setTimeout(wkSyncLand,400); };
-    if(req){ try{ const p=req.call(el); if(p&&p.then){p.then(after,after);} else after(); }catch(e){ after(); } } else { after(); } }
+    el.dataset.docfs='1'; if(req){ try{ const p=req.call(_de); if(p&&p.then){p.then(after,after);} else after(); }catch(e){ after(); } } else { after(); } }
   else { const req=el.requestFullscreen||el.webkitRequestFullscreen;
     if(req){ try{ const _p=req.call(el); if(_p&&_p.then) _p.then(function(){ setTimeout(dashFitFS,80); },function(){}); }catch(e){} }
     else { el.classList.add("wkfs-fallback"); document.body.classList.add("wkfs-on"); wkFitScale(); }
@@ -22821,6 +22823,17 @@ body[data-theme="dark"] .fdx .fd-yplot.cg .fd-yl{stroke:#C9A97A}
 .fdx .fd-ci b{font-size:16px;font-weight:700;color:var(--tx);line-height:1.25}
 .fdx .fd-ci em{font-style:normal;font-size:10.5px;color:var(--mu2)}
 .fdx .dx-canvas:not(.fit) .fd-cg{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* توزيع الميزانية: مجموعات بلا أرقام مكررة */
+.fdx .fd-gl{justify-content:space-around;gap:8px}
+.fdx .fd-gp{display:flex;flex-direction:column;gap:5px}
+.fdx .fd-gh{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--hl);padding-bottom:4px;margin-bottom:1px}
+.fdx .fd-gh b{font-size:12px;font-weight:700;color:var(--tx)}.fdx .fd-gh em{font-style:normal;font-size:11px;font-weight:700;color:var(--mu)}
+.fdx .fd-gr{display:grid;grid-template-columns:9px 150px minmax(0,1fr) 88px 32px;gap:8px;align-items:center;font-size:12px;color:var(--tx)}
+.fdx .fd-gr > i{width:9px;height:9px;border-radius:2px}
+.fdx .fd-gr > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fdx .fd-gr u{display:block;height:6px;border-radius:9px;background:var(--trk);overflow:hidden}.fdx .fd-gr u s{display:block;height:100%;border-radius:9px;text-decoration:none}
+.fdx .fd-gr b{font-size:13px;font-weight:700;text-align:left;white-space:nowrap}.fdx .fd-gr b small{font-size:10px;font-weight:600;color:var(--mu);margin-inline-start:3px}
+.fdx .fd-gr em{font-style:normal;font-size:11px;color:var(--mu);text-align:left}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
@@ -22862,8 +22875,11 @@ function fdPrint(){ var c=document.querySelector("#answer .fdx .dx-canvas"); if(
     +'.pgw .dx-canvas{position:absolute!important;top:0;left:0;width:'+W+'px!important;height:'+H+'px!important;zoom:1!important;transform:scale('+S.toFixed(4)+');transform-origin:top left;margin:0!important}'
     +'.pgw .fd-tw{overflow:hidden!important}</style></head><body><div class="pg"><div class="pgw"><div class="dash dash3 dx dx-land dxf dxf2 fdx">'+cl.outerHTML+'</div></div></div>'
     +'<script>(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){ setTimeout(function(){ window.print(); },300); });<\/script></body></html>';
-  var win=window.open("","_blank"); if(!win){ alert("اسمح بالنوافذ المنبثقة للطباعة"); return; }
-  win.document.open(); win.document.write(html); win.document.close(); }
+  /* الطباعة من إطار مخفي داخل نفس الصفحة — بدون فتح صفحة جديدة */
+  var old=document.getElementById("fdPrFrame"); if(old) old.remove();
+  var fr=document.createElement("iframe"); fr.id="fdPrFrame"; fr.setAttribute("aria-hidden","true"); fr.style.cssText="position:fixed;right:0;bottom:0;width:1123px;height:794px;border:0;opacity:0;pointer-events:none;z-index:-1";
+  document.body.appendChild(fr); var d=fr.contentWindow.document; d.open(); d.write(html.replace(/window\.print\(\)/,"window.focus();window.print()")); d.close();
+  fr.contentWindow.addEventListener("afterprint",function(){ setTimeout(function(){ try{ fr.remove(); }catch(e){} },500); }); }
 (function(){ var o=window.printAnswer; if(typeof o==="function"&&!o._fd){ var w=function(){ if(document.querySelector("#answer .fdx .dx-canvas")) return fdPrint(); return o.apply(this,arguments); }; w._fd=1; window.printAnswer=w; try{ printAnswer=w; }catch(e){} } })();
 function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _initDashGroup(); }catch(e){}
   if(!keep){ FD.sec=""; }
@@ -22883,7 +22899,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var k=function(l,v,s,cls,bar){ return '<div class="fd-k'+(cls?' '+cls:'')+'"><span class="l">'+l+'</span><span class="v">'+v+'</span>'+(bar!=null?'<i class="bar"><u style="width:'+Math.min(100,bar*100).toFixed(1)+'%"></u></i>':'')+'<span class="s">'+s+'</span></div>'; };
   var BUDBAR=''; var gK=function(l,x,s,tone){ var m=_dxMs(x); return '<div class="dxf-k'+(tone?' '+tone:'')+'" title="'+_fdNum(x)+' ريال"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span><span class="dxf-ks">'+s+'</span></div>'; };
   var kpis='<div class="fd-kpis dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
-    +(function(){ var m=_dxMs(BUD); return '<div class="dxf-k fd-kbud" title="'+_fdNum(BUD)+' ريال"><span class="dxf-kl">إجمالي الميزانية</span><span class="fd-kbr"><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span>%%BUDBAR%%</span><span class="dxf-ks">الميزانية الرأسمالية للبرنامج · ألوان الشريط كما في بطاقات الميزانية بالأسفل</span></div>'; })()
+    +(function(){ var m=_dxMs(BUD); return '<div class="dxf-k fd-kbud" title="'+_fdNum(BUD)+' ريال"><span class="dxf-kl">إجمالي الميزانية</span><span class="fd-kbr"><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span>%%BUDBAR%%</span><span class="dxf-ks">الميزانية الرأسمالية للبرنامج · البند 449</span></div>'; })()
     +gK("إجمالي العقود",contracts,pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length))
     +gK("المبالغ المنصرفة",dis,pc(dis,contracts)+" من قيمة المشاريع القائمة")
     +gK("مبالغ تحت الإجراء",und,pc(und,contracts)+" من قيمة المشاريع القائمة")
@@ -22898,9 +22914,11 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var donut='<div class="fd-dw"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="'+r+'" class="fd-dtr" style="stroke-width:'+sw+'"/>'+segs.map(function(x){ if(!(x.v>0)) return ""; var L=Cc*x.v/tot, gp=Math.min(2,L*0.3), o='<circle cx="100" cy="100" r="'+r+'" fill="none" stroke="'+x.c+'" stroke-width="'+sw+'" stroke-dasharray="'+Math.max(0,L-gp).toFixed(2)+' '+Cc.toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 100 100)"><title>'+esc(x.l)+': '+_fdNum(x.v)+' ريال</title></circle>'; off+=L; return o; }).join("")
     +'</svg><div class="fd-dc"><b>'+_dxMs(base)[0]+'</b><span>'+(_dxMs(base)[1].indexOf("مليار")>-1?"مليار ريال":"مليون ريال")+'</span></div></div>';
   var M2=function(x){ var m=_dxMs(x); return m[0]+'<small>'+_rU(m[1])+'</small>'; };
-  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+'</span></header><div class="fd-pb fd-cc">'
-    +'<div class="fd-ch"><span>المشاريع القائمة والمنتهية</span><b>'+M2(act)+'</b><em>'+pc(act,base)+' من '+(filt?'مشاريع التصفية':'الميزانية')+'</em></div>'
-    +'<div class="fd-cg">'+segs.map(function(x){ return '<div class="fd-ci" title="'+_fdNum(x.v)+' ريال"><span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span><b>'+M2(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; }).join("")+'</div></div></section>';
+  var gRow=function(x){ return '<div class="fd-gr" title="'+_fdNum(x.v)+' ريال"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><u><s style="width:'+(base?Math.min(100,x.v/base*100):0).toFixed(1)+'%;background:'+x.c+'"></s></u><b>'+M2(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; };
+  var G1=segs.slice(0,3), G2=segs.slice(3,5), G3=segs.slice(5), sum=function(A){ return A.reduce(function(a,x){ return a+x.v; },0); };
+  var grp=function(t,A){ return A.length?'<div class="fd-gp"><div class="fd-gh"><b>'+t+'</b><em>'+pc(sum(A),base)+'</em></div>'+A.map(gRow).join("")+'</div>':''; };
+  var cap='<section class="fd-p fd-cap"><header><h3>توزيع الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+' · النسب من '+(filt?'إجمالي التصفية':'الميزانية')+'</span></header><div class="fd-pb fd-gl">'
+    +grp("المشاريع القائمة والمنتهية",G1)+grp("قيد الإجراءات",G2)+(G3.length?"<div class=\"fd-gp\">"+G3.map(gRow).join("")+"</div>":"")+'</div></section>';
   BUDBAR='<div class="fd-bb">'+segs.map(function(x){ return x.v>0?'<i style="flex:'+x.v+';background:'+x.c+'" title="'+esc(x.l)+': '+_fdNum(x.v)+' ريال ('+pc(x.v,base)+')"></i>':''; }).join("")+'</div>';
   /* ---- إحصائيات القطاعات ---- */
   var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
