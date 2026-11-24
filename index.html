@@ -13442,7 +13442,7 @@ function homeOpen(){ try{setNavActive("home");}catch(e){} try{ _setHero(false); 
     +(bar!=null?'<div class="hm-kb"><u style="width:'+(Math.max(0,Math.min(1,bar))*100).toFixed(1)+'%"></u>'+(mk!=null?'<s style="inset-inline-start:'+(Math.max(0,Math.min(1,mk))*100).toFixed(1)+'%"></s>':'')+'</div>':'<div class="hm-kb nob"></div>')+'</div>'; };
   var tvm=_dxMs(tv);
   var kpis='<div class="hm-kpis">'
-    +k("المشاريع النشطة",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
+    +k("عدد المشاريع",ar(D.length),"مشروع",ar(rows.filter(function(r){return r.done;}).length)+" مكتمل · "+ar(_hoN(D))+" قيد التسليم · "+ar(stopped.length)+" متوقف","","projRegOpen()","pr",D.length?rows.filter(function(r){return r.done;}).length/D.length:0)
     +k("قيمة المشاريع",tvm[0],tvm[1],"المنصرف "+_dxM(td)+" ("+_dxPct(tv?td/tv:0)+")","","execDashboard()","mo",tv?td/tv:0)
     +k("متوسط الإنجاز",_dxPct(avgA),"","من المشاريع القائمة · المخطط "+_dxPct(avgP),"","execDashboard()","pg",avgA)
     +k("تتطلب متابعة",ar(off.length),"مشروع",ar(overdue.length)+" تجاوز تاريخ النهاية",off.length?"bad":"","prOpenCat(['watch','late','stumb'])","al",D.length?off.length/D.length:0)
@@ -13514,8 +13514,10 @@ function _tbAlerts(){ var out=[]; try{ DATA.forEach(function(p){ var r=analyzePr
     else if(r.stopped) out.push({c:"bad",p:p,t:"مشروع متوقف",k:1,s:0});
     else if(!r.done&&t.ok&&t.left>=0&&t.left<=60) out.push({c:"warn",p:p,t:"ينتهي خلال "+ar(t.left)+" يوم",k:2,s:t.left}); });
   }catch(e){} return out.sort(function(a,b){ return a.k-b.k||a.s-b.s; }); }
-function _tbAlCount(){ try{ var n=document.getElementById("rtbAlN"); if(n){ var c=_tbAlerts().length; n.textContent=ar(c); n.parentNode.classList.toggle("has",c>0); } }catch(e){} }
-function tbAlerts(e){ if(e) e.stopPropagation(); var r=document.getElementById("rtbAlR"); if(!r) return; if(r.classList.contains("open")){ r.classList.remove("open"); return; }
+/* عدّاد التنبيهات: يختفي بعد فتح القائمة، ويظهر من جديد عند فتح الرابط مرة أخرى (في الذاكرة فقط) */
+var _TB_AL_SEEN=false;
+function _tbAlCount(){ try{ var n=document.getElementById("rtbAlN"); if(n){ var c=_TB_AL_SEEN?0:_tbAlerts().length; n.textContent=ar(c); n.style.display=c>0?"":"none"; n.parentNode.classList.toggle("has",c>0); } }catch(e){} }
+function tbAlerts(e){ if(e) e.stopPropagation(); var r=document.getElementById("rtbAlR"); if(!r) return; if(r.classList.contains("open")){ r.classList.remove("open"); return; } _TB_AL_SEEN=true; try{ _tbAlCount(); }catch(_){}
   var L=_tbAlerts(); r.innerHTML='<div class="rtb-h">التنبيهات <span>'+ar(L.length)+'</span></div>'+(L.length?L.slice(0,40).map(function(a){ return '<button class="rtb-i al '+a.c+'" onclick="tbGo(\'p\',\''+esc(a.p.code)+'\')"><i></i><div><b>'+esc(a.p.alias||a.p.name)+'</b><span>'+esc(a.p.code)+' · '+esc(a.t)+'</span></div></button>'; }).join(""):'<div class="rtb-e">لا توجد تنبيهات حالياً 👌</div>')
     +'<button class="rtb-all" onclick="tbGo(\'f\',\'execDashboard()\')">لوحة الأداء ←</button>';
   r.classList.add("open"); }
