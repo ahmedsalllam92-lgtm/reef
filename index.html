@@ -16455,7 +16455,6 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var tools='<div class="dash-filter dx-filter pd-tools dxbar noprint">'
     +'<div class="dx-fl"><select class="df-sel" onchange="pdSetSector(this.value)"><option value="">كل القطاعات</option>'+secs.map(function(s){return '<option value="'+esc(s)+'"'+(PD.sector===s?" selected":"")+'>'+esc(s)+'</option>';}).join("")+'</select>'
     +'<select class="df-sel pd-sel" onchange="projDashSel(this.value)">'+list.map(function(x){return '<option value="'+esc(x.code)+'"'+(x===p?" selected":"")+'>'+esc(x.name)+'</option>';}).join("")+'</select></div>'
-    +'<input class="df-sel pd-q" list="pdList" placeholder="🔍 ابحث باسم المشروع أو الرمز…" onchange="pdSearch(this)"><datalist id="pdList">'+DATA.map(function(x){return '<option value="'+esc(x.name)+'">';}).join("")+'</datalist>'
     +'<span class="pd-nav"><button class="dx-btn" onclick="pdStep(-1)" title="السابق">→</button><button class="dx-btn" onclick="pdStep(1)" title="التالي">←</button></span><span class="pd-topacts"><button class="dx-btn pd-playb" onclick="pdPlay()" title="عرض تلقائي بملء الشاشة — مشروع كل 5 ثوانٍ"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg> تشغيل</button><button class="dx-btn" id="dxLinkBtn" onclick="dxCopyLink()">'+DX_ICO.link+' نسخ الرابط</button></span>'
     +'<span class="df-count">'+ar(list.findIndex(function(x){return x===p;})+1)+' / '+ar(list.length)+'</span><span class="dxbar-x"></span></div>';
   /* --- الرأس --- */
