@@ -9305,7 +9305,9 @@ var CANCELLED_BASE=[{"src": "portfolio", "code": "RO-18", "sector": "الورد"
 function _cancelCodeSet(){ var s={}; try{ var L=(typeof CANCELLED_BASE!=="undefined"?CANCELLED_BASE:[]).concat((typeof PF!=="undefined"&&PF&&PF.cancelled)||[]);
   L.forEach(function(c){ if(c&&c.code&&c.src==="portfolio") s[c.code]=1; });
   if(typeof PF!=="undefined"&&PF&&PF.data) PF.data.forEach(function(p){ delete s[p.code]; }); }catch(e){} return s; }
-function capPlannedData(arr){ try{ var _cc=_cancelCodeSet(); if(Object.keys(_cc).length) arr=(arr||[]).filter(function(p){ return !(p&&_cc[p.code]); }); }catch(e){}
+function capPlannedData(arr){ /* نسبة الإنجاز في كل المنصة = عمود «الجاهزية للتسليم» (الفعلية الأصلية محفوظة في actual_raw) */
+  try{ (arr||[]).forEach(function(p){ if(!p) return; if(p.actual_raw==null) p.actual_raw=p.actual; var rv=pct(p.ready); if(rv!=null&&!isNaN(rv)) p.actual=p.ready; }); }catch(e){}
+  try{ var _cc=_cancelCodeSet(); if(Object.keys(_cc).length) arr=(arr||[]).filter(function(p){ return !(p&&_cc[p.code]); }); }catch(e){}
   try{ (arr||[]).forEach(p=>{ if(!p) return;
     /* نسبة الإنجاز المخططة تؤخذ من عمود «نسبة الإنجاز المخططة» في المحفظة */
     { const _pa=p.planned_adj; if(_pa!=null&&String(_pa).trim()!==""&&!isNaN(parseFloat(String(_pa).replace(/[%٪]/g,"")))){ if(p.planned_calc==null) p.planned_calc=p.planned; p.planned=_pa; } }
