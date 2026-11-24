@@ -9061,6 +9061,16 @@ html body[data-theme="dark"] #wkReport.mgr .m5-kp.t-g{--kt:rgba(92,212,154,.12);
 html body[data-theme="dark"] #wkReport.mgr .m5-kt span{color:#A3B6AB!important}html body[data-theme="dark"] #wkReport.mgr .m5-kt b{color:#F1F6F3!important}html body[data-theme="dark"] #wkReport.mgr .m5-ka{color:#A3B6AB!important;background:rgba(255,255,255,.05)}html body[data-theme="dark"] #wkReport.mgr .m5-kpis.n4 .m5-ka{background:none;color:#8EA196!important}
 @media print{.m5-kp{box-shadow:none}}
 </style>
+<style id="topUnify">
+/* رأس موحّد للوحات الثلاث: لوحة المشروع تستخدم نفس رأس لوحة الأداء العامة داخل اللوحة */
+#answer .pdx .dxf-head .pd-tools.dxbar{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;margin:0!important;flex:1 1 auto;min-width:0}
+#answer .pdx .dxf-head .dxf-ht{flex:1 1 auto;min-width:0}
+#answer .pdx .dxf-head .dxf-tr{display:flex!important;align-items:center!important;gap:16px!important;flex-wrap:nowrap!important}
+#answer .pdx .dxf-head h1{flex:none}#answer .pdx .dxf-head{height:49px;box-sizing:border-box;flex:none;overflow:visible}#answer .pdx .dxf-head .pd-tools .dx-fl,#answer .pdx .dxf-head .pd-tools{min-height:0!important;height:30px}
+#answer .pdx .dx-canvas.fit > .pd-head{margin-top:0}
+.acard:fullscreen .pdx .pd-hd,.acard.wkfs-fallback .pdx .pd-hd{display:none!important}
+.acard:has(.fdx) > .rtools{display:none!important}
+</style>
 <style id="lwSpot3">
 #lw .lw-si{display:grid;grid-template-columns:176px minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:stretch}
 #lw .lw-si>*{animation:lwRise .8s cubic-bezier(.2,.8,.2,1) both}#lw .lw-si>*:nth-child(2){animation-delay:.12s}#lw .lw-si>*:nth-child(3){animation-delay:.24s}
@@ -16532,7 +16542,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
   var imgs=[p.img1,p.img2,p.img3,p.img4].map(driveImg).filter(Boolean);
   var galBody='<div class="pds-host" id="pdsHost" data-pds="'+esc(p.name||"")+'">'+_pdsHTML(imgs)+'</div>';
   setTimeout(function(){ pdsStart(); try{ if(typeof cldProjectImages==="function"&&p.name) cldProjectImages(p.name).then(function(u){ var h=document.getElementById("pdsHost"); if(!u||!u.length||!h||h.getAttribute("data-pds")!==String(p.name||"")) return; var L=u.slice(0,12).map(function(x){ return typeof _cldThumb==="function"?_cldThumb(x,1600):x; }); h.innerHTML=_pdsHTML(L); var c=document.querySelector(".g-ph .dx-ch em, .g-ph .dx-cs"); if(c) c.textContent=ar(L.length)+" صور"; pdsStart(); }).catch(function(){}); }catch(e){} },60);
-  _dxShow('<div class="dash dash3 dx dx-land pd pdl">'+tools+'<div class="dx-canvas">'+head+kpis
+  _dxShow('<div class="dash dash3 dx dx-land pd pdl dxf pdx">'+'<div class="dx-canvas">'+'<div class="dxf-head pd-hd"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة المشروع</h1>'+tools+'</div></div><div class="dxf-hl"><img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'+head+kpis
     +'<div class="dx-gr pdl-g">'+_dxCard("الجدول الزمني",esc(dur||""),tlBody,"g-tl")+_dxCard("الوضع المالي","",finBody,"g-fin")+_dxCard("المطالبات والجودة","",qBody,"g-cl")
       +_dxCard("آخر المستجدات","",ntBody,"g-nt")+_dxCard("صور الموقع",imgs.length?ar(imgs.length)+" صور":"",galBody,"pd-gcard g-ph")
       +_dxCard("موقع المشروع",esc(p.region||""),ksaProjMap(p),"g-cmp g-map")+_dxCard("تحليل المخاطر","",rkBody,"g-rk")+_dxCard("بيانات المشروع","",ptBody,"g-pt")+'</div>'
@@ -21951,7 +21961,7 @@ body:not([data-theme="dark"]) .v2topo{opacity:.55}
 .v2regs path{fill:rgba(var(--rg),var(--a));stroke:rgba(var(--rg),.35);stroke-width:1.6;transition:fill .6s,stroke .6s,filter .6s}
 .v2regs path.has{stroke:rgba(var(--rg),.75)}
 .v2regs path.hl{fill:rgba(214,178,94,.42)!important;stroke:var(--gd2)!important;stroke-width:2.6;filter:drop-shadow(0 0 14px rgba(240,216,148,.65))}
-.v2arcs path{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 9;opacity:.9;animation:v2Dash 3s linear infinite;animation-delay:var(--d)}@keyframes v2Dash{to{stroke-dashoffset:-160}}
+.v2arcs path{fill:none;stroke-width:1.1;stroke-linecap:round;stroke-dasharray:3 6;opacity:.32;animation:v2Dash 4s linear infinite;animation-delay:var(--d)}@keyframes v2Dash{to{stroke-dashoffset:-160}}
 .v2pins > g > *{opacity:0;animation:v2Pin .6s ease forwards;animation-delay:calc(.6s + var(--a))}
 .v2pins .dot{fill:var(--gd2)}
 .v2pins .rp{fill:none;stroke:var(--gd2);stroke-width:1.3;transform-box:fill-box;transform-origin:center;animation:v2Rp 3s ease-out infinite;animation-delay:calc(var(--d) + 1s);will-change:transform,opacity}.v2pins .r2{animation-delay:calc(var(--d) + 2.5s)}
@@ -22134,10 +22144,10 @@ html.kiosk .v2ctl [data-a="link"],html.kiosk .v2ctl [data-a="x"]{display:none}
 .v2olg .ol i{width:12px;height:12px;border-radius:50%}.v2olg .ol b{font-size:22px;font-weight:700;color:var(--hi)}.v2olg .ol span{font-size:13.5px;color:var(--mu)}
 .v2olk{display:flex;gap:18px;margin-top:10px;font-size:13px;color:var(--mu)}.v2olk i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:6px;vertical-align:-1px}
 
-.v2mlg .ln{width:22px!important;height:0!important;border-radius:0!important;border-top:2.5px dashed var(--gd)}
+.v2mlg .ln{width:22px!important;height:0!important;border-radius:0!important;border-top:1.5px dashed var(--gd);opacity:.6}
 .v2slg{position:absolute;top:6px;right:50%;translate:50% 0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;max-width:92%;font-size:14px;color:var(--tx)}
 .v2slg span{display:inline-flex;align-items:center;gap:7px;padding:3px 10px;border-radius:999px;background:var(--pn);border:1px solid var(--pb)}
-.v2slg i{width:18px;height:4px;border-radius:2px}
+.v2slg i{width:16px;height:2px;border-radius:2px;opacity:.7}
 </style>
 <script id="lv2Js">/* ===================== شاشة العرض المباشر «غرفة المتابعة الحية» =====================
    مسرح 1920×1080 يتكيّف مع أي شاشة، بستة مشاهد تتبدّل تلقائياً، بعدّادات متدحرجة وخريطة حيّة ورادار وأقواس تنطلق من الرياض،
@@ -22496,18 +22506,37 @@ body[data-theme="dark"] .fdx .fd-ml.t4 text,body[data-theme="dark"] .fdx .fd-ml.
 .fdx .fd-mlg i{width:34px;height:12px;border-radius:2px}
 .fdx .fd-mlg i.m1{background:var(--m1)}.fdx .fd-mlg i.m2{background:var(--m2)}.fdx .fd-mlg i.m3{background:var(--m3)}.fdx .fd-mlg i.m4{background:var(--m4)}.fdx .fd-mlg i.m5{background:var(--m5)}
 /* الموبايل: عرض متتابع */
-.fdx-wrap.flow{height:auto!important;overflow:visible;border:0;background:none}
-.fdx-wrap.flow .fdx-c{position:static;width:auto;height:auto;transform:none!important;display:flex;flex-direction:column;padding:0;gap:12px}
-.fdx-wrap.flow .fd-head{flex-wrap:wrap}
-.fdx-wrap.flow .fd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-.fdx-wrap.flow .fd-k .v b{font-size:19px}.fdx-wrap.flow .fd-k .s{white-space:normal}
-.fdx-wrap.flow .fd-k+.fd-k::before{display:none}
-.fdx-wrap.flow .fd-ra,.fdx-wrap.flow .fd-rb{grid-template-columns:minmax(0,1fr)}
-.fdx-wrap.flow .fd-cb{flex-direction:column!important}
-.fdx-wrap.flow .fd-bars{height:240px;overflow-x:auto;grid-auto-columns:minmax(66px,1fr)}
-.fdx-wrap.flow .fd-yc{height:240px}
-.fdx-wrap.flow .fd-tw{max-height:420px}.fdx-wrap.flow .fd-t{table-layout:auto}
-.fdx-wrap.flow .fd-map{height:320px}
+.fdx .dx-canvas:not(.fit){height:auto!important;overflow:visible;border:0;background:none}
+.fdx .dx-canvas:not(.fit){position:static;width:auto;height:auto;transform:none!important;display:flex;flex-direction:column;padding:0;gap:12px}
+.fdx .dx-canvas:not(.fit) .fd-head{flex-wrap:wrap}
+.fdx .dx-canvas:not(.fit) .fd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fdx .dx-canvas:not(.fit) .fd-k .v b{font-size:19px}.fdx .dx-canvas:not(.fit) .fd-k .s{white-space:normal}
+.fdx .dx-canvas:not(.fit) .fd-k+.fd-k::before{display:none}
+.fdx .dx-canvas:not(.fit) .fd-ra,.fdx .dx-canvas:not(.fit) .fd-rb{grid-template-columns:minmax(0,1fr)}
+.fdx .dx-canvas:not(.fit) .fd-cb{flex-direction:column!important}
+.fdx .dx-canvas:not(.fit) .fd-bars{height:240px;overflow-x:auto;grid-auto-columns:minmax(66px,1fr)}
+.fdx .dx-canvas:not(.fit) .fd-yc{height:240px}
+.fdx .dx-canvas:not(.fit) .fd-tw{max-height:420px}.fdx .dx-canvas:not(.fit) .fd-t{table-layout:auto}
+.fdx .dx-canvas:not(.fit) .fd-map{height:320px}
+
+/* ===== نفس حاوية وهيدر لوحة الأداء العامة (dx-land + dxf) ===== */
+.fdx .dx-canvas.fit > .fd-kpis{flex:none;height:124px}
+.fdx .dx-canvas.fit > .fd-ra{flex:.8 1 0;min-height:0}
+.fdx .dx-canvas.fit > .fd-rb{flex:1 1 0;min-height:0}
+.fdx .dxf-tr{align-items:baseline!important}
+.fdx .dxf-tr .fd-mo{font-size:13px;color:var(--mu);font-weight:500}
+.fdx .dx-canvas:not(.fit) > *{margin-top:14px}.fdx .dx-canvas:not(.fit) > .dxf-head{margin-top:0}
+.fdx .dx-canvas:not(.fit) > .fd-ra,.fdx .dx-canvas:not(.fit) > .fd-rb{display:grid;gap:12px}
+body[data-theme="dark"] .fdx .dx-canvas{background:var(--pg)!important;border-color:var(--bd)!important}
+body[data-theme="dark"] .fdx .dxf-head h1{color:#FFFFFF}
+@media print{ .fdx .fd-tw{overflow:hidden!important} }
+
+.fdx .fd-lgd span{white-space:nowrap}
+
+/* البار الرئيسي بنفس شكل لوحة الأداء العامة ولوحة المشروع */
+.fdx .fd-kpis.kfx{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;box-shadow:none}
+.fdx .fd-kpis.kfx > .fd-k{position:relative;z-index:1}
+body[data-theme="dark"] .fdx .fd-kpis.kfx{border:0!important}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
@@ -22567,7 +22596,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var pc=function(v,b){ return _dxPct(b?v/b:0); };
   /* ---- شريط المؤشرات المالية (6 مؤشرات بالقيمة الكاملة) ---- */
   var k=function(l,v,s,cls,bar){ return '<div class="fd-k'+(cls?' '+cls:'')+'"><span class="l">'+l+'</span><span class="v">'+v+'</span>'+(bar!=null?'<i class="bar"><u style="width:'+Math.min(100,bar*100).toFixed(1)+'%"></u></i>':'')+'<span class="s">'+s+'</span></div>'; };
-  var kpis='<section class="fd-kpis">'
+  var kpis='<section class="fd-kpis dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
     +k("إجمالي الميزانية",AB(BUD),"الميزانية الرأسمالية للبرنامج")
     +k("إجمالي العقود",AB(contracts),pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length),null,BUD?contracts/BUD:0)
     +k("المبالغ المنصرفة",AB(dis),pc(dis,contracts)+" من قيمة المشاريع القائمة","g",contracts?dis/contracts:0)
@@ -22605,7 +22634,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
       +'<svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline class="fd-yl" vector-effect="non-scaling-stroke" points="'+YC.map(function(d,i){ return XP(i)+','+(100-YP(d.c)); }).join(" ")+'"/></svg>'
       +YC.map(function(d,i){ return '<i class="fd-ydot" style="left:'+XP(i)+'%;bottom:'+YP(d.c)+'%"></i><b class="fd-ylab" style="left:'+XP(i)+'%;bottom:calc('+YP(d.c)+'% + 9px)">'+_fdMn(d.c)+'</b>'; }).join("")
       +'</div><div class="fd-yaxis">'+YC.map(function(d){ return '<span><b>'+d.y+'</b><em>'+_fdMn(d.v)+'</em></span>'; }).join("")+'</div></div>'; }
-  var yr='<section class="fd-p fd-yr"><header><h3>المستخلصات المنفذة</h3><span>مليون ريال · سجل المستخلصات</span></header><div class="fd-pb"><div class="fd-lgd"><span><i style="background:var(--c-yr,var(--c-rem))"></i>قيمة السنة</span><span><i class="ln"></i>التراكمي</span><span class="nt">الرقم أسفل السنة = قيمة السنة</span></div>'+yrs+'</div></section>';
+  var yr='<section class="fd-p fd-yr"><header><h3>المستخلصات المنفذة</h3><span>مليون ريال · سجل المستخلصات</span></header><div class="fd-pb"><div class="fd-lgd"><span><i style="background:var(--c-yr,var(--c-rem))"></i>قيمة السنة</span><span><i class="ln"></i>التراكمي</span></div>'+yrs+'</div></section>';
   /* ---- التوزيع الجغرافي ---- */
   var RV={}, nat=0; KSA_REG.r.forEach(function(rr){ RV[rr.ar]=0; });
   D.forEach(function(p){ var v=_dxN(p.disbursed); if(!v) return; var hit=KSA_REG.r.filter(function(rr){ return _regionHas(p.region,rr.ar); }); if(hit.length) hit.forEach(function(rr){ RV[rr.ar]+=v/hit.length; }); else nat+=v; });
@@ -22623,14 +22652,13 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var tbl='<section class="fd-p fd-tb"><header><h3>سجل المستخلصات</h3><span>'+ar(TR.length)+' مستخلص · الأحدث أولاً · القيم بالريال</span></header><div class="fd-pb">'+(TR.length?'<div class="fd-tw"><table class="fd-t"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup><thead><tr><th>القطاع</th><th>المشروع</th><th>رقم المستخلص</th><th>الشهر</th><th>قيمة المستخلص</th><th>الحالة</th></tr></thead><tbody>'
     +TR.map(function(o){ var sc=(window.SEC_PASTEL||{})[String(o.s||"").trim()]||"#DDE3DE"; return '<tr role="button" onclick="pyOpen(\''+esc(o.c)+'\')"><td><span class="fd-sc"><i style="background:'+sc+'"></i>'+esc(o.s||"—")+'</span></td><td class="nm" title="'+esc(o.n||"")+'"><b>'+esc(o.n||o.c)+'</b><em>'+esc(o.c)+'</em></td><td class="c">'+ar(_payN(o.no)||0)+'</td><td class="c">'+_payMo(o.m)+'</td><td class="v">'+_fdNum(o.v)+'</td><td class="c"><span class="fd-st '+stc(o.st)+'">'+esc(o.st||"—")+'</span></td></tr>'; }).join("")
     +'</tbody></table></div>':'<div class="fd-empty">لا توجد مستخلصات.</div>')+'</div></section>';
-  var bI=function(t,fn,d){ return '<button class="fd-btn noprint" onclick="'+fn+'" title="'+t+'" aria-label="'+t+'">'+I(d)+'</button>'; };
-  var head='<header class="fd-head"><div class="fd-ttl"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div>'
-    +'<div class="fd-hl">'+bI("ملء الشاشة","fdFull()",'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>')+bI("طباعة","fdPrint()",'<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/>')+'<span class="fd-sp"></span><img class="fd-logo" src="'+LOGO+'" alt="ريف"></div></header>';
-  _dxShow('<div class="dash dx fdx"><div class="fdx-wrap"><div class="fdx-c">'+head+kpis
+  var head='<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip noprint" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div></div>'
+    +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg></button>')
+    +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>';
+  _dxShow('<div class="dash dash3 dx dx-land dxf dxf2 fdx"><div class="dx-canvas">'+head+kpis
     +'<div class="fd-ra">'+cap+secs+yr+'</div>'
     +'<div class="fd-rb">'+tbl+geo+'</div>'
-    +'</div></div></div>');
-  [0,60,250].forEach(function(ms){ setTimeout(fdFit,ms); }); }
+    +'</div></div>'); }
 </script>
 </body>
 </html>
