@@ -9040,6 +9040,7 @@ html body:not([data-theme=dark]) #lw.v4 .ov-st+.ov-st{border-inline-start-color:
 html body:not([data-theme=dark]) #lw.v4 .ov-al>div+div{border-top-color:rgba(14,59,39,.09)!important}
 html body:not([data-theme=dark]) #lw.v4 .ov-j,html body:not([data-theme=dark]) #lw.v4 .ov-p{border-color:rgba(14,59,39,.07)!important;box-shadow:0 1px 2px rgba(14,59,39,.04),0 14px 34px -26px rgba(14,59,39,.35)!important}
 </style>
+<style id="stopPrev">.pd-stp2{display:block;font-size:11.5px;font-weight:600;color:#7E8A82;line-height:1.6;margin-top:3px;white-space:normal}body[data-theme="dark"] .pd-stp2{color:#9DB0B8}</style>
 <style id="m5Kp2">
 .m5-kpis{gap:14px}
 .m5-kp{display:grid!important;grid-template-columns:46px minmax(0,1fr);align-items:center;gap:14px!important;padding:14px 18px!important;border-radius:12px!important;border:1px solid #E6EAE5!important;background:#fff!important;box-shadow:0 6px 18px -14px rgba(14,59,39,.35)}
@@ -9568,6 +9569,15 @@ function _cancelCodeSet(){ var s={}; try{ var L=(typeof CANCELLED_BASE!=="undefi
 function _hoN(L){ try{ return (L||[]).filter(function(x){ var p=x&&x.p?x.p:x; return String(p.handover||"")==="1"&&!isFinishedP(p); }).length; }catch(e){ return 0; } }
 /* قيمة المشاريع القائمة (قيد التنفيذ + المنتهية) — أساس نسبة الصرف في كل المنصة */
 function _actV(L){ try{ return (L||[]).reduce(function(a,x){ var p=x&&x.p?x.p:x; if(!p) return a; var st=_geoNowSt(p); return (st==="run"||st==="done")?a+_dxBase(p):a; },0); }catch(e){ return 0; } }
+/* إيقافات متعددة: الإيقاف الحالي يحل محل القديم، والقديم يُحفظ كإيقاف سابق تم استئنافه.
+   مدة الإيقاف الحالي = الأيام من تاريخ الإيقاف حتى اليوم + 3 أيام عن كل 30 يوماً كاملة (أقل من 30 يوماً لا يُضاف شيء) */
+var STOP_OVR={"FR-11":{date:"2026-07-19",old:"2024-11-13",prev:[{from:"2024-11-13",to:"2025-05-20",days:188}]}};
+function _stopCalc(p){ var o=p&&STOP_OVR[p.code]; if(!o) return; var cur=String(p.stop_date||"").slice(0,10);
+  if(!p._stopOvr){ if(cur!==o.old&&cur!==o.date) return; p._stopOvr=1; p.stop_prev=o.prev; p.stop_date=o.date; p.resume_date=""; }
+  var d=Math.max(0,Math.floor((new Date()-new Date(o.date+"T00:00:00"))/864e5)); p.stop_days_raw=d; p.stop_bonus=d>=30?Math.floor(d/30)*3:0; p.stop_duration=String(d+p.stop_bonus); }
+function _stopPrevTxt(p,fmt){ fmt=fmt||fmtDate; return (p&&p.stop_prev||[]).map(function(x){ return fmt(x.from)+" ← "+fmt(x.to)+" ("+ar(x.days)+" يوم) · تم الاستئناف"; }).join(" · "); }
+function _stopNote(p){ return p&&p._stopOvr&&p.stop_bonus?(ar(p.stop_days_raw)+" يوم + "+ar(p.stop_bonus)+" يوم (3 أيام عن كل 30 يوماً)"):""; }
+function _resTxt(p,fmt){ fmt=fmt||fmtDate; return calParts(p.resume_date)?fmt(p.resume_date):"لم يُستأنف"; }
 function capPlannedData(arr){ /* نسبة الإنجاز في كل المنصة = عمود «الجاهزية للتسليم» (الفعلية الأصلية محفوظة في actual_raw) */
   try{ (arr||[]).forEach(function(p){ if(!p) return; if(p.actual_raw==null) p.actual_raw=p.actual; var rv=pct(p.ready); if(rv!=null&&!isNaN(rv)) p.actual=p.ready; }); }catch(e){}
   try{ var _cc=_cancelCodeSet(); if(Object.keys(_cc).length) arr=(arr||[]).filter(function(p){ return !(p&&_cc[p.code]); }); }catch(e){}
@@ -9576,7 +9586,7 @@ function capPlannedData(arr){ /* نسبة الإنجاز في كل المنصة 
     { const _pa=p.planned_adj; if(_pa!=null&&String(_pa).trim()!==""&&!isNaN(parseFloat(String(_pa).replace(/[%٪]/g,"")))){ if(p.planned_calc==null) p.planned_calc=p.planned; p.planned=_pa; } }
     /* كسر عشري أكبر من 1 (مثل 1.4868 = 149%) يعني تجاوز المخطط 100% — وليس 1.49% */
     ["planned","actual"].forEach(k=>{ const v=p[k]; if(typeof v==="number"&&v>1&&v<5) p[k]=1; });
-    if(pct(p.planned)>1) p.planned=1; }); }catch(e){} try{ if(typeof _applyEdits==="function") arr=_applyEdits(arr); }catch(e){} return arr; }
+    if(pct(p.planned)>1) p.planned=1; try{ _stopCalc(p); }catch(e){} }); }catch(e){} try{ if(typeof _applyEdits==="function") arr=_applyEdits(arr); }catch(e){} return arr; }
 let DATA=capPlannedData(SNAPSHOT);
 /* مصدر البيانات: ملف المحفظة (Excel) المرفوع فقط — لم يعد يُقرأ شيت جوجل */
 const SHEET_CSV_URL="";
@@ -10421,7 +10431,7 @@ function cardHTML(p,gallery){ CUR_PROJECT=p; if(!gallery) ANSWER_TITLE=p.name;
       <div class="item"><div class="k">نوع المشروع</div><div class="v" style="font-size:13px">${p.ptype||"—"}</div></div>
       <div class="item"><div class="k">مدة التمديد الكلية</div><div class="v" style="font-size:13px">${hasExt?ext:"لا يوجد"}</div></div>
       ${calParts(p.stop_date)?`<div class="item"><div class="k">تاريخ الإيقاف</div><div class="v" style="font-size:13px">${fmtDate(p.stop_date)}</div></div>
-      <div class="item"><div class="k">تاريخ الاستئناف</div><div class="v" style="font-size:13px">${fmtDate(p.resume_date)}</div></div>`:`<div class="item"><div class="k">الإيقاف / الاستئناف</div><div class="v" style="font-size:13px">لا يوجد</div></div>`}
+      <div class="item"><div class="k">تاريخ الاستئناف</div><div class="v" style="font-size:13px">${_resTxt(p)}</div></div>${p.stop_prev?`<div class="item"><div class="k">إيقاف سابق</div><div class="v" style="font-size:12px">${_stopPrevTxt(p)}</div></div>`:""}`:`<div class="item"><div class="k">الإيقاف / الاستئناف</div><div class="v" style="font-size:13px">لا يوجد</div></div>`}
       ${p.award_date?`<div class="item"><div class="k">تاريخ الترسية</div><div class="v" style="font-size:13px">${fmtDate(p.award_date)}</div></div>`:""}
       ${kvOpt("رقم التعميد",p.mandate_no,1)}
       ${kvOpt("الرقم المرجعي للعقد",p.contract_ref,1)}
@@ -11294,7 +11304,7 @@ function _pcCard(p,monthLbl){
               {l:"يعاد التسليم",v:toNum(p.returned_claims)||0,c:"#6BA5C4",t:ar(toNum(p.returned_claims)||0)},
               {l:"تحت الدراسة",v:toNum(p.under_study)||0,c:"#D8D0BE",t:ar(toNum(p.under_study)||0)}];
   var ext=(clean(p.extension)&&clean(p.extension)!=="لا يوجد")?clean(p.extension):"لا يوجد";
-  var stpH=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+fmtDate(p.resume_date)):"لا يوجد";
+  var stpH=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+_resTxt(p)+(p.stop_prev?" · إيقاف سابق: "+_stopPrevTxt(p):"")):"لا يوجد";
   var vr=(clean(p.variations)!=="لا يوجد")?hlAppr(clean(p.variations).replace(/\|/g," · ")):"لا يوجد";
   var ni=(clean(p.new_items)!=="لا يوجد")?hlAppr(clean(p.new_items).replace(/\|/g," · ")):"لا يوجد";
   var pool=_pcImgs(p,6), want=Math.max(1,PC.imgs||3);
@@ -11593,7 +11603,7 @@ function _drPages(p,per,X){ var V=_drV(p), t=V.t, R=V.R, col=DR_COL[V.cat]||"#00
   var ext=clean(p.extension), hasExt=ext&&ext!=="لا يوجد";
   if(!hasExt){ var _e1=_dxDt(p.end_contractual||p.end_date), _e2=_dxDt(p.end_after_ext); if(_e1&&_e2&&_e2>_e1){ ext=ar(_dxDays(_e1,_e2))+" يوم"; hasExt=true; } }
   var info='<div class="dr-card"><div class="dr-ct">بيانات المشروع</div><table class="dr-tb">'+row("كود المشروع",esc(p.code||""))+row("القطاع",esc(p.sector||"—"))+row("المنطقة",esc(p.region||"—"))+row("نوع المشروع",esc(p.ptype||"—"))+row("المقاول",esc(clean(p.contractor)))+row("الاستشاري",esc(clean(p.consultant)))+row("مدة التنفيذ",X.dur)+row("الالتزام البيئي",esc(clean(p.env)))+'</table></div>';
-  var dates='<div class="dr-card"><div class="dr-ct">التواريخ الرئيسية</div><table class="dr-tb">'+row("تاريخ الترسية",_drDate(p.award_date))+row("تاريخ البداية",_drDate(p.start_date))+row("النهاية التعاقدية",_drDate(p.end_contractual||p.end_date))+row("النهاية بعد التمديد",p.end_after_ext?_drDate(p.end_after_ext):"لا يوجد")+row("مدة التمديد",hasExt?esc(ext):"لا يوجد")+row("الإيقاف / الاستئناف",calParts(p.stop_date)?_drDate(p.stop_date)+" ← "+_drDate(p.resume_date):"لا يوجد")+row("حالة المشروع",esc(p.status||"—"))+'</table></div>';
+  var dates='<div class="dr-card"><div class="dr-ct">التواريخ الرئيسية</div><table class="dr-tb">'+row("تاريخ الترسية",_drDate(p.award_date))+row("تاريخ البداية",_drDate(p.start_date))+row("النهاية التعاقدية",_drDate(p.end_contractual||p.end_date))+row("النهاية بعد التمديد",p.end_after_ext?_drDate(p.end_after_ext):"لا يوجد")+row("مدة التمديد",hasExt?esc(ext):"لا يوجد")+row(p.stop_prev?"الإيقاف الحالي":"الإيقاف / الاستئناف",calParts(p.stop_date)?_drDate(p.stop_date)+" ← "+_resTxt(p,_drDate)+(p._stopOvr?" · "+ar(toNum(p.stop_duration))+" يوم":""):"لا يوجد")+(p.stop_prev?row("إيقاف سابق",_stopPrevTxt(p,_drDate)):"")+row("حالة المشروع",esc(p.status||"—"))+'</table></div>';
   var tl='<div class="dr-card dr-tlc"><div class="dr-ct">المسار الزمني للمشروع<span>'+(t.ok?(V.done?"منتهٍ ✓":(t.left<0?"متجاوز النهاية بـ "+ar(-t.left)+" يوم":"منقضٍ "+_dxPct(t.frac)+" · متبقٍ "+ar(t.left)+" يوم")):"")+'</span></div>'+_drTimeline(p,V)+'</div>';
   var tks='<div class="dr-kps k4">'+_drKpi("المدة الكلية",t.ok?ar(t.total)+" يوم":"—",X.dur)+_drKpi("المنقضي",t.ok?ar(Math.max(0,Math.min(t.elapsed,t.total)))+" يوم":"—",t.ok?_dxPct(t.frac)+" من المدة":"","g")+_drKpi(t.ok&&t.left<0&&!V.done?"تجاوز النهاية":"المتبقي",t.ok&&!V.done?ar(Math.abs(t.left))+" يوم":"—",_drDate(endDateOf(p)),t.ok&&t.left<0&&!V.done?"r":"")+_drKpi("التمديد",hasExt?esc(ext):"لا يوجد",p.end_after_ext?"حتى "+_drDate(p.end_after_ext):"")+'</div>';
   var p2=sec("البيانات الأساسية والجدول الزمني",tl+tks+'<div class="dr-g2">'+info+dates+'</div>');
@@ -11635,7 +11645,7 @@ function weeklyPages(p,per,detailed){
         ${timelineBar(p)}
         ${endDateOf(p)&&endDateOf(p)!==p.end_date?wkRow("النهاية بعد التعديل",fmtDate(endDateOf(p))):""}
         ${wkRow("مدة التمديد",(clean(p.extension)&&clean(p.extension)!=="لا يوجد")?clean(p.extension):"لا يوجد")}
-        ${calParts(p.stop_date)?wkRow("تاريخ الإيقاف",fmtDate(p.stop_date))+wkRow("تاريخ الاستئناف",fmtDate(p.resume_date)):wkRow("الإيقاف / الاستئناف","لا يوجد")}
+        ${calParts(p.stop_date)?wkRow(p.stop_prev?"تاريخ الإيقاف الحالي":"تاريخ الإيقاف",fmtDate(p.stop_date))+wkRow("تاريخ الاستئناف",_resTxt(p))+(p.stop_prev?wkRow("إيقاف سابق",_stopPrevTxt(p)):""):wkRow("الإيقاف / الاستئناف","لا يوجد")}
         ${wkRow("الالتزام البيئي",clean(p.env))}</div></div>
     ${finRow}
     <div class="wprog"><div class="wbox-t">مؤشر الإنجاز والجدول الزمني</div>
@@ -12131,7 +12141,7 @@ async function buildWeeklyPptx(){
       const fw=Math.max(0.16,5.65*frac); s.addShape(p.ShapeType.roundRect,{x:0.55+5.65-fw,y:ty+0.3,w:fw,h:0.16,rectRadius:0.08,fill:{color:over?"C0492B":BARGRN},shadow:{type:"outer",color:over?"7A2B19":"17A35C",blur:6,offset:1,angle:90,opacity:0.45}});
       const rows2=[]; if(endDateOf(pj)&&endDateOf(pj)!==pj.end_date) rows2.push(["النهاية بعد التعديل",fmtDateTxt(endDateOf(pj))]);
       rows2.push(["مدة التمديد",(clean(pj.extension)&&clean(pj.extension)!=="لا يوجد")?clean(pj.extension):"لا يوجد"]);
-      if(calParts(pj.stop_date)){ rows2.push(["تاريخ الإيقاف",fmtDateTxt(pj.stop_date)]); rows2.push(["تاريخ الاستئناف",fmtDateTxt(pj.resume_date)]); } else rows2.push(["الإيقاف / الاستئناف","لا يوجد"]);
+      if(calParts(pj.stop_date)){ rows2.push(["تاريخ الإيقاف",fmtDateTxt(pj.stop_date)]); rows2.push(["تاريخ الاستئناف",_resTxt(pj,fmtDateTxt)]); if(pj.stop_prev) rows2.push(["إيقاف سابق",_stopPrevTxt(pj,fmtDateTxt)]); } else rows2.push(["الإيقاف / الاستئناف","لا يوجد"]);
       rows2.push(["الالتزام البيئي",clean(pj.env)]);
       rows2.slice(0,4).forEach((r,i)=>kv(s,0.55,ty+0.62+i*0.3,5.65,r[0],r[1]));
     }
@@ -15043,7 +15053,7 @@ function _mgrData(L0){ var D=(L0||DATA).slice(), N=_dxN, rows=D.map(function(p){
   X.g={}; ["done","run","tender","award"].forEach(function(k){ var L=rows.filter(function(x){ return x.st===k; }); X.g[k]={n:L.length,v:S(L),L:L}; });
   var run=X.g.run.L; X.c={}; ["ok","watch","late","stumb","ns"].forEach(function(k){ var L=run.filter(function(x){ return x.cat===k; }); X.c[k]={n:L.length,v:S(L),L:L}; });
   X.bad=run.filter(function(x){ return x.cat==="late"||x.cat==="stumb"; }).sort(function(a,b){ return (b.dev||0)-(a.dev||0); });
-  var now=new Date(); X.stop=rows.filter(function(x){ return _isStopped(x.p); }).map(function(x){ var sd=_dxDt(x.p.stop_date); x.sd=sd; x.days=sd?Math.max(0,Math.round((now-sd)/864e5)):null; return x; }).sort(function(a,b){ return (b.days||0)-(a.days||0); });
+  var now=new Date(); X.stop=rows.filter(function(x){ return _isStopped(x.p); }).map(function(x){ var sd=_dxDt(x.p.stop_date); x.sd=sd; x.days=x.p._stopOvr?toNum(x.p.stop_duration):(sd?Math.max(0,Math.round((now-sd)/864e5)):null); return x; }).sort(function(a,b){ return (b.days||0)-(a.days||0); });
   X.wd=rows.filter(function(x){ return _mgrWD(x.p); }).sort(function(a,b){ return b.v-a.v; });
   return X; }
 function _mgrShell(no,title,sub,body,tot){ return '<section class="mgs"><div class="mgs-h"><div class="mgs-t"><span class="mgs-no">'+String(no).padStart(2,"0")+'</span><div><h2>'+title+'</h2>'+(sub?'<p>'+sub+'</p>':'')+'</div></div><img src="'+LOGO+'" alt="ريف"></div><div class="mgs-b">'+body+'</div><div class="mgs-f"><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span><span>'+esc(MGR_LBL)+' · '+esc(MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
@@ -16462,7 +16472,7 @@ function projDash(code){ try{setNavActive("pdash");}catch(e){} try{ _initDashGro
       +'<div class="pd-tll"><span class="pd-left'+(t.left<0&&!r.done?' over':'')+'">'+(r.done?'انتهت المدة':(t.left>=0?'المدة المتبقية <b>'+ar(t.left)+' يوم</b>':'متجاوز المدة بـ <b>'+ar(-t.left)+' يوم</b>'))+'</span><span><i class="el"></i>الزمن المنقضي '+_dxPct(t.frac)+'</span></div></div>'; }
   else tl='<div class="dx-empty">تواريخ البداية/النهاية غير مكتملة في الشيت</div>';
   var dur=(toNum(p.duration)!=null)?(ar(toNum(p.duration))+" شهر"):_dxTxt(p.duration);
-  var stp=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+(calParts(p.resume_date)?fmtDate(p.resume_date):"لم يُستأنف")):"لا يوجد";
+  var stp=calParts(p.stop_date)?(fmtDate(p.stop_date)+" ← "+(calParts(p.resume_date)?fmtDate(p.resume_date):"لم يُستأنف")+(p.stop_prev?'<small class="pd-stp2">الإيقاف الحالي'+(_stopNote(p)?" · المدة "+_stopNote(p):"")+'<br>إيقاف سابق: '+_stopPrevTxt(p)+'</small>':"")):"لا يوجد";
   var tlBody=tl+'<div class="pd-rows two">'
     +_pdRow("النهاية التعاقدية",fmtDate(p.end_contractual),true)+_pdRow("النهاية بعد التمديد",fmtDate(p.end_after_ext||p.end_date),true)
     +_pdRow("تاريخ الترسية",_dxTxt(p.award_alt)?'<span style="direction:ltr;unicode-bidi:isolate;display:inline-block">'+esc(_dxTxt(p.award_alt))+'</span>'+(/14\d\d/.test(String(p.award_alt))?'<span style="margin-inline-start:4px">هـ</span>':""):fmtDate(p.award_date),true)
