@@ -22803,6 +22803,24 @@ body[data-theme="dark"] .fdx .fd-kpis.kfx{border:0!important}
 .fdx .fd-yaxis.cg{position:relative;height:22px;margin:0 6px}
 .fdx .fd-yaxis.cg span{position:absolute;top:5px;transform:translateX(-50%);padding:0;font-size:11px;color:var(--mu);display:block}
 body[data-theme="dark"] .fdx .fd-yplot.cg .fd-yl{stroke:#C9A97A}
+/* الميزانية في البار الأخضر: شريط أفقي جنب الرقم */
+.fdx .fd-kpis.kfx{grid-template-columns:minmax(0,2.1fr) repeat(5,minmax(0,1fr))!important}
+.fdx .fd-kbr{display:flex;align-items:center;gap:14px;min-width:0}
+.fdx .fd-kbr .dxf-kv{flex:none}
+.fdx .fd-bb{flex:1;display:flex;height:12px;border-radius:6px;overflow:hidden;gap:2px;background:rgba(255,255,255,.08);min-width:80px}
+.fdx .fd-bb i{display:block;height:100%;min-width:3px}
+.fdx .fd-kbud .dxf-ks{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* بطاقات الميزانية الرأسمالية */
+.fdx .fd-cc{gap:10px}
+.fdx .fd-ch{display:flex;align-items:baseline;gap:10px;padding:10px 12px;border-radius:8px;background:var(--soft);border:1px solid var(--hl)}
+.fdx .fd-ch span{font-size:12px;color:var(--mu);font-weight:600}.fdx .fd-ch b{font-size:19px;font-weight:800;color:var(--tx);margin-inline-start:auto}.fdx .fd-ch b small,.fdx .fd-ci b small{font-size:10.5px;font-weight:600;color:var(--mu);margin-inline-start:4px}
+.fdx .fd-ch em{font-style:normal;font-size:11px;color:var(--mu2)}
+.fdx .fd-cg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:8px}
+.fdx .fd-ci{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 11px;border-radius:8px;border:1px solid var(--hl);background:var(--bg);min-width:0}
+.fdx .fd-ci span{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fdx .fd-ci span i{flex:none;width:8px;height:8px;border-radius:2px}
+.fdx .fd-ci b{font-size:16px;font-weight:700;color:var(--tx);line-height:1.25}
+.fdx .fd-ci em{font-style:normal;font-size:10.5px;color:var(--mu2)}
+.fdx .dx-canvas:not(.fit) .fd-cg{grid-template-columns:repeat(2,minmax(0,1fr))}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
@@ -22863,9 +22881,9 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var pc=function(v,b){ return _dxPct(b?v/b:0); };
   /* ---- شريط المؤشرات المالية (6 مؤشرات بالقيمة الكاملة) ---- */
   var k=function(l,v,s,cls,bar){ return '<div class="fd-k'+(cls?' '+cls:'')+'"><span class="l">'+l+'</span><span class="v">'+v+'</span>'+(bar!=null?'<i class="bar"><u style="width:'+Math.min(100,bar*100).toFixed(1)+'%"></u></i>':'')+'<span class="s">'+s+'</span></div>'; };
-  var gK=function(l,x,s,tone){ var m=_dxMs(x); return '<div class="dxf-k'+(tone?' '+tone:'')+'" title="'+_fdNum(x)+' ريال"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span><span class="dxf-ks">'+s+'</span></div>'; };
+  var BUDBAR=''; var gK=function(l,x,s,tone){ var m=_dxMs(x); return '<div class="dxf-k'+(tone?' '+tone:'')+'" title="'+_fdNum(x)+' ريال"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span><span class="dxf-ks">'+s+'</span></div>'; };
   var kpis='<div class="fd-kpis dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
-    +gK("إجمالي الميزانية",BUD,"الميزانية الرأسمالية للبرنامج")
+    +(function(){ var m=_dxMs(BUD); return '<div class="dxf-k fd-kbud" title="'+_fdNum(BUD)+' ريال"><span class="dxf-kl">إجمالي الميزانية</span><span class="fd-kbr"><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span>%%BUDBAR%%</span><span class="dxf-ks">الميزانية الرأسمالية للبرنامج · ألوان الشريط كما في بطاقات الميزانية بالأسفل</span></div>'; })()
     +gK("إجمالي العقود",contracts,pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length))
     +gK("المبالغ المنصرفة",dis,pc(dis,contracts)+" من قيمة المشاريع القائمة")
     +gK("مبالغ تحت الإجراء",und,pc(und,contracts)+" من قيمة المشاريع القائمة")
@@ -22879,10 +22897,11 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var tot=segs.reduce(function(a,x){ return a+x.v; },0)||1, r=78, sw=24, Cc=2*Math.PI*r, off=0;
   var donut='<div class="fd-dw"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="'+r+'" class="fd-dtr" style="stroke-width:'+sw+'"/>'+segs.map(function(x){ if(!(x.v>0)) return ""; var L=Cc*x.v/tot, gp=Math.min(2,L*0.3), o='<circle cx="100" cy="100" r="'+r+'" fill="none" stroke="'+x.c+'" stroke-width="'+sw+'" stroke-dasharray="'+Math.max(0,L-gp).toFixed(2)+' '+Cc.toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 100 100)"><title>'+esc(x.l)+': '+_fdNum(x.v)+' ريال</title></circle>'; off+=L; return o; }).join("")
     +'</svg><div class="fd-dc"><b>'+_dxMs(base)[0]+'</b><span>'+(_dxMs(base)[1].indexOf("مليار")>-1?"مليار ريال":"مليون ريال")+'</span></div></div>';
-  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+'</span></header><div class="fd-pb fd-cb">'+donut
-    +'<div class="fd-lg"><div class="fd-lh"><span>المشاريع القائمة والمنتهية</span><b>'+_fdNum(act)+'</b><em>'+pc(act,base)+'</em></div>'
-    +segs.map(function(x){ return '<div class="fd-li"><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><b>'+_fdNum(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; }).join("")
-    +'<div class="fd-lnote">المبالغ بالريال السعودي · النسب من '+(filt?'إجمالي مشاريع التصفية':'إجمالي الميزانية')+'</div></div></div></section>';
+  var M2=function(x){ var m=_dxMs(x); return m[0]+'<small>'+_rU(m[1])+'</small>'; };
+  var cap='<section class="fd-p fd-cap"><header><h3>إحصائيات الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+'</span></header><div class="fd-pb fd-cc">'
+    +'<div class="fd-ch"><span>المشاريع القائمة والمنتهية</span><b>'+M2(act)+'</b><em>'+pc(act,base)+' من '+(filt?'مشاريع التصفية':'الميزانية')+'</em></div>'
+    +'<div class="fd-cg">'+segs.map(function(x){ return '<div class="fd-ci" title="'+_fdNum(x.v)+' ريال"><span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span><b>'+M2(x.v)+'</b><em>'+pc(x.v,base)+'</em></div>'; }).join("")+'</div></div></section>';
+  BUDBAR='<div class="fd-bb">'+segs.map(function(x){ return x.v>0?'<i style="flex:'+x.v+';background:'+x.c+'" title="'+esc(x.l)+': '+_fdNum(x.v)+' ريال ('+pc(x.v,base)+')"></i>':''; }).join("")+'</div>';
   /* ---- إحصائيات القطاعات ---- */
   var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
   var SK=Object.keys(S).sort(_fdSecOrder), smx=Math.max.apply(null,SK.map(function(x){ return Math.max(S[x].d,S[x].u); }).concat([1]));
@@ -22925,7 +22944,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var head='<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip noprint" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div></div>'
     +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="fdPrint()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg></button>')
     +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>';
-  _dxShow('<div class="dash dash3 dx dx-land dxf dxf2 fdx"><div class="dx-canvas">'+head+kpis
+  _dxShow('<div class="dash dash3 dx dx-land dxf dxf2 fdx"><div class="dx-canvas">'+head+kpis.replace('%%BUDBAR%%',BUDBAR)
     +'<div class="fd-ra">'+cap+secs+yr+'</div>'
     +'<div class="fd-rb">'+tbl+geo+'</div>'
     +'</div></div>'); }
