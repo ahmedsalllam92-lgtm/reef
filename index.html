@@ -16395,7 +16395,7 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
   _dxShow('<div class="dash dash3 dx dx-land dxf dxf2">'
     +'<div class="dx-canvas">'
       +'<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء العامة</h1>'+_dashFilterBar(total,true)+'</div><div class="dxf-sub">'+(subT2?'<span class="onlyprint"><b>'+esc(subT2)+'</b></span>':'')+_dxActChips()+'</div></div>'
-        +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="projDashOpen()" title="لوحة المشروع" aria-label="لوحة المشروع"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
+        +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="printAnswer()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></button>')
         +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>'
       +kpiF
       +'<div class="dx-gr dxf-g3">'+fBox("g-sec","المشاريع حسب القطاع",ar(secs.length)+" قطاعات · اضغط للتصفية",secF)+fBox("g-sch","وضع المشاريع","",schF)
@@ -22836,6 +22836,25 @@ body[data-theme="dark"] .fdx .fd-yplot.cg .fd-yl{stroke:#C9A97A}
 .fdx .fd-gr em{font-style:normal;font-size:11px;color:var(--mu);text-align:left}
 
 body[data-theme="dark"] .fdx .fd-p > header h3{color:#EFF4F1}
+/* البار بخمسة مؤشرات + شريط الميزانية الكبير تحته */
+.fdx .fd-kpis.kfx{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.fdx .dx-canvas.fit > .fd-bs{flex:none}
+.fdx .fd-bs{display:grid;grid-template-columns:190px minmax(0,1fr);gap:22px;align-items:start;padding:12px 18px 6px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);box-shadow:var(--shadow)}
+.fdx .fd-bsh{display:flex;flex-direction:column;gap:1px;padding-top:2px}
+.fdx .fd-bsh span{font-size:12px;font-weight:700;color:var(--mu)}
+.fdx .fd-bsh b{font-size:26px;font-weight:800;color:var(--tx);line-height:1.15}.fdx .fd-bsh b small{font-size:12px;font-weight:600;color:var(--mu);margin-inline-start:5px}
+.fdx .fd-bsh em{font-style:normal;font-size:11px;color:var(--mu2)}
+.fdx .fd-bsw{position:relative;padding-top:8px}
+.fdx .fd-bsb{display:flex;height:22px;border-radius:6px;overflow:hidden;gap:2px;background:var(--trk)}
+.fdx .fd-bsb i{display:block;height:100%;min-width:3px}
+.fdx .fd-bsl{position:relative;height:46px}
+.fdx .fd-bl{position:absolute;top:0;transform:translateX(50%);display:flex;flex-direction:column;align-items:center}
+.fdx .fd-bl i{width:1px;height:8px;background:var(--mu);opacity:.45}
+.fdx .fd-bl.l1 i{height:24px}
+.fdx .fd-bl span{font-size:10.5px;color:var(--mu);white-space:nowrap;line-height:1.35;text-align:center}
+.fdx .fd-bl span b{display:block;font-size:10.5px;font-weight:600;color:var(--tx)}
+.fdx .fd-bl span b::before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--c);margin-inline-end:4px;vertical-align:0}
+.fdx .dx-canvas:not(.fit) .fd-bs{grid-template-columns:1fr}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
@@ -22901,7 +22920,6 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var k=function(l,v,s,cls,bar){ return '<div class="fd-k'+(cls?' '+cls:'')+'"><span class="l">'+l+'</span><span class="v">'+v+'</span>'+(bar!=null?'<i class="bar"><u style="width:'+Math.min(100,bar*100).toFixed(1)+'%"></u></i>':'')+'<span class="s">'+s+'</span></div>'; };
   var BUDBAR=''; var gK=function(l,x,s,tone){ var m=_dxMs(x); return '<div class="dxf-k'+(tone?' '+tone:'')+'" title="'+_fdNum(x)+' ريال"><span class="dxf-kl">'+esc(l)+'</span><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span><span class="dxf-ks">'+s+'</span></div>'; };
   var kpis='<div class="fd-kpis dxf-kpis kfx"><i class="hx-fx" aria-hidden="true"><i></i><i></i><i></i></i>'
-    +(function(){ var m=_dxMs(BUD); return '<div class="dxf-k fd-kbud" title="'+_fdNum(BUD)+' ريال"><span class="dxf-kl">إجمالي الميزانية</span><span class="fd-kbr"><span class="dxf-kv">'+m[0]+'<small>'+_rU(m[1])+'</small></span>%%BUDBAR%%</span><span class="dxf-ks">الميزانية الرأسمالية للبرنامج · البند 449</span></div>'; })()
     +gK("إجمالي العقود",contracts,pc(contracts,BUD)+" من الميزانية · "+_arPrj(ACT.length))
     +gK("المبالغ المنصرفة",dis,pc(dis,contracts)+" من قيمة المشاريع القائمة")
     +gK("مبالغ تحت الإجراء",und,pc(und,contracts)+" من قيمة المشاريع القائمة")
@@ -22921,7 +22939,12 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var grp=function(t,A){ return A.length?'<div class="fd-gp"><div class="fd-gh"><b>'+t+'</b><em>'+pc(sum(A),base)+'</em></div>'+A.map(gRow).join("")+'</div>':''; };
   var cap='<section class="fd-p fd-cap"><header><h3>توزيع الميزانية الرأسمالية</h3><span>'+(filt?'ضمن التصفية · ':'البند 449 · ')+_arPrj(capN)+' · النسب من '+(filt?'إجمالي التصفية':'الميزانية')+'</span></header><div class="fd-pb fd-gl">'
     +grp("المشاريع القائمة والمنتهية",G1)+grp("قيد الإجراءات",G2)+(G3.length?"<div class=\"fd-gp\">"+G3.map(gRow).join("")+"</div>":"")+'</div></section>';
-  BUDBAR='<div class="fd-bb">'+segs.map(function(x){ return x.v>0?'<i style="flex:'+x.v+';background:'+x.c+'" title="'+esc(x.l)+': '+_fdNum(x.v)+' ريال ('+pc(x.v,base)+')"></i>':''; }).join("")+'</div>';
+  /* شريط الميزانية الكبير: كل جزء بقيمته تحته وخط خفيف يربطه بجزئه */
+  var cum=0, segT=segs.reduce(function(a,x){ return a+x.v; },0)||1;
+  var lab=segs.map(function(x,k){ var w=x.v/segT*100, c=cum+w/2; cum+=w; if(!(x.v>0)) return ''; var m=_dxMs(x.v);
+    return '<div class="fd-bl l'+(k%2)+'" style="right:'+c.toFixed(2)+'%" title="'+_fdNum(x.v)+' ريال"><i></i><span><b style="--c:'+x.c+'">'+esc(x.l)+'</b>'+m[0]+' '+_rU(String(m[1]).replace(/\s*ريال\s*/,''))+' · '+pc(x.v,base)+'</span></div>'; }).join("");
+  BUDBAR='<section class="fd-bs"><div class="fd-bsh"><span>إجمالي الميزانية الرأسمالية</span><b>'+_dxMs(BUD)[0]+'<small>'+_rU(_dxMs(BUD)[1])+'</small></b><em>البند 449 · '+_arPrj(capN)+'</em></div>'
+    +'<div class="fd-bsw"><div class="fd-bsb">'+segs.map(function(x){ return x.v>0?'<i style="flex:'+x.v+';background:'+x.c+'" title="'+esc(x.l)+': '+_fdNum(x.v)+' ريال ('+pc(x.v,base)+')"></i>':''; }).join("")+'</div><div class="fd-bsl">'+lab+'</div></div></section>';
   /* ---- إحصائيات القطاعات ---- */
   var S={}; ALL.forEach(function(p){ var kk=String(p.sector||"غير محدد").trim(); S[kk]=S[kk]||{d:0,u:0}; S[kk].d+=_dxN(p.disbursed); S[kk].u+=_dxN(p.under_proc); });
   var SK=Object.keys(S).sort(_fdSecOrder), smx=Math.max.apply(null,SK.map(function(x){ return Math.max(S[x].d,S[x].u); }).concat([1]));
@@ -22964,7 +22987,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var head='<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip noprint" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div></div>'
     +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="fdPrint()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg></button>')
     +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>';
-  _dxShow('<div class="dash dash3 dx dx-land dxf dxf2 fdx"><div class="dx-canvas">'+head+kpis.replace('%%BUDBAR%%',BUDBAR)
+  _dxShow('<div class="dash dash3 dx dx-land dxf dxf2 fdx"><div class="dx-canvas">'+head+kpis+BUDBAR
     +'<div class="fd-ra">'+cap+secs+yr+'</div>'
     +'<div class="fd-rb">'+tbl+geo+'</div>'
     +'</div></div>'); }
