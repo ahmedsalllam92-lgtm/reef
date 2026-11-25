@@ -23172,5 +23172,382 @@ body[data-theme="dark"] .sh-pgc{background:#14222A;border-color:rgba(205,228,217
 .sh-sy b{font-size:13px}.sh-sy.ok b{color:#1E6B45}.sh-sy.bad{background:#F8ECE9;border-color:#EBCFC8}.sh-sy.bad b{color:#9A4E42}.sh-sy .mt-btn{margin-inline-start:auto}
 body[data-theme="dark"] .sh-sy{background:#182A33;border-color:rgba(205,228,217,.12);color:#A3B5AC}body[data-theme="dark"] .sh-sy.ok b{color:#8ED2AE}body[data-theme="dark"] .sh-sy.bad{background:rgba(185,106,91,.14);border-color:rgba(185,106,91,.35)}body[data-theme="dark"] .sh-sy.bad b{color:#E7B7AD}
 </style>
+<style id="engCss">/* تقرير متابعة الأعمال الهندسية — يبني على شرائح m5 (تقرير المدير) */
+.eng-ctl{margin:0 0 12px}
+.mgs.eng .m5-b{gap:14px}
+.mgs.eng .m5-h h2 em{margin-inline-start:10px}
+.m5-kpis.n5{grid-template-columns:repeat(5,1fr)}
+.eng-src{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.eng-src.lv{color:#1E6B45;background:#EAF3EE}.eng-src.st{color:#8A6A2E;background:#F6EFDF}
+.eng-lbl{flex:none;font-size:13px;font-weight:800;color:#9A7A3E;margin:2px 0 -4px}.eng-lbl.s{margin:14px 0 8px;font-size:12px}
+/* بطاقات نصية */
+.eng-tc{display:grid;gap:14px;flex:none}.eng-tc.n2{grid-template-columns:1fr 1fr;flex:1;grid-auto-rows:1fr}.eng-tc.n3{grid-template-columns:repeat(3,1fr)}.eng-tc.n4{grid-template-columns:repeat(4,1fr)}
+.eng-t{border:1px solid #E4E7E2;border-radius:8px;background:#fff;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-height:0;position:relative}
+.eng-t:before{content:"";position:absolute;inset-inline-start:0;top:16px;bottom:16px;width:3px;border-radius:2px;background:#C9A961}
+.eng-th{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.eng-th i{font-style:normal;font-size:12px;font-weight:800;color:#B99A4E}
+.eng-th b{font-size:16px;font-weight:800;color:#0E3B27}
+.eng-th em{font-style:normal;font-size:11.5px;font-weight:700;color:#7D8A82;background:#F2F4F1;border-radius:20px;padding:2px 10px}
+.eng-t p{margin:0;font-size:13.5px;line-height:1.85;color:#3E4D44;font-weight:500}
+.eng-tc.sm .eng-t{padding:12px 16px}.eng-tc.sm .eng-th b{font-size:14.5px}.eng-tc.sm .eng-t p{font-size:12.5px;line-height:1.75}
+.eng-tc.n2 .eng-t{padding:20px 24px;justify-content:center}.eng-tc.n2 .eng-t p{font-size:14.5px;line-height:1.95}.eng-tc.n2 .eng-th b{font-size:17.5px}
+.eng-tc.big .eng-th b{font-size:22px}
+/* أشرطة */
+.eng-bl{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:7px}
+.eng-bl div{display:grid;grid-template-columns:minmax(120px,auto) 1fr 92px;align-items:center;gap:12px;font-size:13px;font-weight:700;color:#1B2A22}
+.eng-bl span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+.eng-bl u{display:block;height:12px;border-radius:3px;background:#F0F2EE;text-decoration:none;overflow:hidden}.eng-bl u i{display:block;height:100%;background:#2F7D57;border-radius:3px}
+.eng-bl b{font-weight:800;color:#0E3B27;text-align:left;white-space:nowrap}
+.eng-st2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px}
+.eng-st2 div{display:grid;grid-template-columns:10px 1fr auto auto;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#1B2A22}
+.eng-st2 i{width:10px;height:10px;border-radius:2px}.eng-st2 b{font-weight:800;color:#0E3B27}.eng-st2 em{font-style:normal;color:#8A948D;font-size:11.5px;min-width:34px;text-align:left}
+.eng-hl{flex:none;display:flex;flex-direction:column;gap:4px;margin-top:auto;padding:12px 16px;border-radius:8px;background:#F4F7F5;border:1px solid #E1E8E3;font-size:13px;line-height:1.75;color:#3E4D44;font-weight:600}
+.eng-hl b{color:#0E3B27;font-size:13.5px}
+.m5-card .eng-hl{margin-top:14px}
+.eng-fin{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:8px}
+.eng-fin div{display:grid;grid-template-columns:170px 1fr 100px;align-items:center;gap:12px;font-size:13px;font-weight:700;color:#1B2A22}
+.eng-fin u{display:block;height:14px;border-radius:3px;background:#F0F2EE;text-decoration:none;overflow:hidden}.eng-fin u i{display:block;height:100%;border-radius:3px}
+.eng-fin b{font-weight:800;color:#0E3B27;text-align:left;white-space:nowrap}
+.m5-grid.eng-g75{grid-template-columns:1.55fr 1fr}
+.eng-col{display:flex;flex-direction:column;gap:14px;min-height:0}.eng-col .m5-card{flex:1}
+.m5-tb tr.eng-tt td{border-top:1.5px solid #0E3B27;font-weight:800;color:#0E3B27;background:#F6F8F5}
+.m5-tb td.v.dn{color:#9C443B}
+.m5-tb.eng-top td.nm{max-width:440px}
+.eng-ch{display:inline-block;font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;margin-inline-end:4px;white-space:nowrap}
+.eng-ch.a{background:#E6F2EB;color:#1E6B45}.eng-ch.p{background:#F8EEDB;color:#8A6420}.eng-ch.o{background:#EEF1F3;color:#5E6C74}
+.eng-na{color:#B5BDB8}
+/* المسار الزمني */
+.eng-tl{flex:1;display:flex;align-items:flex-end;gap:14px;padding:10px 6px 0;min-height:0}
+.eng-tl div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px}
+.eng-tl u{display:block;width:62%;max-width:54px;border-radius:5px 5px 0 0;background:#9CC4AE;text-decoration:none;min-height:4px}
+.eng-tl .pk u{background:#0E3B27}.eng-tl b{font-size:14px;font-weight:800;color:#0E3B27}
+.eng-tl span{font-size:12px;font-weight:700;color:#5E6C62;display:flex;flex-direction:column;align-items:center;line-height:1.3;border-top:1px solid #DDE1DB;width:100%;padding-top:6px}.eng-tl em{font-style:normal;font-size:10.5px;color:#9AA49D}
+/* القطاعات */
+.eng-scg{flex:1;display:grid;gap:16px;min-height:0}.eng-scg.n3{grid-template-columns:repeat(3,1fr)}.eng-scg.n2{grid-template-columns:repeat(2,1fr)}.eng-scg.n1{grid-template-columns:1fr}
+.eng-sc{border:1px solid #E4E7E2;border-radius:8px;background:#fff;padding:16px 18px;display:flex;flex-direction:column;gap:11px;min-height:0;overflow:hidden}
+.eng-sch{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid #EEF0EC}.eng-sch b{font-size:17px;font-weight:800;color:#0E3B27}.eng-sch span{font-size:12px;font-weight:600;color:#8A948D}
+.eng-sck{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #EEF0EC;border-radius:8px;background:#FAFBF9}
+.eng-sck div{display:flex;flex-direction:column;align-items:center;padding:8px 4px;gap:1px}.eng-sck div+div{border-inline-start:1px solid #EEF0EC}
+.eng-sck b{font-size:20px;font-weight:800;color:#0E3B27;line-height:1.2}.eng-sck span{font-size:11px;font-weight:700;color:#7D8A82}
+.eng-scs{display:flex;gap:4px;flex-wrap:wrap;min-height:20px}
+.eng-scb{margin:0;font-size:12.5px;line-height:1.8;color:#46574D;font-weight:500}
+.eng-sci em{display:block;font-style:normal;font-size:12px;font-weight:800;color:#9A7A3E;margin-bottom:6px}
+.eng-sci ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.eng-sci li{position:relative;padding-inline-start:16px;font-size:12.5px;line-height:1.6;color:#1B2A22;font-weight:600}
+.eng-sci li:before{content:"";position:absolute;inset-inline-start:2px;top:.6em;width:6px;height:6px;border-radius:2px;background:#2F7D57}
+.eng-scg.n2 .eng-scb,.eng-scg.n2 .eng-sci li{font-size:13.5px}
+.eng-ft{flex:none;font-size:11.5px;font-weight:600;color:#8A948D;text-align:center}
+.eng-pb{min-width:150px}.eng-pb u{display:inline-block;vertical-align:middle;width:90px;height:8px;border-radius:3px;background:#F0F2EE;text-decoration:none;overflow:hidden;margin-inline-end:8px}.eng-pb u i{display:block;height:100%;background:#C9A961}
+.m5-tb.eng-cmp td{padding:13px 10px}.m5-tb.eng-cmp td.r{white-space:normal;line-height:1.6}
+/* المخطط الانسيابي */
+.eng-fl{position:relative;flex:none;width:1184px;border:1px solid #E4E7E2;border-radius:8px;overflow:hidden;background:#fff}
+.eng-ln{position:absolute;inset-inline:0;border-bottom:1px dashed #E6EAE6;display:flex;align-items:center}
+.eng-ln:last-child{border-bottom:0}.eng-ln:nth-child(even){background:#FAFBF9}
+.eng-ln b{width:150px;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 10px;box-sizing:border-box;background:#0E3B27;color:#fff;font-size:12.5px;font-weight:700;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.12)}
+.eng-fl-ln{position:absolute;inset:0}
+.eng-yes{font-size:11px;font-weight:800;fill:#2F7D57;font-family:inherit}
+.eng-st{position:absolute;box-sizing:border-box;border:1px solid #CFE0D6;background:#F3F8F5;border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center;direction:rtl}
+.eng-st i{flex:none;width:22px;height:22px;border-radius:50%;background:#0E3B27;color:#fff;font-style:normal;font-size:11.5px;font-weight:800;display:grid;place-items:center}
+.eng-st span{font-size:12px;line-height:1.5;font-weight:700;color:#1B2A22}
+.eng-st.q{background:#FBF5E8;border-color:#E3CF9F}.eng-st.q i{background:#B99A4E}
+.eng-st.end{background:#0E3B27;border-color:#0E3B27}.eng-st.end span{color:#fff}.eng-st.end i{background:#C9A961;color:#0E3B27}
+.eng-flb{flex:1;display:grid;grid-template-columns:1.3fr 1fr;gap:14px;min-height:0}
+.eng-flc{border:1px solid #E4E7E2;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:#3E4D44}
+.eng-flc b{font-size:13px;color:#0E3B27;font-weight:800}.eng-flc span em{font-style:normal;font-weight:800;color:#9C443B;margin-inline-end:6px}.eng-flc span em:after{content:" ←"}
+.eng-flc.o{background:#F4F7F5;border-color:#E1E8E3}
+/* التحديات والتوصيات */
+.eng-cs{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-height:0}
+.eng-c{border:1px solid #E4E7E2;border-radius:8px;background:#fff;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.eng-ch2{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid #EEF0EC}
+.eng-ch2 i{flex:none;width:30px;height:30px;border-radius:50%;background:#0E3B27;color:#D9C48F;font-style:normal;font-weight:800;display:grid;place-items:center;font-size:14px}
+.eng-ch2 b{font-size:16.5px;font-weight:800;color:#0E3B27;line-height:1.4}
+.eng-cx{display:flex;flex-direction:column;gap:5px;flex:1}.eng-cx em{font-style:normal;font-size:12px;font-weight:800;color:#9C443B}.eng-cx.ok em{color:#1E6B45}
+.eng-cx p{margin:0;font-size:13.5px;line-height:1.85;color:#3E4D44;font-weight:500}
+.eng-cx.ok{background:#F4F8F5;border-radius:8px;padding:12px 14px;flex:1.1}
+.eng-lv{display:inline-block;font-style:normal;font-size:11.5px;font-weight:800;padding:2px 10px;border-radius:20px}.eng-lv.h{background:#F6E6E2;color:#9C443B}.eng-lv.m{background:#F8EEDB;color:#8A6420}
+.m5-tb.eng-rk td{padding:11px 10px}.m5-tb.eng-rk td.nm{max-width:330px}.m5-tb.eng-rk td.eng-w{white-space:normal;line-height:1.6;color:#3E4D44;font-weight:600;max-width:360px}
+/* خطة العمل */
+.eng-pl{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-height:0}
+.eng-pc{border:1px solid #E4E7E2;border-radius:8px;background:#fff;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.eng-pt{display:flex;align-items:center;gap:12px}.eng-pt i{flex:none;width:50px;height:50px;border-radius:12px;background:#0E3B27;color:#D9C48F;font-style:normal;font-weight:800;font-size:20px;display:grid;place-items:center}
+.eng-pt span{display:flex;flex-direction:column}.eng-pt b{font-size:15.5px;font-weight:800;color:#0E3B27}.eng-pt em{font-style:normal;font-size:12.5px;font-weight:700;color:#9A7A3E}
+.eng-pc p{margin:0;font-size:13.5px;line-height:1.85;color:#3E4D44;font-weight:500;flex:1}
+.eng-po{display:flex;flex-direction:column;gap:6px;border-top:1px solid #EEF0EC;padding-top:10px}.eng-po span{font-size:12.5px;font-weight:700;color:#1B2A22}.eng-po em{font-style:normal;color:#8A948D;font-weight:700;margin-inline-end:6px}
+/* الخلاصة */
+.eng-kf{flex:none;display:grid;grid-template-columns:repeat(6,1fr);border:1px solid #E4E7E2;border-radius:8px;background:#FAFBF9}
+.eng-kf div{display:flex;flex-direction:column;gap:2px;padding:14px 16px}.eng-kf div+div{border-inline-start:1px solid #EEF0EC}
+.eng-kf b{font-size:25px;font-weight:800;color:#0E3B27;white-space:nowrap;line-height:1.2}.eng-kf b small{font-size:13px;font-weight:700;margin-inline-start:4px;color:#5E6C62}
+.eng-kf span{font-size:12px;font-weight:700;color:#7D8A82}
+.eng-sum{flex:1;border-radius:8px;background:#0E3B27;color:#E8EFEA;padding:18px 24px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.eng-sum b{color:#D9C48F;font-size:15px}.eng-sum p{margin:0;font-size:14.5px;line-height:1.95;font-weight:500}.eng-sum bdi{color:#fff;font-weight:700}
+/* المحتويات */
+.eng-toc{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:0 60px}
+.eng-toc div{display:grid;grid-template-columns:64px 1fr 60px;align-items:center;gap:18px;padding:14px 22px;border:1px solid #E4E7E2;border-radius:10px;background:#fff}
+.eng-toc i{font-style:normal;font-size:28px;font-weight:800;color:#B99A4E}
+.eng-toc span{display:flex;flex-direction:column;gap:2px}.eng-toc b{font-size:18px;font-weight:800;color:#0E3B27}.eng-toc em{font-style:normal;font-size:13px;color:#7D8A82;font-weight:600}
+.eng-toc u{text-decoration:none;font-size:14px;font-weight:800;color:#0E3B27;text-align:left;border-inline-start:1px solid #EEF0EC;padding-inline-start:14px}
+.eng-leg{flex:none;display:flex;justify-content:center;align-items:center;gap:10px;padding-bottom:4px}.eng-leg em{font-style:normal;font-size:11.5px;color:#8A948D;font-weight:600}
+/* الغلاف والفواصل */
+.eng-dn{font-size:88px;font-weight:800;color:#C9A961;line-height:1}
+.eng-dv .gcv-in p{color:#BFD0C6;font-size:20px}
+.mgs.eng-cv .gcv-in h1{font-size:62px}.mgs.eng-cv .gcv-in h2{font-size:24px;color:#D9C48F;font-weight:700;max-width:900px;line-height:1.5}
+.eng-cd{color:#fff;font-size:20px;font-weight:800}
+.eng-lgs{display:flex;align-items:center;gap:22px;margin-bottom:26px;align-self:flex-start}.gdv .eng-lgs{align-self:center}
+.eng-lgs img{height:62px;max-width:240px;object-fit:contain}.eng-lgs i{width:1px;height:48px;background:rgba(255,255,255,.35)}
+.eng-lgs.wh img.u{filter:brightness(0) invert(1)}
+/* الوضع الداكن */
+html body[data-theme="dark"] #wkReport.mgr .eng-t,html body[data-theme="dark"] #wkReport.mgr .eng-sc,html body[data-theme="dark"] #wkReport.mgr .eng-c,html body[data-theme="dark"] #wkReport.mgr .eng-pc,html body[data-theme="dark"] #wkReport.mgr .eng-toc div,html body[data-theme="dark"] #wkReport.mgr .eng-fl,html body[data-theme="dark"] #wkReport.mgr .eng-flc{background:#14222A!important;border-color:rgba(205,228,217,.09)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-th b,html body[data-theme="dark"] #wkReport.mgr .eng-sch b,html body[data-theme="dark"] #wkReport.mgr .eng-ch2 b,html body[data-theme="dark"] #wkReport.mgr .eng-pt b,html body[data-theme="dark"] #wkReport.mgr .eng-toc b,html body[data-theme="dark"] #wkReport.mgr .eng-toc u,html body[data-theme="dark"] #wkReport.mgr .eng-bl b,html body[data-theme="dark"] #wkReport.mgr .eng-fin b,html body[data-theme="dark"] #wkReport.mgr .eng-st2 b,html body[data-theme="dark"] #wkReport.mgr .eng-sck b,html body[data-theme="dark"] #wkReport.mgr .eng-kf b,html body[data-theme="dark"] #wkReport.mgr .eng-tl b,html body[data-theme="dark"] #wkReport.mgr .eng-hl b,html body[data-theme="dark"] #wkReport.mgr .eng-flc b{color:#F1F6F3!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-t p,html body[data-theme="dark"] #wkReport.mgr .eng-scb,html body[data-theme="dark"] #wkReport.mgr .eng-cx p,html body[data-theme="dark"] #wkReport.mgr .eng-pc p,html body[data-theme="dark"] #wkReport.mgr .eng-hl,html body[data-theme="dark"] #wkReport.mgr .eng-flc,html body[data-theme="dark"] #wkReport.mgr .m5-tb.eng-rk td.eng-w{color:#B9C8C0!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-bl div,html body[data-theme="dark"] #wkReport.mgr .eng-fin div,html body[data-theme="dark"] #wkReport.mgr .eng-st2 div,html body[data-theme="dark"] #wkReport.mgr .eng-sci li,html body[data-theme="dark"] #wkReport.mgr .eng-po span,html body[data-theme="dark"] #wkReport.mgr .eng-st span{color:#DCE6E0!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-bl u,html body[data-theme="dark"] #wkReport.mgr .eng-fin u,html body[data-theme="dark"] #wkReport.mgr .eng-pb u{background:rgba(205,228,217,.08)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-hl,html body[data-theme="dark"] #wkReport.mgr .eng-sck,html body[data-theme="dark"] #wkReport.mgr .eng-kf,html body[data-theme="dark"] #wkReport.mgr .eng-cx.ok,html body[data-theme="dark"] #wkReport.mgr .eng-flc.o,html body[data-theme="dark"] #wkReport.mgr .eng-ln:nth-child(even){background:#182A33!important;border-color:rgba(205,228,217,.09)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-sck div+div,html body[data-theme="dark"] #wkReport.mgr .eng-kf div+div,html body[data-theme="dark"] #wkReport.mgr .eng-sch,html body[data-theme="dark"] #wkReport.mgr .eng-ch2,html body[data-theme="dark"] #wkReport.mgr .eng-po,html body[data-theme="dark"] #wkReport.mgr .eng-ln{border-color:rgba(205,228,217,.09)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-st{background:#182A33!important;border-color:rgba(205,228,217,.16)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-st.q{background:rgba(201,169,97,.12)!important;border-color:rgba(201,169,97,.4)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-st.end{background:#2F7D57!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-ln b{background:#0C171D!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-tl u{background:#3F7A5C!important}html body[data-theme="dark"] #wkReport.mgr .eng-tl .pk u{background:#8ED2AE!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-tl span,html body[data-theme="dark"] #wkReport.mgr .eng-th em{color:#94A79C!important;border-color:rgba(205,228,217,.1)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-th em{background:rgba(205,228,217,.07)!important}
+html body[data-theme="dark"] #wkReport.mgr .m5-tb tr.eng-tt td{background:rgba(205,228,217,.05)!important;border-top-color:rgba(205,228,217,.3)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-sum{background:#0C171D!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-src.lv{background:rgba(142,210,174,.12);color:#8ED2AE}html body[data-theme="dark"] #wkReport.mgr .eng-src.st{background:rgba(201,169,97,.14);color:#D9C48F}
+@media print{ #wkReport.mgr .eng-ln b,#wkReport.mgr .eng-st,#wkReport.mgr .eng-sum,#wkReport.mgr .eng-ch2 i,#wkReport.mgr .eng-pt i,#wkReport.mgr .eng-tl u{-webkit-print-color-adjust:exact;print-color-adjust:exact} }
+
+/* ضبط الكثافة */
+.m5-tb.eng-top td{padding:5px 8px!important;font-size:12.5px}.m5-tb.eng-top td.nm{font-size:12.5px;line-height:1.35}.m5-tb.eng-top td.nm small{font-size:10.5px}
+.m5-tb.eng-top th{padding-bottom:6px}
+.eng-st{padding:10px 12px;justify-content:center;text-align:center}
+.eng-st i{position:absolute;top:-9px;inset-inline-start:-9px;width:21px;height:21px;font-size:11px;box-shadow:0 0 0 3px #fff}
+.eng-st span{font-size:12.5px}
+.eng-flb{flex:none}
+.eng-flc{gap:8px;font-size:13px}.eng-flc span{line-height:1.6}
+.eng-c{padding:22px 24px;gap:16px}.eng-ch2 b{font-size:18px}.eng-cx p{font-size:15px;line-height:2}.eng-cx{flex:none}.eng-cx.ok{flex:none;margin-top:auto;padding:16px 18px}
+.eng-cx em{font-size:13px}
+.eng-pc{padding:22px 24px;gap:16px}.eng-pc p{font-size:15px;line-height:2}.eng-po{margin-top:auto}.eng-po span{font-size:13.5px}.eng-pt b{font-size:17px}
+.m5-tb.eng-rk td{padding:17px 10px;font-size:14px}.m5-tb.eng-rk td.eng-w{font-size:13.5px}
+.eng-sum{flex:none;padding:22px 28px}.eng-sum p{font-size:15.5px}
+.mgs.eng .eng-sum+.eng-tc{flex:1;grid-auto-rows:1fr}.mgs.eng .eng-sum+.eng-tc .eng-t{justify-content:center}.mgs.eng .eng-sum+.eng-tc .eng-t p{font-size:14px}.mgs.eng .eng-sum+.eng-tc .eng-th b{font-size:16px}
+.eng-kf b{font-size:28px}.eng-kf div{padding:18px 18px}
+.m5-card .eng-hl{margin-top:auto}
+.eng-lbl+.eng-tc{flex:1;grid-auto-rows:1fr}.eng-lbl+.eng-tc .eng-t{justify-content:center;padding:18px 22px}.eng-lbl+.eng-tc .eng-t p{font-size:14.5px;line-height:1.95}.eng-lbl+.eng-tc .eng-th b{font-size:17px}
+.eng-lbl+.eng-tc.sm .eng-t p{font-size:13.5px}
+.eng-st2.v{grid-template-columns:1fr}
+
+.eng-rw{flex:1;display:flex;flex-direction:column;gap:12px;min-height:0}
+.eng-rwh{flex:none;display:grid;grid-template-columns:250px 1fr 1fr;gap:18px;padding:0 22px}.eng-rwh em{font-style:normal;font-size:12.5px;font-weight:800;color:#9C443B}.eng-rwh em.ok{color:#1E6B45}
+.eng-r{flex:1;display:grid;grid-template-columns:250px 1fr 1fr;gap:18px;align-items:center;border:1px solid #E4E7E2;border-radius:8px;background:#fff;padding:14px 22px}
+.eng-r .eng-ch2{border:0;padding:0}.eng-r .eng-ch2 b{font-size:17px}
+.eng-r p{margin:0;font-size:14.5px;line-height:1.9;color:#3E4D44;font-weight:500}
+.eng-r p.ok{background:#F4F8F5;border-radius:8px;padding:12px 16px;align-self:stretch;display:flex;align-items:center}
+.m5-card.f .m5-tb.eng-rk td{padding:16px 10px!important;font-size:14px}
+.eng-st2.v{gap:0;margin-top:6px}.eng-st2.v div{padding:11px 4px;border-bottom:1px solid #F0F1EE;font-size:14px}.eng-st2.v div:last-child{border-bottom:0}.eng-st2.v b{font-size:16px}
+html body[data-theme="dark"] #wkReport.mgr .eng-r{background:#14222A!important;border-color:rgba(205,228,217,.09)!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-r p{color:#B9C8C0!important}html body[data-theme="dark"] #wkReport.mgr .eng-r p.ok{background:#182A33!important}
+html body[data-theme="dark"] #wkReport.mgr .eng-st2.v div{border-color:rgba(205,228,217,.07)!important}
+
+.mgs.eng .eng-sum{flex:1}.mgs.eng .eng-sum+.eng-tc{flex:none}
+</style>
+<script id="engJs">/* ================= تقرير متابعة الأعمال الهندسية: المغايرات والبنود المستحدثة والتعديلات التصميمية =================
+   ما له بيانات في المنصة يتحدّث تلقائياً من المحفظة (المغايرات · البنود المستحدثة · تغيّر القيمة التعاقدية · الحالات).
+   وما ليس له بيانات بعد (سجل المعاملات التفصيلي، الجهات، الأعمار، الحوكمة، التحديات…) ثابت في ENG_S ويُحدَّث يدوياً. */
+var ENG_S={
+  cut:"31 يوليو 2026",
+  reg:{n:56,pend:38,avg:107,max:720,pendV:20.51e6,rate:32,
+    at:[["الإدارة العامة للمشتريات والعقود",6],["لجنة فحص العروض",5],["إدارة المشاريع",5],["وكيل الوزارة",4],["المقاول",3],["إدارة المشتريات بالوزارة",1]],
+    act:[["بانتظار موافقة المشتريات",24],["تم الاعتماد",17],["بانتظار موافقة لجنة فحص العروض",15]],
+    mo:[["2024-08",4],["2024-09",1],["2024-11",3],["2025-04",2],["2025-05",2],["2025-06",2],["2025-07",3],["2025-08",1],["2025-09",5],["2025-10",2],["2026-01",1]]},
+  causes:[
+    ["متطلبات تشغيلية ظهرت بعد التصميم","الأكبر أثراً","عند مراجعة متطلبات التشغيل الفعلية ظهرت حاجة إلى خطوط إنتاج وتجهيزات ومساحات خدمية لم يشملها جدول الكميات الأصلي، ولهذا تتصدّر الفاكهة والمواشي قيمة التغيير."],
+    ["اشتراطات السلامة والجهات النظامية","غير قابلة للتفاوض","اشتراطات الدفاع المدني وأنظمة الإطفاء والإنذار ومسارات الإخلاء أضافت بنوداً أو عدّلت بنوداً قائمة، وتمرّ غالباً كبنود مستحدثة بدورة تسعير واعتماد كاملة."],
+    ["ظروف الموقع الفعلية","أثر مالي محدود","فروق المناسيب وطبيعة التربة والخدمات القائمة استدعت تعديل كميات الأعمال الترابية والأساسات والبنية التحتية، وتظهر عادةً كمغايرة تعيد توزيع الكميات."],
+    ["تقاطع الأعمال وتحديث المخططات","يحتاج توثيقاً دقيقاً","تداخل نطاقات المقاولين في الموقع الواحد وتحديث المخططات بعد المراجعة الهندسية أنتجا تعديلات تنسيقية على حدود الأعمال وتسلسلها، مع ضرورة منع ازدواج احتساب البنود."]],
+  choke:[
+    ["المشتريات ولجنة فحص العروض","الاختناق الأكبر","11 معاملة تقف عند التسعير والمراجعة العقدية، وهي أطول المراحل زمناً خصوصاً للبنود المستحدثة التي تتطلب تحليل سعر مستقلاً ومقارنة بأسعار السوق."],
+    ["إدارة المشاريع والاستشاري","قابل للتقصير فوراً","5 معاملات في مرحلة استكمال المستندات الفنية (الحصر التفصيلي، المخططات المحدّثة، مذكرة التبرير)، وهي ضمن سيطرة فريق المشروع ولا تعتمد على جهة خارجية."],
+    ["الاعتماد النهائي لدى الوكالة","يُعالَج بالرفع الموحّد","4 معاملات تنتظر اعتماد وكيل الوزارة لتجاوزها حد الصلاحية؛ رفعها دفعة واحدة مع ملخص تنفيذي موحّد يقلّل دورات المراجعة المتكررة."],
+    ["زمن الدورة والتراكم القديم","المتوسط لا يكفي","متوسط عمر المعاملة 107 أيام، بينما بلغت أقدمها 720 يوماً؛ ما يعني وجود تراكم من دورات سابقة يحتاج تصفية في مسار منفصل."]],
+  sec:{
+    "الفاكهة":{t:"مراكز الخدمات التسويقية للمنتجات الزراعية",k:"استحداث خطوط إنتاج وتجهيزات تشغيل",bg:"استدعت متطلبات التشغيل الفعلية بنوداً فنية متخصصة لاستكمال منظومة الإنتاج، وغيابها يحدّ مباشرة من الطاقة الإنتاجية للمرافق.",
+      it:["خط متكامل لتنظيف وتجهيز الخضروات والفواكه","خزانات تفريغ وماكينات تنظيف بالفقاعات وتجفيف","نظام سيور ناقلة ومحطات فرز وتجميع","طاولات ستانلس ستيل وتحكم بالسرعة عبر محولات التردد"]},
+    "المواشي":{t:"مجمعات المزارع النموذجية للإنتاج الحيواني",k:"أنظمة تشغيل وبنية تحتية وسلامة",bg:"أظهرت مراجعة المخططات ومتطلبات التشغيل بنوداً ضرورية لضمان الجاهزية التشغيلية وفق المتطلبات النظامية والفنية المعتمدة.",
+      it:["بردورات خرسانية وخطوط HDPE لشبكة الحريق","غرف تفتيش كهربائية وغرف اتصالات للبنية التحتية","إطفاء بغاز FM-200 لغرف الجهد المنخفض والمحولات","إنارة داخلية وخارجية وكابلات قدرة وأنظمة مزامنة","ألواح ساندوتش بانل معزولة وعزل داخلي للخزانات"]},
+    "العسل":{t:"محطات تربية ملكات النحل وإنتاج الطرود",k:"مبانٍ وخدمات مساندة",bg:"راجع الاستشاري المخططات التنفيذية ومتطلبات الجهات ذات العلاقة أثناء التنفيذ، فلزمت تعديلات فنية تحقق التشغيل والسلامة دون المساس بنطاق المشروع.",
+      it:["غرف تفتيش من الخرسانة المسلحة بقطر 1 م","طقم مضخات حريق 750 جالون/دقيقة بملحقاته","أعمال البنية التحتية لشبكات الخدمة","استكمال متطلبات السلامة والحماية من الحريق"]},
+    "الأسماك":{t:"مزادات الأسماك ومراكز صيانة القوارب",k:"مناسيب واشتراطات سلامة",bg:"استُحدثت بنود لازمة لتحقيق الجاهزية التشغيلية واستيفاء متطلبات الجهات المختصة بعد مراجعة المخططات ومتطلبات التشغيل والسلامة.",
+      it:["طبقات كسر صخري لتجهيز المواقع الخارجية","لياسة الواجهات واستكمال التشطيبات المعمارية","رشاشات حريق ومضخات (ديزل · كهربائية · جوكي)","وصلات الدفاع المدني وإيصال التيار وإطلاق الخدمة"]},
+    "الورد":{t:"مدن الورد ومصنع الورد والمشاتل",k:"تجهيزات إنتاج وتكامل مرافق",bg:"جاءت التعديلات استجابةً لاحتياجات تشغيلية ظهرت أثناء التنفيذ، بما يحقق تكامل مرافق المشروع ويرفع كفاءة التشغيل.",
+      it:["استكمال البنية التحتية والخدمات المساندة","ربط مواقع الإنتاج والتصنيع والمشاتل بالمرافق","عناصر فنية لرفع الكفاءة والاستدامة","متطلبات السلامة والتشغيل والصيانة المستقبلية"]},
+    "البن العربي":{t:"مشاريع البن العربي",k:"تعديل تنسيقي دون بنود جديدة",bg:"",it:[]}},
+  flows:[
+    {t:"دورة اعتماد المغايرة",s:"من إعداد المغايرة حتى تسليم النسخة المعتمدة للمقاول",lanes:["المقاول","الاستشاري","إدارة المشاريع","الشؤون القانونية","المشتريات / لجنة فحص العروض"],
+     st:[[0,"إعداد المغايرة ومطابقتها للمواصفات"],[1,"هل يعتمدها الاستشاري؟",1],[2,"توافق مع الميزانية والخطة؟",1],[3,"توافق مع الأنظمة والعقد؟",1],[4,"هل تلتزم بسياسات الشراء؟",1],[2,"إرسال النسخة المعتمدة للمقاول"]],
+     back:[["رفض الاستشاري","تعود المغايرة للمقاول للتعديل الفني"],["عدم الالتزام بسياسات الشراء","تُعاد صياغتها وفق السياسات"]],out:"مستند المغايرة المعتمد · رقم الخطاب · تحديث جدول الكميات وقيمة العقد"},
+    {t:"دورة اعتماد البنود المستحدثة",s:"من حصر البنود التي ظهرت أثناء التنفيذ حتى إدراجها في جدول الكميات",lanes:["المقاول","الاستشاري","إدارة المشاريع"],
+     st:[[0,"حصر البنود التي ظهرت أثناء التنفيذ"],[0,"إعداد مسودة البنود وتسعيرها"],[1,"هل تطابق المعايير والمواصفات؟",1],[0,"تعديل البنود وفق ملاحظات الاستشاري"],[2,"هل تعتمدها إدارة المشاريع؟",1],[2,"اعتماد البنود وإدراجها في جدول الكميات"]],
+     back:[["عدم المطابقة","تُعدَّل البنود وفق الملاحظات"],["عدم الاعتماد","إعادة التسعير والمراجعة"]],out:"لا يُنفَّذ أي بند مستحدث قبل اعتماده؛ التنفيذ المسبق يعرّض المطالبة للرفض"},
+    {t:"دورة إعداد ومراجعة التصاميم الهندسية",s:"من التصاميم الأولية حتى تصريح بدء التنفيذ",lanes:["المقاول","الاستشاري","إدارة المشاريع"],
+     st:[[0,"إعداد التصاميم الأولية والمواصفات وتقدير التكلفة"],[0,"تقديم طلب التعديل الرسمي مع مبرراته"],[1,"دراسة أثر التعديل على التكلفة والمدة"],[0,"تقديم التصاميم النهائية للاستشاري"],[1,"هل التصاميم مطابقة؟",1],[2,"هل تعتمدها إدارة المشاريع؟",1],[2,"تصريح بدء التنفيذ وفق التصاميم المعتمدة"]],
+     back:[["عدم المطابقة","تعود للمقاول لمعالجة الملاحظات"],["عدم الاعتماد","إعادة دراسة أثر التعديل"]],out:"التنسيق بين المالك والاستشاري والمقاول شرط لضمان الجودة قبل الاعتماد النهائي"}],
+  ch:[
+    ["تقاطع الأعمال بين المقاولين","صعوبة تنظيم سير الأعمال وتنسيق الجهود بين المقاولين في المشاريع متعددة المراحل كمدن الورد.","تنسيق أسبوعي مع استشاري الإشراف لمناقشة التقاطعات بين المشاريع وتوزيع أولويات التنفيذ."],
+    ["تأخر استجابة المقاولين","تأخر استيفاء مستندات أوامر التغيير والمناقلات، مع تعديلات متكررة على مقترحات سبق أن اعتمدها الاستشاري.","متابعة أسبوعية للمقاولين وآلية مخاطبات رسمية أسبوعية لإنهاء المناقلات وأوامر التغيير في أقرب وقت."],
+    ["تأخر اعتماد خطوط الإنتاج","تأخر اعتماد خطوط الإنتاج للمصانع ينعكس مباشرة على إقفال المناقلات وأوامر التغيير المرتبطة بها.","متابعة دورية أسبوعية لما أُنجز في خطوط الإنتاج وربطها بجدول إقفال المغايرات."]],
+  risk:[
+    ["تأخر اعتماد 38 معاملة بقيمة 20.51 مليون ريال يؤخّر إقفال جداول الكميات","h","h","جدول إقفال أسبوعي لكل معاملة، ورفع موحّد مرفق بملخص تنفيذي للجهة المعتمِدة","إدارة المشاريع والمشتريات"],
+    ["تراكم معاملات قديمة يبلغ عمر أقدمها 720 يوماً","h","h","فصل المعاملات المتجاوزة 180 يوماً ومعالجتها في مسار استثنائي مختصر","إدارة المشاريع"],
+    ["نقص المستندات الفنية يعيد المعاملة إلى بداية الدورة","m","h","قائمة تحقق موحّدة للمستندات الفنية تُستوفى قبل الرفع لأي جهة","إدارة المشاريع والاستشاري"],
+    ["الاعتماد الدفعي لـ 20.51 مليون ريال يضغط على التدفق النقدي","m","h","توزيع الاعتمادات على أرباع السنة وتحديث التوقعات المالية شهرياً","الإدارة المالية"],
+    ["تقاطع الأعمال بين المقاولين في المواقع المشتركة","h","m","مخططات حدود أعمال معتمدة ومحاضر تسليم مواقع موقّعة قبل البدء","الاستشاري والمقاولون"],
+    ["ظهور تغييرات إضافية أثناء التنفيذ في الفاكهة والمواشي","m","m","مراجعة تصميمية مسبقة لخطوط الإنتاج والتجهيزات قبل الترسية","الاستشاري"]],
+  rec:[
+    ["إدارة المشاريع","جدول إقفال أسبوعي للمعاملات المعلّقة بمسؤول وتاريخ مستهدف لكل معاملة، ورفع ما يتجاوز حد الصلاحية دفعة واحدة بملخص تنفيذي، وفصل المتجاوز 180 يوماً في مسار استثنائي.","تقصير زمن الدورة، ورفع نسبة الاعتماد من 32% إلى أكثر من 60% خلال تسعين يوماً."],
+    ["الاستشاري","قائمة تحقق موحّدة للمستندات قبل أي رفع، ومراجعة تصميمية مسبقة لخطوط الإنتاج في الفاكهة والمواشي، وتحديث المخططات وحدود الأعمال قبل التسليم.","معاملات مرتجعة أقل، وبنود مستحدثة أقل في القطاعات الأعلى أثراً، وأساس فني أدق للتسعير."],
+    ["المشتريات والمقاولون","مسار مختصر للمعاملات المتكررة محدودة القيمة، ونموذج موحّد لتحليل أسعار البنود المستحدثة، ومحاضر تسليم مواقع وحدود أعمال قبل التنفيذ في المواقع المشتركة.","تسريع مرحلة التسعير والمراجعة العقدية، وتفادي مطالبات التقاطع، وإقفال جداول الكميات في مواعيدها."]],
+  plan:[
+    ["أول 30 يوماً","تصفية العالق","حصر المعاملات المعلّقة في جدول واحد بالحالة والمسؤول والتاريخ المستهدف، وفصل المتجاوز 180 يوماً، ورفع دفعة موحّدة للوكالة.","جدول إقفال معتمد وتقرير أسبوعي ثابت","إدارة المشاريع"],
+    ["من 30 إلى 60 يوماً","ضبط الدورة","إقرار قائمة التحقق الموحّدة، وتثبيت اجتماع أسبوعي مشترك مع المشتريات ولجنة فحص العروض، واعتماد حدود الأعمال للمواقع المشتركة.","متوسط زمن دورة أقل من 107 أيام","إدارة المشاريع والاستشاري"],
+    ["من 60 إلى 90 يوماً","الإقفال والتحصين","إقفال جداول الكميات للمشاريع العشرة الأعلى أثراً، وبدء تنفيذ البنود المعتمدة، ومراجعة مسبقة لخطوط الإنتاج في الفاكهة والمواشي.","نسبة اعتماد تتجاوز 60%","إدارة المشاريع والاستشاري"]]
+};
+var ENG_SECS=[["01","نبذة عن التقرير والمحفظة","الغرض والمنهجية وأبرز مؤشرات المحفظة"],["02","المغايرات والبنود المستحدثة","الأعداد والقطاعات والأثر المالي ودورة الاعتماد"],["03","التعديلات التصميمية","ما تغيّر فنياً في كل قطاع ولماذا"],["04","حوكمة الاعتماد","دورات اعتماد المغايرة والبنود المستحدثة والتصاميم"],["05","التحديات والتوصيات","المعوقات والمخاطر وخطة العمل والخلاصة"]];
+
+function _engE(v){ v=String(v==null?"":v).trim(); if(!v||v==="لا يوجد"||v==="-"||v==="0") return [];
+  return v.split("|").map(function(s){ return s.trim(); }).filter(Boolean).map(function(s){ return /اعتماد|إعتماد|معتمد/.test(s)?"a":(/إجراء|اجراء|الدراسة|دراسة|انتظار/.test(s)?"p":"o"); }); }
+function _engData(){ var X=_mgrData(DATA), N=_dxN;
+  var R=DATA.map(function(p){ var v=_engE(p.variations), n=_engE(p.new_items), vc=toNum(p.value_change)||0; var all=v.concat(n);
+    return {p:p,v:v,n:n,vc:vc,base:_dxBase(p),orig:_dxOrig(p),pend:all.indexOf("p")>-1,a:all.filter(function(s){ return s==="a"; }).length,pr:all.filter(function(s){ return s==="p"; }).length}; })
+    .filter(function(r){ return r.v.length||r.n.length||r.vc; });
+  var S=function(L,f){ return L.reduce(function(a,x){ return a+f(x); },0); };
+  var agg=function(L){ return {np:L.length,nv:S(L,function(r){ return r.v.length; }),nn:S(L,function(r){ return r.n.length; }),a:S(L,function(r){ return r.a; }),pr:S(L,function(r){ return r.pr; }),
+    net:S(L,function(r){ return r.vc; }),inc:S(L,function(r){ return r.vc>0?r.vc:0; }),dec:S(L,function(r){ return r.vc<0?-r.vc:0; }),
+    vA:S(L.filter(function(r){ return !r.pend; }),function(r){ return r.vc; }),vP:S(L.filter(function(r){ return r.pend; }),function(r){ return r.vc; }),pp:L.filter(function(r){ return r.pend; }).length}; };
+  var T=agg(R), G={}; R.forEach(function(r){ var k=r.p.sector||"—"; (G[k]=G[k]||[]).push(r); });
+  var SK=Object.keys(G).map(function(k){ var o=agg(G[k]); o.k=k; o.L=G[k]; return o; }).sort(function(a,b){ return b.net-a.net||b.np-a.np; });
+  R.sort(function(a,b){ return Math.abs(b.vc)-Math.abs(a.vc); });
+  return {X:X,R:R,T:T,SK:SK}; }
+
+function _engShell(no,title,body,tot,src){ return '<section class="mgs m5 eng"><div class="m5-h"><div class="m5-ht"><span class="m5-k">متابعة الأعمال الهندسية · '+esc(REPORT_DATE||MONTHLBL)+'</span><h2>'+title+'</h2></div><img src="'+LOGO+'" alt="ريف"></div><div class="m5-b">'+body+'</div>'
+  +'<div class="m5-f"><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span><span class="eng-src '+(src==="s"?"st":"lv")+'">'+(src==="s"?"المصدر: سجل المعاملات · حتى "+esc(ENG_S.cut):"المصدر: محفظة المشاريع · محدّث تلقائياً")+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
+function _engDiv(no,tot,s){ return '<section class="mgs m5 gcv gdv eng-dv"><div class="gcv-in"><span class="eng-dn">'+s[0]+'</span><h1>'+s[1]+'</h1><p>'+s[2]+'</p></div><div class="gcv-ft"><span>'+esc(REPORT_TITLE)+' · '+esc(REPORT_DATE||MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
+function _engTxt(L,cls){ return '<div class="eng-tc '+(cls||"")+'">'+L.map(function(c,i){ return '<div class="eng-t"><div class="eng-th"><i>'+ar(i+1)+'</i><b>'+c[0]+'</b>'+(c[1]?'<em>'+c[1]+'</em>':'')+'</div><p>'+c[2]+'</p></div>'; }).join("")+'</div>'; }
+function _engBars(L,fmt,col){ var mx=Math.max.apply(null,L.map(function(x){ return Math.abs(x[1]); }).concat([1e-9]));
+  return '<div class="eng-bl">'+L.map(function(x){ return '<div><span>'+esc(x[0])+'</span><u><i style="width:'+Math.max(1.5,Math.abs(x[1])/mx*100).toFixed(1)+'%;'+(col?'background:'+col:'')+'"></i></u><b>'+(fmt?fmt(x[1]):ar(x[1]))+'</b></div>'; }).join("")+'</div>'; }
+function _engChip(r){ var o={a:["معتمد","a"],p:["تحت الإجراء","p"],o:["أخرى","o"]}; if(!r.length) return '<span class="eng-na">—</span>';
+  var c={}; r.forEach(function(s){ c[s]=(c[s]||0)+1; }); return Object.keys(c).map(function(k){ return '<i class="eng-ch '+o[k][1]+'">'+o[k][0]+(c[k]>1?' ×'+ar(c[k]):'')+'</i>'; }).join(""); }
+function _engRows(L,a,b){ return '<div class="eng-rw"><div class="eng-rwh"><span></span><em>'+a+'</em><em class="ok">'+b+'</em></div>'+L.map(function(c,i){ return '<div class="eng-r"><div class="eng-ch2"><i>'+ar(i+1)+'</i><b>'+c[0]+'</b></div><p>'+c[1]+'</p><p class="ok">'+c[2]+'</p></div>'; }).join("")+'</div>'; }
+function _engLv(t){ return t==="h"?'<i class="eng-lv h">مرتفع</i>':'<i class="eng-lv m">متوسط</i>'; }
+
+function nl0(F){ return F.lanes.length; }
+function _engFlow(F){ var W=1184, H=nl0(F)>3?410:390, LW=150, n=F.st.length, nl=F.lanes.length, cw=(W-LW)/n, lh=H/nl, bw=Math.min(cw-28,190), bh=Math.min(lh-16,nl>3?66:96);
+  var pos=F.st.map(function(s,i){ var cx=W-LW-cw*(i+.5), cy=lh*(s[0]+.5); return {x:cx-bw/2,y:cy-bh/2,cx:cx,cy:cy}; });
+  var svg='<svg class="eng-fl-ln" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'"><defs><marker id="engAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9AA79F"/></marker></defs>';
+  for(var i=0;i<n-1;i++){ var a=pos[i], b=pos[i+1], x1=a.x, x2=b.x+bw, mx=(x1+x2)/2, d=Math.abs(a.cy-b.cy)<1?'M'+x1+' '+a.cy+'H'+x2:'M'+x1+' '+a.cy+'H'+mx+'V'+b.cy+'H'+x2;
+    svg+='<path d="'+d+'" fill="none" stroke="#9AA79F" stroke-width="1.6" marker-end="url(#engAr)"/>'; if(F.st[i][2]) svg+='<text x="'+(mx+4)+'" y="'+(a.cy-6)+'" class="eng-yes">نعم</text>'; }
+  svg+='</svg>';
+  var lanes=F.lanes.map(function(l,i){ return '<div class="eng-ln" style="top:'+(lh*i)+'px;height:'+lh+'px"><b>'+esc(l)+'</b></div>'; }).join("");
+  var boxes=F.st.map(function(s,i){ var p=pos[i]; return '<div class="eng-st'+(s[2]?' q':'')+(i===n-1?' end':'')+'" style="left:'+p.x.toFixed(1)+'px;top:'+p.y.toFixed(1)+'px;width:'+bw.toFixed(1)+'px;height:'+bh.toFixed(1)+'px"><i>'+ar(i+1)+'</i><span>'+esc(s[1])+'</span></div>'; }).join("");
+  return '<div class="eng-fl" style="height:'+H+'px">'+lanes+svg+boxes+'</div>'
+    +'<div class="eng-flb"><div class="eng-flc"><b>مسارات الإرجاع (عند «لا»)</b>'+F.back.map(function(b){ return '<span><em>'+esc(b[0])+'</em>'+esc(b[1])+'</span>'; }).join("")+'</div><div class="eng-flc o"><b>المخرجات والضوابط</b><span>'+esc(F.out)+'</span></div></div>'; }
+
+function _engSecCard(o,s){ var d=ENG_S.sec[o.k]||{t:"",k:"",bg:"",it:[]};
+  return '<div class="eng-sc"><div class="eng-sch"><b>قطاع '+esc(o.k)+'</b><span>'+esc(d.t)+'</span></div>'
+    +'<div class="eng-sck"><div><b>'+ar(o.np)+'</b><span>مشروع</span></div><div><b>'+ar(o.nv)+'</b><span>مغايرة</span></div><div><b>'+ar(o.nn)+'</b><span>بنود مستحدثة</span></div><div><b>'+_dxM(o.net).replace(/ .*/,"")+'</b><span>'+_dxM(o.net).replace(/^[^ ]+ ?/,"")+'</span></div></div>'
+    +'<div class="eng-scs">'+(o.a?'<i class="eng-ch a">معتمد '+ar(o.a)+'</i>':'')+(o.pr?'<i class="eng-ch p">تحت الإجراء '+ar(o.pr)+'</i>':'')+'</div>'
+    +(d.bg?'<p class="eng-scb">'+esc(d.bg)+'</p>':'')+(d.it.length?'<div class="eng-sci"><em>أبرز البنود المستحدثة</em><ul>'+d.it.map(function(t){ return '<li>'+esc(t)+'</li>'; }).join("")+'</ul></div>':'')+'</div>'; }
+
+function _engSlides(){ var D=_engData(), X=D.X, T=D.T, M=_dxM, P=[], tot0=X.orig||1, S=ENG_S, rg=S.reg;
+  var pct=function(a,b){ return b?ar(Math.round(a/b*1000)/10)+"%":"—"; };
+  /* 01 */ P.push({div:0});
+  P.push(["عن التقرير ومنهجيته",'<div class="eng-lbl">عن التقرير</div>'+_engTxt([
+      ["الغرض","",'تقرير دوري يرصد التغييرات التي تطرأ على جداول الكميات والتصاميم أثناء تنفيذ مشاريع ريف الإنشائية، وأثرها على القيمة والجدول الزمني.'],
+      ["المحتوى","",'مؤشرات المحفظة، والمغايرات والبنود المستحدثة وأثرها المالي، والتعديلات التصميمية لكل قطاع، وحوكمة الاعتماد، والتحديات والتوصيات.'],
+      ["مصادر البيانات","",'محفظة المشاريع في المنصة (تتحدّث تلقائياً)، وسجل المغايرات وأوامر البنود المستحدثة، ومحاضر الاجتماعات الأسبوعية وخطابات الجهات المعتمِدة.']],"n3")
+    +'<div class="eng-lbl">التعريفات المرجعية</div>'+_engTxt([
+      ["المغايرة","",'إعادة توزيع كميات بنود قائمة في العقد دون إضافة بنود جديدة.'],
+      ["البند المستحدث","",'بند لم يكن مدرجاً في جدول الكميات؛ يحتاج تسعيراً ومراجعة قانونية واعتماداً مستقلاً، لذا دورته أطول.'],
+      ["صافي الأثر المالي","",'إجمالي الزيادات مطروحاً منه التخفيضات، بالريال السعودي.'],
+      ["معتمد / تحت الإجراء","",'معتمد: أُقرّ نهائياً. تحت الإجراء: لم يكتمل اعتماده بعد. سجل المعاملات مغلق حتى '+esc(S.cut)+'.']],"n4 sm"),"l"]);
+  var stL=[["قيد التنفيذ",X.g.run.n,"#2F7D57"],["منتهية",X.g.done.n,"#0E3B27"],["في الطرح",X.g.tender.n,"#C9A961"],["إجراءات الترسية",X.g.award.n,"#8FA9B5"]];
+  var secC={}; DATA.forEach(function(p){ var k=p.sector||"—"; secC[k]=(secC[k]||0)+1; });
+  P.push(["لمحة عن محفظة المشاريع",_m5Kpis([["إجمالي المشاريع",ar(X.n),_arPrj(D.T.np)+" بها تغييرات"],["القيمة التعاقدية",M(X.val),"الأصلية "+M(X.orig)],["قيد التنفيذ",ar(X.g.run.n),"منها "+ar(X.stop.length)+" متوقفة"],["منتهية",ar(X.g.done.n),pct(X.g.done.n,X.n)+" من المحفظة"]])
+    +'<div class="m5-grid h">'+_m5Card("توزيع المشاريع على القطاعات",_arPrj(X.n),_engBars(Object.keys(secC).sort(function(a,b){ return secC[b]-secC[a]; }).map(function(k){ return [k,secC[k]]; })))
+    +_m5Card("حالة المشاريع","",_m5Stack(stL.map(function(s){ return {v:s[1],c:s[2],l:s[0]}; }))+'<div class="eng-st2 v">'+stL.map(function(s){ return '<div><i style="background:'+s[2]+'"></i><span>'+s[0]+'</span><b>'+ar(s[1])+'</b><em>'+pct(s[1],X.n)+'</em></div>'; }).join("")+'</div>'
+      +'<div class="eng-hl"><b>أثر التغييرات على القيمة التعاقدية</b><span>من <bdi>'+M(X.orig)+'</bdi> عند التوقيع إلى <bdi>'+M(X.val)+'</bdi> بعد المغايرات المعتمدة — بفارق <bdi>'+M(X.val-X.orig)+'</bdi> ('+pct(X.val-X.orig,X.orig)+').</span></div>')+'</div>',"l"]);
+  /* 02 */ P.push({div:1});
+  var tp=T.nv+T.nn, ent=T.a+T.pr;
+  P.push(["مؤشرات المغايرات والبنود المستحدثة",_m5Kpis([["مشاريع بها تغييرات",ar(T.np),pct(T.np,X.n)+" من المحفظة"],["المغايرات",ar(T.nv),pct(T.nv,tp)+" من المعاملات"],["البنود المستحدثة",ar(T.nn),pct(T.nn,tp)+" من المعاملات"],["صافي تغيّر القيمة",M(T.net),pct(T.net,tot0)+" من القيمة الأصلية"]])
+    +'<div class="m5-grid h">'+_m5Card("حالة الاعتماد",ar(ent)+" معاملة",_m5Stack([{v:T.a,c:"#2F7D57",l:"معتمد"},{v:T.pr,c:"#C9A961",l:"تحت الإجراء"}])+'<div class="eng-st2">'
+        +'<div><i style="background:#2F7D57"></i><span>معتمدة</span><b>'+ar(T.a)+'</b><em>'+pct(T.a,ent)+'</em></div><div><i style="background:#C9A961"></i><span>تحت الإجراء</span><b>'+ar(T.pr)+'</b><em>'+pct(T.pr,ent)+'</em></div></div>'
+        +'<div class="eng-lbl s">التوزيع حسب النوع</div>'+_m5Stack([{v:T.nv,c:"#0E3B27",l:"مغايرة"},{v:T.nn,c:"#8FA9B5",l:"بنود مستحدثة"}])+'<div class="eng-st2"><div><i style="background:#0E3B27"></i><span>مغايرة</span><b>'+ar(T.nv)+'</b><em>'+pct(T.nv,tp)+'</em></div><div><i style="background:#8FA9B5"></i><span>بنود مستحدثة</span><b>'+ar(T.nn)+'</b><em>'+pct(T.nn,tp)+'</em></div></div>')
+      +_m5Card("الأثر المالي للتغييرات","بالريال",'<div class="eng-fin">'+[["الزيادات",T.inc,"#2F7D57"],["التخفيضات",T.dec,"#B96A5B"],["صافي الأثر",T.net,"#0E3B27"],["مرتبط بمعاملات معتمدة",T.vA,"#5E9C7B"],["مرتبط بمعاملات تحت الإجراء",T.vP,"#C9A961"]].map(function(r){ var mx=Math.max(T.inc,1); return '<div><span>'+r[0]+'</span><u><i style="width:'+Math.max(1,Math.abs(r[1])/mx*100).toFixed(1)+'%;background:'+r[2]+'"></i></u><b>'+M(r[1])+'</b></div>'; }).join("")+'</div>'
+        +'<div class="m5-note">«تحت الإجراء» = مشروع لديه مغايرة أو بنود مستحدثة لم يكتمل اعتمادها ('+_arPrj(T.pp)+').</div>')+'</div>',"l"]);
+  var sk=D.SK, trs=sk.map(function(o){ return '<tr><td class="nm">'+esc(o.k)+'</td><td class="n">'+ar(o.np)+'</td><td>'+ar(o.nv)+'</td><td>'+ar(o.nn)+'</td><td>'+ar(o.a)+'</td><td>'+ar(o.pr)+'</td><td class="v">'+M(o.net)+'</td><td class="p">'+pct(o.net,T.net)+'</td></tr>'; }).join("")
+    +'<tr class="eng-tt"><td class="nm">الإجمالي</td><td class="n">'+ar(T.np)+'</td><td>'+ar(T.nv)+'</td><td>'+ar(T.nn)+'</td><td>'+ar(T.a)+'</td><td>'+ar(T.pr)+'</td><td class="v">'+M(T.net)+'</td><td class="p">100%</td></tr>';
+  var top1=sk[0], topN=sk.slice().sort(function(a,b){ return (b.nv+b.nn)-(a.nv+a.nn); })[0];
+  P.push(["المغايرات والبنود المستحدثة حسب القطاع",'<div class="m5-grid eng-g75">'+_m5Card("ملخص القطاعات",(top1&&topN&&top1.k!==topN.k)?esc(topN.k)+" الأعلى عدداً · "+esc(top1.k)+" الأعلى أثراً":"",_m5Rows(["القطاع","المشاريع","مغايرات","بنود مستحدثة","معتمدة","تحت الإجراء","صافي الأثر","النسبة"],[trs]),"f")
+    +'<div class="eng-col">'+_m5Card("عدد المعاملات لكل قطاع","",_engBars(sk.map(function(o){ return [o.k,o.nv+o.nn]; }).sort(function(a,b){ return b[1]-a[1]; }),null,"#8FA9B5"))
+    +_m5Card("صافي الأثر المالي لكل قطاع","",_engBars(sk.map(function(o){ return [o.k,o.net]; }),function(v){ return M(v); },"#C9A961"))+'</div></div>',"l"]);
+  var TOP=D.R.slice(0,10), topV=TOP.reduce(function(a,r){ return a+r.vc; },0);
+  P.push(["أعلى المشاريع في قيمة التغييرات",_m5Card("أعلى "+ar(TOP.length)+" مشاريع","تستحوذ على "+pct(topV,T.net)+" من صافي الأثر",_m5Rows(["#","المشروع","القطاع","المغايرات","البنود المستحدثة","قيمة التغيير","نسبة التغيير"],TOP.map(function(r,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(r.p.name||"")+'<small>'+esc(r.p.code||"")+' · '+esc(r.p.region||"")+'</small></td><td>'+esc(r.p.sector||"—")+'</td><td>'+_engChip(r.v)+'</td><td>'+_engChip(r.n)+'</td><td class="v">'+M(r.vc)+'</td><td class="p">'+pct(r.vc,r.orig)+'</td></tr>'; }),"sm eng-top")+'<div class="m5-note">تمثّل '+ar(TOP.length)+' من '+ar(T.np)+' مشروعاً بها تغييرات، وتستحوذ على '+M(topV)+' أي '+pct(topV,T.net)+' من صافي الأثر — متابعتها المكثّفة تكفي للسيطرة على معظم القيمة.</div>',"f"),"l"]);
+  var avgP=T.np?T.net/T.np:0;
+  P.push(["قراءة معمّقة في الأثر المالي",_engTxt([
+      [pct(T.net,tot0)+" من القيمة الأصلية","حجم التغيير",'صافي الأثر <bdi>'+M(T.net)+'</bdi> مقابل قيمة أصلية <bdi>'+M(X.orig)+'</bdi>. النسبة ضمن الحدود المتعارف عليها لمشاريع البنية التحتية الزراعية؛ أي أن التغييرات تصحيحية وليست إعادة تشكيل لنطاق المشاريع.'],
+      [M(avgP)+" متوسط المشروع","توزيع غير متكافئ",'متوسط التغيير '+M(avgP)+' لكل مشروع، لكن أعلى عشرة مشاريع وحدها تستحوذ على '+pct(topV,T.net)+' من الأثر؛ لذلك يُركَّز الجهد الرقابي عليها.'],
+      [M(T.inc)+" زيادات","مقابل "+M(T.dec)+" تخفيضات",'محدودية التخفيضات طبيعية لأن معظم المعاملات بنود تُضاف ولا تُلغى، وهذا يستدعي تدقيق التسعير قبل الاعتماد بدل الاعتماد على المقاصة بين الزيادة والوفر.'],
+      [M(T.vP)+" مرتبطة بمعاملات معلّقة","التزام مؤجل",pct(T.vP,T.net)+' من صافي الأثر يخص مشاريع لديها معاملات لم يكتمل اعتمادها ('+_arPrj(T.pp)+'). يجب رصده في التدفق النقدي المتوقع لأن اعتماده دفعة واحدة قد يضغط على المصروفات في ربع واحد.']],"n2 big"),"l"]);
+  P.push(["لماذا نشأت المغايرات؟",_engTxt(S.causes,"n2"),"s"]);
+  P.push(["أين تقف المعاملات الآن؟",_m5Kpis([["معاملات تحت الإجراء",ar(rg.pend),"من "+ar(rg.n)+" معاملة"],["متوسط عمر المعاملة",ar(rg.avg)+" يوم","أطولها "+ar(rg.max)+" يوماً"],["القيمة المعلّقة",M(rg.pendV),"لم تُعتمد بعد"],["نسبة الاعتماد",ar(rg.rate)+"%","من إجمالي المعاملات"]])
+    +'<div class="m5-grid h">'+_m5Card("الجهة التي تقف عندها المعاملة",ar(rg.at.reduce(function(a,x){ return a+x[1]; },0))+" معاملة",_engBars(rg.at,null,"#C9A961")+'<div class="m5-note">أكثر من نصف المعاملات المعلّقة تقف عند المشتريات ولجنة فحص العروض.</div>')
+    +_m5Card("الإجراء الحالي للمعاملات",ar(rg.n)+" معاملة",_engBars(rg.act,null,"#2F7D57")+'<div class="m5-note">'+ar(Math.round(rg.pend/rg.n*100))+'% من المعاملات ما زالت تحت الإجراء — العائق الأكبر أمام إقفال جداول الكميات وبدء تنفيذ البنود المستحدثة.</div>')+'</div>',"s"]);
+  P.push(["أين يتعطّل الاعتماد ولماذا؟",_engTxt(S.choke,"n2"),"s"]);
+  var mmx=Math.max.apply(null,rg.mo.map(function(x){ return x[1]; })), MO=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+  var pk=rg.mo.slice().sort(function(a,b){ return b[1]-a[1]; })[0], pkL=MO[+pk[0].slice(5)-1]+" "+pk[0].slice(0,4);
+  P.push(["المسار الزمني لإصدار المعاملات",_m5Card("عدد المعاملات الصادرة شهرياً",ar(rg.mo.reduce(function(a,x){ return a+x[1]; },0))+" معاملة مؤرّخة",'<div class="eng-tl">'+rg.mo.map(function(x){ return '<div class="'+(x===pk?'pk':'')+'"><b>'+ar(x[1])+'</b><u style="height:'+(x[1]/mmx*100).toFixed(0)+'%"></u><span>'+MO[+x[0].slice(5)-1].slice(0,3)+'<em>'+x[0].slice(0,4)+'</em></span></div>'; }).join("")+'</div>',"f")
+    +_engTxt([["ذروة الإصدار",pkL,'أعلى شهر بـ '+ar(pk[1])+' معاملات، وتزامنت مع دخول مراكز الخدمات التسويقية مرحلة التجهيز التشغيلي.'],["طول الدورة","",'متوسط '+ar(rg.avg)+' يوماً من الإصدار حتى الاعتماد، وأطولها '+ar(rg.max)+' يوماً.'],["الأثر التشغيلي","",'كل يوم تأخير في الاعتماد يؤجّل بنوداً مرتبطة بالسلامة والتشغيل وينعكس مباشرة على تاريخ الجاهزية.']],"n3 sm"),"s"]);
+  var PER=10; for(var i=0;i<D.R.length;i+=PER){ var ch=D.R.slice(i,i+PER), np=Math.ceil(D.R.length/PER);
+    P.push(["سجل المشاريع ذات التغييرات"+(np>1?' <em>('+ar(i/PER+1)+' من '+ar(np)+')</em>':''),_m5Card(_arPrj(D.R.length)+" مرتبة حسب قيمة التغيير","القيمة الحالية بعد التغيير",_m5Rows(["#","المشروع","القطاع","المغايرات","البنود المستحدثة","قيمة التغيير","القيمة الحالية"],ch.map(function(r,j){ return '<tr><td class="i">'+ar(i+j+1)+'</td><td class="nm">'+esc(r.p.name||"")+'<small>'+esc(r.p.code||"")+' · '+esc(r.p.region||"")+'</small></td><td>'+esc(r.p.sector||"—")+'</td><td>'+_engChip(r.v)+'</td><td>'+_engChip(r.n)+'</td><td class="v '+(r.vc<0?'dn':'')+'">'+M(r.vc)+'</td><td class="r">'+M(r.base)+'</td></tr>'; }),"sm eng-top"),"f"),"l"]); }
+  /* 03 */ P.push({div:2});
+  var SC=D.SK.filter(function(o){ var d=ENG_S.sec[o.k]; return d&&d.it&&d.it.length; });
+  for(var s=0;s<SC.length;s+=3){ var grp=SC.slice(s,s+3); P.push(["التعديلات التصميمية حسب القطاع"+(SC.length>3?' <em>('+ar(s/3+1)+' من '+ar(Math.ceil(SC.length/3))+')</em>':''),'<div class="eng-scg n'+grp.length+'">'+grp.map(function(o){ return _engSecCard(o); }).join("")+'</div><div class="eng-ft">جميع التعديلات نُفّذت وفق المخططات والمواصفات المعتمدة وتحت إشراف الجهات المختصة.</div>',"l"]); }
+  P.push(["مقارنة القطاعات في لوحة واحدة",_m5Card("القطاعات حسب صافي الأثر","",_m5Rows(["القطاع","المعاملات","صافي الأثر","النسبة","طبيعة التعديل الغالبة"],D.SK.map(function(o){ var d=ENG_S.sec[o.k]||{}; var sh=T.net?o.net/T.net:0; return '<tr><td class="nm">'+esc(o.k)+'</td><td class="n">'+ar(o.nv+o.nn)+'</td><td class="v">'+M(o.net)+'</td><td class="eng-pb"><u><i style="width:'+Math.max(0,sh*100).toFixed(1)+'%"></i></u><b>'+pct(o.net,T.net)+'</b></td><td class="r">'+esc((d.t?d.t+" — ":"")+(d.k||""))+'</td></tr>'; }).concat(['<tr class="eng-tt"><td class="nm">الإجمالي</td><td class="n">'+ar(T.nv+T.nn)+'</td><td class="v">'+M(T.net)+'</td><td class="eng-pb"><b>100%</b></td><td class="r">صافي بعد خصم تخفيضات قدرها '+M(T.dec)+'</td></tr>']),"eng-cmp"),"f"),"l"]);
+  /* 04 */ P.push({div:3});
+  S.flows.forEach(function(F){ P.push([F.t+' <em>'+esc(F.s)+'</em>',_engFlow(F),"s"]); });
+  /* 05 */ P.push({div:4});
+  P.push(["أهم التحديات والحلول المنفذة",_engRows(S.ch,"التحدي","الحل المنفَّذ"),"s"]);
+  P.push(["مصفوفة المخاطر وإجراءات التخفيف",_m5Card("المخاطر المتبقية على ملف المغايرات",ar(S.risk.length)+" مخاطر",_m5Rows(["#","المخاطرة","الاحتمال","الأثر","إجراء التخفيف","الجهة المسؤولة"],S.risk.map(function(r,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(r[0])+'</td><td>'+_engLv(r[1])+'</td><td>'+_engLv(r[2])+'</td><td class="eng-w">'+esc(r[3])+'</td><td class="r">'+esc(r[4])+'</td></tr>'; }),"eng-rk"),"f"),"s"]);
+  P.push(["التوصيات الموجّهة للجهات المعنية",_engRows(S.rec,"التوصية","الأثر المتوقع"),"s"]);
+  P.push(["خطة العمل: 30 · 60 · 90 يوماً",'<div class="eng-pl">'+S.plan.map(function(c,i){ return '<div class="eng-pc"><div class="eng-pt"><i>'+ar((i+1)*30)+'</i><span><b>'+c[0]+'</b><em>'+c[1]+'</em></span></div><p>'+c[2]+'</p><div class="eng-po"><span><em>المخرَج</em>'+c[3]+'</span><span><em>المسؤول</em>'+c[4]+'</span></div></div>'; }).join("")+'</div>'
+    +'<div class="eng-hl"><b>مؤشرات قياس النجاح</b><span>نسبة المعاملات المعتمدة · متوسط عمر المعاملة · قيمة الأثر المعلّق · عدد المعاملات المتجاوزة 180 يوماً — تُرصد شهرياً وتُقارن بخط الأساس في '+esc(S.cut)+'.</span></div>',"s"]);
+  P.push(["الخلاصة والمؤشرات الختامية",'<div class="eng-kf">'+[[ar(T.np),"مشروعاً به تغييرات"],[ar(T.nv),"مغايرة"],[ar(T.nn),"بنود مستحدثة"],[M(T.net),"صافي الأثر المالي"],[pct(T.a,ent),"نسبة الاعتماد"],[M(T.vP),"مرتبطة بمعاملات معلّقة"]].map(function(k){ return '<div><b>'+_m5Val(k[0])+'</b><span>'+k[1]+'</span></div>'; }).join("")+'</div>'
+    +'<div class="eng-sum"><b>الخلاصة</b><p>رُصدت تغييرات على '+_arPrj(T.np)+' في '+ar(D.SK.length)+' قطاعات ('+ar(T.nv)+' مغايرة و'+ar(T.nn)+' بنود مستحدثة)، بصافي أثر <bdi>'+M(T.net)+'</bdi> ('+pct(T.net,tot0)+' من القيمة الأصلية): زيادات <bdi>'+M(T.inc)+'</bdi> مقابل تخفيضات <bdi>'+M(T.dec)+'</bdi>. اعتُمد '+ar(T.a)+' منها، ولا يزال '+ar(T.pr)+' تحت الإجراء. جميع التعديلات جاءت وفق المخططات المعتمدة ومتطلبات التشغيل الفعلية دون الإخلال بنطاق المشاريع أو أهدافها.</p></div>'
+    +_engTxt([["تركّز التغيير","",esc(D.SK.slice(0,2).map(function(o){ return o.k; }).join(" و"))+' يستحوذان على '+pct((D.SK[0]?D.SK[0].net:0)+(D.SK[1]?D.SK[1].net:0),T.net)+' من صافي الأثر، نتيجة خطوط الإنتاج وأنظمة السلامة والبنية التحتية.'],["عنق الزجاجة","",'أغلب المعاملات المعلّقة تقف عند المشتريات ولجنة فحص العروض، ما يؤخّر إقفال جداول الكميات.'],["الأولوية","",'تثبيت المخاطبات الأسبوعية وربط اعتماد خطوط الإنتاج بجدول إقفال المغايرات لتقصير زمن الدورة.']],"n3 sm"),"l"]);
+  /* ترقيم وأقسام */
+  var list=[{cover:1},{toc:1}].concat(P,[{end:1}]), tot=list.length, secAt=[];
+  list.forEach(function(pg,i){ if(pg.div!=null) secAt[pg.div]=i+1; });
+  return list.map(function(pg,i){ var no=i+1;
+    if(pg.cover) return _engCover(D,no,tot);
+    if(pg.toc) return _engShell(no,"محتويات التقرير",'<div class="eng-toc">'+ENG_SECS.map(function(s,k){ return '<div><i>'+s[0]+'</i><span><b>'+s[1]+'</b><em>'+s[2]+'</em></span><u>'+ar(secAt[k]||0)+'</u></div>'; }).join("")+'</div><div class="eng-leg"><span class="eng-src lv">يتحدّث تلقائياً من المحفظة</span><span class="eng-src st">بيانات ثابتة من سجل المعاملات حتى '+esc(S.cut)+'</span><em>يُشار لمصدر كل شريحة في تذييلها</em></div>',tot,"l");
+    if(pg.div!=null) return _engDiv(no,tot,ENG_SECS[pg.div]);
+    if(pg.end) return '<section class="mgs m5 gcv gdv eng-dv"><div class="gcv-in">'+_engLogos()+'<h1>شكراً لكم</h1><p>مركز إدارة المشاريع — برنامج ريف</p></div><div class="gcv-ft"><span>'+esc(REPORT_DATE||MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>';
+    return _engShell(no,pg[0],pg[1],tot,pg[2]); }).join(""); }
+function _engLogos(){ return REPORT_LOGO?'<div class="eng-lgs'+(REPORT_LOGO_WHITEN?' wh':'')+'"><img class="u" src="'+REPORT_LOGO+'" alt="شعار"><i></i><img src="'+LOGO_W+'" alt="ريف"></div>':'<img class="gcv-lg" src="'+LOGO_W+'" alt="ريف">'; }
+function _engCover(D,no,tot){ var T=D.T, M=_dxM;
+  return '<section class="mgs m5 gcv eng-cv"><div class="gcv-in">'+_engLogos()+'<span class="gcv-k">مركز إدارة المشاريع · دعم استشاري</span><h1>'+esc(REPORT_TITLE)+'</h1><h2>المغايرات والبنود المستحدثة والتعديلات التصميمية لمشاريع برنامج ريف الإنشائية</h2>'
+    +'<div class="gcv-kp"><div><b>'+ar(T.np)+'</b><span>مشروعاً به تغييرات</span></div><div><b>'+ar(T.nv+T.nn)+'</b><span>مغايرة وبند مستحدث</span></div><div><b>'+M(T.net)+'</b><span>صافي الأثر المالي</span></div><div><b>'+ar(T.pr)+'</b><span>تحت الإجراء</span></div></div></div>'
+    +'<div class="gcv-ft"><span class="eng-cd">'+esc(REPORT_DATE||MONTHLBL)+'</span><span>ريف السعودية · وزارة البيئة والمياه والزراعة</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
+function engReportOpen(){ try{ setNavActive("report"); }catch(e){} initReportSettings("eng","متابعة الأعمال الهندسية",MONTHLBL);
+  IS_REPORT=true; WEEKLY_MODE=false; REPORT_CTX=null; ANSWER_TITLE="تقرير متابعة الأعمال الهندسية"; PRINT_NAME=REPORT_TITLE+" - "+REPORT_DATE; RERENDER=function(){ engReportOpen(); }; RERENDER._inplace=true;
+  var bar='<div class="rp-ready noprint mg-bar"><button onclick="_rpBack()">→ التقارير</button><span>'+esc(REPORT_TITLE)+' — '+esc(REPORT_DATE)+'</span><button class="ic" onclick="wkFullscreen()">⛶ ملء الشاشة</button><button class="ok" onclick="mgrPrint()">⬇ تنزيل PDF</button></div>'
+    +'<div class="rfilter noprint eng-ctl">'+reportBrandControls()+'</div>';
+  var y=window.scrollY; show(bar+'<div class="report mgr" id="wkReport"><button class="wkfs-exit noprint" onclick="wkFullscreen()">✕ خروج من ملء الشاشة</button>'+_engSlides()+'</div>'); setTimeout(function(){ _mgrFit(); if(SILENT_RENDER) try{ window.scrollTo(0,y); }catch(e){} },30); }
+try{ window.engReportOpen=engReportOpen; }catch(e){}
+/* التسجيل في صفحة التقارير */
+(function(){ try{ if(!RP2_TYPES.all.some(function(x){ return x[0]==="eng"; })) RP2_TYPES.all.splice(1,0,["eng","تقرير الأعمال الهندسية","المغايرات والبنود المستحدثة والتعديلات التصميمية","المؤشرات · القطاعات · الأثر المالي · الحوكمة · التوصيات","شرائح"]);
+  if(typeof RP2_IC==="object"&&!RP2_IC.eng) RP2_IC.eng='<path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-6h6v6"/><path d="M12 4v3"/>';
+  var g0=window.rpGo; if(typeof g0==="function"&&!g0._eng){ var g1=function(t){ if(t==="eng"){ engReportOpen(); try{ _rpAfter(); }catch(e){} return; } return g0.apply(this,arguments); }; g1._eng=1; window.rpGo=g1; try{ rpGo=g1; }catch(e){} }
+  if(typeof RB_PAGES!=="undefined"&&Array.isArray(RB_PAGES)) RB_PAGES.push([["تقرير الاعمال الهندسية","المغايرات","البنود المستحدثة","التعديلات التصميمية"],function(){ engReportOpen(); },"تقرير الأعمال الهندسية"]);
+}catch(e){} })();
+</script>
 </body>
 </html>
