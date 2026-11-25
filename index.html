@@ -9062,6 +9062,7 @@ html body[data-theme="dark"] #wkReport.mgr .m5-kt span{color:#A3B6AB!important}h
 @media print{.m5-kp{box-shadow:none}}
 </style>
 <script>document.addEventListener("fullscreenchange",function(){ if(document.fullscreenElement) return; var el=document.querySelector("#answer .acard.wkfs-fallback[data-docfs]"); if(el){ delete el.dataset.docfs; try{ wkFullscreen(); }catch(e){} } });</script>
+<style id="pyHit">#answer tr.py-hit td{background:rgba(201,165,78,.22)!important;transition:background .4s}</style>
 <style id="hmgRing">html body .hmg-c .hmg-rg{width:42px!important;height:42px!important}html body .hmg-c .hmg-rg b{font-size:12px!important;font-weight:800!important;margin-top:0!important}html body .hmg-c .hmg-rg b small{font-size:7px!important}html body .hmg-c .hmg-rg .bg,html body .hmg-c .hmg-rg .fg{stroke-width:4!important}</style>
 <style id="topUnify">
 /* رأس موحّد للوحات الثلاث: لوحة المشروع تستخدم نفس رأس لوحة الأداء العامة داخل اللوحة */
@@ -15936,7 +15937,7 @@ function payRegOpen(keep){ try{setNavActive("payreg");}catch(e){} try{ _initDash
         +'<div class="hb-cc2">'+_pyBadge(last.st)+(last.fn?'<span class="py-fn" style="--c:'+_payFnCol(last.fn)+'">'+esc(last.fn)+'</span>':'')+'</div></div></article>'; }).join("")+'</div>'; }
   else body='<div class="hb-tw"><table class="hb-t py-t"><thead><tr>'+th("c","الكود")+th("n","المشروع")+th("no","رقم")+th("m","الفترة")+th("v","قيمة المستخلص")+th("cum","التراكمي")+th("rem","المتبقي من العقد")+th("st","الحالة")+th("sub","التسليم للمالية")+th("paid","تاريخ الصرف")+th("dur","مدة الصرف")+'</tr></thead><tbody>'
     +L.map(function(o){ var cr=Math.min(1,_payN(o.cr));
-      return '<tr onclick="pyOpen(\''+esc(o.c).replace(/'/g,"\\'")+'\')"><td class="cd">'+cp(o)+'</td><td class="nm"><b>'+esc(o.n||"—")+'</b><small>'+esc(o.s||"")+(o.t?(" · "+esc(o.t)):"")+(o.nt?' · <em class="py-nt">'+esc(o.nt)+'</em>':'')+'</small></td>'
+      return '<tr data-k="'+esc(String(o.c)).replace(/"/g,"")+'|'+esc(String(o.no==null?"":o.no))+'" onclick="pyOpen(\''+esc(o.c).replace(/'/g,"\\'")+'\')"><td class="cd">'+cp(o)+'</td><td class="nm"><b>'+esc(o.n||"—")+'</b><small>'+esc(o.s||"")+(o.t?(" · "+esc(o.t)):"")+(o.nt?' · <em class="py-nt">'+esc(o.nt)+'</em>':'')+'</small></td>'
         +'<td class="n py-no">'+ar(_payN(o.no))+'</td><td class="n">'+esc(_payMo(o.m))+'</td><td class="n"><b>'+_dxM(_payN(o.v))+'</b><small class="py-r">'+_dxPct(_payN(o.r))+' من العقد</small></td>'
         +'<td><div class="py-cum"><span>'+_dxM(_payN(o.cum))+'</span><em>'+_dxPct(cr)+'</em></div><div class="py-cb"><u style="width:'+(cr*100).toFixed(1)+'%"></u></div></td>'
         +'<td class="n">'+(_payN(o.rem)>=1?_dxM(_payN(o.rem)):'—')+'</td><td>'+_pyBadge(o.st)+(o.fn?'<small class="py-fn" style="--c:'+_payFnCol(o.fn)+'">'+esc(o.fn)+'</small>':'')+'</td>'
@@ -22903,6 +22904,21 @@ body[data-theme="dark"] .fdx{--m0:#18292F;--m1:#1F3A2E;--m2:#27503D;--m3:#2F6A4E
 body[data-theme="dark"] .fdx .fd-mr{stroke:rgba(255,255,255,.18)!important}
 body[data-theme="dark"] .fdx .fd-ml text,body[data-theme="dark"] .fdx .fd-ml.t0 text{fill:#E4EFE8!important;stroke:rgba(0,0,0,.35)!important}
 .fdx .fd-ml.t4 text,.fdx .fd-ml.t5 text{fill:#fff!important;stroke:rgba(0,0,0,.25)!important}
+/* القطاعات أكبر بعد إزالة «الصرف مقابل الإنجاز» */
+.fdx .fd-ra.nocap{grid-template-columns:minmax(0,2.3fr) minmax(0,1fr)!important}
+.fdx .fd-ra.nocap .fd-b{width:30px!important}.fdx .fd-ra.nocap .fd-b b{font-size:11.5px!important}.fdx .fd-ra.nocap .fd-bc > span{font-size:12px!important}
+/* سجل المستخلصات: فلاتر وتجميع */
+.fdx .fd-tfs{display:flex;gap:6px;align-items:center}
+.fdx .fd-fsel{font:inherit;font-size:11.5px;height:28px;padding:0 8px;border-radius:7px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);max-width:150px}
+.fdx .fd-fsel.on{border-color:var(--c-tnd);background:rgba(201,165,78,.08)}
+.fdx .fd-tfx{font:inherit;font-size:12px;width:26px;height:26px;border-radius:7px;border:1px solid var(--bd);background:var(--soft);color:var(--mu);cursor:pointer}
+.fdx .fd-t tr.g0 td{border-top:1.5px solid var(--bd)!important}
+.fdx .fd-t tr.gx td{border-top:1px dashed var(--hl)!important}
+.fdx .fd-t td[rowspan]{vertical-align:top!important;background:var(--bg)}
+.fdx .fd-t tbody tr:nth-child(even) td{background:transparent}
+.fdx .fd-t td.lk{cursor:pointer}.fdx .fd-t td.lk:hover b{color:var(--c-dis);text-decoration:underline}
+.fdx .fd-t tbody tr{cursor:default}
+.fdx button.fd-st{border:0;font:inherit;cursor:pointer}.fdx button.fd-st:hover{box-shadow:0 0 0 1.5px currentColor}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
@@ -22950,6 +22966,9 @@ function fdPrint(){ var c=document.querySelector("#answer .fdx .dx-canvas"); if(
   document.body.appendChild(fr); var d=fr.contentWindow.document; d.open(); d.write(html.replace(/window\.print\(\)/,"window.focus();window.print()")); d.close();
   fr.contentWindow.addEventListener("afterprint",function(){ setTimeout(function(){ try{ fr.remove(); }catch(e){} },500); }); }
 (function(){ var o=window.printAnswer; if(typeof o==="function"&&!o._fd){ var w=function(){ if(document.querySelector("#answer .fdx .dx-canvas")) return fdPrint(); return o.apply(this,arguments); }; w._fd=1; window.printAnswer=w; try{ printAnswer=w; }catch(e){} } })();
+function fdTf(k,v){ FD.tf=FD.tf||{}; FD.tf[k]=v; finDashOpen(true); }
+function fdClaim(code,no){ try{ event&&event.stopPropagation(); }catch(e){} try{ setNavActive("payreg"); }catch(e){} PY.q=String(code); PY.sector=""; PY.ptype=""; PY.fn=""; PY.year=""; PY.st=""; PY.view="table"; payRegOpen(true);
+  setTimeout(function(){ var r=document.querySelector('#answer tr[data-k="'+String(code).replace(/"/g,"")+'|'+String(no)+'"]'); if(r){ r.scrollIntoView({block:"center",behavior:"smooth"}); r.classList.add("py-hit"); setTimeout(function(){ r.classList.remove("py-hit"); },4200); } },350); }
 function _v2PlFd(n){ return n===1?'مشروع':(n===2?'مشروعان':(n<11?'مشاريع':'مشروعاً')); }
 function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _initDashGroup(); }catch(e){}
   if(!keep){ FD.sec=""; }
@@ -23035,16 +23054,26 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
     +'<div class="fd-mside">'+(nat?'<div class="fd-nat"><span>على مستوى المملكة</span><b>'+(+(nat/1e6).toFixed(1)).toLocaleString("en-US")+'</b><em>مليون ريال</em></div>':'')
     +'<div class="fd-mlg"><span>الأعلى</span><i class="m5"></i><i class="m4"></i><i class="m3"></i><i class="m2"></i><i class="m1"></i><span>الأقل</span></div></div></div></section>';
   /* ---- سجل المستخلصات ---- */
-  var TR=PR.slice().sort(function(a,b){ var x=String(b.m||""), y=String(a.m||""); if(x!==y) return x<y?-1:1; return _payN(b.no)-_payN(a.no); });
+  /* سجل المستخلصات: المنصرف أولاً، ومستخلصات كل مشروع متتالية، مع فلاتر القطاع والمنطقة والمقاول والنوع */
+  FD.tf=FD.tf||{}; var PJ={}; (DATA||[]).forEach(function(p){ PJ[String(p.code)]=p; });
+  var fv=function(o,k){ var p=PJ[String(o.c)]||{}; return k==="s"?String(o.s||p.sector||"").trim():k==="r"?String(p.region||"").trim():k==="c"?String(_dxTxt(p.contractor)||"").trim():String(p.ptype||o.t||"").trim(); };
+  var opts=function(k,lbl){ var m={}; PR.forEach(function(o){ var v=fv(o,k); if(v) m[v]=(m[v]||0)+1; }); return '<select class="fd-fsel'+(FD.tf[k]?' on':'')+'" onchange="fdTf(\''+k+'\',this.value)"><option value="">'+lbl+'</option>'+Object.keys(m).sort().map(function(v){ return '<option value="'+esc(v)+'"'+(FD.tf[k]===v?' selected':'')+'>'+esc(v)+' ('+ar(m[v])+')</option>'; }).join("")+'</select>'; };
+  var TF=PR.filter(function(o){ return ["s","r","c","t"].every(function(k){ return !FD.tf[k]||fv(o,k)===FD.tf[k]; }); });
+  var paidF=function(o){ return /منصرف/.test(o.st||"")?0:1; }, PG={}, PO=[];
+  TF.forEach(function(o){ var k=String(o.c); if(!PG[k]){ PG[k]=[]; PO.push(k); } PG[k].push(o); });
+  PO.sort(function(a,b){ var A=PG[a], B=PG[b], pa=Math.min.apply(null,A.map(paidF)), pb=Math.min.apply(null,B.map(paidF)); if(pa!==pb) return pa-pb; var la=A.map(function(o){ return o.m||""; }).sort().pop(), lb=B.map(function(o){ return o.m||""; }).sort().pop(); return la<lb?1:(la>lb?-1:0); });
   var stc=function(s){ s=String(s||""); return /منصرف/.test(s)?"ok":(/إجراء/.test(s)?"pr":"na"); };
-  var tbl='<section class="fd-p fd-tb"><header><h3>سجل المستخلصات</h3><span>'+ar(TR.length)+' مستخلص · الأحدث أولاً · القيم بالريال</span></header><div class="fd-pb">'+(TR.length?'<div class="fd-tw"><table class="fd-t"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup><thead><tr><th>القطاع</th><th>المشروع</th><th>رقم المستخلص</th><th>الشهر</th><th>قيمة المستخلص</th><th>الحالة</th></tr></thead><tbody>'
-    +TR.map(function(o){ var sc=(window.SEC_PASTEL||{})[String(o.s||"").trim()]||"#DDE3DE"; return '<tr role="button" onclick="pyOpen(\''+esc(o.c)+'\')"><td><span class="fd-sc"><i style="background:'+sc+'"></i>'+esc(o.s||"—")+'</span></td><td class="nm" title="'+esc(o.n||"")+'"><b>'+esc(o.n||o.c)+'</b><em>'+esc(o.c)+'</em></td><td class="c">'+ar(_payN(o.no)||0)+'</td><td class="c">'+_payMo(o.m)+'</td><td class="v">'+_fdNum(o.v)+'</td><td class="c"><span class="fd-st '+stc(o.st)+'">'+esc(o.st||"—")+'</span></td></tr>'; }).join("")
-    +'</tbody></table></div>':'<div class="fd-empty">لا توجد مستخلصات.</div>')+'</div></section>';
+  var rows=PO.map(function(k){ var G=PG[k].slice().sort(function(a,b){ return paidF(a)-paidF(b)||_payN(a.no)-_payN(b.no); }), o0=G[0], p=PJ[k]||{}, sc=(window.SEC_PASTEL||{})[fv(o0,"s")]||"#DDE3DE", n=G.length;
+      return G.map(function(o,i){ return '<tr class="'+(i===0?'g0':'gx')+'">'+(i===0?'<td rowspan="'+n+'"><span class="fd-sc"><i style="background:'+sc+'"></i>'+esc(fv(o,"s")||"—")+'</span></td><td rowspan="'+n+'" class="nm lk" role="button" title="فتح المشروع" onclick="pyOpen(\''+esc(k).replace(/'/g,"\\'")+'\')"><b>'+esc(o.n||p.name||k)+'</b><em>'+esc(k)+' · '+ar(n)+' مستخلص</em></td>':'')
+        +'<td class="c">'+ar(_payN(o.no)||0)+'</td><td class="c">'+_payMo(o.m)+'</td><td class="v">'+_fdNum(o.v)+'</td><td class="c"><button class="fd-st '+stc(o.st)+'" title="فتح المستخلص في سجل المستخلصات" onclick="fdClaim(\''+esc(k).replace(/'/g,"\\'")+'\',\''+esc(String(o.no||""))+'\')">'+esc(o.st||"—")+'</button></td></tr>'; }).join(""); }).join("");
+  var anyF=["s","r","c","t"].some(function(k){ return FD.tf[k]; });
+  var tbl='<section class="fd-p fd-tb"><header><h3>سجل المستخلصات</h3><div class="fd-tfs">'+opts("s","كل القطاعات")+opts("r","كل المناطق")+opts("c","كل المقاولين")+opts("t","كل الأنواع")+(anyF?'<button class="fd-tfx" onclick="FD.tf={};finDashOpen(true)">✕</button>':'')+'</div></header><div class="fd-pb">'+(rows?'<div class="fd-tw"><table class="fd-t"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup><thead><tr><th>القطاع</th><th>المشروع</th><th>رقم المستخلص</th><th>الشهر</th><th>قيمة المستخلص</th><th>الحالة</th></tr></thead><tbody>'
+    +rows+'</tbody></table></div>':'<div class="fd-empty">لا توجد مستخلصات مطابقة.</div>')+'</div></section>';
   var head='<div class="dxf-head"><div class="dxf-ht"><div class="dxf-tr"><h1>لوحة الأداء المالية</h1><span class="fd-mo">'+esc(MONTHLBL)+'</span>'+(FD.sec?'<button class="fd-chip noprint" onclick="fdSet(\'sec\',\''+esc(FD.sec).replace(/'/g,"\\'")+'\')">قطاع '+esc(FD.sec)+' ✕</button>':'')+'</div></div>'
     +'<div class="dxf-hl">'+_dxBtns('<button class="dx-btn ic" id="dxLinkBtn" onclick="dxCopyLink()" title="نسخ الرابط" aria-label="نسخ الرابط">'+DX_ICO.link+'</button><button class="dx-btn ic" onclick="fdPrint()" title="طباعة" aria-label="طباعة"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg></button>')
     +'<img class="dxf-logo" src="'+LOGO+'" alt="ريف"></div></div>';
   _dxShow('<div class="dash dash3 dx dx-land dxf dxf2 fdx"><div class="dx-canvas">'+head+kpis+BUDBAR
-    +'<div class="fd-ra">'+cap+secs+yr+'</div>'
+    +'<div class="fd-ra nocap">'+secs+yr+'</div>'
     +'<div class="fd-rb">'+tbl+geo+'</div>'
     +'</div></div>'); }
 </script>
