@@ -23428,7 +23428,7 @@ function _engData(){ var X=_mgrData(DATA), N=_dxN;
   return {X:X,R:R,T:T,SK:SK}; }
 
 function _engShell(no,title,body,tot,src){ return '<section class="mgs m5 eng"><div class="m5-h"><div class="m5-ht"><span class="m5-k">متابعة الأعمال الهندسية · '+esc(REPORT_DATE||MONTHLBL)+'</span><h2>'+title+'</h2></div><img src="'+LOGO+'" alt="ريف"></div><div class="m5-b">'+body+'</div>'
-  +'<div class="m5-f"><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span><span class="eng-src '+(src==="s"?"st":"lv")+'">'+(src==="s"?"المصدر: سجل المعاملات · حتى "+esc(ENG_S.cut):"المصدر: محفظة المشاريع · محدّث تلقائياً")+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
+  +'<div class="m5-f"><span>برنامج التنمية الريفية الزراعية المستدامة — ريف</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
 function _engDiv(no,tot,s){ return '<section class="mgs m5 gcv gdv eng-dv"><div class="gcv-in"><span class="eng-dn">'+s[0]+'</span><h1>'+s[1]+'</h1><p>'+s[2]+'</p></div><div class="gcv-ft"><span>'+esc(REPORT_TITLE)+' · '+esc(REPORT_DATE||MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>'; }
 function _engTxt(L,cls){ return '<div class="eng-tc '+(cls||"")+'">'+L.map(function(c,i){ return '<div class="eng-t"><div class="eng-th"><i>'+ar(i+1)+'</i><b>'+c[0]+'</b>'+(c[1]?'<em>'+c[1]+'</em>':'')+'</div><p>'+c[2]+'</p></div>'; }).join("")+'</div>'; }
 function _engBars(L,fmt,col){ var mx=Math.max.apply(null,L.map(function(x){ return Math.abs(x[1]); }).concat([1e-9]));
@@ -23462,12 +23462,12 @@ function _engSlides(){ var D=_engData(), X=D.X, T=D.T, M=_dxM, P=[], tot0=X.orig
   P.push(["عن التقرير ومنهجيته",'<div class="eng-lbl">عن التقرير</div>'+_engTxt([
       ["الغرض","",'تقرير دوري يرصد التغييرات التي تطرأ على جداول الكميات والتصاميم أثناء تنفيذ مشاريع ريف الإنشائية، وأثرها على القيمة والجدول الزمني.'],
       ["المحتوى","",'مؤشرات المحفظة، والمغايرات والبنود المستحدثة وأثرها المالي، والتعديلات التصميمية لكل قطاع، وحوكمة الاعتماد، والتحديات والتوصيات.'],
-      ["مصادر البيانات","",'محفظة المشاريع في المنصة (تتحدّث تلقائياً)، وسجل المغايرات وأوامر البنود المستحدثة، ومحاضر الاجتماعات الأسبوعية وخطابات الجهات المعتمِدة.']],"n3")
+      ["الأهمية","",'يمنح صنّاع القرار رؤية موثّقة لحجم التغيير وأثره على الميزانية والجدول الزمني، ويكشف مواضع التأخر في دورة الاعتماد.']],"n3")
     +'<div class="eng-lbl">التعريفات المرجعية</div>'+_engTxt([
       ["المغايرة","",'إعادة توزيع كميات بنود قائمة في العقد دون إضافة بنود جديدة.'],
       ["البند المستحدث","",'بند لم يكن مدرجاً في جدول الكميات؛ يحتاج تسعيراً ومراجعة قانونية واعتماداً مستقلاً، لذا دورته أطول.'],
       ["صافي الأثر المالي","",'إجمالي الزيادات مطروحاً منه التخفيضات، بالريال السعودي.'],
-      ["معتمد / تحت الإجراء","",'معتمد: أُقرّ نهائياً. تحت الإجراء: لم يكتمل اعتماده بعد. سجل المعاملات مغلق حتى '+esc(S.cut)+'.']],"n4 sm"),"l"]);
+      ["معتمد / تحت الإجراء","",'معتمد: أُقرّ نهائياً. تحت الإجراء: لم يكتمل اعتماده بعد.']],"n4 sm"),"l"]);
   var stL=[["قيد التنفيذ",X.g.run.n,"#2F7D57"],["منتهية",X.g.done.n,"#0E3B27"],["في الطرح",X.g.tender.n,"#C9A961"],["إجراءات الترسية",X.g.award.n,"#8FA9B5"]];
   var secC={}; DATA.forEach(function(p){ var k=p.sector||"—"; secC[k]=(secC[k]||0)+1; });
   P.push(["لمحة عن محفظة المشاريع",_m5Kpis([["إجمالي المشاريع",ar(X.n),_arPrj(D.T.np)+" بها تغييرات"],["القيمة التعاقدية",M(X.val),"الأصلية "+M(X.orig)],["قيد التنفيذ",ar(X.g.run.n),"منها "+ar(X.stop.length)+" متوقفة"],["منتهية",ar(X.g.done.n),pct(X.g.done.n,X.n)+" من المحفظة"]])
@@ -23527,7 +23527,7 @@ function _engSlides(){ var D=_engData(), X=D.X, T=D.T, M=_dxM, P=[], tot0=X.orig
   list.forEach(function(pg,i){ if(pg.div!=null) secAt[pg.div]=i+1; });
   return list.map(function(pg,i){ var no=i+1;
     if(pg.cover) return _engCover(D,no,tot);
-    if(pg.toc) return _engShell(no,"محتويات التقرير",'<div class="eng-toc">'+ENG_SECS.map(function(s,k){ return '<div><i>'+s[0]+'</i><span><b>'+s[1]+'</b><em>'+s[2]+'</em></span><u>'+ar(secAt[k]||0)+'</u></div>'; }).join("")+'</div><div class="eng-leg"><span class="eng-src lv">يتحدّث تلقائياً من المحفظة</span><span class="eng-src st">بيانات ثابتة من سجل المعاملات حتى '+esc(S.cut)+'</span><em>يُشار لمصدر كل شريحة في تذييلها</em></div>',tot,"l");
+    if(pg.toc) return _engShell(no,"محتويات التقرير",'<div class="eng-toc">'+ENG_SECS.map(function(s,k){ return '<div><i>'+s[0]+'</i><span><b>'+s[1]+'</b><em>'+s[2]+'</em></span><u>'+ar(secAt[k]||0)+'</u></div>'; }).join("")+'</div>',tot,"l");
     if(pg.div!=null) return _engDiv(no,tot,ENG_SECS[pg.div]);
     if(pg.end) return '<section class="mgs m5 gcv gdv eng-dv"><div class="gcv-in">'+_engLogos()+'<h1>شكراً لكم</h1><p>مركز إدارة المشاريع — برنامج ريف</p></div><div class="gcv-ft"><span>'+esc(REPORT_DATE||MONTHLBL)+'</span><b>'+ar(no)+' / '+ar(tot)+'</b></div></section>';
     return _engShell(no,pg[0],pg[1],tot,pg[2]); }).join(""); }
