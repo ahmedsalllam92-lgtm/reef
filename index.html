@@ -9064,6 +9064,17 @@ html body[data-theme="dark"] #wkReport.mgr .m5-kt span{color:#A3B6AB!important}h
 <script>document.addEventListener("fullscreenchange",function(){ if(document.fullscreenElement) return; var el=document.querySelector("#answer .acard.wkfs-fallback[data-docfs]"); if(el){ delete el.dataset.docfs; try{ wkFullscreen(); }catch(e){} } });</script>
 <style id="pyHit">#answer tr.py-hit td{background:rgba(201,165,78,.22)!important;transition:background .4s}</style>
 <style id="hmgRing">html body .hmg-c .hmg-rg{width:42px!important;height:42px!important}html body .hmg-c .hmg-rg b{font-size:12px!important;font-weight:800!important;margin-top:0!important}html body .hmg-c .hmg-rg b small{font-size:7px!important}html body .hmg-c .hmg-rg .bg,html body .hmg-c .hmg-rg .fg{stroke-width:4!important}</style>
+<style id="dxfStg">
+.dxf-kpis.kfx{grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.3fr)!important}
+.dxf-stg{gap:5px!important}
+.dxf-sgh{display:flex;align-items:center;gap:10px;min-width:0}.dxf-sgh .dxf-kl{white-space:nowrap}.dxf-sgb{flex:1;min-width:40px;display:flex;height:6px;border-radius:3px;overflow:hidden;gap:2px}.dxf-sgb i{display:block;height:100%}
+.dxf-sgl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dxf-sgl div{display:flex;flex-direction:column;min-width:0;line-height:1.2;gap:1px}
+.dxf-sgl b{display:flex;align-items:baseline;gap:5px;font-size:20px;font-weight:800;color:#fff;white-space:nowrap}.dxf-sgl b i{width:7px;height:7px;border-radius:2px;flex:none;align-self:center}
+.dxf-sgl b span{font-size:11.5px;font-weight:700;color:#D8BC85}
+.dxf-sgl em{font-style:normal;font-size:11px;font-weight:600;color:#A9C2B3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:900px){ .dxf-kpis.kfx{grid-template-columns:repeat(2,minmax(0,1fr))!important} .dxf-stg{grid-column:1/-1} .dxf-sgl b{font-size:17px;flex-wrap:wrap;white-space:normal} .dxf-sgl em{white-space:normal} }
+</style>
 <style id="topUnify">
 /* رأس موحّد للوحات الثلاث: لوحة المشروع تستخدم نفس رأس لوحة الأداء العامة داخل اللوحة */
 #answer .pdx .dxf-head .pd-tools.dxbar{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;margin:0!important;flex:1 1 auto;min-width:0}
@@ -16387,7 +16398,10 @@ function execDashboard(){ try{setNavActive("dashboard");}catch(e){} RERENDER=_dx
     +fK("قيمة المشاريع",awM[0],awM[1],chg?((chg>0?"زيادة ":"تخفيض ")+_dxM(Math.abs(chg))+" عن القيمة التعاقدية"):"دون تغيير عن القيمة التعاقدية")
     +fK("متوسط الإنجاز الفعلي",_dxPct(avgA),"","المخطط "+_dxPct(avgP)+" · الفارق "+(gap>=0?"+":"−")+ar(Math.abs(Math.round(gap*100)))+" نقطة · المشاريع القائمة",gap<-0.05?"warn":"")
     +fK("نسبة الصرف",_dxPct(spend),"","المنصرف "+_dxM(dis)+" · من المشاريع القائمة")
-    +fK("مشاريع تتطلب متابعة",ar(offT+cnt.watch),"مشروع",ar(cnt.stumb)+" متعثّر · "+ar(cnt.late)+" متأخر · "+ar(cnt.watch)+" يحتاج متابعة · "+ar(overdue.length)+" تجاوز تاريخ النهاية",offT?"bad":"")
+    +(function(){ var G=[["tender","الطرح","#C9A961"],["award","الترسية","#9FB8C4"],["run","بدأت","#5FB386"],["done","انتهت","#E3ECE6"]], o={}; G.forEach(function(g){ o[g[0]]={n:0,v:0}; });
+        D.forEach(function(p){ var k=_geoNowSt(p); if(o[k]){ o[k].n++; o[k].v+=_dxBase(p); } }); var tv=G.reduce(function(a,g){ return a+o[g[0]].v; },0)||1;
+        return '<div class="dxf-k dxf-stg"><div class="dxf-sgh"><span class="dxf-kl">مراحل المشاريع والميزانية</span><div class="dxf-sgb">'+G.map(function(g){ return o[g[0]].v>0?'<i style="flex:'+o[g[0]].v+';background:'+g[2]+'" title="'+g[1]+' · '+esc(_dxM(o[g[0]].v))+'"></i>':''; }).join("")+'</div></div>'
+          +'<div class="dxf-sgl">'+G.map(function(g){ var m=_dxMs(o[g[0]].v); return '<div><b><i style="background:'+g[2]+'"></i>'+ar(o[g[0]].n)+'<span>'+g[1]+'</span></b><em>'+String(m[0]).replace(/(\.\d)\d+/,"$1")+' '+_rU(m[1])+'</em></div>'; }).join("")+'</div></div>'; })()
     +'</div>';
   /* الإنجاز حسب القطاع */
   var _svT=secs.reduce(function(a,s){ return a+s.v; },0)||1, _svM=Math.max.apply(null,secs.map(function(s){ return s.v; }).concat([1]));
