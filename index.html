@@ -22842,7 +22842,7 @@ function _v2Pl(n,one,few,many){ return n===1?one:(n>2&&n<11?few:many); }
 function _v2Prj(n){ return n===2?"مشروعان":_v2Pl(n,"مشروع","مشاريع","مشروعاً"); }
 function _v2Data(){ var R=_lwRows(); var stf=function(p){ try{ return _geoNowSt(p); }catch(e){ return "run"; } };
   R.forEach(function(x){ x.st=stf(x.p); x.tf=(x.t&&x.t.ok)?Math.max(0,Math.min(1,x.t.frac)):null; });
-  var STD=[["tender","في إجراءات الطرح","قيد الطرح والمنافسة"],["award","في إجراءات الترسية","تُجهَّز للتعاقد"],["run","قيد التنفيذ","تعمل الآن على الأرض"],["done","منتهية","اكتملت وسُلّمت"]];
+  var STD=[["tender","في إجراءات الطرح","قيد الطرح والمنافسة"],["award","في إجراءات الترسية","تُجهَّز للتعاقد"],["run","قيد التنفيذ","تعمل الآن"],["done","منتهية","اكتملت وسُلّمت"]];
   var ST=STD.map(function(s){ var L=R.filter(function(x){ return x.st===s[0]; }); return {k:s[0],l:s[1],sub:s[2],n:L.length,v:L.reduce(function(a,x){ return a+x.v; },0)}; });
   var RG={}, nat=0; R.forEach(function(x){ var hit=KSA_REG.r.filter(function(r){ return _regionHas(x.p.region,r.ar); });
     if(!hit.length){ if(_isNational(x.p.region)) nat++; return; }
