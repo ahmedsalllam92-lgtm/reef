@@ -23,6 +23,8 @@ function cleanScope(s) { if (!s || typeof s !== "object") return null; const v =
 function view(r) { const now = Date.now(); return { token: r.token, label: r.label, created: r.created, exp: r.exp, revoked: !!r.revoked, views: r.views || 0, lastView: r.lastView || null, scope: r.scope || null,
   devices: r.devs ? Object.keys(r.devs).length : null, devList: r.devs ? Object.values(r.devs).sort((a, b) => b.last - a.last).slice(0, 12).map(x => ({ ua: x.ua, last: x.last, n: x.n })) : [],
   lastSess: r.sess ? { start: r.sess.start, last: r.sess.last, ua: r.sess.ua || "" } : null,
+  pages: r.pages ? Object.keys(r.pages).map(k => ({ p: k, n: r.pages[k].n, last: r.pages[k].last })).sort((a, b) => b.last - a.last).slice(0, 40) : [],
+  trail: (r.trail || []).slice(-30).reverse(),
   status: r.revoked ? "revoked" : (r.exp < now ? "expired" : "active") }; }
 
 export default async (req) => {
@@ -53,6 +55,17 @@ export default async (req) => {
       const sid = clean(d.sid, 40), dev = clean(d.dev, 40), now = Date.now();
       if (r.sess && r.sess.sid === sid) { r.sess.last = now; if (r.devs && r.devs[dev]) r.devs[dev].last = now; await S.setJSON(tok, r); }
       return J(200, { ok: true });
+    }
+    // ===== الشاشات التي فتحها الزائر: عدد مرات فتح كل شاشة + آخر الزيارات =====
+    if (d.action === "visit") {
+      if (!/^[A-Za-z0-9_-]{16,64}$/.test(tok)) return J(200, { ok: false });
+      const r = await S.get(tok, { type: "json" }); if (!r || r.revoked || r.exp < Date.now()) return J(200, { ok: false });
+      const p = clean(d.page, 90), ua = clean(d.ua, 60), dev = clean(d.dev, 40), now = Date.now(); if (!p) return J(200, { ok: false });
+      r.pages = r.pages || {}; const o = r.pages[p] || { n: 0 }; o.n++; o.last = now; r.pages[p] = o;
+      const ks = Object.keys(r.pages); if (ks.length > 80) ks.sort((a, b) => r.pages[a].last - r.pages[b].last).slice(0, ks.length - 80).forEach(k => delete r.pages[k]);
+      r.trail = (r.trail || []).concat([{ p, at: now, ua: ua || ((r.devs && r.devs[dev] && r.devs[dev].ua) || "") }]).slice(-60);
+      if (r.sess && r.devs && r.devs[dev]) { r.sess.last = now; r.devs[dev].last = now; }
+      await S.setJSON(tok, r); return J(200, { ok: true });
     }
     // ===== آخر نسخة من المحفظة المرفوعة: يقرؤها الزائر برابط صالح (أو المسؤول بالمفتاح) =====
     if (d.action === "pf_get") {

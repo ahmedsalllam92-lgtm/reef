@@ -16037,7 +16037,20 @@ function _shRender(){ var L=SHM.links; if(!L.length){ _shList('<div class="hb-em
         +'<td class="sh-act noprint"><button onclick="shCopy(\''+t+'\')">نسخ</button>'
         +'<select onchange="if(this.value){shExtend(\''+t+'\',this.value);this.value=\'\';}"><option value="">تمديد…</option><option value="1">+ يوم</option><option value="7">+ أسبوع</option><option value="30">+ شهر</option></select>'
         +(l.status==="revoked"?'<button onclick="shAct(\'restore\',\''+t+'\')">إعادة تفعيل</button>':'<button class="warn" onclick="shAct(\'revoke\',\''+t+'\')">إيقاف</button>')
-        +'<button class="del" onclick="shAct(\'delete\',\''+t+'\')">حذف</button></td></tr>'; }).join("")+'</tbody></table></div>'); }
+        +'<button class="del" onclick="shAct(\'delete\',\''+t+'\')">حذف</button></td></tr>'+_shPagesRow(l,t); }).join("")+'</tbody></table></div>'); }
+/* الشاشات التي فتحها مستخدم الرابط */
+function _shPagesRow(l,t){ var P=l.pages||[], T=l.trail||[]; var on=!!(window.SH_OPEN&&SH_OPEN[t]);
+  var head='<button class="sh-pgt" onclick="shPagesTog(\''+t+'\')">'+(P.length?'الشاشات المفتوحة · '+ar(P.length)+' '+(P.length===1?'شاشة':(P.length===2?'شاشتان':(P.length<11?'شاشات':'شاشة'))):'لم تُسجَّل شاشات بعد')+' <i>'+(on?'▴':'▾')+'</i></button>';
+  var body=on?('<div class="sh-pgb"><div class="sh-pgc"><b>أكثر الشاشات فتحاً</b>'+(P.length?P.slice().sort(function(a,b){ return b.n-a.n; }).map(function(x){ return '<div class="sh-pgr"><span>'+esc(x.p)+'</span><em>'+ar(x.n)+' مرة · آخرها '+esc(_shDate(x.last))+'</em></div>'; }).join(""):'<div class="sh-na">لا يوجد بعد — يبدأ التسجيل من أول فتح بعد هذا التحديث</div>')+'</div>'
+    +'<div class="sh-pgc"><b>آخر التنقلات</b>'+(T.length?T.map(function(x){ return '<div class="sh-pgr"><span>'+esc(x.p)+'</span><em>'+esc(_shDate(x.at))+(x.ua?' · '+esc(x.ua):'')+'</em></div>'; }).join(""):'<div class="sh-na">لا يوجد</div>')+'</div></div>'):'';
+  return '<tr class="sh-pg"><td colspan="7">'+head+body+'</td></tr>'; }
+function shPagesTog(t){ window.SH_OPEN=window.SH_OPEN||{}; SH_OPEN[t]=!SH_OPEN[t]; try{ _shRender(); }catch(e){} }
+/* تسجيل الشاشات في وضع رابط المشاركة */
+var SH_VIS={last:"",at:0};
+function _shVisit(label){ try{ if(!(typeof SHARE!=="undefined"&&SHARE&&SHARE.token)) return; label=String(label||"").replace(/\s+/g," ").trim(); if(!label) return; var now=Date.now(); if(label===SH_VIS.last&&now-SH_VIS.at<30000) return; SH_VIS.last=label; SH_VIS.at=now;
+  _shareApi({action:"visit",token:SHARE.token,page:label.slice(0,90),dev:_shDev(),ua:_shUA()}).catch(function(){}); }catch(e){} }
+function _shNavLabel(k){ var M={home:"الرئيسية",dashboard:"لوحة الأداء العامة",findash:"لوحة الأداء المالية",pdash:"لوحة المشروع",live:"شاشة العرض المباشر",report:"التقارير",payreg:"سجل المستخلصات",projreg:"سجل المشاريع",stages:"تتبع المراحل",cancelled:"المشاريع الملغاة"};
+  var b=document.querySelector('[data-nav="'+k+'"]'); var t=b?(b.innerText||b.textContent||"").trim():""; return t||M[k]||k; }
 function shCreate(){ if(SHM.busy) return; var g=function(id){ return ((document.getElementById(id)||{}).value||"").trim(); };
   var dur=g("shDur"), body={action:"create",key:_shK(),label:g("shLabel")||"رابط مشاركة"};
   if(dur==="until"){ if(!g("shUntil")){ _shMsg("اختر تاريخ الانتهاء.",true); return; } body.until=g("shUntil"); } else body.days=+dur;
@@ -23101,5 +23114,28 @@ function liveWallOpen(){ liveWallClose(true); try{ setNavActive("live"); }catch(
   setTimeout(function(){ try{ _lwSpotList(LV2.D.R); }catch(e){} },1200); }
 try{ window.liveWallOpen=liveWallOpen; window.liveWallClose=liveWallClose; window.liveWallPause=liveWallPause; window._lwNext=_lwNext; }catch(e){}
 </script>
+<script id="shTrack">(function(){ if(window._shTrackOn) return; window._shTrackOn=1;
+  var wrap=function(name,lab){ var o=window[name]; if(typeof o!=="function"||o._sht) return; var w=function(){ var r=o.apply(this,arguments); try{ var l=lab.apply(null,arguments); if(l) _shVisit(l); }catch(e){} return r; }; w._sht=1; window[name]=w; try{ eval(name+"=w"); }catch(e){} };
+  var pName=function(c){ var p=(DATA||[]).find(function(x){ return String(x.code)===String(c); }); return p?(p.code+" · "+(p.alias||p.name||"")):String(c||""); };
+  setTimeout(function(){
+    wrap("setNavActive",function(k){ return (k&&k!=="pdash"&&k!=="share")?_shNavLabel(k):""; });
+    wrap("projDash",function(c){ return "لوحة المشروع · "+pName(c); });
+    wrap("projCard",function(c){ return "بطاقة المشروع · "+pName(c); });
+    wrap("rp2Go",function(){ try{ var T=(RP2_TYPES[RP2.scope]||[]).filter(function(x){ return x[0]===RP2.type; })[0]; return T?"تقرير: "+T[1]:""; }catch(e){ return ""; } });
+    wrap("mgrReportOpen",function(){ return "تقرير مدير الإدارة"; });
+  },0); })();</script>
+<style id="shTrackCss">
+.sh-t tr.sh-pg td{padding:0 14px 10px!important;border-top:0!important;background:transparent}
+.sh-pgt{font:inherit;font-size:12px;font-weight:700;color:#1E6B45;background:#F2F7F3;border:1px solid #D9E7DD;border-radius:8px;padding:4px 10px;cursor:pointer}
+.sh-pgt i{font-style:normal;margin-inline-start:4px}
+.sh-pgb{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.sh-pgc{border:1px solid #E3E9E4;border-radius:10px;padding:10px 12px;background:#FAFBF9;max-height:260px;overflow:auto}
+.sh-pgc > b{display:block;font-size:12.5px;color:#0E3B27;margin-bottom:6px}
+.sh-pgr{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px dashed #E6ECE7;font-size:12.5px}
+.sh-pgr:first-of-type{border-top:0}.sh-pgr span{color:#1B2A21;font-weight:600}.sh-pgr em{font-style:normal;color:#7D8A82;font-size:11.5px;white-space:nowrap}
+body[data-theme="dark"] .sh-pgt{background:#182A33;border-color:rgba(205,228,217,.12);color:#8ED2AE}
+body[data-theme="dark"] .sh-pgc{background:#14222A;border-color:rgba(205,228,217,.1)}body[data-theme="dark"] .sh-pgc > b{color:#8ED2AE}body[data-theme="dark"] .sh-pgr span{color:#E4ECE7}body[data-theme="dark"] .sh-pgr{border-color:rgba(205,228,217,.08)}
+@media (max-width:760px){ .sh-pgb{grid-template-columns:1fr} }
+</style>
 </body>
 </html>
