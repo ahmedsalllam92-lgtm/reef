@@ -14884,7 +14884,7 @@ function _geoDates(p){ var o={t:null,a:null,m:null,s:_stgDt(p.start_date)||_dxDt
   try{ var D=_stgLoad(); if(!GEO._ix||GEO._ixD!==D){ GEO._ix={}; GEO._ixD=D; (D.rows||[]).forEach(function(r){ var m=_stgMatch(r[0],r[1]); if(m) GEO._ix[m.code]=r; }); }
     var r=GEO._ix[p.code]; if(r){ o.t=_stgDt(r[2]); o.a=_stgDt(r[3]); o.m=_stgDt(r[6]); } }catch(e){}
   if(!o.t) o.t=o.a||o.m||o.s; if(!o.m) o.m=o.s; return o; }
-function _geoNowSt(p){ var s=String(p.status||"")+" "+String(p.pstatus||""); if(_isDone(p)||/انتهاء|إنتهاء/.test(s)) return "done"; if(/بدء|إيقاف/.test(s)) return "run"; if(/ترسية|توقيع|الامتثال|الإمتثال/.test(s)) return "award"; return "tender"; }
+function _geoNowSt(p){ var s=String(p.status||"")+" "+String(p.pstatus||""); if(_isDone(p)||/انتهاء|إنتهاء/.test(s)) return "done"; if(/بدء|إيقاف/.test(s)) return "run"; if(/ترسية|توقيع|الامتثال|الإمتثال|فحص العروض|فحص عروض|المشتريات|التعاقد/.test(s)) return "award"; return "tender"; }
 var GEO_RANK={tender:0,award:1,run:2,done:3};
 function _geoState(p,at){ var d=_geoDates(p), now=new Date(), ns=_geoNowSt(p); if(!at) return {on:true,st:ns,a:(ns==="run"||ns==="done")?(pct(p.actual)||0):0};
   if(!d.t||d.t>at) return {on:false};
