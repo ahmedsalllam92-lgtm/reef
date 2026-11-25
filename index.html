@@ -22919,6 +22919,13 @@ body[data-theme="dark"] .fdx .fd-ml text,body[data-theme="dark"] .fdx .fd-ml.t0 
 .fdx .fd-t td.lk{cursor:pointer}.fdx .fd-t td.lk:hover b{color:var(--c-dis);text-decoration:underline}
 .fdx .fd-t tbody tr{cursor:default}
 .fdx button.fd-st{border:0;font:inherit;cursor:pointer}.fdx button.fd-st:hover{box-shadow:0 0 0 1.5px currentColor}
+/* أرقام غير عريضة وخطوط شبكة أخف */
+.fdx .fd-yplot.cg .fd-ylab:not(.last){font-weight:500!important}
+.fdx .fd-b b,.fdx .fd-ra.nocap .fd-b b{font-weight:400!important}
+.fdx .fd-bars{background:repeating-linear-gradient(0deg,transparent 0 calc(25% - 1px),rgba(14,59,39,.05) calc(25% - 1px) 25%)!important;background-position:bottom!important;background-size:100% calc(100% - 40px)!important;background-repeat:no-repeat!important;border-bottom-color:rgba(14,59,39,.08)!important}
+body[data-theme="dark"] .fdx .fd-bars{background:repeating-linear-gradient(0deg,transparent 0 calc(25% - 1px),rgba(255,255,255,.035) calc(25% - 1px) 25%)!important;background-position:bottom!important;background-size:100% calc(100% - 40px)!important;background-repeat:no-repeat!important;border-bottom-color:rgba(255,255,255,.06)!important}
+.fdx .fd-yplot.cg .gl{border-top-color:rgba(14,59,39,.06)!important}
+body[data-theme="dark"] .fdx .fd-yplot.cg .gl{border-top-color:rgba(255,255,255,.04)!important}
 </style>
 <script id="finJs">/* ================= اللوحة المالية (لوحة بشاشة واحدة 1600×1000 تُصغَّر لتملأ المساحة) ================= */
 var FD={sec:""};
