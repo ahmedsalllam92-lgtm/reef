@@ -3,6 +3,7 @@
 // التخزين: Netlify Blobs (متجر "reef-shares") · مفتاح الإدارة: SHARE_ADMIN_KEY (سري في إعدادات Netlify)
 import { getStore } from "@netlify/blobs";
 import crypto from "node:crypto";
+import zlib from "node:zlib";
 
 const J = (code, obj) => new Response(JSON.stringify(obj), { status: code, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
 const store = () => globalThis.__REEF_SHARE_STORE || getStore({ name: "reef-shares", consistency: "strong" });
@@ -76,7 +77,10 @@ export default async (req) => {
       const P = pfStore(); const meta = await P.get("meta", { type: "json" });
       if (!meta) return J(200, { ok: true, none: true });
       if (d.since && String(d.since) === String(meta.at)) return J(200, { ok: true, same: true, at: meta.at });
-      const pf = await P.get("pf", { type: "json" }); return J(200, { ok: true, pf });
+      const pf = await P.get("pf", { type: "json" });
+      // ضغط الرد (حد Netlify للرد ~6MB): يفكّه المتصفح بـ DecompressionStream
+      if (d.gzok && pf) return J(200, { ok: true, at: meta.at, gz: zlib.gzipSync(Buffer.from(JSON.stringify(pf))).toString("base64") });
+      return J(200, { ok: true, pf });
     }
     if (d.action === "pm_put") {
       const M = d.d; if (!M || typeof M !== "object" || !Array.isArray(M.phases)) return J(400, { error: "بيانات الخريطة غير صالحة" });
@@ -112,8 +116,10 @@ export default async (req) => {
       const r = { token, label: clean(d.label) || "رابط مشاركة", created: Date.now(), exp: expiryFrom(d), revoked: false, views: 0, scope: cleanScope(d.scope) };
       await S.setJSON(token, r); return J(200, { ok: true, link: view(r) });
     }
+    if (d.action === "pf_meta") { const m = await pfStore().get("meta", { type: "json" }); const e = await pfStore().get("pe_meta", { type: "json" }); return J(200, { ok: true, meta: m || null, pe: e || null }); }
     if (d.action === "pf_put") {
-      const pf = d.pf; if (!pf || !Array.isArray(pf.data) || !pf.data.length || pf.data.length > 2000) return J(400, { error: "بيانات المحفظة غير صالحة" });
+      let pf = d.pf;
+      if (d.gz) { try { pf = JSON.parse(zlib.gunzipSync(Buffer.from(String(d.gz), "base64")).toString("utf8")); } catch (e) { return J(400, { error: "تعذّر فك ضغط بيانات المحفظة" }); } } if (!pf || !Array.isArray(pf.data) || !pf.data.length || pf.data.length > 2000) return J(400, { error: "بيانات المحفظة غير صالحة" });
       const P = pfStore(); const meta = await P.get("meta", { type: "json" });
       if (meta && !d.force && Date.parse(meta.at) >= Date.parse(pf.at)) return J(200, { ok: true, kept: true, at: meta.at });
       const rec = { name: clean(pf.name, 160), sheet: clean(pf.sheet, 80), at: String(pf.at || new Date().toISOString()), data: pf.data, cancelled: Array.isArray(pf.cancelled) ? pf.cancelled.slice(0, 2000) : [] };

@@ -13848,7 +13848,8 @@ function _peSave(o){ try{ localStorage.setItem(PE_KEY,JSON.stringify(o)); localS
 /* مزامنة التعديلات اليدوية مع الخادم: تظهر على كل الأجهزة وفي روابط العرض */
 var PE_AT_KEY="reef_edits_at";
 function _peAt(){ try{ return localStorage.getItem(PE_AT_KEY)||""; }catch(e){ return ""; } }
-function _pePush(){ try{ var k=_shKey(); if(!k||location.protocol==="file:") return; _shareApi({action:"pe_put",key:k,edits:_peLoad(),at:_peAt()||new Date().toISOString()}).catch(function(){}); }catch(e){} }
+function _pePush(force){ try{ var k=_shKey(); if(location.protocol==="file:") return; if(!k){ if(Object.keys(_peLoad()).length) _shSyncMsg("⚠ التعديل محفوظ على هذا الجهاز فقط — أدخل مفتاح الإدارة في «روابط المشاركة» ليصل لروابط العرض","bad"); return; }
+  return _shareApi({action:"pe_put",key:k,edits:_peLoad(),at:_peAt()||new Date().toISOString(),force:!!force}).then(function(j){ if(j&&j.ok&&!j.kept) _shSyncMsg("✓ وصل التعديل لروابط العرض","ok"); else if(!j||!j.ok) _shSyncMsg("✕ لم يصل التعديل لروابط العرض: "+((j&&j.error)||""),"bad"); return j; }).catch(function(){ _shSyncMsg("✕ لم يصل التعديل لروابط العرض (تعذّر الاتصال)","bad"); }); }catch(e){} }
 function _peReplace(E,at){ try{ (DATA||[]).forEach(function(p){ var o=p._orig; if(o){ Object.keys(o).forEach(function(f){ p[f]=o[f]; }); } p._orig={}; p._edited=false; });
     localStorage.setItem(PE_KEY,JSON.stringify(E||{})); localStorage.setItem(PE_AT_KEY,at||""); }catch(e){}
   try{ _applyEdits(DATA); }catch(e){} try{ if(typeof RERENDER==="function"){ SILENT_RENDER=true; RERENDER(); SILENT_RENDER=false; } }catch(e){ SILENT_RENDER=false; } }
@@ -15279,7 +15280,7 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
   for(var i=0;i<np;i++) pages.push(["المشاريع المتعثّرة والمتأخرة"+(np>1?' <em>('+ar(i+1)+'/'+ar(np)+')</em>':''),(i===0?k3:'')+_m5Card("قائمة المشاريع",_arPrj(B.length)+" · مرتبة حسب الحيود",B.length?_m5Rows(["#","المشروع","القطاع","الفعلي","المخطط","الحيود","التصنيف"],r3.slice(i*PER,i*PER+PER)):'<div class="m5-empty">لا توجد مشاريع متعثّرة أو متأخرة ✓</div>',"f")]);
   /* 4) المتوقفة */
   var SP=X.stop, sv=SP.reduce(function(a,x){ return a+x.v; },0), dd=SP.filter(function(x){ return x.days!=null; }).map(function(x){ return x.days; }), avg=dd.length?Math.round(dd.reduce(function(a,b){ return a+b; },0)/dd.length):null;
-  var k4=_m5Kpis([["المشاريع المتوقفة",ar(SP.length),_mgrPct(SP.length,X.g.run.n)+" من المشاريع قيد التنفيذ"],["قيمتها",M(sv),_mgrPct(sv,X.val)+" من قيمة المحفظة"],["متوسط مدة التوقف",avg!=null?_durMDh(avg):"—",avg!=null?"= "+ar(avg)+" يوم":""]]);
+  var k4=_m5Kpis([["المشاريع المتوقفة",ar(SP.length),_mgrPct(SP.length,X.g.run.n)+" من المشاريع قيد التنفيذ"],["قيمتها",M(sv),_mgrPct(sv,X.val)+" من قيمة المحفظة"],["متوسط مدة التوقف",avg!=null?_durMDh(avg):"—",dd.length?(function(){ var mx=Math.max.apply(null,dd); return "أطولها "+(mx>=60?ar(Math.round(mx/30.4))+" شهر":ar(mx)+" يوم"); })():""]]);
   var _rs=function(t){ t=String(t||'').replace(/\s+/g,' ').trim(); return t?esc(t):'<span class="m5-na">—</span>'; };
   var r4=SP.map(function(x,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(x.p.name||"")+'</td><td>'+esc(x.p.sector||"—")+'</td><td>'+(x.sd?esc(fmtDateTxt(x.p.stop_date)):'—')+'</td><td class="sp"><i class="m5-dot" style="background:#8A8F8C"></i>'+(x.days!=null?_mgrDays(x.days):'—')+'</td><td class="rs">'+_rs(x.p.stop_reason)+'</td><td class="n">'+_dxPct(x.a)+'</td></tr>'; });
   pages.push(["المشاريع المتوقفة",k4+_m5Card("قائمة المشاريع","مرتبة حسب مدة التوقف",SP.length?_m5Rows(["#","المشروع","القطاع","متوقف منذ","مدة التوقف","سبب الإيقاف","الإنجاز"],r4.slice(0,8),"sp"):'<div class="m5-empty">لا توجد مشاريع متوقفة ✓</div>',"f")]);
@@ -15977,9 +15978,17 @@ function pdsStart(){ pdsStop(); if(PDS.n<2) return; PDS.t=setInterval(function()
 try{ window.pdsGo=pdsGo; window._cphDelete=_cphDelete; }catch(e){}
 /* ================= روابط المشاركة المؤقتة (عرض فقط) ================= */
 var SHARE={token:null,exp:null,label:"",timer:null};
+function _shGz(o){ var cs=new CompressionStream("gzip"), w=cs.writable.getWriter(); w.write(new TextEncoder().encode(JSON.stringify(o))); w.close();
+  return new Response(cs.readable).arrayBuffer().then(function(b){ var u=new Uint8Array(b), s="", i; for(i=0;i<u.length;i+=32768) s+=String.fromCharCode.apply(null,u.subarray(i,i+32768)); return btoa(s); }); }
+function _shUngz(b64){ var bin=atob(b64), u=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+  return new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream("gzip"))).text().then(JSON.parse); }
 function _shareApi(body){ if(location.protocol==="file:") return Promise.reject(new Error("الروابط المؤقتة تعمل على الموقع المنشور فقط"));
-  return fetch("/.netlify/functions/share",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),cache:"no-store"})
-    .then(function(r){ return r.json().catch(function(){ throw new Error("رد غير صالح من الخادم ("+r.status+")"); }); }); }
+  var pre=Promise.resolve(body);
+  try{ if(body&&body.action==="pf_get"&&typeof DecompressionStream!=="undefined") body.gzok=1;
+    if(body&&body.action==="pf_put"&&body.pf&&typeof CompressionStream!=="undefined") pre=_shGz(body.pf).then(function(g){ var b=Object.assign({},body); delete b.pf; b.gz=g; return b; }).catch(function(){ return body; }); }catch(e){}
+  return pre.then(function(B){ return fetch("/.netlify/functions/share",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(B),cache:"no-store"}); })
+    .then(function(r){ return r.json().catch(function(){ throw new Error(r.status===413?"حجم البيانات أكبر من المسموح على الخادم":"رد غير صالح من الخادم ("+r.status+")"); }); })
+    .then(function(j){ if(j&&j.gz) return _shUngz(j.gz).then(function(o){ j.pf=o; delete j.gz; return j; }); return j; }); }
 function _shareUrl(t){ return location.origin+location.pathname+"?s="+t; }
 function _shDate(ms){ try{ return new Date(ms).toLocaleString("ar-SA-u-nu-latn",{dateStyle:"long",timeStyle:"short"}); }catch(e){ return new Date(ms).toISOString().slice(0,16).replace("T"," "); } }
 /* ---------- وضع الزائر ---------- */
@@ -16005,7 +16014,7 @@ function _roCheck(first){ if(first&&!SHARE._beat){ SHARE._beat=setInterval(_shBe
     var left=SHARE.exp-Date.now(); if(left>0 && left<36e5*6) setTimeout(function(){ _roCheck(false); },Math.min(left+1500,2147483000)); })
   .catch(function(e){ if(first) _roFail({why:"error"}); }); }
 (function(){ try{ var m=location.search.match(/[?&]s=([A-Za-z0-9_-]{16,64})/); if(!m) return; SHARE.token=m[1];
-  document.documentElement.classList.add("ro","ro-wait"); var go=function(){ _roGate('<h2>جارٍ التحقق من رابط المشاركة…</h2>',false); _roCheck(true); SHARE.timer=setInterval(function(){ _roCheck(false); },180000); try{ setTimeout(_pfPull,1500); if(!SHARE._pft) SHARE._pft=setInterval(function(){ _pfPull(); try{ _pePull(); }catch(e){} },60000); }catch(e){} };
+  document.documentElement.classList.add("ro","ro-wait"); var go=function(){ _roGate('<h2>جارٍ التحقق من رابط المشاركة…</h2>',false); _roCheck(true); SHARE.timer=setInterval(function(){ _roCheck(false); },180000); try{ setTimeout(_pfPull,1500); setTimeout(function(){ try{ _pePull(); }catch(e){} },2200); document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible"&&Date.now()-(SHARE._vt||0)>15000){ SHARE._vt=Date.now(); try{ _pfPull(); _pePull(); }catch(e){} } }); if(!SHARE._pft) SHARE._pft=setInterval(function(){ _pfPull(); try{ _pePull(); }catch(e){} },60000); }catch(e){} };
   if(document.body) go(); else document.addEventListener("DOMContentLoaded",go); }catch(e){} })();
 /* ---------- صفحة إدارة الروابط ---------- */
 var SHM={links:[],busy:false};
@@ -16018,15 +16027,29 @@ function shareOpen(){ try{setNavActive("share");}catch(e){} RERENDER=null; ANSWE
       +'<label>المدة<select id="shDur" onchange="document.getElementById(\'shUntilW\').style.display=this.value===\'until\'?\'\':\'none\'"><option value="1">يوم واحد</option><option value="3">3 أيام</option><option value="7" selected>أسبوع</option><option value="14">أسبوعان</option><option value="30">شهر</option><option value="90">3 أشهر</option><option value="until">حتى تاريخ محدد…</option></select></label>'
       +'<label id="shUntilW" style="display:none">حتى تاريخ<input id="shUntil" type="date"></label>'
       +'<button class="mt-btn sh-go" onclick="shCreate()">🔗 إنشاء الرابط</button></div><div id="shMsg" class="sh-msg"></div></div>'
-    +'<div id="shList"></div>'
+    +'<div id="shSync" class="sh-sync"></div><div id="shList"></div>'
     +'<div class="sh-note">ℹ الرابط المؤقت يفتح المنصة <b>للعرض فقط</b>: تختفي أدوات الرفع والتعديل والحذف، ويُتحقق من صلاحية الرابط عند فتحه وكل 3 دقائق — فإيقاف الرابط أو انتهاء مدته يغلق العرض فوراً حتى لو كانت الصفحة مفتوحة.</div></div>');
   if(k) shLoad(); else _shList('<div class="hb-empty">أدخل مفتاح الإدارة ثم اضغط «حفظ» لعرض الروابط.</div>'); }
 function shSaveKey(){ var v=(document.getElementById("shKey")||{}).value||""; try{ localStorage.setItem("reef_share_key",v.trim()); }catch(e){} shLoad(); }
+/* حالة المزامنة: هل ما تراه روابط العرض = آخر بيانات على هذا الجهاز؟ */
+function shSyncCheck(){ var el=document.getElementById("shSync"); if(!el) return; var k=_shK(); if(!k){ el.innerHTML=""; return; }
+  el.innerHTML='<span class="sh-sy">● جارٍ التحقق من تطابق روابط العرض…</span>';
+  _shareApi({action:"pf_meta",key:k}).then(function(j){ if(!j||!j.ok) throw new Error((j&&j.error)||"");
+    var m=j.meta, loc=(typeof PF!=="undefined"&&PF&&PF.at)?Date.parse(PF.at):0, srv=m&&m.at?Date.parse(m.at):0, pl=_peAt()?Date.parse(_peAt()):0, ps=j.pe&&j.pe.at?Date.parse(j.pe.at):0;
+    var okD=!loc||srv>=loc, okE=!pl||ps>=pl;
+    el.innerHTML='<div class="sh-sy '+(okD&&okE?'ok':'bad')+'"><b>'+(okD&&okE?'✓ روابط العرض محدّثة':'⚠ روابط العرض لا تعرض آخر تحديث')+'</b>'
+      +'<span>المحفظة على روابط العرض: '+(m?esc(m.name||"")+' · '+esc(_shDate(srv)):'لا توجد')+(loc?' — على هذا الجهاز: '+esc(_shDate(loc)):'')+'</span>'
+      +(pl||ps?'<span>التعديلات اليدوية: '+(ps?esc(_shDate(ps)):'لا توجد')+(pl&&!okE?' — على هذا الجهاز أحدث ('+esc(_shDate(pl))+')':'')+'</span>':'')
+      +'<button class="mt-btn" onclick="shSyncNow()">مزامنة الآن</button></div>'; })
+  .catch(function(e){ el.innerHTML='<div class="sh-sy bad"><b>⚠ تعذّر التحقق من المزامنة</b><span>'+esc((e&&e.message)||"")+'</span></div>'; }); }
+function shSyncNow(){ var el=document.getElementById("shSync"); if(el) el.innerHTML='<span class="sh-sy">● جارٍ رفع آخر بيانات لروابط العرض…</span>';
+  var a=(typeof PF!=="undefined"&&PF&&PF.data&&PF.data.length)?_pfPush(true):null, b=Object.keys(_peLoad()).length?_pePush(true):null;
+  Promise.all([a,b]).then(function(){ setTimeout(shSyncCheck,400); }); }
 function _shMsg(m,bad){ var e=document.getElementById("shMsg"); if(e) e.innerHTML=m?('<span class="mst '+(bad?"warn":"ok")+'">'+m+'</span>'):""; }
 function _shList(h){ var e=document.getElementById("shList"); if(e) e.innerHTML=h; }
 function _shDur(ms){ var m=Math.round((ms||0)/60000); if(m<1) return "أقل من دقيقة"; if(m<60) return ar(m)+" دقيقة"; var h=Math.floor(m/60), r=m%60; return ar(h)+" ساعة"+(r?" و"+ar(r)+" دقيقة":""); }
 function _shK(){ var i=document.getElementById("shKey"); return (i&&i.value.trim())||_shKey(); }
-function shLoad(){ _shList('<div class="hb-empty">● جارٍ تحميل الروابط…</div>');
+function shLoad(){ try{ shSyncCheck(); }catch(e){} _shList('<div class="hb-empty">● جارٍ تحميل الروابط…</div>');
   _shareApi({action:"list",key:_shK()}).then(function(j){ if(j.error) throw new Error(j.error); SHM.links=j.links||[]; _shRender(); }).catch(function(e){ _shList('<div class="lc-bad">⚠ '+esc(e.message)+'</div>'); }); }
 function _shRender(){ var L=SHM.links; if(!L.length){ _shList('<div class="hb-empty">لا توجد روابط بعد — أنشئ أول رابط من الأعلى.</div>'); return; }
   var st={active:["نشط","ok"],expired:["منتهي","exp"],revoked:["موقوف","off"]};
@@ -19446,7 +19469,12 @@ function dxShareCreate(){ var g=function(id){ return ((document.getElementById(i
 /* ---------- الزائر: وضع العرض المقيّد ---------- */
 var _KO={};
 /* مزامنة المحفظة المرفوعة مع روابط العرض: المسؤول يرفع النسخة للخادم، والرابط يقرأ آخر نسخة كل دقيقة */
-function _pfPush(){ try{ var k=_shKey(); if(!k||typeof PF==="undefined"||!PF||!PF.data||!PF.data.length||location.protocol==="file:") return; var X=Object.assign({},PF); try{ var s=JSON.parse(localStorage.getItem("reef_stg_v1")||"null"); if(s&&s.rows&&s.rows.length) X.stg=s; }catch(e){} try{ var y=JSON.parse(localStorage.getItem("reef_pay_v1")||"null"); if(y&&y.rows&&y.rows.length) X.pay=y; }catch(e){} _shareApi({action:"pf_put",key:k,pf:X}).catch(function(){}); }catch(e){} }
+function _shSyncMsg(t,c){ try{ var el=document.getElementById("shSyncT"); if(!el){ el=document.createElement("div"); el.id="shSyncT"; document.body.appendChild(el); }
+  el.className=c||""; el.textContent=t; el.hidden=false; clearTimeout(_shSyncMsg._t); _shSyncMsg._t=setTimeout(function(){ el.hidden=true; },c==="bad"?12000:(c?5000:30000)); }catch(e){} }
+function _pfPush(force){ try{ var k=_shKey(); if(typeof PF==="undefined"||!PF||!PF.data||!PF.data.length||location.protocol==="file:") return;
+  if(!k){ _shSyncMsg("⚠ هذا الجهاز غير مربوط بمفتاح الإدارة، فلن تصل التحديثات لروابط العرض — افتح «روابط المشاركة» وأدخل المفتاح","bad"); return; } var X=Object.assign({},PF); try{ var s=JSON.parse(localStorage.getItem("reef_stg_v1")||"null"); if(s&&s.rows&&s.rows.length) X.stg=s; }catch(e){} try{ var y=JSON.parse(localStorage.getItem("reef_pay_v1")||"null"); if(y&&y.rows&&y.rows.length) X.pay=y; }catch(e){} _shSyncMsg("● جارٍ تحديث روابط العرض…","");
+  return _shareApi({action:"pf_put",key:k,pf:X,force:!!force}).then(function(j){ if(j&&j.ok) _shSyncMsg(j.kept?"روابط العرض بها نسخة أحدث بالفعل ("+_shDate(Date.parse(j.at))+")":"✓ تم تحديث روابط العرض بآخر بيانات","ok"); else _shSyncMsg("✕ لم تتحدّث روابط العرض: "+((j&&j.error)||"خطأ غير معروف"),"bad"); return j; })
+    .catch(function(e){ _shSyncMsg("✕ لم تتحدّث روابط العرض: "+((e&&e.message)||"تعذّر الاتصال")+" — افتح «روابط المشاركة» واضغط «مزامنة الآن»","bad"); }); }catch(e){} }
 /* سجل المستخلصات وتتبع المراحل يصلان مع المحفظة لكل الأجهزة وروابط العرض */
 function _pfExtras(pf){ try{ if(pf&&pf.stg&&pf.stg.rows&&pf.stg.rows.length) _stgSave(pf.stg); }catch(e){} try{ if(pf&&pf.pay&&pf.pay.rows&&pf.pay.rows.length) _paySave(pf.pay); }catch(e){} }
 function _pfPull(){ try{ if(typeof SHARE==="undefined"||!SHARE.token||location.protocol==="file:") return;
@@ -23136,6 +23164,13 @@ try{ window.liveWallOpen=liveWallOpen; window.liveWallClose=liveWallClose; windo
 body[data-theme="dark"] .sh-pgt{background:#182A33;border-color:rgba(205,228,217,.12);color:#8ED2AE}
 body[data-theme="dark"] .sh-pgc{background:#14222A;border-color:rgba(205,228,217,.1)}body[data-theme="dark"] .sh-pgc > b{color:#8ED2AE}body[data-theme="dark"] .sh-pgr span{color:#E4ECE7}body[data-theme="dark"] .sh-pgr{border-color:rgba(205,228,217,.08)}
 @media (max-width:760px){ .sh-pgb{grid-template-columns:1fr} }
+</style>
+<style id="shSyncCss">
+#shSyncT{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:100005;background:#14222A;color:#E4ECE7;font-size:13px;line-height:1.6;padding:9px 16px;border-radius:10px;box-shadow:0 12px 30px -10px rgba(0,0,0,.45);max-width:min(560px,calc(100vw - 32px));text-align:center}
+#shSyncT.ok{background:#1E6B45;color:#fff}#shSyncT.bad{background:#8A4A3E;color:#fff}
+.sh-sync{margin:0 0 12px}.sh-sy{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:12.5px;color:#46574D;border:1px solid #E1E8E3;background:#F4F7F5;border-radius:12px;padding:10px 14px}
+.sh-sy b{font-size:13px}.sh-sy.ok b{color:#1E6B45}.sh-sy.bad{background:#F8ECE9;border-color:#EBCFC8}.sh-sy.bad b{color:#9A4E42}.sh-sy .mt-btn{margin-inline-start:auto}
+body[data-theme="dark"] .sh-sy{background:#182A33;border-color:rgba(205,228,217,.12);color:#A3B5AC}body[data-theme="dark"] .sh-sy.ok b{color:#8ED2AE}body[data-theme="dark"] .sh-sy.bad{background:rgba(185,106,91,.14);border-color:rgba(185,106,91,.35)}body[data-theme="dark"] .sh-sy.bad b{color:#E7B7AD}
 </style>
 </body>
 </html>
