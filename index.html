@@ -23033,7 +23033,7 @@ function finDashOpen(keep){ try{ setNavActive("findash"); }catch(e){} try{ _init
   var YK=Object.keys(Y).sort(), cum=0, YC=YK.map(function(y){ cum+=Y[y].v; return {y:y,v:Y[y].v,n:Y[y].n,c:cum}; });
   var yrs;
   if(!YC.length) yrs='<div class="fd-empty">لا توجد مستخلصات في السجل.</div>';
-  else { var cmx=Math.max(1,YC[YC.length-1].c)*1.18, n=YC.length, XP=function(i){ return n>1?(4+i/(n-1)*92):50; }, YP=function(v){ return 100-v/cmx*100; };
+  else { var cmx=Math.max(1,YC[YC.length-1].c)*1.18, n=YC.length, XP=function(i){ return n>1?(96-i/(n-1)*92):50; }, YP=function(v){ return 100-v/cmx*100; };
     var pts=YC.map(function(d,i){ return XP(i).toFixed(2)+','+YP(d.c).toFixed(2); });
     yrs='<div class="fd-yc"><div class="fd-yplot cg">'
       +'<i class="gl" style="bottom:33%"></i><i class="gl" style="bottom:66%"></i>'
