@@ -8607,7 +8607,7 @@ body[data-theme="dark"] .iah{background:var(--d-card,#14222A);border-color:rgba(
 .m5-sx u{display:flex;height:14px;border-radius:3px;overflow:hidden;gap:1px;text-decoration:none;min-width:12px}.m5-sx u i{display:block;height:100%}
 .m5-sx b{font-weight:800;color:#0E3B27;text-align:left}
 .m5-grid.f .m5-card{padding:16px 20px}
-.m5-grid.h{grid-template-columns:1fr 1fr}.m5-grid.h .m5-tb td{padding:12px 8px}.m5-grid.h .m5-tb td.nm{max-width:330px;white-space:normal}
+.m5-grid.h{grid-template-columns:1fr 1fr}.m5-grid.v{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:start;gap:12px}.m5-grid.v .m5-card{min-height:0}.m5-tb.wd td{padding-top:8px!important;padding-bottom:8px!important}.m5-tb.wd td.nm small{display:inline!important;margin-inline-start:8px}.m5-tb.wd td.nm small::before{content:'· '}.m5-grid.v .m5-tb td.nm{max-width:none;white-space:normal}.m5-tb td.rs{font-size:12.5px;color:#46574D;line-height:1.5;white-space:normal;max-width:340px}.m5-na{color:#A7B0AA}.m5-tb.sp td{padding-top:14px!important;padding-bottom:14px!important}.m5-grid.h .m5-tb td{padding:12px 8px}.m5-grid.h .m5-tb td.nm{max-width:330px;white-space:normal}
 .m5-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#3E7A5C}
 /* ملء الشاشة */
 #wkReport.mgr.mg-fs .mgs.m5{border-radius:4px}
@@ -9668,7 +9668,7 @@ const HMAP=(function(){const m={};const add=(k,f)=>k.forEach(x=>m[hkey(x)]=f);
   add(["تاريخ توقيع العقد"],"sign_date"); add(["تاريخ استلام الموقع"],"site_handover");
   add(["تاريخ بداية المشروع (المتوقع/الفعلي)"],"start_date");
   add(["تاريخ نهاية المشروع (المتوقع)"],"end_date"); add(["تاريخ النهاية التعاقدي"],"end_contractual");
-  add(["تاريخ الإيقاف ( إن وجد )"],"stop_date"); add(["تاريخ الإستئناف"],"resume_date");
+  add(["تاريخ الإيقاف ( إن وجد )"],"stop_date"); add(["سبب الإيقاف","سبب الايقاف","أسباب الإيقاف","اسباب الايقاف","سبب التوقف","أسباب التوقف"],"stop_reason"); add(["سبب السحب","أسباب السحب","اسباب السحب"],"withdraw_reason"); add(["تاريخ الإستئناف"],"resume_date");
   add(["الإحداثيات","الاحداثيات","احداثيات","إحداثيات","الموقع الجغرافي","الموقع الجغرافى","رابط الموقع","رابط الخريطة","رابط قوقل","رابط جوجل","رابط الموقع على الخريطة","الموقع على الخريطة","خط الطول والعرض","احداثيات الموقع","إحداثيات الموقع","gps","coordinates","location link","lat lng","latlng"],"coords");
   add(["صور المشروع"],"img1"); add(["صور المشروع2"],"img2");
   add(["صور المشروع3"],"img3"); add(["صور المشروع4"],"img4");
@@ -13445,7 +13445,7 @@ function _pfCancelledFrom(wb){ var sn=(wb.SheetNames||[]).filter(function(s){ re
   if(hr<0) return [];
   var H=g[hr].map(function(h){ return _lcNorm(h); }), ix=function(re){ return H.findIndex(function(h){ return re.test(h); }); };
   var c={code:ix(/^(الكود|كود المشروع)$/),sector:ix(/القطاع/),name:ix(/اسم المشروع|مسمي المشروع/),value:ix(/قيمه المشروع|القيمه/),duration:ix(/مده المشروع/),reason:ix(/سبب الالغاء/),
-         purchase_req:ix(/طلب الشراء/),competition_no:ix(/رقم المنافسه/),date:ix(/تاريخ الالغاء/),minutes:ix(/محضر/),note:ix(/ملاحظ/)};
+         purchase_req:ix(/طلب الشراء/),competition_no:ix(/رقم المنافسه/),date:ix(/تاريخ الالغاء/),minutes:ix(/محضر/),note:ix(/ملاحظ/),withdraw_reason:ix(/سبب السحب|اسباب السحب/)};
   return g.slice(hr+1).map(function(r){ var o={src:"sheet"}; Object.keys(c).forEach(function(k){ o[k]=c[k]>=0?String(r[c[k]]==null?"":r[c[k]]).trim():""; }); return o; })
     .filter(function(o){ return o.name && _lcNorm(o.name).length>3; }); }
 /* مقارنة بالبيانات الحالية */
@@ -15280,8 +15280,9 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
   /* 4) المتوقفة */
   var SP=X.stop, sv=SP.reduce(function(a,x){ return a+x.v; },0), dd=SP.filter(function(x){ return x.days!=null; }).map(function(x){ return x.days; }), avg=dd.length?Math.round(dd.reduce(function(a,b){ return a+b; },0)/dd.length):null;
   var k4=_m5Kpis([["المشاريع المتوقفة",ar(SP.length),_mgrPct(SP.length,X.g.run.n)+" من المشاريع قيد التنفيذ"],["قيمتها",M(sv),_mgrPct(sv,X.val)+" من قيمة المحفظة"],["متوسط مدة التوقف",avg!=null?_durMDh(avg):"—",avg!=null?"= "+ar(avg)+" يوم":""]]);
-  var r4=SP.map(function(x,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(x.p.name||"")+'</td><td>'+esc(x.p.sector||"—")+'</td><td>'+(x.sd?esc(fmtDateTxt(x.p.stop_date)):'—')+'</td><td class="sp"><i class="m5-dot" style="background:#8A8F8C"></i>'+(x.days!=null?_mgrDays(x.days):'—')+'</td><td class="n">'+_dxPct(x.a)+'</td></tr>'; });
-  pages.push(["المشاريع المتوقفة",k4+_m5Card("قائمة المشاريع","مرتبة حسب مدة التوقف",SP.length?_m5Rows(["#","المشروع","القطاع","متوقف منذ","مدة التوقف","الإنجاز"],r4.slice(0,9)):'<div class="m5-empty">لا توجد مشاريع متوقفة ✓</div>',"f")]);
+  var _rs=function(t){ t=String(t||'').replace(/\s+/g,' ').trim(); return t?esc(t):'<span class="m5-na">—</span>'; };
+  var r4=SP.map(function(x,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(x.p.name||"")+'</td><td>'+esc(x.p.sector||"—")+'</td><td>'+(x.sd?esc(fmtDateTxt(x.p.stop_date)):'—')+'</td><td class="sp"><i class="m5-dot" style="background:#8A8F8C"></i>'+(x.days!=null?_mgrDays(x.days):'—')+'</td><td class="rs">'+_rs(x.p.stop_reason)+'</td><td class="n">'+_dxPct(x.a)+'</td></tr>'; });
+  pages.push(["المشاريع المتوقفة",k4+_m5Card("قائمة المشاريع","مرتبة حسب مدة التوقف",SP.length?_m5Rows(["#","المشروع","القطاع","متوقف منذ","مدة التوقف","سبب الإيقاف","الإنجاز"],r4.slice(0,8),"sp"):'<div class="m5-empty">لا توجد مشاريع متوقفة ✓</div>',"f")]);
   /* 5) السحب: نصف للمشاريع في إجراءات السحب (من لون الخلية في المحفظة) ونصف للمسحوبة فعلاً (من تاب المشاريع الملغاة: السبب يذكر السحب) */
   var W=X.wd, wv=W.reduce(function(a,x){ return a+x.v; },0), wdis=W.reduce(function(a,x){ return a+x.d; },0);
   var WD=[]; try{ /* المسحوبة: من آخر ملف محفظة مرفوع (وإلا النسخة المدمجة)، حسب «سبب الإلغاء» أو «الملاحظات»، بلا تكرار */
@@ -15290,11 +15291,11 @@ function _mgrSlides(){ var X=_mgrData(), M=_dxM, pages=[];
     WD=_src.filter(function(c){ return /سحب/.test(String(c.reason||"")+" "+String(c.note||"")) && !(c.code&&_act[c.code]); }).filter(function(c){ var k=_lcNorm(c.name)+"|"+Math.round(toNum(c.value)||0); if(_sn[k]) return false; _sn[k]=1; return true; }); }catch(e){}
   var wdv=WD.reduce(function(a,c){ return a+(toNum(c.value)||0); },0);
   var k5=_m5Kpis([["في إجراءات السحب",_arPrj(W.length),M(wv)+" · المنصرف "+M(wdis)],["تم سحبها",_arPrj(WD.length),M(wdv)+" · من سجل المشاريع الملغاة"],["الإجمالي",_arPrj(W.length+WD.length),M(wv+wdv)]]);
-  var r5=W.map(function(x,i){ var t=_dxTime(x.p); return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(x.p.name||"")+'<small>'+esc(clean(x.p.contractor))+'</small></td><td class="n">'+_dxPct(x.a)+'</td><td class="v">'+M(x.v)+'</td><td class="'+(t.ok&&t.left<0?'dv':'')+'">'+(t.ok?(t.left<0?'متجاوز '+ar(-t.left)+' يوم':'متبقٍ '+ar(t.left)+' يوم'):'—')+'</td></tr>'; });
-  var r6=WD.map(function(c,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(String(c.name||"").trim())+'<small>'+esc(c.sector||"—")+(c.code?' · '+esc(c.code):'')+'</small></td><td class="v">'+(toNum(c.value)?M(toNum(c.value)):'—')+'</td><td class="r">'+(c.date?esc(c.date):(c.duration?ar(c.duration)+' شهر':'—'))+'</td></tr>'; });
-  var c5a=_m5Card("في إجراءات السحب",_arPrj(W.length)+" · محددة في ملف المحفظة",W.length?_m5Rows(["#","المشروع / المقاول","الإنجاز","قيمة العقد","المدة"],r5.slice(0,7),"sm"):'<div class="m5-empty">لا توجد مشاريع في إجراءات السحب ✓</div>');
-  var c5b=_m5Card("تم سحبها",_arPrj(WD.length)+" · من سجل المشاريع الملغاة",WD.length?_m5Rows(["#","المشروع / القطاع","القيمة",WD.some(function(c){ return c.date; })?"تاريخ السحب":"مدة المشروع"],r6.slice(0,7),"sm"):'<div class="m5-empty">لا توجد مشاريع مسحوبة</div>');
-  pages.push(["في إجراءات السحب",k5+'<div class="m5-grid h">'+c5a+c5b+'</div>']);
+  var r5=W.map(function(x,i){ var t=_dxTime(x.p); return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(x.p.name||"")+'<small>'+esc(clean(x.p.contractor))+'</small></td><td class="n">'+_dxPct(x.a)+'</td><td class="v">'+M(x.v)+'</td><td class="'+(t.ok&&t.left<0?'dv':'')+'">'+(t.ok?(t.left<0?'متجاوز '+ar(-t.left)+' يوم':'متبقٍ '+ar(t.left)+' يوم'):'—')+'</td><td class="rs">'+_rs(x.p.withdraw_reason)+'</td></tr>'; });
+  var r6=WD.map(function(c,i){ return '<tr><td class="i">'+ar(i+1)+'</td><td class="nm">'+esc(String(c.name||"").trim())+'<small>'+esc(c.sector||"—")+(c.code?' · '+esc(c.code):'')+'</small></td><td class="v">'+(toNum(c.value)?M(toNum(c.value)):'—')+'</td><td class="r">'+(c.date?esc(c.date):(c.duration?ar(c.duration)+' شهر':'—'))+'</td><td class="rs">'+_rs(c.withdraw_reason||c.reason||c.note)+'</td></tr>'; });
+  var c5a=_m5Card("في إجراءات السحب",_arPrj(W.length)+" · محددة في ملف المحفظة",W.length?_m5Rows(["#","المشروع / المقاول","الإنجاز","قيمة العقد","المدة","سبب السحب"],r5.slice(0,4),"sm wd"):'<div class="m5-empty">لا توجد مشاريع في إجراءات السحب ✓</div>');
+  var c5b=_m5Card("تم سحبها",_arPrj(WD.length)+" · من سجل المشاريع الملغاة",WD.length?_m5Rows(["#","المشروع / القطاع","القيمة",WD.some(function(c){ return c.date; })?"تاريخ السحب":"مدة المشروع","سبب السحب"],r6.slice(0,4),"sm wd"):'<div class="m5-empty">لا توجد مشاريع مسحوبة</div>');
+  pages.push(["في إجراءات السحب",k5+'<div class="m5-grid v">'+c5a+c5b+'</div>']);
   return pages.map(function(pg,i){ return _mgrShell(i+1,pg[0],"",pg[1],pages.length); }).join(""); }
 try{ window.addEventListener("beforeprint",function(){ if(document.querySelector("#wkReport.mgr")) document.body.classList.add("mgr-print"); }); window.addEventListener("afterprint",function(){ document.body.classList.remove("mgr-print"); }); }catch(e){}
 
